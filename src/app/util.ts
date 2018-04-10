@@ -28,10 +28,6 @@ export const compareDatesNoTimezone = (aa: Date, bb: Date) =>
 
 export const copyJson = <T extends any>(source: T) => <T>JSON.parse(JSON.stringify(source));
 
-export const DELIVERYPOINTID_EMPTY = 'DE0000000000000000000000000000000';
-export const DELIVERYPOINTID_PATTERN = '[A-Z]{2}[A-Z0-9]{31}';
-export const DELIVERYPOINTID_REGEXP = new RegExp(DELIVERYPOINTID_PATTERN);
-
 export const EMAIL_REGEXP_VALUE =
   '[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*'
   + '@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?';
@@ -57,14 +53,11 @@ export const hexToRgb = (hex: string) => {
   return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)] : null;
 }
 
-export const isDeliveryPointId = (value: string) => DELIVERYPOINTID_REGEXP.test(value);
-
 export const isEqualValue = (aa, bb) => JSON.stringify(aa) === JSON.stringify(bb);
 
 export const isJiraTask = (value: string) => JIRATASK_REGEXP.test(value);
 export const isNumeric = (value: string) =>
   typeof value === 'string' && (
-    isDeliveryPointId(value) ||
     isJiraTask(value) ||
     !isNaN(parseFloat(value)) && value.length - parseFloat(value).toString().length < 4 ||
     !isNaN(parseFloat(value.split('.').join(''))));

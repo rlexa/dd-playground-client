@@ -1,8 +1,5 @@
-import { TestBed, inject } from '@angular/core/testing';
-import {
-  compareDates, compareDatesNoTimezone,
-  hash, DELIVERYPOINTID_EMPTY, isDeliveryPointId, isJiraTask, isNumeric, isObject, mapArray, toRange, isEqualValue,
-} from './util';
+import { inject } from '@angular/core/testing';
+import { compareDates, compareDatesNoTimezone, hash, isEqualValue, isJiraTask, isNumeric, isObject, mapArray, toRange } from './util';
 
 describe('Util', () => {
   test('compare dates', inject([], () => {
@@ -22,11 +19,6 @@ describe('Util', () => {
     expect(typeof hash('hash1')).toBe('number');
     expect(typeof hash('hash2')).toBe('number');
     expect(hash('hash1')).not.toBe(hash('hash2'));
-  }));
-
-  test('detect deliverypointid', inject([], () => {
-    ['asd', ''].forEach(ii => expect(isDeliveryPointId(ii)).toBe(false));
-    expect(isDeliveryPointId(DELIVERYPOINTID_EMPTY)).toBe(true);
   }));
 
   test('detect jiratask', inject([], () => {
