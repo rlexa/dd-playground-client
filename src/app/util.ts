@@ -21,11 +21,6 @@ export function clearUiSelection() {
   }
 }
 
-export const compareStrings = (aa: string, bb: string) => aa.localeCompare(bb);
-export const compareDates = (aa: Date, bb: Date) => aa.getTime() - bb.getTime();
-export const compareDatesNoTimezone = (aa: Date, bb: Date) =>
-  aa.getFullYear() - bb.getFullYear() || aa.getMonth() - bb.getMonth() || aa.getDate() - bb.getDate();
-
 export const copyJson = <T extends any>(source: T) => <T>JSON.parse(JSON.stringify(source));
 
 export const EMAIL_REGEXP_VALUE =
@@ -105,29 +100,6 @@ export const parseFloating = (from?: any) => parseFloat('' + from);
 export const parseInteger = (from?: any) => parseInt('' + from, 10);
 export const parseString = (from?: any, to?: any) => (typeof (from) === 'undefined' || from === null ? null : from.toString()) as string;
 
-const EMPTY_VALUES = [undefined, null];
-export function compare<T extends number | string | Date>(aa: T, bb: T): number {
-  let ret = 0;
-  if (aa !== bb) {
-    if (EMPTY_VALUES.includes(aa)) {
-      if (!EMPTY_VALUES.includes(bb)) {
-        ret = -1;
-      }
-    } else if (EMPTY_VALUES.includes(bb)) {
-      ret = 1;
-    } else {
-      if (typeof (aa) === 'string') {
-        ret = compareStrings(<string>aa, <string>bb);
-      } else if (aa instanceof Date) {
-        ret = compareDates(<Date>aa, <Date>bb);
-      } else {
-        ret = <number>aa - <number>bb;
-      }
-    }
-  }
-  return ret;
-}
-
 export const TELEPHONE_AREA_REGEXP_VALUE = '^[0-9]{1,}$';
 export const TELEPHONE_COUNTRY_REGEXP_VALUE = '^[+]*[0-9]{1,}[-]{0,1}[0-9]*$';
 export const TELEPHONE_DIRECT_REGEXP_VALUE = '^[0-9]{1,}$';
@@ -140,9 +112,7 @@ export const toMin = <V extends any>(value: V[]) => (value || []).reduce((acc, v
 export const toRange = (count: number, optTo?: number) =>
   Array.from(Array(optTo ? optTo - count : count || 0), (ii, jj) => jj + (optTo ? count : 0));
 
-export const toUnique = <V extends any>(value: V[]) =>
-  // TODO AR: really should be [...new Set(value)]; but it's es6 target then...
-  (value || []).reduce((acc, val) => acc.includes(val) ? acc : acc.push(val) && acc, <V[]>[]);
+export const toUnique = <V extends any>(value: V[]) => [...new Set(value || [])];
 
 export const toWebAddress = (value: string) => ('' + value).startsWith('http') ? value : 'http://' + value;
 

@@ -1,19 +1,7 @@
 import { inject } from '@angular/core/testing';
-import { compareDates, compareDatesNoTimezone, hash, isEqualValue, isJiraTask, isNumeric, isObject, mapArray, toRange } from './util';
+import { hash, isEqualValue, isJiraTask, isNumeric, isObject, mapArray, toRange } from './util';
 
 describe('Util', () => {
-  test('compare dates', inject([], () => {
-    expect(compareDates(new Date(0), new Date(0))).toBe(0);
-    expect(compareDates(new Date(0), new Date(1))).toBeLessThan(0);
-    expect(compareDates(new Date(1), new Date(0))).toBeGreaterThan(0);
-  }));
-
-  test('compare dates no timezone', inject([], () => {
-    expect(compareDatesNoTimezone(new Date('2018-01-01'), new Date('2018-01-01T00:00:00+01:00'))).toBe(0);
-    expect(compareDatesNoTimezone(new Date('2018-01-01'), new Date('2018-01-01T00:00:00-01:00'))).toBe(0);
-    expect(compareDatesNoTimezone(new Date('2018-01-01'), new Date('2018-01-02'))).toBeLessThan(0);
-    expect(compareDatesNoTimezone(new Date('2018-01-02'), new Date('2018-01-01'))).toBeGreaterThan(0);
-  }));
 
   test('hash', inject([], () => {
     expect(typeof hash('hash1')).toBe('number');
