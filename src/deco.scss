@@ -1,0 +1,449 @@
+.border-radius {
+  border-radius: $border-radius;
+}
+
+.border-radius-top-left {
+  border-top-left-radius: $border-radius;
+}
+
+.border-radius-top-right {
+  border-top-right-radius: $border-radius;
+}
+
+.border-radius-top {
+  @extend .border-radius-top-left;
+  @extend .border-radius-top-right;
+}
+
+.border-radius-wide {
+  border-radius: $border-radius-wide;
+}
+
+.border-radius-wide-top-left {
+  border-top-left-radius: $border-radius-wide;
+}
+
+.border-radius-wide-top-right {
+  border-top-right-radius: $border-radius-wide;
+}
+
+.border-radius-wide-top {
+  @extend .border-radius-wide-top-left;
+  @extend .border-radius-wide-top-right;
+}
+
+.border-left {
+  border-left: solid 1px $clr-mat-dark-divider;
+}
+
+.border-right {
+  border-right: solid 1px $clr-mat-dark-divider;
+}
+
+.border-top {
+  border-top: solid 1px $clr-mat-dark-divider;
+}
+
+.border-bottom {
+  border-bottom: solid 1px $clr-mat-dark-divider;
+}
+
+.border {
+  @extend .border-radius;
+  @extend .border-left;
+  @extend .border-right;
+  @extend .border-top;
+  @extend .border-bottom;
+}
+
+.border-transparent {
+  border-color: transparent;
+}
+
+.background-card {
+  background: $clr-card-bg;
+}
+
+.background-default {
+  background: $clr-item-bg;
+}
+
+.background-highlighted {
+  background-color: fade-out($mat-clr-chip-bg-connected, .35);
+}
+
+.background-light {
+  background: $clr-item-bg-light;
+}
+
+.auto-line-height {
+  line-height: initial;
+}
+
+.no-font-size {
+  font-size: inherit;
+}
+
+.text-gigantic {
+  font-size: $font-size-gigantic;
+}
+
+.font-default {
+  font-size: $font-size-default;
+}
+
+.font-smaller {
+  font-size: $font-size-smaller;
+}
+
+.font-small {
+  font-size: $font-size-small;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.text-warning {
+  color: $clr-warn;
+}
+
+.ellipsis {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.break-text {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.break-word {
+  word-break: break-all;
+}
+
+.no-break-text {
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+.value-numeric {
+  font-family: monospace;
+}
+
+.color-primary {
+  color: $clr-primary;
+}
+
+.color-secondary {
+  color: $clr-secondary;
+}
+
+.color-accent {
+  @extend .color-secondary;
+}
+
+.color-warn {
+  color: $clr-warn;
+}
+
+.css-highlight {
+  color: $clr-primary;
+}
+
+.mat-chip {
+  @extend .transition-background-color;
+  background-color: fade-out($mat-clr-chip-bg, .75);
+  padding: 0.8rem 1.2rem;
+  border-radius: 2.4rem;
+  font-size: 1.3rem;
+  line-height: 1.6rem;
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+
+  &.mat-chip-transparent {
+    background-color: transparent;
+  }
+
+  &:hover:not(.mat-chip-ignore-hover) {
+    background-color: $mat-clr-chip-bg;
+  }
+
+  &.highlighted:not(:hover) {
+    @extend .background-highlighted;
+  }
+
+  &.outline-primary {
+    border-color: $clr-primary;
+  }
+
+  &:not(.mat-basic-chip) {
+    background-color: fade-out($mat-clr-chip-bg, .75);
+  }
+}
+
+.copyable {
+  cursor: copy;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.deadclick {
+  &:active {
+    pointer-events: none;
+  }
+}
+
+.deadclick-force {
+  pointer-events: none;
+}
+
+.highlighted:not(:hover) {
+  @extend .background-highlighted;
+}
+
+.hoverable:hover {
+  background-color: $clr-mat-light-row-hover;
+}
+
+.svg-icon-height {
+  height: $size-svg-icon-height;
+}
+
+.overview-container {
+  display: flex;
+  flex-direction: column;
+
+  > :nth-child(1n) {
+    @extend .childhv;
+  }
+
+  @media(min-width: $size-min-cards-wrap) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    > :nth-child(1n) {
+      align-self: flex-start;
+      min-width: $size-card-flowh;
+
+      &:not(.noresize) {
+        min-width: 0.5 * $size-card-flowh;
+        max-width: $size-card-flowh;
+      }
+    }
+  }
+}
+
+.table-container {
+  &.maxheight {
+    max-height: $size-table-height;
+  }
+}
+
+.table-container-inline {
+  max-height: $size-table-height-inline;
+  @extend .scroll-auto;
+}
+
+.table-container-worklist {
+  max-width: 100rem;
+}
+
+.htmltable-dense {
+  tr>td {
+    padding-top: 0.4 * $margin-between-items-h;
+    padding-bottom: 0.4 * $margin-between-items-h;
+    max-width: $size-htmltable-cell;
+    word-break: break-word; // hmm making bigger would break cards where it is used mostly
+    &[colspan="2"] {
+      max-width: $size-htmltable-cell * 1;
+    }
+    &[colspan="3"] {
+      max-width: $size-htmltable-cell * 1;
+    }
+  }
+}
+
+.diagram-container {
+  max-height: $size-diagram;
+  @extend .scroll-auto;
+}
+
+.topfix {
+  margin-bottom: 0rem;
+  font-size: 0.75 * $font-size-default;
+  color: $clr-mat-dark-secondary;
+}
+
+.hint {
+  font-size: 75%;
+  @extend .margin-top-narrow;
+}
+
+.user-selectable {
+  user-select: text;
+}
+
+.icon-background {
+  background-color: fade-out($clr-primary, .75);
+  border-radius: 2.4rem;
+}
+
+.top-right-single-action-in-container {
+  @extend .position-absolute;
+  display: inline-block;
+  top: -0.5rem;
+  right: -0.5rem;
+  transform: scale(0.5);
+}
+
+.top-right-single-label-in-container {
+  @extend .position-absolute;
+  display: inline-block;
+  top: 1rem;
+  right: 1rem;
+  font-size: $font-size-small;
+}
+
+.top-right-in-window {
+  @extend .position-fixed;
+  top: .2rem;
+  right: .3rem;
+}
+
+.btm-right-single-action {
+  @extend .position-fixed;
+  display: inline-block;
+  bottom: 2rem;
+  right: 2rem;
+}
+
+.transition-background-color {
+  transition: background-color $transition-duration;
+}
+
+.transition-border-color {
+  transition: border-color $transition-duration;
+}
+
+.transition-opacity {
+  transition: opacity $transition-duration;
+}
+
+.transition-transform {
+  transition: transform $transition-duration-fast ease-out;
+}
+
+.rot90 {
+  transform: rotate(90deg);
+}
+
+.rot-90 {
+  transform: rotate(-90deg);
+}
+
+.scale05 {
+  transform: scale(0.5);
+}
+
+.active {
+  .active-scale {
+    transform: scale(2);
+  }
+}
+
+.label-overlay {
+  z-index: 1000;
+  font-size: $font-size-default;
+  color: cyan;
+  pointer-events: none;
+}
+
+.selectbox {
+  min-width: $size-selectbox;
+}
+
+.container-calendar {
+  margin-top: 1.6rem;
+}
+
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  vertical-align: top;
+  overflow: hidden;
+
+  svg {
+    display: inline-block;
+  }
+}
+
+.html-input-color {
+  border-width: 0px;
+  padding: 0px;
+  margin: 0px;
+  width: 2rem;
+  height: 2rem;
+}
+
+.link-right {
+  @extend .position-absolute;
+  top: -.5rem;
+  right: -1rem;
+}
+
+.number-indicator {
+  border: 1px solid $clr-primary;
+  border-radius: 0.4rem;
+  padding: .2rem;
+}
+
+.dialog-content-min-width {
+  min-width: $size-dialogcontent-width;
+}
+
+.dialog-content-force-width {
+  min-width: $size-dialogcontent-width;
+  max-width: $size-dialogcontent-width;
+}
+
+.sprite-login {
+  opacity: .5;
+  transform: scale(2);
+
+  @media(min-width: 700px) {
+    transform: scale(3);
+  }
+}
+
+app-busy-backdrop {
+  @extend .position-absolute;
+  @extend .match-parent;
+  z-index: 1001;
+  background: $clr-default-bg;
+  opacity: .7;
+}

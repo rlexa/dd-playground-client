@@ -1,0 +1,8 @@
+<div *ngIf="state$ | async as state" ddFlexbox="vyt">
+  <mat-card>
+    <mat-card-title>State (PARSED)</mat-card-title>
+    <mat-card-content>
+      <app-simple-view [data]="state" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+    </mat-card-content>
+  </mat-card>
+</div>

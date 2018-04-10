@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~font-awesome/css/font-awesome.min.css';
+@import '~material-design-icons/iconfont/material-icons.css';
+
+@import 'variables.scss';
+
+@import 'overwrite-md.scss';
+
+@import 'layout.scss';
+@import 'default.scss';
+@import 'deco.scss';

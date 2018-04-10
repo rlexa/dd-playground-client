@@ -1,0 +1,12 @@
+<div class="position-absolute match-parent app-viewport">
+  <div class="position-absolute match-parent container-bg-logo"></div>
+  <ng-container *ngIf="isForcingStart || isBrowserChrome; else templateNeedChrome">
+    <router-outlet></router-outlet>
+  </ng-container>
+  <ng-template #templateNeedChrome>
+    <div ddFlexbox="vxcyc" class="position-absolute match-parent">
+      <h1 class="color-warn">Please switch to Chrome browser.</h1>
+      <button *ngIf="!isBrowserIE" (click)="onForceStart()">Force</button>
+    </div>
+  </ng-template>
+</div>

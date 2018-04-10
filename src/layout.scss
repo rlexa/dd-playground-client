@@ -1,0 +1,280 @@
+.position-absolute {
+  position: absolute;
+}
+
+.position-fixed {
+  position: fixed;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.auto-min-width {
+  min-width: auto;
+}
+
+.in-parent-width {
+  max-width: 100%;
+}
+
+.match-parent {
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.match-parent-to-top {
+  left: 0px;
+  top: 0px;
+  right: 0px;
+}
+
+.match-parent-height {
+  height: 100%;
+}
+
+.match-parent-width {
+  width: 100%;
+}
+
+.match-parent-size {
+  @extend .match-parent-height;
+  @extend .match-parent-width;
+}
+
+.scroll-auto {
+  overflow: auto;
+}
+
+.scroll-x-hidden {
+  overflow-x: hidden;
+}
+
+.scroll-x-auto {
+  overflow-x: auto;
+}
+
+.scroll-x-always {
+  overflow-x: scroll;
+}
+
+.scroll-y-hidden {
+  overflow-y: hidden;
+}
+
+.scroll-y-auto {
+  overflow-y: auto;
+}
+
+.scroll-y-always {
+  overflow-y: scroll;
+}
+
+.scroll-performance {
+  will-change: scroll-position, transform;
+}
+
+.no-paddingh {
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
+
+.no-paddingv {
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+}
+
+.no-paddinghv {
+  @extend .no-paddingh;
+  @extend .no-paddingv;
+}
+
+.no-paddingvh {
+  @extend .no-paddinghv;
+}
+
+.no-padding {
+  @extend .no-paddinghv;
+}
+
+.padding-left {
+  padding-left: $margin-between-items-h;
+}
+
+.padding-right {
+  padding-right: $margin-between-items-h;
+}
+
+.padding-top {
+  padding-top: $margin-between-items-h;
+}
+
+.padding-bottom {
+  padding-bottom: $margin-between-items-h;
+}
+
+.padding {
+  @extend .padding-left;
+  @extend .padding-right;
+  @extend .padding-top;
+  @extend .padding-bottom;
+}
+
+.padding-left-wide {
+  padding-left: $margin-between-items-h-wide;
+}
+
+.padding-right-wide {
+  padding-right: $margin-between-items-h-wide;
+}
+
+.padding-top-wide {
+  padding-top: $margin-between-items-h-wide;
+}
+
+.padding-bottom-wide {
+  padding-bottom: $margin-between-items-h-wide;
+}
+
+.padding-wide {
+  @extend .padding-left-wide;
+  @extend .padding-right-wide;
+  @extend .padding-top-wide;
+  @extend .padding-bottom-wide;
+}
+
+.container {
+  padding: $size-padding;
+}
+
+.container-main {
+  padding: $size-padding;
+}
+
+.container-border-radius {
+  @extend .border-radius;
+}
+
+.contenth {
+  padding-left: 0.5 * $margin-between-items-h;
+  padding-right: 0.5 * $margin-between-items-h;
+}
+
+.contentv {
+  padding-top: 0.5 * $margin-between-items-h;
+  padding-bottom: 0.5 * $margin-between-items-h;
+}
+
+.contenthv {
+  @extend .contenth;
+  @extend .contentv;
+}
+
+.contentvh {
+  @extend .contenthv;
+}
+
+.perspective {
+  perspective: 50rem;
+}
+
+.childh {
+  margin-left: 0.5 * $margin-between-items-h;
+  margin-right: 0.5 * $margin-between-items-h;
+}
+
+.childv {
+  margin-top: 0.5 * $margin-between-items-h;
+  margin-bottom: 0.5 * $margin-between-items-h;
+}
+
+.childhv {
+  @extend .childh;
+  @extend .childv;
+}
+
+.childvh {
+  @extend .childhv;
+}
+
+.no-marginh {
+  margin-left: 0rem;
+  margin-right: 0rem;
+}
+
+.no-marginv {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+}
+
+.no-marginhv {
+  @extend .no-marginh;
+  @extend .no-marginv;
+}
+
+.no-marginvh {
+  @extend .no-marginhv;
+}
+
+.margin-left {
+  margin-left: $margin-between-items-h;
+}
+
+.margin-right {
+  margin-right: $margin-between-items-h;
+}
+
+.margin-top {
+  margin-top: $margin-between-items-h;
+}
+
+.margin-bottom {
+  margin-bottom: $margin-between-items-h;
+}
+
+.margin-left-narrow {
+  margin-left: 0.5 * $margin-between-items-h;
+}
+
+.margin-right-narrow {
+  margin-right: 0.5 * $margin-between-items-h;
+}
+
+.margin-top-narrow {
+  margin-top: 0.5 * $margin-between-items-h;
+}
+
+.margin-bottom-narrow {
+  margin-bottom: 0.5 * $margin-between-items-h;
+}
+
+.margin-left-wide {
+  margin-left: $margin-between-items-h-wide;
+}
+
+.margin-right-wide {
+  margin-right: $margin-between-items-h-wide;
+}
+
+.margin-top-wide {
+  margin-top: $margin-between-items-h-wide;
+}
+
+.margin-bottom-wide {
+  margin-bottom: $margin-between-items-h-wide;
+}
+
+.floatl {
+  float: left;
+}
+
+.floatr {
+  float: right;
+}
+
+.size-data-label {
+  min-width: $size-htmltable-cell;
+  max-width: $size-htmltable-cell;
+}

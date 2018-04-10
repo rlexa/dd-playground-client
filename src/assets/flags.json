@@ -1,0 +1,10 @@
+{
+  "buildSystem": "ng serve",
+  "buildVariant": "dev",
+  "buildId": "0",
+  "buildRevision": "0",
+  "project": "dd-playground-client",
+  "projectParent": "dd",
+  "title": "Playground",
+  "version": "0.0.1"
+}

@@ -1,0 +1,27 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "outDir": "./dist/out-tsc",
+    "baseUrl": "src",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "_strictInjectionParameters": "Report an error for a parameter supplied whose injection type cannot be determined",
+    "strictInjectionParameters": true,
+    "_fullTemplateTypeCheck": "Enable binding expression validation phase of the template compiler which uses TypeScript to validate binding expressions",
+    "fullTemplateTypeCheck": true
+  }
+}
