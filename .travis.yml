@@ -1,0 +1,15 @@
+sudo: false
+
+language: node_js
+node_js:
+  - 9
+
+branches:
+  only:
+    - master
+
+#deploy:
+#  provider: firebase
+#  token:
+#    secure: "$FIREBASE_TOKEN" # TODO need to 'firebase login:ci' first... damn this proxy!
+#  message: "travis"
