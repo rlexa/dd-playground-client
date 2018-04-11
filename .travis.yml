@@ -8,8 +8,8 @@ branches:
   only:
     - master
 
-#deploy:
-#  provider: firebase
-#  token:
-#    secure: "$FIREBASE_TOKEN" # TODO need to 'firebase login:ci' first... damn this proxy!
-#  message: "travis"
+deploy:
+  provider: firebase
+  token:
+    secure: "$FIREBASE_TOKEN"
+  message: "travis"
