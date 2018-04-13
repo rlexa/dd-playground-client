@@ -1,5 +1,7 @@
 export type funcMap<T> = (from: any, to: T) => T;
 
+export const arrayFrom = (len: number) => Array.from(Array(Math.max(len || 0, 0)).keys());
+
 export function calcElementHeight(element: HTMLElement) {
   let ret = 0;
   if (element) {
