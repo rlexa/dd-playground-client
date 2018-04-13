@@ -20,14 +20,17 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
 
   private readonly cssContent = '.content';
   private readonly cssPoint = '.point';
+  private readonly cssPath = '.path';
   private readonly cssAxisX = '.axis-x';
   private readonly cssAxisY = '.axis-y';
-  private readonly clrPoint = 'red';
   private readonly defMinX = 0;
   private readonly defMaxX = 100;
   private readonly defMinY = 0;
   private readonly defMaxY = 100;
   private readonly minMaxBuffer = 10;
+  private readonly plotResolution = 1000;
+  private readonly defPointColor = 'red';
+  private readonly defPolynomColors = ['red', 'green', 'blue', 'yellow', 'purple'];
 
   private readonly done = new DoneSubject();
   private readonly triggerResized = new Subject();
@@ -35,14 +38,32 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
 
   private chart: Chart = null;
   private xyPoints: number[][] = [];
+  private clrPoint = this.defPointColor;
+  private polynomWeights: number[][] = [[1], [1, 1], [1, 1, 1]];
+  private polynomColors: string[] = this.defPolynomColors;
 
   @Input() set points(val: number[]) {
     val = (val || []);
     const len = Math.floor(val.length / 2);
-    this.xyPoints.splice(0, this.xyPoints.length);
+    this.xyPoints = [];
     for (let ii = 0; ii < val.length; ii += 2) {
       this.xyPoints.push([val[ii], val[ii + 1]]);
     }
+    this.triggerRender.next();
+  }
+
+  @Input() set pointColor(val: string) {
+    this.clrPoint = val || this.defPointColor;
+    this.triggerRender.next();
+  }
+
+  @Input() set polynomials(val: number[][]) {
+    this.polynomWeights = val || [];
+    this.triggerRender.next();
+  }
+
+  @Input() set polynomialColors(val: string[]) {
+    this.polynomColors = val || this.defPolynomColors;
     this.triggerRender.next();
   }
 
@@ -67,12 +88,11 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
 
     const margin = { top: 5, right: 20, bottom: 20, left: 35 };
     const width = Math.floor(rect.width);
-    const height = 330;
+    const height = 350;
     const svg = d3
       .select('#svgChart')
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .attr('viewBox', '0 0 ' + (width + margin.left + margin.right) + ' ' + (height + margin.top + margin.bottom));
-    svg.append('defs');
     this.chart = {
       svg, height, width,
       x: d3.scaleLinear().domain([this.defMinX, this.defMaxX]).range([0, width]),
@@ -144,20 +164,50 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
 
     // RENDER POINTS
 
-    const point = this.chart.g.select(this.cssContent).selectAll(this.cssPoint).data(this.xyPoints);
+    {
+      const point = this.chart.g.select(this.cssContent).selectAll(this.cssPoint).data(this.xyPoints);
+      const item = point.enter()
+        .append('circle')
+        .attr('r', 3)
+        .style('stroke', this.clrPoint)
+        .style('stroke-width', 1)
+        .style('fill', 'none')
+        .style('transition', 'cx 500ms, cy 500ms')
+        .classed(this.cssPoint.substr(1), true);
+      item.merge(point)
+        .attr('cx', ii => this.chart.x(ii[0]))
+        .attr('cy', ii => this.chart.y(ii[1]));
+      point.exit().remove();
+    }
 
-    const item = point.enter()
-      .append('circle')
-      .attr('r', 3)
-      .style('stroke', this.clrPoint)
-      .style('stroke-width', 1)
-      .style('fill', 'none')
-      .style('transition', 'cx 500ms, cy 500ms')
-      .classed(this.cssPoint.substr(1), true);
-    item.merge(point)
-      .attr('cx', ii => this.chart.x(ii[0]))
-      .attr('cy', ii => this.chart.y(ii[1]));
-    point.exit().remove();
+    // RENDER POLYNOMS
+
+    {
+      const stride = (xMax - xMin) / this.plotResolution;
+      const plotteds = this.polynomWeights.map((weights, weightsIndex) => {
+        const getY = (factors: number[], xx: number) => factors.reduce((acc, val, index) => acc + val * xx ** (weights.length - 1 - index), 0);
+        return arrayFrom(this.plotResolution).map((ii, index) => [xMin + stride * index, getY(weights, xMin + stride * index)]);
+      });
+
+      const line = d3.line()
+        .x(ii => this.chart.x(ii[0]))
+        .y(ii => this.chart.y(ii[1]));
+
+      const path = this.chart.g.select(this.cssContent).selectAll(this.cssPath).data(plotteds);
+      const item = path.enter()
+        .append('path')
+        .style('stroke', (ii, index) => this.polynomColors[index % this.polynomColors.length])
+        .style('stroke-width', 1.5)
+        .style('stroke-linejoin', 'round')
+        .style('stroke-linecap', 'round')
+        .style('fill', 'none')
+        .style('transition', 'd 500ms')
+        .classed(this.cssPath.substr(1), true);
+      item.merge(path)
+        .attr('d', line);
+      path.exit().remove();
+    }
+
   }
 
 }

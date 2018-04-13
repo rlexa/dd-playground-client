@@ -5,7 +5,7 @@ import { arrayFrom } from 'app/util';
 export class DemoMiscComponent {
 
   curPolynomPoint = [0, 0];
-  readonly samplePolynomPointsRange = 1000;
+  readonly samplePolynomPointsRange = 100;
   samplePolynomPoints = [];
 
   constructor() {
