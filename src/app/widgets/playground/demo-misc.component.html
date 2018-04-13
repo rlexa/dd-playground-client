@@ -1,7 +1,13 @@
 <div ddFlexbox="vyt">
   <mat-card>
-    <mat-card-title>Nothing to play around with.</mat-card-title>
+    <mat-card-title>Polynomial {{ curPolynomPoint.join(', ') }}</mat-card-title>
     <mat-card-content>
+      <div ddFlexbox="vys">
+        <app-diagram-polynom ddFlexitem="at" [points]="samplePolynomPoints" (hoveredPoint)="curPolynomPoint = $event"></app-diagram-polynom>
+        <div ddFlexbox="hyc">
+          <button mat-raised-button color="accent" (click)="reSamplePolynomPoints()">POINTS</button>
+        </div>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

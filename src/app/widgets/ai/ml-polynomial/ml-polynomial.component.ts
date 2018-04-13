@@ -5,6 +5,5 @@ import { Component } from '@angular/core';
   templateUrl: './ml-polynomial.component.html'
 })
 export class MlPolynomialComponent {
-
   constructor() { }
 }
