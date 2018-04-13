@@ -39,7 +39,7 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
   private chart: Chart = null;
   private xyPoints: number[][] = [];
   private clrPoint = this.defPointColor;
-  private polynomWeights: number[][] = [[1], [1, 1], [1, 1, 1]];
+  private polynomWeights: number[][] = [];
   private polynomColors: string[] = this.defPolynomColors;
 
   @Input() set points(val: number[]) {
