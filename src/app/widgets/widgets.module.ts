@@ -4,7 +4,7 @@ import { MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatL
 import { RouterModule } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { FlexboxModule } from 'dd-flexbox';
-import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, EmptyComponent, OverviewComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
+import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, EmptyComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
 
 @NgModule({
   imports: [
@@ -31,6 +31,7 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
     DemoMiscComponent,
     DemoStateComponent,
     EmptyComponent,
+    MlPolynomialComponent,
     OverviewComponent,
     RoutedContentComponent,
     SimpleViewComponent,
@@ -43,6 +44,7 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
     DemoMiscComponent,
     DemoStateComponent,
     EmptyComponent,
+    MlPolynomialComponent,
     OverviewComponent,
     RoutedContentComponent,
   ]
@@ -56,6 +58,7 @@ export {
   DemoMiscComponent,
   DemoStateComponent,
   EmptyComponent,
+  MlPolynomialComponent,
   OverviewComponent,
   RoutedContentComponent,
 };

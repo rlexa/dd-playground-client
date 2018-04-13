@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 
 /* ROUTE PARTS */
 
+export const AI = 'ai';
 export const BUILDCONFIG = 'buildconfig';
 export const CONFIGURATION = 'configuration';
 export const CURRENT = 'current';
@@ -10,6 +11,7 @@ export const DEMO_MISC = 'demomisc';
 export const DEMO_STATE = 'demostate';
 export const OVERVIEW = 'overview';
 export const PLAYGROUND = 'playground';
+export const APPROXPOLYNOM = 'approxpolynom';
 export const ROOT = '';
 export const SETTINGS = 'settings';
 export const WILDCARD = '**';

@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 export const ICON_MAP: { [key: string]: string } = {
+  ai: 'school',
   back: 'keyboard_backspace',
   build_config: 'device_hub',
   close: 'close',
@@ -33,6 +34,7 @@ export const ICON_MAP: { [key: string]: string } = {
   menuv: 'more_vert',
   overview: 'widgets',
   playground: 'videogame_asset',
+  polynom: 'format_textdirection_l_to_r',
   refresh: 'refresh',
   release_notes: 'linear_scale',
   request: 'send',

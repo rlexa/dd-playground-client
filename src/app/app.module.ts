@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { AppStore, GlobalFlags, ReduxService, createAppStore } from 'app/redux';
-import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, OverviewComponent, RoutedContentComponent, WidgetsModule } from 'app/widgets/widgets.module';
+import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, WidgetsModule } from 'app/widgets/widgets.module';
 import { AppComponent } from './app.component';
 import * as routing from './routing';
 
@@ -42,6 +42,14 @@ const appRoutes: Routes = [
         children: [
           { path: routing.ROOT, redirectTo: routing.CURRENT, pathMatch: 'full' },
           { path: routing.CURRENT, children: [{ path: routing.ROOT, component: OverviewComponent }] }
+        ]
+      },
+      {
+        path: routing.AI,
+        component: RoutedContentComponent,
+        children: [
+          { path: routing.ROOT, redirectTo: routing.APPROXPOLYNOM, pathMatch: 'full' },
+          { path: routing.APPROXPOLYNOM, children: [{ path: routing.ROOT, component: MlPolynomialComponent }] }
         ]
       },
       {

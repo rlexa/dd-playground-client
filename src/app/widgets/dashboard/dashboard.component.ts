@@ -32,6 +32,11 @@ export class DashboardComponent implements OnDestroy {
       ]
     },
     {
+      icon: 'ai', route: routing.AI, label: 'AI', subs: [
+        { icon: 'polynom', route: routing.APPROXPOLYNOM, label: 'ML Polynomial', subs: [] }
+      ]
+    },
+    {
       icon: 'playground', route: routing.PLAYGROUND, label: 'Demo', subs: [
         { icon: 'items1', route: routing.DEMO_MISC, label: 'Misc.', subs: [] },
         { icon: 'items2', route: routing.DEMO_STATE, label: 'State', subs: [] }
