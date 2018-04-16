@@ -1,8 +1,49 @@
-<div ddFlexbox="vyt">
-  <mat-card>
+<div ddFlexbox="vys">
+  <mat-card ddFlexitem="at">
     <mat-card-title>Polynomial</mat-card-title>
     <mat-card-content>
-      <app-diagram-polynom></app-diagram-polynom>
+      <div ddFlexbox="vys">
+        <div ddFlexbox="hys" class="childv">
+
+          <table>
+            <tr>
+              <td></td>
+              <td *ngFor="let _ of factorsCurrent; let iFactor = index; trackBy: trackByIndex">
+                <mat-form-field class="width-short-input font-table-input mat-input-save-subspace childh">
+                  <input matInput type="number" [disabled]="isBusy" required [value]="getFactor(iFactor)" (change)="setFactor(iFactor, +$event.target.value)">
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr *ngFor="let factors of [factorsCurrent, factorsTrained]; let iFactors = index;" [ngStyle]="{'color': colors[iFactors % colors.length]}">
+              <td>f(x) = </td>
+              <ng-container *ngFor="let factor of factors; let ii = index;">
+                <td [ngStyle]="{'vertical-align': 'bottom'}">
+                  {{ (factor >= 0 ? ' +' : ' ') + (factor | d3number:'.2r') }}
+                  <ng-container *ngIf="ii+1 < factors.length">
+                    {{ 'x' }}
+                    <sup *ngIf="ii+2 < factors.length" class="font-small">{{ factors.length - 1 - ii }}</sup>
+                  </ng-container>
+                </td>
+              </ng-container>
+            </tr>
+          </table>
+
+          <div ddFlexbox="vys" class="childhv">
+            <div class="childhv">
+              <button mat-raised-button (click)="generatePoints()" [disabled]="isBusy">NEW POINTS</button>
+            </div>
+            <div ddFlexbox="hyscsw" class="childhv">
+              <button *ngFor="let ii of [1, 5, 10, 100]; let iindex= index;" mat-raised-button class="auto-min-width" (click)="train(ii)"
+                [disabled]="isBusy">
+                {{ (iindex === 0 ? 'TRAIN ' : '') + 'x' + ii }}
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <app-diagram-polynom [style.minWidth]="'70rem'" ddFlexitem="at" [points]="pointsCurrent" [polynomials]="[factorsCurrent, factorsTrained]"
+          [polynomialColors]="colors"></app-diagram-polynom>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

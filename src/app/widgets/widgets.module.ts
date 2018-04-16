@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatListModule, MatSelectModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatListModule, MatSelectModule, MatToolbarModule, MatTooltipModule, MatInputModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { FlexboxModule } from 'dd-flexbox';
@@ -9,12 +10,14 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule, ReactiveFormsModule,
     RouterModule,
 
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatListModule,
     MatSelectModule,
     MatToolbarModule,

@@ -185,7 +185,7 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
     {
       const stride = (xMax - xMin) / this.plotResolution;
       const plotteds = this.polynomWeights.map((weights, weightsIndex) => {
-        const getY = (factors: number[], xx: number) => factors.reduce((acc, val, index) => acc + val * xx ** (weights.length - 1 - index), 0);
+        const getY = (factors: number[], xx: number) => weights ? factors.reduce((acc, val, index) => acc + val * xx ** (weights.length - 1 - index), 0) : 0;
         return arrayFrom(this.plotResolution).map((ii, index) => [xMin + stride * index, getY(weights, xMin + stride * index)]);
       });
 

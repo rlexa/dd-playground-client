@@ -1,18 +1,20 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IconPipe, RipupperPipe, UppercasePipe } from '.';
+import { NgModule } from '@angular/core';
+import { D3numberPipe, IconPipe, RipupperPipe, UppercasePipe } from '.';
 
 @NgModule({
   imports: [CommonModule],
   declarations: [
+    D3numberPipe,
     IconPipe,
     RipupperPipe,
-    UppercasePipe
+    UppercasePipe,
   ],
   exports: [
+    D3numberPipe,
     IconPipe,
     RipupperPipe,
-    UppercasePipe
+    UppercasePipe,
   ]
 })
 export class GeneralModule { }

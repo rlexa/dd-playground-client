@@ -21,3 +21,4 @@ export const WILDCARD = '**';
 /* ROUTE NAVIGATION */
 
 export const gotoSettings = (router: Router) => router.navigate([DASHBOARD, SETTINGS, BUILDCONFIG]);
+export const gotoAiApproxPolynom = (router: Router) => router.navigate([DASHBOARD, AI, APPROXPOLYNOM]);
