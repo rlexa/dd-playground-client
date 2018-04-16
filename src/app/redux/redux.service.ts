@@ -6,6 +6,7 @@ import { GlobalFlags, actMergeGlobalFlags, actSetGlobalRoute } from './globals';
 import { AppState } from './state';
 import { AppStore } from './store';
 import { DashboardState, actMergeDashboard } from './ui';
+import { actSetMlPolynomialFactorsCurrent, actSetMlPolynomialFactorsTrained, actSetMlPolynomialPointsCurrent } from './ui/ai/ml-polynomial';
 
 type ReduxGetter<T> = (state: AppState) => T;
 
@@ -34,9 +35,12 @@ export class ReduxService {
 
   // BGN MUTATORS
 
-  mergeUiDashboard = (val: DashboardState) => this.dispatch(actMergeDashboard(val));
   mergeGlobalFlags = (val: GlobalFlags) => this.dispatch(actMergeGlobalFlags(val));
+  mergeUiDashboard = (val: DashboardState) => this.dispatch(actMergeDashboard(val));
   setGlobalRoute = (val: string) => this.do(this.state.globalValues.route, Object.freeze(val), actSetGlobalRoute);
+  setMlPolynomialFactorsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsCurrent, Object.freeze(val || []), actSetMlPolynomialFactorsCurrent);
+  setMlPolynomialFactorsTrained = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsTrained, Object.freeze(val || []), actSetMlPolynomialFactorsTrained);
+  setMlPolynomialPointsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.pointsCurrent, Object.freeze(val || []), actSetMlPolynomialPointsCurrent);
 
   // END MUTATORS
 

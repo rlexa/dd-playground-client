@@ -1,5 +1,6 @@
-import { Action, ActionCreator, Reducer, combineReducers } from 'redux';
-import { IActionValue, createReducer, redSetValue, redMergeValue } from '../util';
+import { IActionValue, createReducer, redMergeValue } from 'app/redux/util';
+import { combineReducers } from 'redux';
+import { UiAiState, redUiAiState } from './ai';
 
 // STATE
 
@@ -9,8 +10,10 @@ export interface DashboardState {
   isVisibleSide?: boolean;
 }
 
+const KEY_AI_STATE = 'ai';
 const KEY_DASHBOARD = 'dashboard';
 export interface UiState {
+  ai?: UiAiState;
   dashboard: DashboardState;
 }
 
@@ -25,6 +28,7 @@ export const actMergeDashboard = (value: DashboardState) => <IActionValue<Dashbo
 // REDUCER
 
 export const redUiState = combineReducers<UiState>({
+  [KEY_AI_STATE]: redUiAiState,
   [KEY_DASHBOARD]: createReducer(Object.freeze(<DashboardState>
     {
       isVisibleFooter: true,

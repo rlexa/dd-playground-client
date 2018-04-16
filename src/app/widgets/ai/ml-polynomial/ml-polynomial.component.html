@@ -8,13 +8,13 @@
           <table>
             <tr>
               <td></td>
-              <td *ngFor="let _ of factorsCurrent; let iFactor = index; trackBy: trackByIndex">
+              <td *ngFor="let _ of factorsCurrent$ | async as factorsCurrent; let iFactor = index; trackBy: trackByIndex">
                 <mat-form-field class="width-short-input font-table-input mat-input-save-subspace childh">
-                  <input matInput type="number" [disabled]="isBusy" required [value]="getFactor(iFactor)" (change)="setFactor(iFactor, +$event.target.value)">
+                  <input matInput type="number" [disabled]="isBusy" required [value]="factorsCurrent[iFactor]" (change)="updateFactor(factorsCurrent, iFactor, +$event.target.value)">
                 </mat-form-field>
               </td>
             </tr>
-            <tr *ngFor="let factors of [factorsCurrent, factorsTrained]; let iFactors = index;" [ngStyle]="{'color': colors[iFactors % colors.length]}">
+            <tr *ngFor="let factors of [factorsCurrent$ | async, factorsTrained$ | async]; let iFactors = index;" [ngStyle]="{'color': colors[iFactors % colors.length]}">
               <td>f(x) = </td>
               <ng-container *ngFor="let factor of factors; let ii = index;">
                 <td [ngStyle]="{'vertical-align': 'bottom'}">
@@ -41,7 +41,7 @@
           </div>
 
         </div>
-        <app-diagram-polynom [style.minWidth]="'70rem'" ddFlexitem="at" [points]="pointsCurrent" [polynomials]="[factorsCurrent, factorsTrained]"
+        <app-diagram-polynom [style.minWidth]="'70rem'" ddFlexitem="at" [points]="pointsCurrent$ | async" [polynomials]="[factorsCurrent$ | async, factorsTrained$ | async]"
           [polynomialColors]="colors"></app-diagram-polynom>
       </div>
     </mat-card-content>
