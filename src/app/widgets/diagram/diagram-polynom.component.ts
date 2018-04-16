@@ -29,8 +29,10 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
   private readonly defMaxY = 100;
   private readonly minMaxBuffer = 10;
   private readonly plotResolution = 1000;
-  private readonly defPointColor = 'red';
-  private readonly defPolynomColors = ['red', 'green', 'blue', 'yellow', 'purple'];
+  private readonly defHslPrefix = 'hsl(';
+  private readonly defHslSuffix = ', 100%, 70%)';
+  private readonly defPointColor = this.defHslPrefix + '0' + this.defHslSuffix;
+  private readonly defPolynomColors = [this.defPointColor];
 
   private readonly done = new DoneSubject();
   private readonly triggerResized = new Subject();
@@ -131,6 +133,8 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
     this.triggerRender.next();
   }
 
+  private getHslColor = (index: number, len: number) => this.defHslPrefix + Math.floor(index * 360 / (len || 1)) + this.defHslSuffix;
+
   private render() {
     if (!this.chart) {
       return;
@@ -196,7 +200,8 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
       const path = this.chart.g.select(this.cssContent).selectAll(this.cssPath).data(plotteds);
       const item = path.enter()
         .append('path')
-        .style('stroke', (ii, index) => this.polynomColors[index % this.polynomColors.length])
+        .style('stroke', (ii, index) => this.polynomColors === this.defPolynomColors ?
+          this.getHslColor(index, this.polynomWeights.length) : this.polynomColors[index % this.polynomColors.length])
         .style('stroke-width', 1.5)
         .style('stroke-linejoin', 'round')
         .style('stroke-linecap', 'round')
