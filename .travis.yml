@@ -9,7 +9,7 @@ branches:
     - master
 
 before_script:
-  - sed -i "s/\(\"buildVariant\": \"\)[^\"]*\(\"\)/\1prod\2/g" src/assets/flags.json
+  - sed -i "s/(\"buildVariant\": \")[^\"]*(\")/\1prod\2/g" src/assets/flags.json
   - npm install -g firebase-tools
   - npm install -g @angular/cli
 
