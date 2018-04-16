@@ -30,6 +30,7 @@ export class MlPolynomialComponent implements OnDestroy {
 
   ngOnDestroy() { this.done.done(); }
 
+  getFactor = (factors: number[], index: number) => factors[index];
   updateFactor(factors: number[], index: number, val: number) {
     factors = [...factors];
     factors[index] = Math.min(Math.max(val || 0, -this.factorRange), this.factorRange);
