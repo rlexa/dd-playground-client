@@ -46,7 +46,6 @@ export const redGlobalValues = combineReducers<GlobalValues>({
       project: null,
       projectParent: null,
       title: null,
-      urlJiraTasks: null,
       version: null
     }), {
       [globalActions.mergeFlags]: redMergeValue
