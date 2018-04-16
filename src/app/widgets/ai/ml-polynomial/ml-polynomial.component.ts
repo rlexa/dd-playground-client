@@ -34,11 +34,9 @@ export class MlPolynomialComponent implements OnDestroy {
   ngOnDestroy() { this.done.done(); }
 
   getFactor = (factors: number[], index: number) => factors[index];
-  updateFactor(factors: number[], index: number, val: number) {
-    factors = [...factors];
-    factors[index] = Math.min(Math.max(val || 0, -this.factorRange), this.factorRange);
-    this.redux.setMlPolynomialFactorsCurrent(factors);
-  }
+  updateFactor = (factors: number[], index: number, val: number) =>
+    this.redux.setMlPolynomialFactorsCurrent(
+      factors.map((ii, _index) => _index === index ? Math.min(Math.max(val || 0, -this.factorRange), this.factorRange) : ii));
 
   updateLearningRate = (val: number) => this.redux.setMlPolynomialLearningRate(val);
 
