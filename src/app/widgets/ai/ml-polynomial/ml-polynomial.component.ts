@@ -33,6 +33,9 @@ export class MlPolynomialComponent {
     this.changeDetectorRef.markForCheck();
   }
 
+  generatePoints = () =>
+    this.pointsCurrent = generatePolynomialPoints({ weights: this.factorsCurrent, points: this.numPoints, xFrom: -this.xRange / 2, xTo: this.xRange / 2 });
+
   async train(steps: number) {
     if (this.isBusy) {
       return;
@@ -47,7 +50,4 @@ export class MlPolynomialComponent {
       this.changeDetectorRef.markForCheck();
     }
   }
-
-  private generatePoints = () =>
-    this.pointsCurrent = generatePolynomialPoints({ weights: this.factorsCurrent, points: this.numPoints, xFrom: -this.xRange / 2, xTo: this.xRange / 2 });
 }
