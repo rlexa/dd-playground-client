@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
 import { DoneSubject, Subject } from 'app/rx';
 import { arrayFrom } from 'app/util';
-import * as d3 from 'd3';
+import { ScaleLinear, Selection, axisBottom, axisLeft, line, mouse, scaleLinear, select } from 'd3';
 
 interface Chart {
-  x: d3.ScaleLinear<number, number>;
-  y: d3.ScaleLinear<number, number>;
-  g: d3.Selection<any, any, any, any>;
-  svg: d3.Selection<any, any, any, any>;
+  x: ScaleLinear<number, number>;
+  y: ScaleLinear<number, number>;
+  g: Selection<any, any, any, any>;
+  svg: Selection<any, any, any, any>;
   height: number;
   width: number;
 }
@@ -86,19 +86,18 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
       this.chart.g.remove();
     }
 
-    const rect = (d3.select('.svg-container').node() as HTMLElement).getBoundingClientRect();
+    const rect = (select('.svg-container').node() as HTMLElement).getBoundingClientRect();
 
     const margin = { top: 5, right: 20, bottom: 20, left: 35 };
     const width = Math.floor(rect.width);
     const height = 350;
-    const svg = d3
-      .select('#svgChart')
+    const svg = select('#svgChart')
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .attr('viewBox', '0 0 ' + (width + margin.left + margin.right) + ' ' + (height + margin.top + margin.bottom));
     this.chart = {
       svg, height, width,
-      x: d3.scaleLinear().domain([this.defMinX, this.defMaxX]).range([0, width]),
-      y: d3.scaleLinear().domain([this.defMinY, this.defMaxY]).range([height, 0]),
+      x: scaleLinear().domain([this.defMinX, this.defMaxX]).range([0, width]),
+      y: scaleLinear().domain([this.defMinY, this.defMaxY]).range([height, 0]),
       g: svg.append('g').attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
     };
 
@@ -125,7 +124,7 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
 
     this.chart.g.on('pointermove', (ii, index, elements) => {
       const sel = elements[index];
-      const xy = d3.mouse(sel as any);
+      const xy = mouse(sel as any);
       const [xx, yy] = [this.chart.x.invert(xy[0]), this.chart.y.invert(xy[1])];
       this.hoveredPoint.emit([xx, yy]);
     });
@@ -154,10 +153,10 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
 
     this.chart.g
       .select(this.cssAxisX)
-      .call(d3.axisBottom(this.chart.x));
+      .call(axisBottom(this.chart.x));
     this.chart.g
       .select(this.cssAxisY)
-      .call(d3.axisLeft(this.chart.y));
+      .call(axisLeft(this.chart.y));
 
     this.chart.g
       .selectAll(this.cssAxisX + ' .domain, ' + this.cssAxisY + ' .domain')
@@ -193,7 +192,7 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
         return arrayFrom(this.plotResolution).map((ii, index) => [xMin + stride * index, getY(weights, xMin + stride * index)]);
       });
 
-      const line = d3.line()
+      const doLine = line()
         .x(ii => this.chart.x(ii[0]))
         .y(ii => this.chart.y(ii[1]));
 
@@ -209,7 +208,7 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
         .style('transition', 'd 500ms')
         .classed(this.cssPath.substr(1), true);
       item.merge(path)
-        .attr('d', line);
+        .attr('d', doLine);
       path.exit().remove();
     }
 
