@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { detectPolynom, generatePolynomialPoints } from 'app/ai';
 import { ReduxService } from 'app/redux';
-import { DoneSubject } from 'app/rx';
+import { DoneSubject, Subject } from 'app/rx';
 import { trackByIndex } from 'app/widgets/util';
 
 @Component({
@@ -13,19 +13,22 @@ export class MlPolynomialComponent implements OnDestroy {
   private readonly numPoints = 10;
   private readonly xRange = 100;
   private readonly factorRange = 10;
-  private readonly learningRate = .1;
   private readonly done = new DoneSubject();
+  private readonly triggerDoPoints = new Subject();
 
   readonly colors = ['rgba(0, 0, 255, 200)', 'rgba(255, 100, 100, 255)'];
   readonly trackByIndex = trackByIndex;
 
   isBusy = false;
 
-  constructor(private readonly redux: ReduxService) { }
+  constructor(private readonly redux: ReduxService) {
+    this.triggerDoPoints.takeUntil(this.done).debounceTime(1).subscribe(() => this.doGeneratePoints());
+  }
 
   factorsCurrent$ = this.redux.watch(state => state.ui.ai.mlPolynomial.factorsCurrent).takeUntil(this.done)
-    .do(() => this.generatePoints());
+    .do(() => this.triggerDoPoints.next());
   factorsTrained$ = this.redux.watch(state => state.ui.ai.mlPolynomial.factorsTrained).takeUntil(this.done);
+  learningRate$ = this.redux.watch(state => state.ui.ai.mlPolynomial.learningRate).takeUntil(this.done);
   pointsCurrent$ = this.redux.watch(state => state.ui.ai.mlPolynomial.pointsCurrent).takeUntil(this.done);
 
   ngOnDestroy() { this.done.done(); }
@@ -37,14 +40,9 @@ export class MlPolynomialComponent implements OnDestroy {
     this.redux.setMlPolynomialFactorsCurrent(factors);
   }
 
-  generatePoints = () =>
-    this.redux.setMlPolynomialPointsCurrent(
-      generatePolynomialPoints({
-        weights: this.redux.state.ui.ai.mlPolynomial.factorsCurrent,
-        points: this.numPoints,
-        xFrom: -this.xRange / 2,
-        xTo: this.xRange / 2
-      }));
+  updateLearningRate = (val: number) => this.redux.setMlPolynomialLearningRate(val);
+
+  generatePoints = () => this.triggerDoPoints.next();
 
   async train(steps: number) {
     if (this.isBusy) {
@@ -53,10 +51,24 @@ export class MlPolynomialComponent implements OnDestroy {
     this.isBusy = true;
     try {
       const state = this.redux.state.ui.ai.mlPolynomial;
-      const trained = await detectPolynom({ initialWeights: state.factorsTrained, learningRate: this.learningRate, loops: steps, xyFlatData: state.pointsCurrent });
+      const trained = await detectPolynom({
+        initialWeights: state.factorsTrained,
+        learningRate: state.learningRate,
+        loops: steps,
+        xyFlatData: state.pointsCurrent
+      });
       this.redux.setMlPolynomialFactorsTrained(trained);
     } finally {
       this.isBusy = false;
     }
   }
+
+  private doGeneratePoints = () =>
+    this.redux.setMlPolynomialPointsCurrent(
+      generatePolynomialPoints({
+        weights: this.redux.state.ui.ai.mlPolynomial.factorsCurrent,
+        points: this.numPoints,
+        xFrom: -this.xRange / 2,
+        xTo: this.xRange / 2
+      }));
 }

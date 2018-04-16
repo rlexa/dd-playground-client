@@ -14,10 +14,10 @@
                 </mat-form-field>
               </td>
             </tr>
-            <tr *ngFor="let factors of [factorsCurrent, factorsTrained$ | async]; let iFactors = index;" [ngStyle]="{'color': colors[iFactors % colors.length]}">
+            <tr *ngFor="let factors of [factorsCurrent, factorsTrained$ | async]; let iFactors = index;" [ngStyle]="{'color': colors[iFactors % colors.length], 'vertical-align': 'bottom'}">
               <td>f(x) = </td>
               <ng-container *ngFor="let factor of factors; let ii = index;">
-                <td [ngStyle]="{'vertical-align': 'bottom'}">
+                <td>
                   {{ (factor >= 0 ? ' +' : ' ') + (factor | d3number:'.2r') }}
                   <ng-container *ngIf="ii+1 < factors.length">
                     {{ 'x' }}
@@ -33,6 +33,13 @@
               <button mat-raised-button (click)="generatePoints()" [disabled]="isBusy">NEW POINTS</button>
             </div>
             <div ddFlexbox="hyscsw" class="childhv">
+              <div class="childh">
+                <label>Rate: </label>
+                <mat-form-field class="width-short-input font-table-input mat-input-save-subspace">
+                  <input matInput type="number" [disabled]="isBusy" required [value]="learningRate$ | async" (change)="updateLearningRate(+$event.target.value)"
+                    step=".1" min="0.01">
+                </mat-form-field>
+              </div>
               <button *ngFor="let ii of [1, 5, 10, 100]; let iindex= index;" mat-raised-button class="auto-min-width" (click)="train(ii)"
                 [disabled]="isBusy">
                 {{ (iindex === 0 ? 'TRAIN ' : '') + 'x' + ii }}
