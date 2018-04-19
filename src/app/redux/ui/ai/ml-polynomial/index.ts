@@ -1,12 +1,13 @@
-import { IActionValue, createReducer, redSetValue } from 'app/redux/util';
+import { createAction, createReducer, redSetValue } from 'app/redux/util';
 import { combineReducers } from 'redux';
+import { INTERFIX } from './parent';
 
 // STATE
 
-const KEY_FACTORS_CURRENT = 'factorsCurrent';
-const KEY_FACTORS_TRAINED = 'factorsTrained';
-const KEY_LEARNING_RATE = 'learningRate';
-const KEY_POINTS_CURRENT = 'pointsCurrent';
+const KEY_FAC = 'factorsCurrent';
+const KEY_FAT = 'factorsTrained';
+const KEY_LEA = 'learningRate';
+const KEY_POI = 'pointsCurrent';
 export interface MlPolynomialState {
   factorsCurrent?: number[];
   factorsTrained?: number[];
@@ -16,23 +17,23 @@ export interface MlPolynomialState {
 
 // ACTION
 
-const mlPolynomialActions = {
-  setMlPolynomialFactorsCurrent: 'ML_POLYNOMIAL_SET_FACTORS_CURRENT',
-  setMlPolynomialFactorsTrained: 'ML_POLYNOMIAL_SET_FACTORS_TRAINED',
-  setMlPolynomialLearningRate: 'ML_POLYNOMIAL_SET_LEARNING_RATE',
-  setMlPolynomialPointsCurrent: 'ML_POLYNOMIAL_SET_POINTS_CURRENT',
+const actions = {
+  SET_FAC: 'SET_' + INTERFIX + '_FACTORS_CURRENT',
+  SET_FAT: 'SET_' + INTERFIX + '_FACTORS_TRAINED',
+  SET_LEA: 'SET_' + INTERFIX + '_LEARNING_RATE',
+  SET_POI: 'SET_' + INTERFIX + '_POINTS_CURRENT',
 }
 
-export const actSetMlPolynomialFactorsCurrent = (value: number[]) => <IActionValue<number[]>>{ type: mlPolynomialActions.setMlPolynomialFactorsCurrent, value };
-export const actSetMlPolynomialFactorsTrained = (value: number[]) => <IActionValue<number[]>>{ type: mlPolynomialActions.setMlPolynomialFactorsTrained, value };
-export const actSetMlPolynomialLearningRate = (value: number) => <IActionValue<number>>{ type: mlPolynomialActions.setMlPolynomialLearningRate, value };
-export const actSetMlPolynomialPointsCurrent = (value: number[]) => <IActionValue<number[]>>{ type: mlPolynomialActions.setMlPolynomialPointsCurrent, value };
+export const actSetUiAiMlPolynomFactorsCurrent = createAction<number[]>(actions.SET_FAC);
+export const actSetUiAiMlPolynomFactorsTrained = createAction<number[]>(actions.SET_FAT);
+export const actSetUiAiMlPolynomLearningRate = createAction<number>(actions.SET_LEA);
+export const actSetUiAiMlPolynomPointsCurrent = createAction<number[]>(actions.SET_POI);
 
 // REDUCER
 
 export const redMlPolynomialState = combineReducers<MlPolynomialState>({
-  [KEY_FACTORS_CURRENT]: createReducer<number[]>(Object.freeze([1, 1, 1, 1]) as number[], { [mlPolynomialActions.setMlPolynomialFactorsCurrent]: redSetValue }),
-  [KEY_FACTORS_TRAINED]: createReducer<number[]>(Object.freeze([0, 0, 0, 0]) as number[], { [mlPolynomialActions.setMlPolynomialFactorsTrained]: redSetValue }),
-  [KEY_LEARNING_RATE]: createReducer<number>(.1, { [mlPolynomialActions.setMlPolynomialLearningRate]: redSetValue }),
-  [KEY_POINTS_CURRENT]: createReducer<number[]>(Object.freeze([]) as number[], { [mlPolynomialActions.setMlPolynomialPointsCurrent]: redSetValue }),
+  [KEY_FAC]: createReducer(Object.freeze([1, 1, 1, 1]), { [actions.SET_FAC]: redSetValue }),
+  [KEY_FAT]: createReducer(Object.freeze([0, 0, 0, 0]), { [actions.SET_FAT]: redSetValue }),
+  [KEY_LEA]: createReducer(.1, { [actions.SET_LEA]: redSetValue }),
+  [KEY_POI]: createReducer(Object.freeze([]), { [actions.SET_POI]: redSetValue }),
 });

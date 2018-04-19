@@ -5,8 +5,8 @@ import { Action, Store } from 'redux';
 import { GlobalFlags, actMergeGlobalFlags, actSetGlobalRoute } from './globals';
 import { AppState } from './state';
 import { AppStore } from './store';
-import { DashboardState, actMergeDashboard } from './ui';
-import { actSetMlPolynomialFactorsCurrent, actSetMlPolynomialFactorsTrained, actSetMlPolynomialPointsCurrent, actSetMlPolynomialLearningRate } from './ui/ai/ml-polynomial';
+import { DashboardState, actMergeUiDashboard } from './ui';
+import { actSetUiAiMlPolynomFactorsCurrent, actSetUiAiMlPolynomFactorsTrained, actSetUiAiMlPolynomLearningRate, actSetUiAiMlPolynomPointsCurrent } from './ui/ai/ml-polynomial';
 
 type ReduxGetter<T> = (state: AppState) => T;
 
@@ -36,12 +36,15 @@ export class ReduxService {
   // BGN MUTATORS
 
   mergeGlobalFlags = (val: GlobalFlags) => this.dispatch(actMergeGlobalFlags(val));
-  mergeUiDashboard = (val: DashboardState) => this.dispatch(actMergeDashboard(val));
+
+  mergeUiDashboard = (val: DashboardState) => this.dispatch(actMergeUiDashboard(val));
+
   setGlobalRoute = (val: string) => this.do(this.state.globalValues.route, Object.freeze(val), actSetGlobalRoute);
-  setMlPolynomialFactorsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsCurrent, Object.freeze(val || []), actSetMlPolynomialFactorsCurrent);
-  setMlPolynomialFactorsTrained = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsTrained, Object.freeze(val || []), actSetMlPolynomialFactorsTrained);
-  setMlPolynomialLearningRate = (val: number) => this.do(this.state.ui.ai.mlPolynomial.learningRate, Math.max(.000001, val || 0), actSetMlPolynomialLearningRate);
-  setMlPolynomialPointsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.pointsCurrent, Object.freeze(val || []), actSetMlPolynomialPointsCurrent);
+
+  setMlPolynomialFactorsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsCurrent, Object.freeze(val || []), actSetUiAiMlPolynomFactorsCurrent);
+  setMlPolynomialFactorsTrained = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsTrained, Object.freeze(val || []), actSetUiAiMlPolynomFactorsTrained);
+  setMlPolynomialLearningRate = (val: number) => this.do(this.state.ui.ai.mlPolynomial.learningRate, Math.max(.000001, val || 0), actSetUiAiMlPolynomLearningRate);
+  setMlPolynomialPointsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.pointsCurrent, Object.freeze(val || []), actSetUiAiMlPolynomPointsCurrent);
 
   // END MUTATORS
 

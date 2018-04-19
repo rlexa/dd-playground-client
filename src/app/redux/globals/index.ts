@@ -1,5 +1,6 @@
-import { Action, ActionCreator, Reducer, combineReducers } from 'redux';
-import { IActionValue, createReducer, redSetValue, redMergeValue } from '../util';
+import { combineReducers } from 'redux';
+import { createAction, createReducer, redMergeValue, redSetValue } from 'app/redux/util';
+import { INTERFIX } from './parent';
 
 // STATE
 
@@ -16,8 +17,8 @@ export interface GlobalFlags {
   version?: string;
 }
 
-const KEY_FLAGS = 'flags';
-const KEY_ROUTE = 'route';
+const KEY_FLA = 'flags';
+const KEY_ROU = 'route';
 export interface GlobalValues {
   flags: GlobalFlags;
   route: string;
@@ -25,18 +26,18 @@ export interface GlobalValues {
 
 // ACTION
 
-const globalActions = {
-  mergeFlags: 'MERGE_GLOBAL_FLAGS',
-  setRoute: 'SET_GLOBAL_ROUTE'
+const actions = {
+  MRG_FLA: 'MRG_' + INTERFIX + '_FLAGS',
+  SET_ROU: 'SET_' + INTERFIX + '_ROUTE',
 }
 
-export const actMergeGlobalFlags = (value: GlobalFlags) => <IActionValue<GlobalFlags>>{ type: globalActions.mergeFlags, value };
-export const actSetGlobalRoute = (value: string) => <IActionValue<string>>{ type: globalActions.setRoute, value };
+export const actMergeGlobalFlags = createAction<GlobalFlags>(actions.MRG_FLA);
+export const actSetGlobalRoute = createAction<string>(actions.SET_ROU);
 
 // REDUCER
 
 export const redGlobalValues = combineReducers<GlobalValues>({
-  [KEY_FLAGS]: createReducer(Object.freeze(<GlobalFlags>
+  [KEY_FLA]: createReducer(Object.freeze(<GlobalFlags>
     {
       buildId: null,
       buildRevision: null,
@@ -48,8 +49,8 @@ export const redGlobalValues = combineReducers<GlobalValues>({
       title: null,
       version: null
     }), {
-      [globalActions.mergeFlags]: redMergeValue
+      [actions.MRG_FLA]: redMergeValue
     }
   ),
-  [KEY_ROUTE]: createReducer<string>(Object.freeze('') as string, { [globalActions.setRoute]: redSetValue })
+  [KEY_ROU]: createReducer(Object.freeze(''), { [actions.SET_ROU]: redSetValue })
 });

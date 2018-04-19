@@ -3,7 +3,7 @@ import { MlPolynomialState, redMlPolynomialState } from './ml-polynomial';
 
 // STATE
 
-const KEY_ML_POLYNOMIAL = 'mlPolynomial';
+const KEY_MLP = 'mlPolynomial';
 export interface UiAiState {
   mlPolynomial?: MlPolynomialState
 }
@@ -11,5 +11,5 @@ export interface UiAiState {
 // REDUCER
 
 export const redUiAiState = combineReducers<UiAiState>({
-  [KEY_ML_POLYNOMIAL]: redMlPolynomialState,
+  [KEY_MLP]: redMlPolynomialState,
 });
