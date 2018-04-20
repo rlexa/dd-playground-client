@@ -1,7 +1,11 @@
 import { Rank, Tensor, scalar, tensor1d, tidy, train, variable } from '@tensorflow/tfjs';
 import { times } from './util';
 
-export async function detectPolynom({ xyFlatData = <number[]>[], initialWeights = <number[]>[], loops = 1, learningRate = .05 }) {
+export const DEF_LEARNINGRATE = .05;
+export const DEF_LOOPS = 1;
+export const DEF_OPTIMIZER = 'adam';
+
+export async function detectPolynom({ xyFlatData = <number[]>[], initialWeights = <number[]>[], loops = DEF_LOOPS, learningRate = DEF_LEARNINGRATE, optimizer = DEF_OPTIMIZER }) {
   // VARIABLES
   const variables = initialWeights.map(ii => variable(scalar(ii || 0)));
 
@@ -14,11 +18,11 @@ export async function detectPolynom({ xyFlatData = <number[]>[], initialWeights 
   const doLoss = (predictions: Tensor, labels: Tensor) => tidy(() => predictions.sub(labels).square().mean());
 
   // OPTIMIZER
-  const optimizer = train.adam(learningRate);
+  const optimize = train.adam(learningRate);
 
   // TRAIN
   const doTrain = (xs: Tensor, ys: Tensor) => tidy(() =>
-    optimizer.minimize(() => <Tensor<Rank.R0>>doLoss(doPredict(xs), ys)));
+    optimize.minimize(() => <Tensor<Rank.R0>>doLoss(doPredict(xs), ys)));
   const doTrainTimes = (xs: Tensor, ys: Tensor, count: number) =>
     times(count).map(ii => doTrain(xs, ys)).filter(ii => !!ii).forEach(ii => ii.dispose());
 

@@ -23,11 +23,11 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
   private readonly cssPath = '.path';
   private readonly cssAxisX = '.axis-x';
   private readonly cssAxisY = '.axis-y';
-  private readonly defMinX = 0;
-  private readonly defMaxX = 1;
-  private readonly defMinY = 0;
-  private readonly defMaxY = 1;
-  private readonly minMaxBuffer = .1;
+  private readonly defMinX = -5;
+  private readonly defMaxX = 5;
+  private readonly defMinY = -5;
+  private readonly defMaxY = 5;
+  private readonly minMaxBuffer = 1;
   private readonly plotResolution = 1000;
   private readonly defHslPrefix = 'hsl(';
   private readonly defHslSuffix = ', 100%, 70%)';

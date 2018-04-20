@@ -6,7 +6,7 @@ import { GlobalFlags, actMergeGlobalFlags, actSetGlobalRoute } from './globals';
 import { AppState } from './state';
 import { AppStore } from './store';
 import { DashboardState, actMergeUiDashboard } from './ui';
-import { actSetUiAiMlPolynomFactorsCurrent, actSetUiAiMlPolynomFactorsTrained, actSetUiAiMlPolynomLearningRate, actSetUiAiMlPolynomPointsCurrent } from './ui/ai/ml-polynomial';
+import { actSetUiAiMlPolynomFactorsCurrent, actSetUiAiMlPolynomFactorsTrained, actSetUiAiMlPolynomLearningRate, actSetUiAiMlPolynomOptimizer, actSetUiAiMlPolynomPointsCurrent } from './ui/ai/ml-polynomial';
 
 type ReduxGetter<T> = (state: AppState) => T;
 
@@ -44,6 +44,7 @@ export class ReduxService {
   setMlPolynomialFactorsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsCurrent, Object.freeze(val || []), actSetUiAiMlPolynomFactorsCurrent);
   setMlPolynomialFactorsTrained = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsTrained, Object.freeze(val || []), actSetUiAiMlPolynomFactorsTrained);
   setMlPolynomialLearningRate = (val: number) => this.do(this.state.ui.ai.mlPolynomial.learningRate, Math.max(.000001, val || 0), actSetUiAiMlPolynomLearningRate);
+  setMlPolynomialOptimizer = (val: string) => this.do(this.state.ui.ai.mlPolynomial.optimizer, Object.freeze(val || null), actSetUiAiMlPolynomOptimizer);
   setMlPolynomialPointsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.pointsCurrent, Object.freeze(val || []), actSetUiAiMlPolynomPointsCurrent);
 
   // END MUTATORS
