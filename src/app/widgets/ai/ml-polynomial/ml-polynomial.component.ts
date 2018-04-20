@@ -10,8 +10,8 @@ import { trackByIndex } from 'app/widgets/util';
 })
 export class MlPolynomialComponent implements OnDestroy {
 
-  private readonly numPoints = 10;
-  private readonly xRange = 100;
+  private readonly numPoints = 20;
+  private readonly xRange = 1;
   private readonly factorRange = 10;
   private readonly done = new DoneSubject();
   private readonly triggerDoPoints = new Subject();
@@ -66,7 +66,7 @@ export class MlPolynomialComponent implements OnDestroy {
       generatePolynomialPoints({
         weights: this.redux.state.ui.ai.mlPolynomial.factorsCurrent,
         points: this.numPoints,
-        xFrom: -this.xRange / 2,
-        xTo: this.xRange / 2
+        xFrom: 0,
+        xTo: this.xRange
       }));
 }
