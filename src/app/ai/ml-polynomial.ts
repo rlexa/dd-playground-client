@@ -18,7 +18,7 @@ export async function detectPolynom({ xyFlatData = <number[]>[], initialWeights 
   const doLoss = (predictions: Tensor, labels: Tensor) => tidy(() => predictions.sub(labels).square().mean());
 
   // OPTIMIZER
-  const optimize = train.adam(learningRate);
+  const optimize = (typeof train[optimizer] === 'function' ? train[optimizer] : train[DEF_OPTIMIZER])(learningRate);
 
   // TRAIN
   const doTrain = (xs: Tensor, ys: Tensor) => tidy(() =>
