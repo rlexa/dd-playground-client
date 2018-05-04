@@ -19,9 +19,9 @@
   <div [ngStyle]="{'grid-area': GRID_SIDE}" class="position-relative">
     <ng-container *ngIf="isVisibleSide$ | async">
       <mat-toolbar color="primary" class="toolbar-column">
-        <nav *ngIf="subRoute && subRoutes?.length" class="mat-nav-list">
-          <ng-container *ngFor="let ii of subRoutes;">
-            <a mat-button [style.minWidth]="'auto'" [routerLink]="'/' + ROUTE_ROOT + '/' + subRoute + '/' + ii.route" routerLinkActive="active"
+        <nav *ngIf="(subRoute$ | async) && (subRoutes$ | async).length" class="mat-nav-list">
+          <ng-container *ngFor="let ii of (subRoutes$ | async)">
+            <a mat-button [style.minWidth]="'auto'" [routerLink]="'/' + ROUTE_ROOT + '/' + (subRoute$ | async) + '/' + ii.route" routerLinkActive="active"
               [matTooltip]="ii.label" matTooltipPosition="right">
               <i class="material-icons transition-transform active-scale">{{ ii.icon | icon }}</i>
             </a>

@@ -1,7 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReduxService } from 'app/redux';
 import * as routing from 'app/routing';
-import { DoneSubject } from 'app/rx';
 
 interface RouteDef {
   icon: string;
@@ -10,8 +9,12 @@ interface RouteDef {
   subs: RouteDef[];
 }
 
-@Component({ selector: 'app-dashboard', templateUrl: './dashboard.component.html' })
-export class DashboardComponent implements OnDestroy {
+@Component({
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DashboardComponent {
 
   readonly GRID_CONTENT = 'cont';
   readonly GRID_FOOTER = 'foot';
@@ -25,7 +28,7 @@ export class DashboardComponent implements OnDestroy {
 
   readonly ROUTE_ROOT = routing.DASHBOARD;
 
-  readonly routes: RouteDef[] = [
+  readonly routes = <RouteDef[]>[
     {
       icon: 'overview', route: routing.OVERVIEW, label: 'Overview', subs: [
         { icon: 'current', route: routing.CURRENT, label: 'Current', subs: [] }
@@ -49,27 +52,23 @@ export class DashboardComponent implements OnDestroy {
       ]
     }
   ];
-  subRoute: string = null;
-  subRoutes: RouteDef[] = [];
 
-  private readonly done = new DoneSubject();
-
-  constructor(private redux: ReduxService) {
-    redux.watch(state => state.globalValues.route).takeUntil(this.done).subscribe(url => this.updateSubRoutes(url));
-  }
+  constructor(private redux: ReduxService) { }
 
   isVisibleFooter$ = this.redux.watch(state => state.ui.dashboard.isVisibleFooter);
   isVisibleHeader$ = this.redux.watch(state => state.ui.dashboard.isVisibleHeader);
   isVisibleSide$ = this.redux.watch(state => state.ui.dashboard.isVisibleSide);
 
-  ngOnDestroy() { this.done.done(); }
-
-  private updateSubRoutes(url: string) {
-    const paths = url.split('/');
-    const indexMe = paths.indexOf(routing.DASHBOARD);
-    this.subRoute = indexMe >= 0 && paths.length > indexMe + 1 ? paths[indexMe + 1] : null;
-    const route = this.routes.find(ii => ii.route === this.subRoute);
-    this.subRoutes = route ? route.subs : [];
-  }
+  subRoute$ = this.redux.watch(state => state.globalValues.route)
+    .map(url => {
+      const paths = url.split('/');
+      const indexMe = paths.indexOf(routing.DASHBOARD);
+      return indexMe >= 0 && paths.length > indexMe + 1 ? paths[indexMe + 1] : null;
+    });
+  subRoutes$ = this.subRoute$
+    .map(subRoute => {
+      const route = this.routes.find(ii => ii.route === subRoute);
+      return route ? route.subs : [];
+    });
 
 }

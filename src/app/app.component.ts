@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { DateAdapter, NativeDateAdapter } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { ReduxService } from 'app/redux';
+import { BehaviorSubject } from './rx';
 
 const userAgent = !window ? '' : window.navigator.userAgent;
 const isBrowserChrome = userAgent.indexOf('Chrome') >= 0;
@@ -11,17 +12,16 @@ const isBrowserIE = userAgent.indexOf('MSIE') >= 0 || userAgent.match(/Trident.*
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['app.component.scss']
+  styleUrls: ['app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
+
+  private start: () => void = null;
 
   readonly isBrowserChrome = isBrowserChrome;
   readonly isBrowserIE = isBrowserIE;
-
-  isForcingStart = false;
-
-  private locale = null;
-  private start: () => void = null;
+  readonly isForcingStart$ = new BehaviorSubject(false);
 
   constructor(
     title: Title,
@@ -40,8 +40,12 @@ export class AppComponent {
     }
   }
 
+  ngOnDestroy() {
+    this.isForcingStart$.complete();
+  }
+
   onForceStart() {
-    this.isForcingStart = true;
+    this.isForcingStart$.next(true);
     this.start();
   }
 

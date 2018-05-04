@@ -1,6 +1,6 @@
 <div class="position-absolute match-parent app-viewport">
   <div class="position-absolute match-parent container-bg-logo"></div>
-  <ng-container *ngIf="isForcingStart || isBrowserChrome; else templateNeedChrome">
+  <ng-container *ngIf="(isForcingStart$ | async) || isBrowserChrome; else templateNeedChrome">
     <router-outlet></router-outlet>
   </ng-container>
   <ng-template #templateNeedChrome>
