@@ -1,15 +1,13 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { isNumeric, isWeb } from 'app/util';
 import { WithDataProperty } from 'app/widgets/util';
-import { GlobalFlags } from 'app/redux';
-import { Observable } from 'app/rx';
-import { isWeb, isNumeric } from 'app/util';
 
 type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string' | 'void';
 
 @Component({
   selector: 'app-simple-view',
   templateUrl: './simple-view.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SimpleViewComponent extends WithDataProperty<Object> {
 

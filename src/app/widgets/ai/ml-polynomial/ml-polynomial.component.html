@@ -10,7 +10,8 @@
               <td></td>
               <td *ngFor="let _ of factorsCurrent; let iFactor = index; trackBy: trackByIndex">
                 <mat-form-field class="width-short-input font-table-input mat-input-save-subspace childh">
-                  <input matInput type="number" [disabled]="isBusy" required [value]="getFactor(factorsCurrent, iFactor)" (change)="updateFactor(factorsCurrent, iFactor, +$event.target.value)">
+                  <input matInput type="number" [min]="-factorRange" [max]="factorRange" [disabled]="isBusy$ | async" required [value]="factorsCurrent[iFactor]"
+                    (change)="updateFactor(factorsCurrent, iFactor, +$event.target.value, $event.target)">
                 </mat-form-field>
               </td>
             </tr>
@@ -31,17 +32,17 @@
           <div ddFlexbox="vys" class="childhv">
             <div ddFlexbox="hyscsw" class="childhv">
               <div class="childh">
-                <button mat-raised-button (click)="generatePoints()" [disabled]="isBusy">NEW POINTS</button>
+                <button mat-raised-button (click)="generatePoints()" [disabled]="isBusy$ | async">NEW POINTS</button>
               </div>
               <div class="childh">
-                <button mat-raised-button (click)="resetTrained()" [disabled]="isBusy">RESET TRAINED</button>
+                <button mat-raised-button (click)="resetTrained()" [disabled]="isBusy$ | async">RESET TRAINED</button>
               </div>
             </div>
             <div ddFlexbox="hyscsw" class="childhv">
               <div class="childh" [style.paddingTop]="'.39rem'">
                 <label>Rate: </label>
                 <mat-form-field class="width-short-input font-table-input mat-input-save-subspace">
-                  <input matInput type="number" [disabled]="isBusy" required [value]="learningRate$ | async" (change)="updateLearningRate(+$event.target.value)"
+                  <input matInput type="number" [disabled]="isBusy$ | async" required [value]="learningRate$ | async" (change)="updateLearningRate(+$event.target.value)"
                     step=".1" min="0.01">
                 </mat-form-field>
               </div>
@@ -50,8 +51,8 @@
                   <mat-option *ngFor="let ii of optimizers" [value]="ii"> {{ ii }} </mat-option>
                 </mat-select>
               </mat-form-field>
-              <button *ngFor="let ii of [1, 5, 10, 100]; let iindex= index;" mat-raised-button class="auto-min-width" (click)="train(ii)"
-                [disabled]="isBusy">
+              <button *ngFor="let ii of [1, 5, 10, 100, 1000]; let iindex= index;" mat-raised-button class="auto-min-width" (click)="train(ii)"
+                [disabled]="isBusy$ | async">
                 {{ (iindex === 0 ? 'TRAIN ' : '') + 'x' + ii }}
               </button>
             </div>

@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
-import { DoneSubject, Subject } from 'app/rx';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
+import { Subject } from 'app/rx';
 import { arrayFrom } from 'app/util';
 import { ScaleLinear, Selection, axisBottom, axisLeft, line, mouse, scaleLinear, select } from 'd3';
 
@@ -14,7 +14,8 @@ interface Chart {
 
 @Component({
   selector: 'app-diagram-polynom',
-  templateUrl: './diagram-polynom.component.html'
+  templateUrl: './diagram-polynom.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
 
@@ -34,9 +35,8 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
   private readonly defPointColor = this.defHslPrefix + '0' + this.defHslSuffix;
   private readonly defPolynomColors = [this.defPointColor];
 
-  private readonly done = new DoneSubject();
-  private readonly triggerResized = new Subject();
-  private readonly triggerRender = new Subject();
+  private readonly triggerResized$ = new Subject();
+  private readonly triggerRender$ = new Subject();
 
   private chart: Chart = null;
   private xyPoints: number[][] = [];
@@ -51,35 +51,37 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
     for (let ii = 0; ii < val.length; ii += 2) {
       this.xyPoints.push([val[ii], val[ii + 1]]);
     }
-    this.triggerRender.next();
+    this.triggerRender$.next();
   }
 
   @Input() set pointColor(val: string) {
     this.clrPoint = val || this.defPointColor;
-    this.triggerRender.next();
+    this.triggerRender$.next();
   }
 
   @Input() set polynomials(val: number[][]) {
     this.polynomWeights = val || [];
-    this.triggerRender.next();
+    this.triggerRender$.next();
   }
 
   @Input() set polynomialColors(val: string[]) {
     this.polynomColors = val || this.defPolynomColors;
-    this.triggerRender.next();
+    this.triggerRender$.next();
   }
 
   @Output() hoveredPoint = new EventEmitter<number[]>();
 
-  @HostListener('window:resize') onWindowResize = () => this.triggerResized.next();
+  @HostListener('window:resize') onWindowResize = () => this.triggerResized$.next();
 
-  constructor() {
-    this.triggerResized.takeUntil(this.done).debounceTime(100).subscribe(() => this.rechart());
-    this.triggerRender.takeUntil(this.done).debounceTime(1).subscribe(() => this.render());
+  constructor() { }
+
+  ngAfterViewInit() {
+    this.triggerResized$.debounceTime(100).subscribe(() => this.rechart());
+    this.triggerRender$.debounceTime(1).subscribe(() => this.render());
+    this.rechart();
   }
 
-  ngAfterViewInit() { this.rechart(); }
-  ngOnDestroy() { this.done.done(); }
+  ngOnDestroy() { [this.triggerRender$, this.triggerResized$].forEach(ii => ii.complete()); }
 
   private rechart() {
     if (this.chart) {
@@ -129,7 +131,7 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
       this.hoveredPoint.emit([xx, yy]);
     });
 
-    this.triggerRender.next();
+    this.triggerRender$.next();
   }
 
   private getHslColor = (index: number, len: number) => this.defHslPrefix + Math.floor(index * 360 / (len || 1)) + this.defHslSuffix;

@@ -1,10 +1,10 @@
 <div ddFlexbox="vyt">
   <mat-card>
-    <mat-card-title>Polynomial {{ '(' + curPolynomPoint.join(', ') + ')' }}</mat-card-title>
+    <mat-card-title>Polynomial {{ '(' + transitionalPolynomPoint.join(', ') + ')' }}</mat-card-title>
     <mat-card-content>
       <div ddFlexbox="vys">
-        <app-diagram-polynom ddFlexitem="at" [points]="samplePolynomPoints" [polynomials]="[[1], [1, 1], [1, 1, 1], [1, 1, 1, 1]]"
-          (hoveredPoint)="curPolynomPoint = $event"></app-diagram-polynom>
+        <app-diagram-polynom ddFlexitem="at" [points]="samplePolynomPoints$ | async" [polynomials]="[[1], [1, 1], [1, 1, 1], [1, 1, 1, 1]]"
+          (hoveredPoint)="transitionalPolynomPoint = $event"></app-diagram-polynom>
         <div ddFlexbox="hyc">
           <button mat-raised-button color="accent" (click)="reSamplePolynomPoints()">POINTS</button>
         </div>
