@@ -35,7 +35,7 @@ export async function detectPolynom({ xyFlatData = <number[]>[], initialWeights 
 
   // RESULT
   const result = (await Promise.all(variables.map(ii => ii.data())))
-    .reduce((acc, ii) => acc.concat([...ii]), <number[]>[]);
+    .reduce((acc, ii) => acc.concat([...Array.from(ii)]), <number[]>[]);
 
   // CLEANUP
   [...variables, xData, yData].forEach(ii => ii.dispose());

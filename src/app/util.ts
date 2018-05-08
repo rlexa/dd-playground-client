@@ -114,8 +114,6 @@ export const toMin = <V extends any>(value: V[]) => (value || []).reduce((acc, v
 export const toRange = (count: number, optTo?: number) =>
   Array.from(Array(optTo ? optTo - count : count || 0), (ii, jj) => jj + (optTo ? count : 0));
 
-export const toUnique = <V extends any>(value: V[]) => [...new Set(value || [])];
-
 export const toWebAddress = (value: string) => ('' + value).startsWith('http') ? value : 'http://' + value;
 
 export const WEB_REGEXP_VALUE = '(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}' +
