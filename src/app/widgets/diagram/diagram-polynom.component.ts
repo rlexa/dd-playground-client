@@ -1,7 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
-import { Subject } from 'app/rx';
 import { arrayFrom } from 'app/util';
 import { ScaleLinear, Selection, axisBottom, axisLeft, line, mouse, scaleLinear, select } from 'd3';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 interface Chart {
   x: ScaleLinear<number, number>;
@@ -76,8 +77,8 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
   constructor() { }
 
   ngAfterViewInit() {
-    this.triggerResized$.debounceTime(100).subscribe(() => this.rechart());
-    this.triggerRender$.debounceTime(1).subscribe(() => this.render());
+    this.triggerResized$.pipe(debounceTime(100)).subscribe(() => this.rechart());
+    this.triggerRender$.pipe(debounceTime(1)).subscribe(() => this.render());
     this.rechart();
   }
 

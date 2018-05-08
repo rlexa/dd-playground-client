@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BehaviorSubject } from 'app/rx';
 import { arrayFrom } from 'app/util';
+import { BehaviorSubject } from 'rxjs';
 
 const createSamplePoints = (range = 100) => arrayFrom(10 * 2).map(ii => Math.random() * range - range / 2)
 

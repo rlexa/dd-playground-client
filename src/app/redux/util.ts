@@ -9,6 +9,6 @@ export const createReducer = <S extends any>(initialState: S, handlers?: { [key:
     return handlers && handlers.hasOwnProperty(action.type) ? handlers[action.type](state, action) : state;
   };
 
-export const redMergeValue = <T extends object>(state: T, action: IActionValue<T>) => <T>Object.assign({}, state, action.value);
+export const redMergeValue = <T extends object>(state: T, action: IActionValue<T>) => Object.freeze(Object.assign(<T>{}, state, action.value)) as T;
 
-export const redSetValue = <T extends any>(state: T, action: IActionValue<T>) => action.value;
+export const redSetValue = <T extends any>(state: T, action: IActionValue<T>) => Object.freeze(action.value) as T;

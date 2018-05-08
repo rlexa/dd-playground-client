@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReduxService } from 'app/redux';
 import * as routing from 'app/routing';
+import { map } from 'rxjs/operators';
 
 interface RouteDef {
   icon: string;
@@ -60,15 +61,15 @@ export class DashboardComponent {
   isVisibleSide$ = this.redux.watch(state => state.ui.dashboard.isVisibleSide);
 
   subRoute$ = this.redux.watch(state => state.globalValues.route)
-    .map(url => {
+    .pipe(map(url => {
       const paths = url.split('/');
       const indexMe = paths.indexOf(routing.DASHBOARD);
       return indexMe >= 0 && paths.length > indexMe + 1 ? paths[indexMe + 1] : null;
-    });
+    }));
   subRoutes$ = this.subRoute$
-    .map(subRoute => {
+    .pipe(map(subRoute => {
       const route = this.routes.find(ii => ii.route === subRoute);
       return route ? route.subs : [];
-    });
+    }));
 
 }

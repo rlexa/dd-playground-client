@@ -1,5 +1,5 @@
 import { createAction, createReducer, redSetValue } from 'app/redux/util';
-import { combineReducers } from 'redux';
+import { AnyAction, ReducersMapObject, combineReducers } from 'redux';
 import { INTERFIX } from './parent';
 
 // STATE
@@ -35,7 +35,7 @@ export const actSetUiAiMlPolynomPointsCurrent = createAction<number[]>(actions.S
 
 // REDUCER
 
-export const redMlPolynomialState = combineReducers<MlPolynomialState>({
+export const redMlPolynomialState = combineReducers(<ReducersMapObject<MlPolynomialState, AnyAction>>{
   [KEY_FAC]: createReducer(Object.freeze([1, 1, 1, 1]), { [actions.SET_FAC]: redSetValue }),
   [KEY_FAT]: createReducer(Object.freeze([0, 0, 0, 0]), { [actions.SET_FAT]: redSetValue }),
   [KEY_LEA]: createReducer(.1, { [actions.SET_LEA]: redSetValue }),

@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
 import { createAction, createReducer, redMergeValue, redSetValue } from 'app/redux/util';
+import { AnyAction, ReducersMapObject, combineReducers } from 'redux';
 import { INTERFIX } from './parent';
 
 // STATE
@@ -36,7 +36,7 @@ export const actSetGlobalRoute = createAction<string>(actions.SET_ROU);
 
 // REDUCER
 
-export const redGlobalValues = combineReducers<GlobalValues>({
+export const redGlobalValues = combineReducers(<ReducersMapObject<GlobalValues, AnyAction>>{
   [KEY_FLA]: createReducer(Object.freeze(<GlobalFlags>
     {
       buildId: null,

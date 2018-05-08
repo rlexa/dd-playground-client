@@ -1,7 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
-import { EqvalueSubject, Subject } from 'app/rx';
+import { EqvalueSubject } from 'app/rx';
 import { isEqualValue } from 'app/util';
 import { Action, Store } from 'redux';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { GlobalFlags, actMergeGlobalFlags, actSetGlobalRoute } from './globals';
 import { AppState } from './state';
 import { AppStore } from './store';
@@ -27,9 +29,9 @@ export class ReduxService {
   private triggerCheckWatchers = new Subject();
 
   constructor(@Inject(AppStore) private store: Store<AppState>) {
-    this.triggerCheckWatchers.debounceTime(100).subscribe(() => this.checkWatchers());
+    this.triggerCheckWatchers.pipe(debounceTime(100)).subscribe(() => this.checkWatchers());
     this.state = this.store.getState();
-    this.onStateChange = new EqvalueSubject<AppState>(this.state);
+    this.onStateChange = new EqvalueSubject(this.state);
     store.subscribe(() => this.update());
   }
 
@@ -41,11 +43,11 @@ export class ReduxService {
 
   setGlobalRoute = (val: string) => this.do(this.state.globalValues.route, Object.freeze(val), actSetGlobalRoute);
 
-  setMlPolynomialFactorsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsCurrent, Object.freeze(val || []), actSetUiAiMlPolynomFactorsCurrent);
-  setMlPolynomialFactorsTrained = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsTrained, Object.freeze(val || []), actSetUiAiMlPolynomFactorsTrained);
+  setMlPolynomialFactorsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsCurrent, val || [], actSetUiAiMlPolynomFactorsCurrent);
+  setMlPolynomialFactorsTrained = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.factorsTrained, val || [], actSetUiAiMlPolynomFactorsTrained);
   setMlPolynomialLearningRate = (val: number) => this.do(this.state.ui.ai.mlPolynomial.learningRate, Math.max(.000001, val || 0), actSetUiAiMlPolynomLearningRate);
-  setMlPolynomialOptimizer = (val: string) => this.do(this.state.ui.ai.mlPolynomial.optimizer, Object.freeze(val || null), actSetUiAiMlPolynomOptimizer);
-  setMlPolynomialPointsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.pointsCurrent, Object.freeze(val || []), actSetUiAiMlPolynomPointsCurrent);
+  setMlPolynomialOptimizer = (val: string) => this.do(this.state.ui.ai.mlPolynomial.optimizer, val || null, actSetUiAiMlPolynomOptimizer);
+  setMlPolynomialPointsCurrent = (val: number[]) => this.do(this.state.ui.ai.mlPolynomial.pointsCurrent, val || [], actSetUiAiMlPolynomPointsCurrent);
 
   // END MUTATORS
 

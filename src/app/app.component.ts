@@ -3,7 +3,8 @@ import { DateAdapter, NativeDateAdapter } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { ReduxService } from 'app/redux';
-import { BehaviorSubject } from './rx';
+import { BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 const userAgent = !window ? '' : window.navigator.userAgent;
 const isBrowserChrome = userAgent.indexOf('Chrome') >= 0;
@@ -33,7 +34,7 @@ export class AppComponent implements OnDestroy {
     this.start = () => {
       title.setTitle(redux.state.globalValues.flags.title);
       dateAdapter.setLocale('de-DE');
-      router.events.filter(ev => ev instanceof NavigationEnd).subscribe(ev => redux.setGlobalRoute(router.routerState.snapshot.url));
+      router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(ev => redux.setGlobalRoute(router.routerState.snapshot.url));
     };
     if (this.isBrowserChrome) {
       this.start();

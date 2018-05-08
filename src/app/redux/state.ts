@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { AnyAction, ReducersMapObject, combineReducers } from 'redux';
 import { GlobalValues, redGlobalValues } from './globals';
 import { UiState, redUiState } from './ui';
 
@@ -9,7 +9,7 @@ export interface AppState {
   ui: UiState;
 }
 
-export const redAppState = combineReducers<AppState>({
+export const redAppState = combineReducers(<ReducersMapObject<AppState, AnyAction>>{
   [KEY_GLO]: redGlobalValues,
   [KEY_UIS]: redUiState
 });

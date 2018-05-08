@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { DEF_OPTIMIZER, OPTIMIZERS, detectPolynom, generatePolynomialPoints } from 'app/ai';
 import { ReduxService } from 'app/redux';
-import { BehaviorSubject, Subject } from 'app/rx';
 import { trackByIndex } from 'app/widgets/util';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { debounceTime, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ml-polynomial',
@@ -24,8 +25,7 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
 
   constructor(private readonly redux: ReduxService) { }
 
-  factorsCurrent$ = this.redux.watch(state => state.ui.ai.mlPolynomial.factorsCurrent)
-    .do(() => this.triggerDoPoints$.next());
+  factorsCurrent$ = this.redux.watch(state => state.ui.ai.mlPolynomial.factorsCurrent).pipe(tap(() => this.triggerDoPoints$.next()));
   factorsTrained$ = this.redux.watch(state => state.ui.ai.mlPolynomial.factorsTrained);
   learningRate$ = this.redux.watch(state => state.ui.ai.mlPolynomial.learningRate);
   pointsCurrent$ = this.redux.watch(state => state.ui.ai.mlPolynomial.pointsCurrent);
@@ -39,7 +39,7 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.triggerDoPoints$.debounceTime(1).subscribe(() => this.doGeneratePoints());
+    this.triggerDoPoints$.pipe(debounceTime(1)).subscribe(() => this.doGeneratePoints());
   }
 
   updateFactor = (factors: number[], index: number, val: number, elem: HTMLInputElement) =>

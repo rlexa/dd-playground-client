@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { AnyAction, ReducersMapObject, combineReducers } from 'redux';
 import { MlPolynomialState, redMlPolynomialState } from './ml-polynomial';
 
 // STATE
@@ -10,6 +10,6 @@ export interface UiAiState {
 
 // REDUCER
 
-export const redUiAiState = combineReducers<UiAiState>({
+export const redUiAiState = combineReducers(<ReducersMapObject<UiAiState, AnyAction>>{
   [KEY_MLP]: redMlPolynomialState,
 });
