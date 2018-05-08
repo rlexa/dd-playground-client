@@ -51,7 +51,7 @@
     "@angular/platform-browser": "^6.0.0",
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/router": "^6.0.0",
-    "@tensorflow/tfjs": "^0.8.0",
+    "@tensorflow/tfjs": "^0.10.3",
     "core-js": "^2.4.1",
     "d3": "^5.1.0",
     "dd-flexbox": "^0.10.0",
