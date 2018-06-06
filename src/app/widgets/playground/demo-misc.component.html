@@ -1,5 +1,5 @@
 <div ddFlexbox="vyt">
-  <mat-card>
+  <mat-card class="childv">
     <mat-card-title>Polynomial {{ '(' + transitionalPolynomPoint.join(', ') + ')' }}</mat-card-title>
     <mat-card-content>
       <div ddFlexbox="vys">
@@ -8,6 +8,23 @@
         <div ddFlexbox="hyc">
           <button mat-raised-button color="accent" (click)="reSamplePolynomPoints()">POINTS</button>
         </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="childv">
+    <mat-card-title>Graphsky</mat-card-title>
+    <mat-card-content>
+      <div ddFlexbox="vys">
+        <div ddFlexbox="hycscw">
+          <button mat-button color="accent" (click)="graphskyAddRandom()">+ RNDM</button>
+          <button mat-button color="accent" (click)="graphskyDelRandom()" [disabled]="(graphskyNodes$ | async) < 1">- RNDM</button>
+          <button mat-button color="warn" (click)="graphskyDrop()">DROP</button>
+        </div>
+
+        <app-simple-view [data]="graphskyLog$ | async" [isWidthConstrained]="false"></app-simple-view>
+
+        <pre class="childhv contenthv border">{{ graphskyAll$ | async | json }}</pre>
       </div>
     </mat-card-content>
   </mat-card>
