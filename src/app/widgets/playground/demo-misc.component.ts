@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { GraphskyService } from 'app/graphsky';
 import { arrayFrom } from 'app/util';
-import { BehaviorSubject, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const createSamplePoints = (range = 100) => arrayFrom(10 * 2).map(ii => Math.random() * range - range / 2)
 
@@ -24,10 +24,22 @@ export class DemoMiscComponent {
   readonly graphskyAll$ = this.graphsky.change$.pipe(map(() => this.graphsky.query(
     (nodes, links) => nodes
       .filter(node => 'name' in node.data)
+      .sort((aa, bb) => aa.data['name'].toString().localeCompare(bb.data['name'].toString()))
       .reduce((acc, node) => (
         {
           ...acc,
           [node.data['name'].toString()]: node.out.map(link => link.data['relationship'] + ' ' + link.to.data['name']).join(', ')
+        }), {})
+  )));
+  readonly graphskyLiked$ = this.graphsky.change$.pipe(map(() => this.graphsky.query(
+    (_, links) => links
+      .filter(link => link.data['relationship'] === 'likes')
+      .map(link => link.to)
+      .sort((aa, bb) => aa.data['name'].toString().localeCompare(bb.data['name'].toString()))
+      .reduce((acc, node) => (
+        {
+          ...acc,
+          [node.data['name'].toString()]: (acc[node.data['name'].toString()] || 0) + 1
         }), {})
   )));
 
@@ -38,16 +50,11 @@ export class DemoMiscComponent {
     this.graphsky.link([
       { from: { name: 'Alice' }, to: { name: 'Bob' }, data: { relationship: 'likes' } },
       { from: { name: 'Alice' }, to: { name: 'Clark' }, data: { relationship: 'likes' } },
-      { from: { name: 'Bob' }, to: { name: 'Donnie' }, data: { relationship: 'hates' } }]);
+      { from: { name: 'Bob' }, to: { name: 'Clark' }, data: { relationship: 'likes' } },
+      { from: { name: 'Clark' }, to: { name: 'Donnie' }, data: { relationship: 'likes' } },
+      { from: { name: 'Donnie' }, to: { name: 'Alice' }, data: { relationship: 'likes' } },
+    ]);
   }
-
-  graphskyAddRandom = () => this.graphsky.add([{ tag: 'TAG_' + Math.floor(Math.random() * 15), nr: Math.round(Math.random() * 100) }]);
-
-  graphskyDelRandom = () => of(this.graphsky.query(nodes => nodes.map(ii => ii.data)))
-    .pipe(
-      filter(nodes => nodes.length > 0),
-      map(nodes => nodes[Math.floor(Math.random() * nodes.length)]))
-    .subscribe(data => this.graphsky.remove([data]));
 
   graphskyDrop = () => this.graphsky.drop();
 }
