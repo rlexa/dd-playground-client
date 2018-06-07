@@ -25,6 +25,8 @@ interface IGraphskyState {
 
 const equalData = (aa: IGraphskyData, bb: IGraphskyData) => aa && bb &&
   (aa === bb || Object.keys(aa).length === Object.keys(bb).length && Object.entries(aa).every(([key, val]) => val === bb[key]));
+const equalDataSome = (superset: IGraphskyData, subset: IGraphskyData) => superset && subset &&
+  (superset === subset || Object.keys(superset).length >= Object.keys(subset).length && Object.entries(subset).every(([key, val]) => val === superset[key]));
 
 interface IGraphsky {
   change$: Observable<void>;
@@ -78,11 +80,11 @@ export class Graphsky implements IGraphsky {
     this.nodes$.next(this.nodes$.value.filter(ii => !unnode.includes(ii)));
   }
 
-  link = (links: { from: IGraphskyData, to: IGraphskyData, data: IGraphskyData }[]) => links
+  link = (links: { from: IGraphskyData, fromNotExact?: boolean, to: IGraphskyData, toNotExact?: boolean, data: IGraphskyData }[]) => links
     .filter(ii => typeof ii.data === 'object' && ii.data !== null && ii.data !== undefined && toString.call(ii.data) === '[object Object]')
     .forEach(ii => {
-      const from = this.nodes$.value.find(jj => equalData(jj.data, ii.from));
-      const to = this.nodes$.value.find(jj => equalData(jj.data, ii.to));
+      const from = this.nodes$.value.find(jj => !ii.fromNotExact ? equalData(jj.data, ii.from) : equalDataSome(jj.data, ii.from));
+      const to = this.nodes$.value.find(jj => !ii.toNotExact ? equalData(jj.data, ii.to) : equalDataSome(jj.data, ii.to));
       if (from && to && from !== to && !this.links$.value.find(jj => jj.from === from && jj.to === to && equalData(ii.data, jj.data))) {
         const link = <IGraphskyLink>{ data: Object.freeze(ii.data), from, to, ms: Date.now(), };
         from.out.push(link);
