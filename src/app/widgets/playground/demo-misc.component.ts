@@ -42,6 +42,15 @@ export class DemoMiscComponent {
           [node.data['name'].toString()]: (acc[node.data['name'].toString()] || 0) + 1
         }), {})
   )));
+  readonly graphskyDiversity$ = this.graphsky.change$.pipe(map(() => this.graphsky.query(
+    (nodes, _) => nodes
+      .filter(node => 'sex' in node.data)
+      .reduce((acc, node) => (
+        {
+          ...acc,
+          [node.data['sex'].toString()]: (acc[node.data['sex'].toString()] || 0) + 1
+        }), {})
+  )));
 
   reSamplePolynomPoints = () => this.samplePolynomPoints$.next(createSamplePoints(this.samplePolynomPointsRange));
 
