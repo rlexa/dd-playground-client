@@ -16,13 +16,14 @@
     <mat-card-title>Graphsky</mat-card-title>
     <mat-card-content>
       <div ddFlexbox="vys">
-        <div ddFlexbox="hycscw">
+        <div ddFlexbox="hycw">
+          <button mat-button color="accent" (click)="graphskyAddTestData()">+ TEST</button>
           <button mat-button color="accent" (click)="graphskyAddRandom()">+ RNDM</button>
           <button mat-button color="accent" (click)="graphskyDelRandom()" [disabled]="(graphskyNodes$ | async) < 1">- RNDM</button>
           <button mat-button color="warn" (click)="graphskyDrop()">DROP</button>
         </div>
 
-        <app-simple-view [data]="graphskyLog$ | async" [isWidthConstrained]="false"></app-simple-view>
+        <app-simple-view [data]="graphskyLog$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
 
         <pre class="childhv contenthv border">{{ graphskyAll$ | async | json }}</pre>
       </div>

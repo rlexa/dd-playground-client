@@ -25,6 +25,14 @@ export class DemoMiscComponent {
 
   reSamplePolynomPoints = () => this.samplePolynomPoints$.next(createSamplePoints(this.samplePolynomPointsRange));
 
+  graphskyAddTestData = () => {
+    this.graphsky.add([{ name: 'Alice' }, { name: 'Bob' }, { name: 'Clark' }, { name: 'Donnie' }]);
+    this.graphsky.link([
+      { from: { name: 'Alice' }, to: { name: 'Bob' }, data: { relationship: 'likes' } },
+      { from: { name: 'Alice' }, to: { name: 'Clark' }, data: { relationship: 'likes' } },
+      { from: { name: 'Bob' }, to: { name: 'Donnie' }, data: { relationship: 'hates' } }]);
+  }
+
   graphskyAddRandom = () => this.graphsky.add([{ tag: 'TAG_' + Math.floor(Math.random() * 15), nr: Math.round(Math.random() * 100) }]);
 
   graphskyDelRandom = () => of(this.graphsky.query(new GraphskyQuery().alias('all')))
