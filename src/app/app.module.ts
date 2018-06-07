@@ -6,9 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { AppStore, createAppStore, GlobalFlags, ReduxService } from 'app/redux';
-import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, WidgetsModule } from 'app/widgets/widgets.module';
+import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, WidgetsModule } from 'app/widgets/widgets.module';
 import { AppComponent } from './app.component';
-import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WILDCARD } from './routing';
+import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WALKER, ROUTE_WILDCARD } from './routing';
 
 async function loadHttp(path: string, http: HttpClient, handler: (data: any) => void, parseAs: 'json' | 'text' = 'json') {
   try {
@@ -42,6 +42,14 @@ const appRoutes: Routes = [
         children: [
           { path: ROUTE_ROOT, redirectTo: ROUTE_CURRENT, pathMatch: 'full' },
           { path: ROUTE_CURRENT, children: [{ path: ROUTE_ROOT, component: OverviewComponent }] }
+        ]
+      },
+      {
+        path: ROUTE_GRAPH,
+        component: GraphTopLevelComponent,
+        children: [
+          { path: ROUTE_ROOT, redirectTo: ROUTE_WALKER, pathMatch: 'full' },
+          { path: ROUTE_WALKER, children: [{ path: ROUTE_ROOT, component: GraphWalkerComponent }] }
         ]
       },
       {

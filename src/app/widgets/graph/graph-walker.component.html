@@ -1,0 +1,19 @@
+<div ddFlexbox="vyt">
+  <div ddFlexbox="hysw">
+
+    <mat-card class="childhv">
+      <mat-card-title>DB Stats: Overall</mat-card-title>
+      <mat-card-content>
+        <app-simple-view [data]="dbState$ | async" [isDense]="true" [isWidthConstrained]="false"></app-simple-view>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="childhv">
+      <mat-card-title>DB Stats: Node Types</mat-card-title>
+      <mat-card-content>
+        <app-simple-view [data]="dbNodeTypeCount$ | async" [isDense]="true" [isWidthConstrained]="false"></app-simple-view>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

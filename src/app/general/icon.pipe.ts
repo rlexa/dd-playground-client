@@ -20,6 +20,7 @@ export const ICON_MAP: { [key: string]: string } = {
   go_down: 'arrow_downward',
   go_down_left: 'subdirectory_arrow_left',
   go_down_right: 'subdirectory_arrow_right',
+  graph: 'blur_on',
   help: 'help_outline',
   info: 'info_outline',
   items1: 'filter_1',
@@ -46,6 +47,7 @@ export const ICON_MAP: { [key: string]: string } = {
   telephone: 'phone',
   tens: 'train',
   vens: 'account_box',
+  walker: 'pets',
   warning: 'warning',
   web: 'web'
 }

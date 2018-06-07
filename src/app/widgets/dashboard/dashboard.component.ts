@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReduxService } from 'app/redux';
-import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_SETTINGS } from 'app/routing';
+import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_SETTINGS, ROUTE_WALKER } from 'app/routing';
 import { map } from 'rxjs/operators';
 
 interface RouteDef {
@@ -33,6 +33,11 @@ export class DashboardComponent {
     {
       icon: 'overview', route: ROUTE_OVERVIEW, label: 'Overview', subs: [
         { icon: 'current', route: ROUTE_CURRENT, label: 'Current', subs: [] }
+      ]
+    },
+    {
+      icon: 'graph', route: ROUTE_GRAPH, label: 'Graph', subs: [
+        { icon: 'walker', route: ROUTE_WALKER, label: 'Walker', subs: [] }
       ]
     },
     {

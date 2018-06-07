@@ -2,7 +2,7 @@ import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 type GraphskyValue = string | boolean | number | null;
-interface IGraphskyData { [key: string]: GraphskyValue };
+export interface IGraphskyData { [key: string]: GraphskyValue };
 
 interface IGraphskyNode {
   data: IGraphskyData,
@@ -47,7 +47,7 @@ export class Graphsky implements IGraphsky {
   private readonly links$ = new BehaviorSubject(<IGraphskyLink[]>[]);
 
   readonly change$ = merge(this.links$, this.nodes$).pipe(map(() => { }));
-  readonly log$ = new BehaviorSubject(<IGraphskyState>{ nodes: 0 });
+  readonly log$ = new BehaviorSubject(<IGraphskyState>{ links: 0, nodes: 0 });
   readonly nodeCount$ = new BehaviorSubject(0);
   readonly linkCount$ = new BehaviorSubject(0);
 

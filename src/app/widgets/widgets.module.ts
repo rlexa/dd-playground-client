@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatListModule, MatSelectModule, MatToolbarModule, MatTooltipModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatSelectModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { FlexboxModule } from 'dd-flexbox';
-import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
+import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
 
 @NgModule({
   imports: [
@@ -35,6 +35,8 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
     DemoStateComponent,
     DiagramPolynomComponent,
     EmptyComponent,
+    GraphTopLevelComponent,
+    GraphWalkerComponent,
     MlPolynomialComponent,
     OverviewComponent,
     RoutedContentComponent,
@@ -48,6 +50,8 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
     DemoMiscComponent,
     DemoStateComponent,
     EmptyComponent,
+    GraphTopLevelComponent,
+    GraphWalkerComponent,
     MlPolynomialComponent,
     OverviewComponent,
     RoutedContentComponent,
@@ -55,14 +59,5 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
 })
 export class WidgetsModule { }
 
-export {
-  BuildComponent,
-  ConfigComponent,
-  DashboardComponent,
-  DemoMiscComponent,
-  DemoStateComponent,
-  EmptyComponent,
-  MlPolynomialComponent,
-  OverviewComponent,
-  RoutedContentComponent,
-};
+export { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GraphTopLevelComponent, GraphWalkerComponent, EmptyComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, };
+
