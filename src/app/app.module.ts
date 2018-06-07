@@ -5,10 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
-import { AppStore, GlobalFlags, ReduxService, createAppStore } from 'app/redux';
+import { AppStore, createAppStore, GlobalFlags, ReduxService } from 'app/redux';
 import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, WidgetsModule } from 'app/widgets/widgets.module';
 import { AppComponent } from './app.component';
-import * as routing from './routing';
+import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WILDCARD } from './routing';
 
 async function loadHttp(path: string, http: HttpClient, handler: (data: any) => void, parseAs: 'json' | 'text' = 'json') {
   try {
@@ -32,48 +32,48 @@ export function beforeInit(http: HttpClient, redux: ReduxService) {
 
 const appRoutes: Routes = [
   {
-    path: routing.DASHBOARD,
+    path: ROUTE_DASHBOARD,
     component: DashboardComponent,
     children: [
-      { path: routing.ROOT, redirectTo: routing.OVERVIEW, pathMatch: 'full' },
+      { path: ROUTE_ROOT, redirectTo: ROUTE_OVERVIEW, pathMatch: 'full' },
       {
-        path: routing.OVERVIEW,
+        path: ROUTE_OVERVIEW,
         component: RoutedContentComponent,
         children: [
-          { path: routing.ROOT, redirectTo: routing.CURRENT, pathMatch: 'full' },
-          { path: routing.CURRENT, children: [{ path: routing.ROOT, component: OverviewComponent }] }
+          { path: ROUTE_ROOT, redirectTo: ROUTE_CURRENT, pathMatch: 'full' },
+          { path: ROUTE_CURRENT, children: [{ path: ROUTE_ROOT, component: OverviewComponent }] }
         ]
       },
       {
-        path: routing.AI,
+        path: ROUTE_AI,
         component: RoutedContentComponent,
         children: [
-          { path: routing.ROOT, redirectTo: routing.APPROXPOLYNOM, pathMatch: 'full' },
-          { path: routing.APPROXPOLYNOM, children: [{ path: routing.ROOT, component: MlPolynomialComponent }] }
+          { path: ROUTE_ROOT, redirectTo: ROUTE_APPROXPOLYNOM, pathMatch: 'full' },
+          { path: ROUTE_APPROXPOLYNOM, children: [{ path: ROUTE_ROOT, component: MlPolynomialComponent }] }
         ]
       },
       {
-        path: routing.PLAYGROUND,
+        path: ROUTE_PLAYGROUND,
         component: RoutedContentComponent,
         children: [
-          { path: routing.ROOT, redirectTo: routing.DEMO_MISC, pathMatch: 'full' },
-          { path: routing.DEMO_MISC, children: [{ path: routing.ROOT, component: DemoMiscComponent }] },
-          { path: routing.DEMO_STATE, children: [{ path: routing.ROOT, component: DemoStateComponent }] }
+          { path: ROUTE_ROOT, redirectTo: ROUTE_DEMO_MISC, pathMatch: 'full' },
+          { path: ROUTE_DEMO_MISC, children: [{ path: ROUTE_ROOT, component: DemoMiscComponent }] },
+          { path: ROUTE_DEMO_STATE, children: [{ path: ROUTE_ROOT, component: DemoStateComponent }] }
         ]
       },
       {
-        path: routing.SETTINGS,
+        path: ROUTE_SETTINGS,
         component: RoutedContentComponent,
         children: [
-          { path: routing.ROOT, redirectTo: routing.CONFIGURATION, pathMatch: 'full' },
-          { path: routing.CONFIGURATION, children: [{ path: routing.ROOT, component: ConfigComponent }] },
-          { path: routing.BUILDCONFIG, children: [{ path: routing.ROOT, component: BuildComponent }] }
+          { path: ROUTE_ROOT, redirectTo: ROUTE_CONFIGURATION, pathMatch: 'full' },
+          { path: ROUTE_CONFIGURATION, children: [{ path: ROUTE_ROOT, component: ConfigComponent }] },
+          { path: ROUTE_BUILDCONFIG, children: [{ path: ROUTE_ROOT, component: BuildComponent }] }
         ]
       }
     ]
   },
-  { path: routing.ROOT, redirectTo: routing.DASHBOARD, pathMatch: 'full' },
-  { path: routing.WILDCARD, redirectTo: routing.DASHBOARD, pathMatch: 'full' }
+  { path: ROUTE_ROOT, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full' },
+  { path: ROUTE_WILDCARD, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full' }
 ];
 
 @NgModule({

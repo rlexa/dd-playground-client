@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReduxService } from 'app/redux';
-import * as routing from 'app/routing';
+import { routeToSettings } from 'app/routing';
 
 @Component({
   selector: 'app-version',
@@ -11,5 +11,5 @@ import * as routing from 'app/routing';
 export class VersionComponent {
   constructor(private redux: ReduxService, private router: Router) { }
   version$ = this.redux.watch(state => state.globalValues.flags.version);
-  onGotoSettings = () => routing.gotoSettings(this.router);
+  onGotoSettings = () => routeToSettings(this.router);
 }

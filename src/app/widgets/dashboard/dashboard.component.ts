@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReduxService } from 'app/redux';
-import * as routing from 'app/routing';
+import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_SETTINGS } from 'app/routing';
 import { map } from 'rxjs/operators';
 
 interface RouteDef {
@@ -27,29 +27,29 @@ export class DashboardComponent {
     [this.GRID_FOOTER, this.GRID_FOOTER],
   ].map(line => '"' + line.join(' ') + '"').join(' ');
 
-  readonly ROUTE_ROOT = routing.DASHBOARD;
+  readonly ROUTE_ROOT = ROUTE_DASHBOARD;
 
   readonly routes = <RouteDef[]>[
     {
-      icon: 'overview', route: routing.OVERVIEW, label: 'Overview', subs: [
-        { icon: 'current', route: routing.CURRENT, label: 'Current', subs: [] }
+      icon: 'overview', route: ROUTE_OVERVIEW, label: 'Overview', subs: [
+        { icon: 'current', route: ROUTE_CURRENT, label: 'Current', subs: [] }
       ]
     },
     {
-      icon: 'ai', route: routing.AI, label: 'AI', subs: [
-        { icon: 'polynom', route: routing.APPROXPOLYNOM, label: 'ML Polynomial', subs: [] }
+      icon: 'ai', route: ROUTE_AI, label: 'AI', subs: [
+        { icon: 'polynom', route: ROUTE_APPROXPOLYNOM, label: 'ML Polynomial', subs: [] }
       ]
     },
     {
-      icon: 'playground', route: routing.PLAYGROUND, label: 'Demo', subs: [
-        { icon: 'items1', route: routing.DEMO_MISC, label: 'Misc.', subs: [] },
-        { icon: 'items2', route: routing.DEMO_STATE, label: 'State', subs: [] }
+      icon: 'playground', route: ROUTE_PLAYGROUND, label: 'Demo', subs: [
+        { icon: 'items1', route: ROUTE_DEMO_MISC, label: 'Misc.', subs: [] },
+        { icon: 'items2', route: ROUTE_DEMO_STATE, label: 'State', subs: [] }
       ]
     },
     {
-      icon: 'settings', route: routing.SETTINGS, label: 'Settings', subs: [
-        { icon: 'configuration', route: routing.CONFIGURATION, label: 'Configuration', subs: [] },
-        { icon: 'build_config', route: routing.BUILDCONFIG, label: 'Build Settings', subs: [] }
+      icon: 'settings', route: ROUTE_SETTINGS, label: 'Settings', subs: [
+        { icon: 'configuration', route: ROUTE_CONFIGURATION, label: 'Configuration', subs: [] },
+        { icon: 'build_config', route: ROUTE_BUILDCONFIG, label: 'Build Settings', subs: [] }
       ]
     }
   ];
@@ -63,7 +63,7 @@ export class DashboardComponent {
   subRoute$ = this.redux.watch(state => state.globalValues.route)
     .pipe(map(url => {
       const paths = url.split('/');
-      const indexMe = paths.indexOf(routing.DASHBOARD);
+      const indexMe = paths.indexOf(ROUTE_DASHBOARD);
       return indexMe >= 0 && paths.length > indexMe + 1 ? paths[indexMe + 1] : null;
     }));
   subRoutes$ = this.subRoute$

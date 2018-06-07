@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { gotoAiApproxPolynom } from 'app/routing';
+import { routeToAiApproxPolynom } from 'app/routing';
 
 @Component({
   selector: 'app-overview',
@@ -9,5 +9,5 @@ import { gotoAiApproxPolynom } from 'app/routing';
 })
 export class OverviewComponent {
   constructor(private readonly router: Router) { }
-  gotoAiApproxPolynom = () => gotoAiApproxPolynom(this.router);
+  gotoAiApproxPolynom = () => routeToAiApproxPolynom(this.router);
 }
