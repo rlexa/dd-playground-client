@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { GraphskyQuery, GraphskyService } from 'app/graphsky';
+import { GraphskyService } from 'app/graphsky';
 import { arrayFrom } from 'app/util';
 import { BehaviorSubject, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -21,7 +21,15 @@ export class DemoMiscComponent {
 
   readonly graphskyLog$ = this.graphsky.log$;
   readonly graphskyNodes$ = this.graphsky.nodeCount$;
-  readonly graphskyAll$ = this.graphsky.change$.pipe(map(() => this.graphsky.query()));
+  readonly graphskyAll$ = this.graphsky.change$.pipe(map(() => this.graphsky.query(
+    (nodes, links) => nodes
+      .filter(node => 'name' in node.data)
+      .reduce((acc, node) => (
+        {
+          ...acc,
+          [node.data['name'].toString()]: node.out.map(link => link.data['relationship'] + ' ' + link.to.data['name']).join(', ')
+        }), {})
+  )));
 
   reSamplePolynomPoints = () => this.samplePolynomPoints$.next(createSamplePoints(this.samplePolynomPointsRange));
 
@@ -35,11 +43,10 @@ export class DemoMiscComponent {
 
   graphskyAddRandom = () => this.graphsky.add([{ tag: 'TAG_' + Math.floor(Math.random() * 15), nr: Math.round(Math.random() * 100) }]);
 
-  graphskyDelRandom = () => of(this.graphsky.query(new GraphskyQuery().alias('all')))
+  graphskyDelRandom = () => of(this.graphsky.query(nodes => nodes.map(ii => ii.data)))
     .pipe(
-      map(result => result['all'].nodes),
       filter(nodes => nodes.length > 0),
-      map(nodes => nodes[Math.floor(Math.random() * nodes.length)].data))
+      map(nodes => nodes[Math.floor(Math.random() * nodes.length)]))
     .subscribe(data => this.graphsky.remove([data]));
 
   graphskyDrop = () => this.graphsky.drop();
