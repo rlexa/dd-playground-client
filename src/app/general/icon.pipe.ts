@@ -20,6 +20,8 @@ export const ICON_MAP: { [key: string]: string } = {
   go_down: 'arrow_downward',
   go_down_left: 'subdirectory_arrow_left',
   go_down_right: 'subdirectory_arrow_right',
+  go_left: 'chevron_left',
+  go_right: 'chevron_right',
   graph: 'blur_on',
   help: 'help_outline',
   info: 'info_outline',

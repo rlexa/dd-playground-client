@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 type GraphskyValue = string | boolean | number | null;
 export interface IGraphskyData { [key: string]: GraphskyValue };
 
-interface IGraphskyNode {
+export interface IGraphskyNode {
   data: IGraphskyData,
   inc: IGraphskyLink[],
   ms: number,
@@ -16,6 +16,14 @@ interface IGraphskyLink {
   from: IGraphskyNode,
   ms: number,
   to: IGraphskyNode,
+}
+
+export interface IGraphskyLinkRequest {
+  from: IGraphskyData,
+  fromNotExact?: boolean,
+  to: IGraphskyData,
+  toNotExact?: boolean,
+  data: IGraphskyData,
 }
 
 interface IGraphskyState {
@@ -80,7 +88,7 @@ export class Graphsky implements IGraphsky {
     this.nodes$.next(this.nodes$.value.filter(ii => !unnode.includes(ii)));
   }
 
-  link = (links: { from: IGraphskyData, fromNotExact?: boolean, to: IGraphskyData, toNotExact?: boolean, data: IGraphskyData }[]) => links
+  link = (links: IGraphskyLinkRequest[]) => links
     .filter(ii => typeof ii.data === 'object' && ii.data !== null && ii.data !== undefined && toString.call(ii.data) === '[object Object]')
     .forEach(ii => {
       const from = this.nodes$.value.find(jj => !ii.fromNotExact ? equalData(jj.data, ii.from) : equalDataSome(jj.data, ii.from));

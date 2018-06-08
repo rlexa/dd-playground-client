@@ -1,3 +1,4 @@
-﻿name;nameShort;nameNative;nameShortNative;code
-Federal Republic of Germany;Germany;Bundesrepublik Deutschland;Deutschland;DE
-Russian Federation;Russia;Российская Федерация;Россия;RU
+﻿code;name;nameShort;nameNative;nameShortNative;dateFrom;dateTo;url
+DE;Federal Republic of Germany;Germany;Bundesrepublik Deutschland;Deutschland;23.05.1949;now;https://www.deutschland.de
+RU;Russian Federation;Russia;Российская Федерация;Россия;25.12.1991;now;http://government.ru/en/
+US;United States of America;USA;United States;USA;1776-07-04;now;https://www.usa.gov/

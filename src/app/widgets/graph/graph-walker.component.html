@@ -1,3 +1,24 @@
+<ng-template #tmplNode let-item let-header="header">
+  <div ddFlexbox="vyt" class="childhv background-card border">
+    <h4 *ngIf="header" class="childh text-center">{{ header }}</h4>
+    <div ddFlexbox="hyc">
+      <label class="childh">{{ item.inc.length }}</label>
+      <label ddFlexitem="1 0" class="childh text-center">{{ 'inc .. out' }}</label>
+      <label class="childh">{{ item.out.length }}</label>
+    </div>
+    <app-simple-view [data]="item.data" [isDense]="true" [isWidthConstrained]="false"></app-simple-view>
+  </div>
+</ng-template>
+
+<ng-template #tmplLink let-item let-header="header">
+  <div ddFlexbox="vyt" class="childhv background-card border">
+    <h4 *ngIf="header" class="childh text-center">{{ header }}</h4>
+    <app-simple-view [data]="item.data" [isDense]="true" [isWidthConstrained]="false"></app-simple-view>
+  </div>
+</ng-template>
+
+<!-- START HERE -->
+
 <div ddFlexbox="vyt">
   <div ddFlexbox="hysw">
 
@@ -15,5 +36,51 @@
       </mat-card-content>
     </mat-card>
 
+  </div>
+
+  <div ddFlexbox="hycw">
+    <button mat-raised-button (click)="tryQuery()" [disabled]="!(curType$ | async) || !(curTag$ | async) || !(curVal$ | async)">Query first node of...</button>
+    <mat-form-field class="margin-left childhv" hintLabel="Type">
+      <mat-select [value]="curType$ | async" (selectionChange)="curType$.next($event.value)">
+        <mat-option *ngFor="let ii of dbTypes$ | async" [value]="ii"> {{ ii }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="margin-left childhv" hintLabel="Tag">
+      <input matInput [value]="curTag$ | async" (change)="curTag$.next($event.target.value)" (keyup.enter)="tryQuery()">
+    </mat-form-field>
+    <mat-form-field class="margin-left childhv" hintLabel="Value">
+      <input matInput [value]="curVal$ | async" (change)="curVal$.next($event.target.value)" (keyup.enter)="tryQuery()">
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="curNode$ | async as node" ddFlexbox="hysxc">
+
+    <div ddFlexbox="vys">
+      <div *ngFor="let link of node.inc" ddFlexbox="hys" class="childh">
+        <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.from}"></ng-container>
+        <div ddFlexbox="hyc">
+          <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}"></ng-container>
+          <button mat-mini-fab (click)="curNode$.next(link.from)">
+            <mat-icon>{{ 'go_left' | icon }}</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div ddFlexbox="vyc" class="childh">
+      <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: node, header: 'CURRENT'}"></ng-container>
+    </div>
+
+    <div ddFlexbox="vys" class="childh">
+      <div *ngFor="let link of node.out" ddFlexbox="hys">
+        <div ddFlexbox="hyc">
+          <button mat-mini-fab (click)="curNode$.next(link.to)">
+            <mat-icon>{{ 'go_right' | icon }}</mat-icon>
+          </button>
+          <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}"></ng-container>
+        </div>
+        <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.to}"></ng-container>
+      </div>
+    </div>
   </div>
 </div>

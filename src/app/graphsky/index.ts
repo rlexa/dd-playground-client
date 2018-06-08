@@ -1,3 +1,3 @@
-export { IGraphskyData } from './graphsky';
+export { IGraphskyData, IGraphskyLinkRequest, IGraphskyNode } from './graphsky';
 export * from './graphsky.service';
 
