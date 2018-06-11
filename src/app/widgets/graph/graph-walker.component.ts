@@ -14,6 +14,13 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
     private readonly graphsky: GraphskyService,
   ) { }
 
+  readonly GRID_FROM = 'from';
+  readonly GRID_CURRENT = 'current';
+  readonly GRID_TO = 'to';
+  readonly GRID = [[this.GRID_FROM, this.GRID_CURRENT, this.GRID_TO]]
+    .map(line => '"' + line.join(' ') + '"').join(' ');
+  readonly GRID_SIZE = '1fr auto 1fr';
+
   readonly curType$ = new BehaviorSubject(<string>null);
   readonly curTag$ = new BehaviorSubject(<string>null);
   readonly curVal$ = new BehaviorSubject(<string>null);

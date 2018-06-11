@@ -53,34 +53,42 @@
     </mat-form-field>
   </div>
 
-  <div *ngIf="curNode$ | async as node" ddFlexbox="hysxc">
+  <div *ngIf="curNode$ | async as node" [ngStyle]="{'display': 'grid', 'grid-template-areas': GRID, 'grid-template-columns': GRID_SIZE }">
 
-    <div ddFlexbox="vys">
-      <div *ngFor="let link of node.inc" ddFlexbox="hys" class="childh">
-        <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.from}"></ng-container>
-        <div ddFlexbox="hyc">
-          <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}"></ng-container>
-          <button mat-mini-fab (click)="curNode$.next(link.from)">
-            <mat-icon>{{ 'go_left' | icon }}</mat-icon>
-          </button>
+    <div [ngStyle]="{'grid-area': GRID_FROM}">
+      <div ddFlexbox="vye">
+        <div *ngFor="let link of node.inc" ddFlexbox="hys" class="childh">
+          <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.from}"></ng-container>
+          <div ddFlexbox="hyc">
+            <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}"></ng-container>
+            <button mat-mini-fab (click)="curNode$.next(link.from)">
+              <mat-icon>{{ 'go_left' | icon }}</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
-    <div ddFlexbox="vyc" class="childh">
-      <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: node, header: 'CURRENT'}"></ng-container>
-    </div>
-
-    <div ddFlexbox="vys" class="childh">
-      <div *ngFor="let link of node.out" ddFlexbox="hys">
-        <div ddFlexbox="hyc">
-          <button mat-mini-fab (click)="curNode$.next(link.to)">
-            <mat-icon>{{ 'go_right' | icon }}</mat-icon>
-          </button>
-          <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}"></ng-container>
-        </div>
-        <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.to}"></ng-container>
+    <div [ngStyle]="{'grid-area': GRID_CURRENT}">
+      <div ddFlexbox="vyc" class="childh">
+        <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: node, header: 'CURRENT'}"></ng-container>
       </div>
     </div>
+
+    <div [ngStyle]="{'grid-area': GRID_TO}">
+      <div ddFlexbox="vys" class="childh">
+        <div *ngFor="let link of node.out" ddFlexbox="hys">
+          <div ddFlexbox="hyc">
+            <button mat-mini-fab (click)="curNode$.next(link.to)">
+              <mat-icon>{{ 'go_right' | icon }}</mat-icon>
+            </button>
+            <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}"></ng-container>
+          </div>
+          <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.to}"></ng-container>
+        </div>
+      </div>
+    </div>
+
   </div>
+
 </div>
