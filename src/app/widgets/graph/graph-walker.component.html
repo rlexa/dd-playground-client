@@ -39,7 +39,7 @@
   </div>
 
   <div ddFlexbox="hycw">
-    <button mat-raised-button (click)="tryQuery()" [disabled]="!(curType$ | async) || !(curTag$ | async) || !(curVal$ | async)">Query first node of...</button>
+    <label>Query first node of:</label>
 
     <mat-form-field class="margin-left childhv" hintLabel="Type">
       <mat-select [value]="curType$ | async" (selectionChange)="curType$.next($event.value)">
@@ -54,6 +54,8 @@
         <mat-option *ngFor="let ii of curTypeKeysFiltered$ | async" [value]="ii">{{ ii }}</mat-option>
       </mat-autocomplete>
     </mat-form-field>
+
+    <button *ngFor="let ii of CMPS" mat-mini-fab (click)="tryQuery(ii)">{{ ii }}</button>
 
     <mat-form-field class="margin-left childhv" hintLabel="Value">
       <input #valInput matInput [value]="curVal$ | async" (change)="curVal$.next($event.target.value)" [matAutocomplete]="valAutoComplete"

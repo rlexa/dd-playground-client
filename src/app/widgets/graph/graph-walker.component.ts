@@ -1,8 +1,39 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { GraphskyService, IGraphskyNode } from 'app/graphsky';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { debounceTime, filter, map, tap } from 'rxjs/operators';
+import { debounceTime, filter, map } from 'rxjs/operators';
 import { TAG_TYPE } from './data';
+
+const CMP_EQ = '=';
+const CMP_NE = '!=';
+const CMP_LE = '<=';
+const CMP_LT = '<';
+const CMP_GE = '>=';
+const CMP_GT = '>';
+const compareEqual = (cmp: string, aa: any, bb: any) => {
+  let ret = false;
+  switch (cmp) {
+    case CMP_GT:
+      ret = aa > bb;
+      break;
+    case CMP_GE:
+      ret = aa >= bb;
+      break;
+    case CMP_LT:
+      ret = aa < bb;
+      break;
+    case CMP_LE:
+      ret = aa <= bb;
+      break;
+    case CMP_NE:
+      ret = aa !== bb;
+      break;
+    case CMP_EQ:
+    default:
+      ret = aa === bb;
+  }
+  return ret;
+}
 
 @Component({
   selector: 'app-graph-walker',
@@ -20,6 +51,8 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
   readonly GRID = [[this.GRID_FROM, this.GRID_CURRENT, this.GRID_TO]]
     .map(line => '"' + line.join(' ') + '"').join(' ');
   readonly GRID_SIZE = '1fr auto 1fr';
+
+  readonly CMPS = [CMP_LT, CMP_LE, CMP_NE, CMP_EQ, CMP_GE, CMP_GT];
 
   readonly curType$ = new BehaviorSubject(<string>null);
   readonly curTag$ = new BehaviorSubject(<string>null);
@@ -46,8 +79,7 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
         .filter(ii => ii.data[TAG_TYPE] === type && tag in ii.data && ii.data[tag] !== null && ii.data[tag] !== undefined)
         .map(ii => ii.data[tag].toString())
         .reduce((acc, ii) => acc.includes(ii) ? acc : [...acc, ii], <string[]>[])
-        .sort())),
-    tap(ii => console.log(ii)));
+        .sort())));
   readonly curTypeKeyTagValuesFiltered$ = combineLatest(this.curVal$, this.curTypeKeyTagValues$).pipe(
     map(([val, vals]) => !val || !val.length ? vals || [] : (vals || []).filter(ii => ii.toLocaleLowerCase().includes(val.toLocaleLowerCase())).sort()));
 
@@ -74,10 +106,10 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
       .subscribe(val => this.curTag$.next(val));
   }
 
-  tryQuery = () => of([this.curType$.value, this.curTag$.value, this.curVal$.value])
+  tryQuery = (cmp: string) => of([this.curType$.value, this.curTag$.value, this.curVal$.value])
     .pipe(
       filter(params => params.every(ii => !!ii && ii.length > 0)),
-      map(([type, tag, val]) => this.graphsky.query((nodes, _) => nodes.filter(ii => ii.data[TAG_TYPE] === type && ii.data[tag] === val))),
+      map(([type, tag, val]) => this.graphsky.query((nodes, _) => nodes.filter(ii => ii.data[TAG_TYPE] === type && compareEqual(cmp, ii.data[tag], val)))),
       map(nodes => nodes.length ? nodes[0] : null))
     .subscribe(node => this.curNode$.next(node));
 }
