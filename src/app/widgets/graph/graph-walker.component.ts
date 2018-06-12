@@ -106,7 +106,7 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
       .subscribe(val => this.curTag$.next(val));
   }
 
-  tryQuery = (cmp: string) => of([this.curType$.value, this.curTag$.value, this.curVal$.value])
+  tryQuery = (cmp = CMP_EQ) => of([this.curType$.value, this.curTag$.value, this.curVal$.value])
     .pipe(
       filter(params => params.every(ii => !!ii && ii.length > 0)),
       map(([type, tag, val]) => this.graphsky.query((nodes, _) => nodes.filter(ii => ii.data[TAG_TYPE] === type && compareEqual(cmp, ii.data[tag], val)))),
