@@ -56,7 +56,11 @@
     </mat-form-field>
 
     <mat-form-field class="margin-left childhv" hintLabel="Value">
-      <input matInput [value]="curVal$ | async" (change)="curVal$.next($event.target.value)" (keyup.enter)="tryQuery()">
+      <input #valInput matInput [value]="curVal$ | async" (change)="curVal$.next($event.target.value)" [matAutocomplete]="valAutoComplete"
+        (focus)="this.curVal$.next(valInput.value)" (keyup)="this.curVal$.next(valInput.value)" (keyup.enter)="tryQuery()">
+      <mat-autocomplete #valAutoComplete="matAutocomplete" (optionSelected)="curVal$.next($event.option.value)">
+        <mat-option *ngFor="let ii of curTypeKeyTagValuesFiltered$ | async" [value]="ii">{{ ii }}</mat-option>
+      </mat-autocomplete>
     </mat-form-field>
   </div>
 

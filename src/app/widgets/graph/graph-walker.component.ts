@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { GraphskyService, IGraphskyNode } from 'app/graphsky';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { debounceTime, filter, map } from 'rxjs/operators';
+import { debounceTime, filter, map, tap } from 'rxjs/operators';
 import { TAG_TYPE } from './data';
 
 @Component({
@@ -33,13 +33,23 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
   ));
 
   readonly dbTypes$ = this.dbNodeTypeCount$.pipe(map(val => Object.keys(val).sort()));
-  readonly curTypeKeys$ = this.curType$.pipe(
+  readonly curTypeFirstNode$ = this.curType$.pipe(
     filter(type => !!type && type.length > 0),
-    map(type => this.graphsky.query((nodes, _) => nodes.find(ii => ii.data[TAG_TYPE] === type))),
+    map(type => this.graphsky.query((nodes, _) => nodes.find(ii => ii.data[TAG_TYPE] === type))));
+  readonly curTypeKeys$ = this.curTypeFirstNode$.pipe(
     map(node => node ? Object.keys(node.data).filter(ii => ii !== TAG_TYPE) : []));
-  readonly curTypeKeysFiltered$ = combineLatest(this.curTag$, this.curTypeKeys$)
-    .pipe(
-      map(([tag, keys]) => !tag || !tag.length ? keys || [] : (keys || []).filter(ii => ii.toLocaleLowerCase().includes(tag.toLocaleLowerCase()))));
+  readonly curTypeKeysFiltered$ = combineLatest(this.curTag$, this.curTypeKeys$).pipe(
+    map(([tag, keys]) => !tag || !tag.length ? keys || [] : (keys || []).filter(ii => ii.toLocaleLowerCase().includes(tag.toLocaleLowerCase())).sort()));
+  readonly curTypeKeyTagValues$ = combineLatest(this.curType$, this.curTypeKeys$, this.curTag$).pipe(
+    map(([type, keys, tag]) => !type || !keys || !keys.includes(tag) ? [] :
+      this.graphsky.query((nodes, _) => nodes
+        .filter(ii => ii.data[TAG_TYPE] === type && tag in ii.data && ii.data[tag] !== null && ii.data[tag] !== undefined)
+        .map(ii => ii.data[tag].toString())
+        .reduce((acc, ii) => acc.includes(ii) ? acc : [...acc, ii], <string[]>[])
+        .sort())),
+    tap(ii => console.log(ii)));
+  readonly curTypeKeyTagValuesFiltered$ = combineLatest(this.curVal$, this.curTypeKeyTagValues$).pipe(
+    map(([val, vals]) => !val || !val.length ? vals || [] : (vals || []).filter(ii => ii.toLocaleLowerCase().includes(val.toLocaleLowerCase())).sort()));
 
   ngOnDestroy() {
     [
