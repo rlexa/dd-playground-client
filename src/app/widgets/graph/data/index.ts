@@ -1,7 +1,8 @@
 import { IGraphskyData } from 'app/graphsky';
 
+export const TAG_TYPE = '_type';
 export interface TypedNode extends IGraphskyData {
-  _type: string;
+  [TAG_TYPE]: string;
 }
 
 export interface Country extends TypedNode {

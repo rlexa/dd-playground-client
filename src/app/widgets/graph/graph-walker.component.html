@@ -40,14 +40,21 @@
 
   <div ddFlexbox="hycw">
     <button mat-raised-button (click)="tryQuery()" [disabled]="!(curType$ | async) || !(curTag$ | async) || !(curVal$ | async)">Query first node of...</button>
+
     <mat-form-field class="margin-left childhv" hintLabel="Type">
       <mat-select [value]="curType$ | async" (selectionChange)="curType$.next($event.value)">
         <mat-option *ngFor="let ii of dbTypes$ | async" [value]="ii"> {{ ii }} </mat-option>
       </mat-select>
     </mat-form-field>
+
     <mat-form-field class="margin-left childhv" hintLabel="Tag">
-      <input matInput [value]="curTag$ | async" (change)="curTag$.next($event.target.value)" (keyup.enter)="tryQuery()">
+      <input #tagInput matInput [value]="curTag$ | async" (change)="curTag$.next($event.target.value)" [matAutocomplete]="tagAutoComplete"
+        (focus)="this.curTag$.next(tagInput.value)" (keyup)="this.curTag$.next(tagInput.value)" (keyup.enter)="tryQuery()">
+      <mat-autocomplete #tagAutoComplete="matAutocomplete" (optionSelected)="curTag$.next($event.option.value)">
+        <mat-option *ngFor="let ii of curTypeKeysFiltered$ | async" [value]="ii">{{ ii }}</mat-option>
+      </mat-autocomplete>
     </mat-form-field>
+
     <mat-form-field class="margin-left childhv" hintLabel="Value">
       <input matInput [value]="curVal$ | async" (change)="curVal$.next($event.target.value)" (keyup.enter)="tryQuery()">
     </mat-form-field>
