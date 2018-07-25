@@ -1,4 +1,5 @@
-﻿from-_type;to-_type;from-code;to-nameShort;dateMemberFrom;dateMemberTo
-country;institution;RU;UNO;1945-10-24;now
-country;institution;US;NATO;1949-04-04;now
-country;institution;US;UNO;1945-10-24;now
+﻿from-_type;to-_type;from-code;to-nameShort;dateMemberFrom;dateMemberTo;role
+country;institution;IL;UNO;1949-05-11;now;member
+country;institution;RU;UNO;1945-10-24;now;veto-member
+country;institution;US;NATO;1949-04-04;now;member
+country;institution;US;UNO;1945-10-24;now;veto-member
