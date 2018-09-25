@@ -1,7 +1,8 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { rxComplete, rxNext_ } from 'app/rx';
 import { arrayFrom } from 'app/util';
-import { ScaleLinear, Selection, axisBottom, axisLeft, line, mouse, scaleLinear, select } from 'd3';
-import { Subject } from 'rxjs';
+import { axisBottom, axisLeft, line, mouse, ScaleLinear, scaleLinear, select, Selection } from 'd3';
+import { BehaviorSubject, merge, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 interface Chart {
@@ -18,71 +19,63 @@ interface Chart {
   templateUrl: './diagram-polynom.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
+export class DiagramPolynomComponent implements OnDestroy, OnInit, AfterViewInit {
+  private readonly CSS_AXIS_X = '.axis-x';
+  private readonly CSS_AXIS_Y = '.axis-y';
+  private readonly CSS_CONTENT = '.content';
+  private readonly CSS_PATH = '.path';
+  private readonly CSS_POINT = '.point';
+  private readonly DEF_HSL_PREFIX = 'hsl(';
+  private readonly DEF_HSL_SUFFIX = ', 100%, 70%)';
+  private readonly DEF_MAX_X = 5;
+  private readonly DEF_MAX_Y = 5;
+  private readonly DEF_MIN_X = -5;
+  private readonly DEF_MIN_Y = -5;
+  private readonly DEF_POINT_COLOR = this.DEF_HSL_PREFIX + '0' + this.DEF_HSL_SUFFIX;
+  private readonly DEF_POLYNOM_COLORS = [this.DEF_POINT_COLOR];
+  private readonly MIN_MAX_BUFFER = 1;
+  private readonly PLOT_RESOLUTION = 1000;
 
-  private readonly cssContent = '.content';
-  private readonly cssPoint = '.point';
-  private readonly cssPath = '.path';
-  private readonly cssAxisX = '.axis-x';
-  private readonly cssAxisY = '.axis-y';
-  private readonly defMinX = -5;
-  private readonly defMaxX = 5;
-  private readonly defMinY = -5;
-  private readonly defMaxY = 5;
-  private readonly minMaxBuffer = 1;
-  private readonly plotResolution = 1000;
-  private readonly defHslPrefix = 'hsl(';
-  private readonly defHslSuffix = ', 100%, 70%)';
-  private readonly defPointColor = this.defHslPrefix + '0' + this.defHslSuffix;
-  private readonly defPolynomColors = [this.defPointColor];
+  private readonly clrPoint$ = new BehaviorSubject(this.DEF_POINT_COLOR);
+  private readonly polynomColors$ = new BehaviorSubject(this.DEF_POLYNOM_COLORS);
+  private readonly polynomWeights$ = new BehaviorSubject(<number[][]>[]);
+  private readonly xyPoints$ = new BehaviorSubject(<number[][]>[]);
 
   private readonly triggerResized$ = new Subject();
   private readonly triggerRender$ = new Subject();
 
-  private chart: Chart = null;
-  private xyPoints: number[][] = [];
-  private clrPoint = this.defPointColor;
-  private polynomWeights: number[][] = [];
-  private polynomColors: string[] = this.defPolynomColors;
+  private chart = <Chart>null;
 
   @Input() set points(val: number[]) {
     val = (val || []);
-    const len = Math.floor(val.length / 2);
-    this.xyPoints = [];
+    const points = [];
     for (let ii = 0; ii < val.length; ii += 2) {
-      this.xyPoints.push([val[ii], val[ii + 1]]);
+      points.push([val[ii], val[ii + 1]]);
     }
-    this.triggerRender$.next();
+    this.xyPoints$.next(points);
   }
 
-  @Input() set pointColor(val: string) {
-    this.clrPoint = val || this.defPointColor;
-    this.triggerRender$.next();
-  }
-
-  @Input() set polynomials(val: number[][]) {
-    this.polynomWeights = val || [];
-    this.triggerRender$.next();
-  }
-
-  @Input() set polynomialColors(val: string[]) {
-    this.polynomColors = val || this.defPolynomColors;
-    this.triggerRender$.next();
-  }
+  @Input() set pointColor(val: string) { this.clrPoint$.next(val || this.DEF_POINT_COLOR); }
+  @Input() set polynomialColors(val: string[]) { this.polynomColors$.next(val || this.DEF_POLYNOM_COLORS); }
+  @Input() set polynomials(val: number[][]) { this.polynomWeights$.next(val || []); }
 
   @Output() hoveredPoint = new EventEmitter<number[]>();
 
   @HostListener('window:resize') onWindowResize = () => this.triggerResized$.next();
 
-  constructor() { }
-
-  ngAfterViewInit() {
-    this.triggerResized$.pipe(debounceTime(100)).subscribe(() => this.rechart());
-    this.triggerRender$.pipe(debounceTime(1)).subscribe(() => this.render());
-    this.rechart();
+  ngOnDestroy() {
+    rxComplete(this.clrPoint$, this.polynomColors$, this.polynomWeights$, this.triggerRender$, this.triggerResized$, this.xyPoints$);
   }
 
-  ngOnDestroy() { [this.triggerRender$, this.triggerResized$].forEach(ii => ii.complete()); }
+  ngOnInit() {
+    this.triggerResized$.pipe(debounceTime(100)).subscribe(() => this.rechart());
+    this.triggerRender$.pipe(debounceTime(1)).subscribe(() => this.render());
+    merge(this.clrPoint$, this.polynomColors$, this.polynomWeights$, this.xyPoints$).subscribe(rxNext_(this.triggerRender$));
+  }
+
+  ngAfterViewInit() {
+    this.rechart();
+  }
 
   private rechart() {
     if (this.chart) {
@@ -99,8 +92,8 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
       .attr('viewBox', '0 0 ' + (width + margin.left + margin.right) + ' ' + (height + margin.top + margin.bottom));
     this.chart = {
       svg, height, width,
-      x: scaleLinear().domain([this.defMinX, this.defMaxX]).range([0, width]),
-      y: scaleLinear().domain([this.defMinY, this.defMaxY]).range([height, 0]),
+      x: scaleLinear().domain([this.DEF_MIN_X, this.DEF_MAX_X]).range([0, width]),
+      y: scaleLinear().domain([this.DEF_MIN_Y, this.DEF_MAX_Y]).range([height, 0]),
       g: svg.append('g').attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
     };
 
@@ -113,15 +106,15 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
 
     this.chart.g
       .append('g')
-      .classed(this.cssContent.substr(1), true);
+      .classed(this.CSS_CONTENT.substr(1), true);
 
     this.chart.g
       .append('g')
-      .classed(this.cssAxisX.substr(1), true)
+      .classed(this.CSS_AXIS_X.substr(1), true)
       .attr('transform', 'translate(0,' + this.chart.height + ')');
     this.chart.g
       .append('g')
-      .classed(this.cssAxisY.substr(1), true);
+      .classed(this.CSS_AXIS_Y.substr(1), true);
 
     // LISTENER
 
@@ -135,18 +128,19 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
     this.triggerRender$.next();
   }
 
-  private getHslColor = (index: number, len: number) => this.defHslPrefix + Math.floor(index * 360 / (len || 1)) + this.defHslSuffix;
+  private getHslColor = (index: number, len: number) => this.DEF_HSL_PREFIX + Math.floor(index * 360 / (len || 1)) + this.DEF_HSL_SUFFIX;
 
   private render() {
     if (!this.chart) {
       return;
     }
 
+    const points = this.xyPoints$.value;
     const [xMin, xMax, yMin, yMax] = [
-      this.xyPoints.reduce((acc, ii) => Math.min(acc, ii[0] - this.minMaxBuffer), this.defMinX),
-      this.xyPoints.reduce((acc, ii) => Math.max(acc, ii[0] + this.minMaxBuffer), this.defMaxX),
-      this.xyPoints.reduce((acc, ii) => Math.min(acc, ii[1] - this.minMaxBuffer), this.defMinX),
-      this.xyPoints.reduce((acc, ii) => Math.max(acc, ii[1] + this.minMaxBuffer), this.defMaxY),
+      points.reduce((acc, ii) => Math.min(acc, ii[0] - this.MIN_MAX_BUFFER), this.DEF_MIN_X),
+      points.reduce((acc, ii) => Math.max(acc, ii[0] + this.MIN_MAX_BUFFER), this.DEF_MAX_X),
+      points.reduce((acc, ii) => Math.min(acc, ii[1] - this.MIN_MAX_BUFFER), this.DEF_MIN_X),
+      points.reduce((acc, ii) => Math.max(acc, ii[1] + this.MIN_MAX_BUFFER), this.DEF_MAX_Y),
     ];
 
     // ADJUST AND RENDER AXIS
@@ -155,31 +149,31 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
     this.chart.y.domain([yMin, yMax]);
 
     this.chart.g
-      .select(this.cssAxisX)
+      .select(this.CSS_AXIS_X)
       .call(axisBottom(this.chart.x));
     this.chart.g
-      .select(this.cssAxisY)
+      .select(this.CSS_AXIS_Y)
       .call(axisLeft(this.chart.y));
 
     this.chart.g
-      .selectAll(this.cssAxisX + ' .domain, ' + this.cssAxisY + ' .domain')
+      .selectAll(this.CSS_AXIS_X + ' .domain, ' + this.CSS_AXIS_Y + ' .domain')
       .attr('stroke-width', 1);
     this.chart.g
-      .selectAll(this.cssAxisY + ' .tick line')
+      .selectAll(this.CSS_AXIS_Y + ' .tick line')
       .attr('stroke-width', 1);
 
     // RENDER POINTS
 
     {
-      const point = this.chart.g.select(this.cssContent).selectAll(this.cssPoint).data(this.xyPoints);
+      const point = this.chart.g.select(this.CSS_CONTENT).selectAll(this.CSS_POINT).data(points);
       const item = point.enter()
         .append('circle')
         .attr('r', 3)
-        .style('stroke', this.clrPoint)
+        .style('stroke', this.clrPoint$.value)
         .style('stroke-width', 1)
         .style('fill', 'none')
         .style('transition', 'cx 500ms, cy 500ms')
-        .classed(this.cssPoint.substr(1), true);
+        .classed(this.CSS_POINT.substr(1), true);
       item.merge(point)
         .attr('cx', ii => this.chart.x(ii[0]))
         .attr('cy', ii => this.chart.y(ii[1]));
@@ -189,27 +183,27 @@ export class DiagramPolynomComponent implements OnDestroy, AfterViewInit {
     // RENDER POLYNOMS
 
     {
-      const stride = (xMax - xMin) / this.plotResolution;
-      const plotteds = this.polynomWeights.map((weights, weightsIndex) => {
+      const stride = (xMax - xMin) / this.PLOT_RESOLUTION;
+      const plotteds = this.polynomWeights$.value.map((weights, weightsIndex) => {
         const getY = (factors: number[], xx: number) => weights ? factors.reduce((acc, val, index) => acc + val * xx ** (weights.length - 1 - index), 0) : 0;
-        return arrayFrom(this.plotResolution).map((ii, index) => [xMin + stride * index, getY(weights, xMin + stride * index)]);
+        return arrayFrom(this.PLOT_RESOLUTION).map((ii, index) => [xMin + stride * index, getY(weights, xMin + stride * index)]);
       });
 
       const doLine = line()
         .x(ii => this.chart.x(ii[0]))
         .y(ii => this.chart.y(ii[1]));
 
-      const path = this.chart.g.select(this.cssContent).selectAll(this.cssPath).data(plotteds);
+      const path = this.chart.g.select(this.CSS_CONTENT).selectAll(this.CSS_PATH).data(plotteds);
       const item = path.enter()
         .append('path')
-        .style('stroke', (ii, index) => this.polynomColors === this.defPolynomColors ?
-          this.getHslColor(index, this.polynomWeights.length) : this.polynomColors[index % this.polynomColors.length])
+        .style('stroke', (ii, index) => this.polynomColors$.value === this.DEF_POLYNOM_COLORS ?
+          this.getHslColor(index, this.polynomWeights$.value.length) : this.polynomColors$.value[index % this.polynomColors$.value.length])
         .style('stroke-width', 1.5)
         .style('stroke-linejoin', 'round')
         .style('stroke-linecap', 'round')
         .style('fill', 'none')
         .style('transition', 'd 500ms')
-        .classed(this.cssPath.substr(1), true);
+        .classed(this.CSS_PATH.substr(1), true);
       item.merge(path)
         .attr('d', doLine);
       path.exit().remove();
