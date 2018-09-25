@@ -30,5 +30,5 @@ export const actMergeUiDashboard = action_<DashboardState>(actions.MRG_DAS);
 
 export const redUiState = combineReducers(<ReducersMapObject<UiState, AnyAction>>{
   [KEY_AIS]: redUiAiState,
-  [KEY_DAS]: reduce_(Object.freeze(<DashboardState>{ isVisibleFooter: true, isVisibleHeader: true, isVisibleSide: true }), { [actions.MRG_DAS]: reduceMrg })
+  [KEY_DAS]: reduce_(Object.freeze(<DashboardState>{ isVisibleFooter: true, isVisibleHeader: true, isVisibleSide: true }), { [actions.MRG_DAS]: reduceMrg }),
 });

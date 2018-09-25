@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
-import { AppStore, createAppStore, GlobalFlags, ReduxService, ReduxSetService } from 'app/redux';
+import { AppStore, createAppStore, GlobalFlags, ReduxService, ReduxSetGlobalService } from 'app/redux';
 import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, WidgetsModule } from 'app/widgets/widgets.module';
 import { AppComponent } from './app.component';
 import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WALKER, ROUTE_WILDCARD } from './routing';
@@ -20,10 +20,10 @@ async function loadHttp(path: string, http: HttpClient, handler: (data: any) => 
   }
 }
 
-export function beforeInit(http: HttpClient, reduxSet: ReduxSetService) {
+export function beforeInit(http: HttpClient, reduxSet: ReduxSetGlobalService) {
   return () => Promise.all([
     loadHttp('/assets/flags.json', http, data =>
-      reduxSet.mergeGlobalFlags({
+      reduxSet.mergeFlags({
         ...data,
         ...<GlobalFlags>{ isProduction: data && data.buildVariant && data.buildVariant.toLowerCase() === 'prod' }
       }))
@@ -115,7 +115,7 @@ const appRoutes: Routes = [
     ReduxService,
     {
       provide: APP_INITIALIZER,
-      deps: [HttpClient, ReduxSetService],
+      deps: [HttpClient, ReduxSetGlobalService],
       multi: true,
       useFactory: beforeInit
     }

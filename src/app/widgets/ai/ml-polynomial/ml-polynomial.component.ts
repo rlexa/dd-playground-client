@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { DEF_OPTIMIZER, detectPolynom, generatePolynomialPoints, OPTIMIZERS } from 'app/ai';
-import { ReduxService, ReduxSetService } from 'app/redux';
+import { ReduxService, ReduxSetUiAiService } from 'app/redux';
 import { DoneSubject, rxComplete } from 'app/rx';
 import { trackByIndex } from 'app/widgets/util';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -14,7 +14,7 @@ import { debounceTime, tap } from 'rxjs/operators';
 export class MlPolynomialComponent implements OnDestroy, OnInit {
   constructor(
     private readonly redux: ReduxService,
-    private readonly reduxSet: ReduxSetService,
+    private readonly reduxSet: ReduxSetUiAiService,
   ) { }
 
   private readonly numPoints = 20;
