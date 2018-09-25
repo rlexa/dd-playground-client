@@ -1,6 +1,6 @@
-import { createAction, createReducer, redMergeValue } from 'app/redux/util';
-import { AnyAction, ReducersMapObject, combineReducers } from 'redux';
-import { UiAiState, redUiAiState } from './ai';
+import { action_, reduceMrg, reduce_ } from 'app/redux/util';
+import { AnyAction, combineReducers, ReducersMapObject } from 'redux';
+import { redUiAiState, UiAiState } from './ai';
 import { INTERFIX } from './parent';
 
 // STATE
@@ -24,11 +24,11 @@ const actions = {
   MRG_DAS: 'MRG_' + INTERFIX + '_DASHBOARD',
 }
 
-export const actMergeUiDashboard = createAction<DashboardState>(actions.MRG_DAS);
+export const actMergeUiDashboard = action_<DashboardState>(actions.MRG_DAS);
 
 // REDUCER
 
 export const redUiState = combineReducers(<ReducersMapObject<UiState, AnyAction>>{
   [KEY_AIS]: redUiAiState,
-  [KEY_DAS]: createReducer(Object.freeze(<DashboardState>{ isVisibleFooter: true, isVisibleHeader: true, isVisibleSide: true }), { [actions.MRG_DAS]: redMergeValue })
+  [KEY_DAS]: reduce_(Object.freeze(<DashboardState>{ isVisibleFooter: true, isVisibleHeader: true, isVisibleSide: true }), { [actions.MRG_DAS]: reduceMrg })
 });

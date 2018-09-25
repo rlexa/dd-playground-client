@@ -1,18 +1,20 @@
 // Place your settings in this file to overwrite default and user settings.
 {
   "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
     "**/.DS_Store": true,
-    "**/dist": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/.vscode": true,
+    "**/CVS": true,
     "**/coverage": true,
-    "**/*.bak": true
+    "**/dist": true,
+    "**/*.bak": true,
   },
   "editor.detectIndentation": false,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
+  "html.format.wrapLineLength": 140,
   "html.suggest.angular1": false,
   "beautify.options": {
     "indent_size": 2,
@@ -23,5 +25,7 @@
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
     }
-  }
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.tsdk": "node_modules\\typescript\\lib",
 }

@@ -1,5 +1,5 @@
-import { createAction, createReducer, redSetValue } from 'app/redux/util';
-import { AnyAction, ReducersMapObject, combineReducers } from 'redux';
+import { action_, reduceSet, reduce_ } from 'app/redux/util';
+import { AnyAction, combineReducers, ReducersMapObject } from 'redux';
 import { INTERFIX } from './parent';
 
 // STATE
@@ -27,18 +27,18 @@ const actions = {
   SET_POI: 'SET_' + INTERFIX + '_POINTS_CURRENT',
 }
 
-export const actSetUiAiMlPolynomFactorsCurrent = createAction<number[]>(actions.SET_FAC);
-export const actSetUiAiMlPolynomFactorsTrained = createAction<number[]>(actions.SET_FAT);
-export const actSetUiAiMlPolynomLearningRate = createAction<number>(actions.SET_LEA);
-export const actSetUiAiMlPolynomOptimizer = createAction<string>(actions.SET_OPT);
-export const actSetUiAiMlPolynomPointsCurrent = createAction<number[]>(actions.SET_POI);
+export const actSetUiAiMlPolynomFactorsCurrent = action_<number[]>(actions.SET_FAC);
+export const actSetUiAiMlPolynomFactorsTrained = action_<number[]>(actions.SET_FAT);
+export const actSetUiAiMlPolynomLearningRate = action_<number>(actions.SET_LEA);
+export const actSetUiAiMlPolynomOptimizer = action_<string>(actions.SET_OPT);
+export const actSetUiAiMlPolynomPointsCurrent = action_<number[]>(actions.SET_POI);
 
 // REDUCER
 
 export const redMlPolynomialState = combineReducers(<ReducersMapObject<MlPolynomialState, AnyAction>>{
-  [KEY_FAC]: createReducer(Object.freeze([1, 1, 1, 1]), { [actions.SET_FAC]: redSetValue }),
-  [KEY_FAT]: createReducer(Object.freeze([0, 0, 0, 0]), { [actions.SET_FAT]: redSetValue }),
-  [KEY_LEA]: createReducer(.1, { [actions.SET_LEA]: redSetValue }),
-  [KEY_OPT]: createReducer(Object.freeze(null as string), { [actions.SET_OPT]: redSetValue }),
-  [KEY_POI]: createReducer(Object.freeze([]), { [actions.SET_POI]: redSetValue }),
+  [KEY_FAC]: reduce_(Object.freeze([1, 1, 1, 1]), { [actions.SET_FAC]: reduceSet }),
+  [KEY_FAT]: reduce_(Object.freeze([0, 0, 0, 0]), { [actions.SET_FAT]: reduceSet }),
+  [KEY_LEA]: reduce_(.1, { [actions.SET_LEA]: reduceSet }),
+  [KEY_OPT]: reduce_(Object.freeze(null as string), { [actions.SET_OPT]: reduceSet }),
+  [KEY_POI]: reduce_(Object.freeze([]), { [actions.SET_POI]: reduceSet }),
 });

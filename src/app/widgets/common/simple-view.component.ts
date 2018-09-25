@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { FORMAT_DATE_TIMESTAMP } from 'app/presets';
 import { isNumeric, isWeb } from 'app/util';
 import { WithDataProperty } from 'app/widgets/util';
+import { map } from 'rxjs/operators';
 
 type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string' | 'void';
 
@@ -9,20 +11,16 @@ type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string'
   templateUrl: './simple-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SimpleViewComponent extends WithDataProperty<Object> {
+export class SimpleViewComponent extends WithDataProperty<Object>  {
+  readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;
+
+  readonly keys$ = this.data$.pipe(map(_ => Object.keys(_ || {})));
+  readonly types$ = this.keys$.pipe(map(_ => _.map(key => this.data$.value[key]).map(this.guessType)));
 
   @Input() isWidthConstrained = true;
   @Input() isDense = false;
   @Input() isExpanded = true;
   @Input() isExpandable = false;
-
-  keys: string[] = [];
-  types: CellType[] = [];
-
-  protected onDataChange(old: Object, val: Object) {
-    this.keys = Object.keys(val || {});
-    this.types = this.keys.map(key => this.guessType(val[key]));
-  }
 
   private guessType = (val: any): CellType => val === null || val === undefined ? 'void' :
     typeof val === 'object' ? val instanceof Date ? 'timestamp' : 'recursive' :

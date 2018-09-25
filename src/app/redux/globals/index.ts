@@ -1,5 +1,5 @@
-import { createAction, createReducer, redMergeValue, redSetValue } from 'app/redux/util';
-import { AnyAction, ReducersMapObject, combineReducers } from 'redux';
+import { action_, reduceMrg, reduceSet, reduce_ } from 'app/redux/util';
+import { AnyAction, combineReducers, ReducersMapObject } from 'redux';
 import { INTERFIX } from './parent';
 
 // STATE
@@ -31,13 +31,13 @@ const actions = {
   SET_ROU: 'SET_' + INTERFIX + '_ROUTE',
 }
 
-export const actMergeGlobalFlags = createAction<GlobalFlags>(actions.MRG_FLA);
-export const actSetGlobalRoute = createAction<string>(actions.SET_ROU);
+export const actMergeGlobalFlags = action_<GlobalFlags>(actions.MRG_FLA);
+export const actSetGlobalRoute = action_<string>(actions.SET_ROU);
 
 // REDUCER
 
 export const redGlobalValues = combineReducers(<ReducersMapObject<GlobalValues, AnyAction>>{
-  [KEY_FLA]: createReducer(Object.freeze(<GlobalFlags>
+  [KEY_FLA]: reduce_(Object.freeze(<GlobalFlags>
     {
       buildId: null,
       buildRevision: null,
@@ -49,8 +49,8 @@ export const redGlobalValues = combineReducers(<ReducersMapObject<GlobalValues, 
       title: null,
       version: null
     }), {
-      [actions.MRG_FLA]: redMergeValue
+      [actions.MRG_FLA]: reduceMrg
     }
   ),
-  [KEY_ROU]: createReducer(Object.freeze(''), { [actions.SET_ROU]: redSetValue })
+  [KEY_ROU]: reduce_(Object.freeze(''), { [actions.SET_ROU]: reduceSet })
 });

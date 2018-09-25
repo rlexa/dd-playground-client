@@ -1,12 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService } from 'app/redux';
+import { DoneSubject } from 'app/rx';
 
 @Component({
   selector: 'app-demo-state',
   templateUrl: './demo-state.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DemoStateComponent {
+export class DemoStateComponent implements OnDestroy {
   constructor(private redux: ReduxService) { }
-  state$ = this.redux.watch(state => state);
+
+  private readonly done$ = new DoneSubject();
+
+  readonly state$ = this.redux.watch(state => state, this.done$);
+
+  ngOnDestroy() { this.done$.done(); }
 }

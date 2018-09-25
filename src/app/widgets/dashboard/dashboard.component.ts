@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService } from 'app/redux';
 import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_SETTINGS, ROUTE_WALKER } from 'app/routing';
+import { DoneSubject } from 'app/rx';
 import { map } from 'rxjs/operators';
 
 interface RouteDef {
@@ -15,7 +16,10 @@ interface RouteDef {
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnDestroy {
+  constructor(private redux: ReduxService) { }
+
+  private readonly done$ = new DoneSubject();
 
   readonly GRID_CONTENT = 'cont';
   readonly GRID_FOOTER = 'foot';
@@ -59,22 +63,22 @@ export class DashboardComponent {
     }
   ];
 
-  constructor(private redux: ReduxService) { }
+  isVisibleFooter$ = this.redux.watch(state => state.ui.dashboard.isVisibleFooter, this.done$);
+  isVisibleHeader$ = this.redux.watch(state => state.ui.dashboard.isVisibleHeader, this.done$);
+  isVisibleSide$ = this.redux.watch(state => state.ui.dashboard.isVisibleSide, this.done$);
 
-  isVisibleFooter$ = this.redux.watch(state => state.ui.dashboard.isVisibleFooter);
-  isVisibleHeader$ = this.redux.watch(state => state.ui.dashboard.isVisibleHeader);
-  isVisibleSide$ = this.redux.watch(state => state.ui.dashboard.isVisibleSide);
-
-  subRoute$ = this.redux.watch(state => state.globalValues.route)
+  subRoute$ = this.redux.watch(state => state.globalValues.route, this.done$)
     .pipe(map(url => {
       const paths = url.split('/');
       const indexMe = paths.indexOf(ROUTE_DASHBOARD);
       return indexMe >= 0 && paths.length > indexMe + 1 ? paths[indexMe + 1] : null;
     }));
+
   subRoutes$ = this.subRoute$
     .pipe(map(subRoute => {
       const route = this.routes.find(ii => ii.route === subRoute);
       return route ? route.subs : [];
     }));
 
+  ngOnDestroy() { this.done$.done(); }
 }

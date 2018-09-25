@@ -1,33 +1,35 @@
-<div *ngIf="model !== null" class="position-relative">
+<div *ngIf="data$ | async as model" class="position-relative">
   <div ddFlexbox="hys" [style.maxWidth]="'100%'" class="scroll-x-auto">
     <button mat-button *ngIf="isExpandable" class="inline-button" (click)="isExpanded = !isExpanded">
       <i class="material-icons rot-90">{{ (isExpanded ? 'collapse' : 'expand') | icon }}</i>
     </button>
     <mat-list *ngIf="!isExpandable || isExpanded" class="mat-list-auto-height" [attr.dense]="isDense ? true : null">
-      <table>
-        <tr *ngFor="let key of keys; let iindex = index;">
-          <td [style.verticalAlign]="'top'">
-            <mat-list-item>
-              <span class="no-break-text">{{ key | startuppercase | ripupper }}</span>
-            </mat-list-item>
-          </td>
-          <!-- <td class="contenthv" [style.verticalAlign]="'top'">{{ types[iindex] }}</td> -->
-          <td>
-            <mat-list-item>
-              <span class="break-text" [ngClass]="{'value-numeric': types[iindex] === 'number', 'size-data-label': isWidthConstrained}">
-                <ng-container [ngSwitch]="types[iindex]">
-                  <a *ngSwitchCase="'url'" [href]="model[key]">{{ model[key] }}</a>
-                  <ng-container *ngSwitchCase="'timestamp'"> {{ model[key] | date:timestampFormat }} </ng-container>
-                  <ng-container *ngSwitchCase="'json'"> {{ model[key] | json }} </ng-container>
-                  <ng-container *ngSwitchCase="'void'"> {{ '-' }} </ng-container>
-                  <app-simple-view *ngSwitchCase="'recursive'" [data]="model[key]" [isWidthConstrained]="isWidthConstrained" [isExpandable]="true"
-                    [isExpanded]="false"></app-simple-view>
-                  <ng-container *ngSwitchDefault> {{ model[key] }} </ng-container>
-                </ng-container>
-              </span>
-            </mat-list-item>
-          </td>
-        </tr>
+      <table *ngIf="keys$ | async as keys">
+        <ng-container *ngIf="types$ | async as types">
+          <tr *ngFor="let key of keys; let iindex = index;">
+            <td [style.verticalAlign]="'top'">
+              <mat-list-item>
+                <span class="no-break-text">{{ key | startuppercase | ripupper }}</span>
+              </mat-list-item>
+            </td>
+            <!-- <td class="contenthv" [style.verticalAlign]="'top'">{{ types[iindex] }}</td> -->
+            <td>
+              <mat-list-item>
+                <span class="break-text" [ngClass]="{'value-numeric': types[iindex] === 'number', 'size-data-label': isWidthConstrained}">
+                  <ng-container [ngSwitch]="types[iindex]">
+                    <a *ngSwitchCase="'url'" [href]="model[key]">{{ model[key] }}</a>
+                    <ng-container *ngSwitchCase="'timestamp'"> {{ model[key] | date:FORMAT_DATE_TIMESTAMP }} </ng-container>
+                    <ng-container *ngSwitchCase="'json'"> {{ model[key] | json }} </ng-container>
+                    <ng-container *ngSwitchCase="'void'"> {{ '-' }} </ng-container>
+                    <app-simple-view *ngSwitchCase="'recursive'" [data]="model[key]" [isWidthConstrained]="isWidthConstrained"
+                      [isExpandable]="true" [isExpanded]="false"></app-simple-view>
+                    <ng-container *ngSwitchDefault> {{ model[key] }} </ng-container>
+                  </ng-container>
+                </span>
+              </mat-list-item>
+            </td>
+          </tr>
+        </ng-container>
       </table>
     </mat-list>
   </div>
