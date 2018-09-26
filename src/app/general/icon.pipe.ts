@@ -17,6 +17,7 @@ export const ICON_MAP: { [key: string]: string } = {
   exit: 'power_settings_new',
   expand: 'expand_more',
   filter: 'filter_list',
+  game: 'games',
   go_down: 'arrow_downward',
   go_down_left: 'subdirectory_arrow_left',
   go_down_right: 'subdirectory_arrow_right',

@@ -1,0 +1,9 @@
+<div class="border">
+  <table>
+    <tr *ngFor="let yy of HEIGHT">
+      <td *ngFor="let xx of WIDTH">
+        <app-game-down-field [theme]="theme$ | async" [data]="fields_$[yy * WIDTH.length + xx] | async"></app-game-down-field>
+      </td>
+    </tr>
+  </table>
+</div>

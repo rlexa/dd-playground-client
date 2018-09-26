@@ -1,0 +1,17 @@
+<div ddFlexbox="hyscsw">
+
+  <mat-card class="childhv">
+    <mat-card-title>Scene</mat-card-title>
+    <mat-card-content>
+      <app-game-down-scene></app-game-down-scene>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="childhv">
+    <mat-card-title>State</mat-card-title>
+    <mat-card-content>
+      <app-simple-view [data]="state$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+    </mat-card-content>
+  </mat-card>
+
+</div>

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService } from 'app/redux';
-import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_SETTINGS, ROUTE_WALKER } from 'app/routing';
+import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_SETTINGS, ROUTE_WALKER } from 'app/routing';
 import { DoneSubject } from 'app/rx';
 import { map } from 'rxjs/operators';
 
@@ -47,6 +47,11 @@ export class DashboardComponent implements OnDestroy {
     {
       icon: 'ai', route: ROUTE_AI, label: 'AI', subs: [
         { icon: 'polynom', route: ROUTE_APPROXPOLYNOM, label: 'ML Polynomial', subs: [] }
+      ]
+    },
+    {
+      icon: 'game', route: ROUTE_GAME, label: 'Game', subs: [
+        { icon: 'items1', route: ROUTE_GAME_DOWN, label: 'Down', subs: [] },
       ]
     },
     {

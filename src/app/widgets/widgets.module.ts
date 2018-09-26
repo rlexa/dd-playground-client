@@ -5,7 +5,7 @@ import { MatAutocompleteModule, MatButtonModule, MatCardModule, MatFormFieldModu
 import { RouterModule } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { FlexboxModule } from 'dd-flexbox';
-import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
+import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownFieldComponent, GameDownSceneComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
 
 @NgModule({
   imports: [
@@ -36,6 +36,9 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
     DemoStateComponent,
     DiagramPolynomComponent,
     EmptyComponent,
+    GameDownComponent,
+    GameDownFieldComponent,
+    GameDownSceneComponent,
     GraphTopLevelComponent,
     GraphWalkerComponent,
     MlPolynomialComponent,
@@ -51,6 +54,7 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
     DemoMiscComponent,
     DemoStateComponent,
     EmptyComponent,
+    GameDownComponent,
     GraphTopLevelComponent,
     GraphWalkerComponent,
     MlPolynomialComponent,
@@ -60,5 +64,5 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
 })
 export class WidgetsModule { }
 
-export { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GraphTopLevelComponent, GraphWalkerComponent, EmptyComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, };
+export { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GameDownComponent, GraphTopLevelComponent, GraphWalkerComponent, EmptyComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, };
 

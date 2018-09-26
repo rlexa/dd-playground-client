@@ -1,0 +1,5 @@
+<div class="border-radius" [ngStyle]="{'width': '10rem', 'height': '10rem'}">
+  <ng-container *ngIf="data$ | async as data">
+    <label>{{ data.field }}</label>
+  </ng-container>
+</div>

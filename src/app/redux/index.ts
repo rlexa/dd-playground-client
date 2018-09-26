@@ -1,3 +1,4 @@
+export * from './game';
 export * from './globals';
 export * from './redux-set-global.service';
 export * from './redux-set-ui-ai.service';
