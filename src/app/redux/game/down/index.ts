@@ -25,10 +25,12 @@ export interface GameDownStateScene {
 const KEY_FIV = 'fieldValues';
 const KEY_SCE = 'scene';
 const KEY_THV = 'themeValues';
+const KEY_VID = 'viewDebug';
 export interface GameDownState {
   fieldValues: string[],
   scene: GameDownStateScene,
   themeValues: string[],
+  viewDebug: boolean,
 }
 
 // DEFAULTS
@@ -59,6 +61,7 @@ const actions = {
   SET_SCE_FIS: 'SET_' + INTERFIX + '_' + KEY_SCE + '_' + KEY_GDS_FIE + '_FIELDS',
   SET_SCE_THE: 'SET_' + INTERFIX + '_' + KEY_SCE + '_' + KEY_GDS_THE + '_THEME',
   SET_THV: 'SET_' + INTERFIX + '_THEME_VALUES',
+  SET_VID: 'SET_' + INTERFIX + '_VIEW_DEBUG',
 }
 
 interface IndexValue<T> { index: number, value: T }
@@ -68,6 +71,7 @@ export const actSetGameDownStateSceneField = action_<IndexValue<GameDownStateFie
 export const actSetGameDownStateSceneFields = action_<GameDownStateFields>(actions.SET_SCE_FIS);
 export const actSetGameDownStateSceneTheme = action_<string>(actions.SET_SCE_THE);
 export const actSetGameDownThemeValues = action_<string[]>(actions.SET_THV);
+export const actSetGameDownViewDebug = action_<boolean>(actions.SET_VID);
 
 // REDUCER
 
@@ -90,4 +94,5 @@ export const redGameDownState = combineReducers(<ReducersMapObject<GameDownState
       [KEY_GDS_THE]: reduce_(DEF_Theme, { [actions.SET_SCE_THE]: reduceSet }),
     }),
   [KEY_THV]: reduce_(Object.freeze(DEF_ThemeValues), { [actions.SET_THV]: reduceSet }),
+  [KEY_VID]: reduce_(true, { [actions.SET_VID]: reduceSet }),
 });

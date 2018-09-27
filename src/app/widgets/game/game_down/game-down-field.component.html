@@ -1,7 +1,7 @@
 <div class="border-radius position-relative" [ngStyle]="{'width': '8rem', 'height': '8rem'}">
   <ng-container *ngIf="theme$ | async as theme">
     <ng-container *ngIf="data$ | async as data">
-      <div ddFlexbox="vxeye" class="position-absolute match-parent">
+      <div *ngIf="viewDebug" ddFlexbox="vxeye" class="position-absolute match-parent">
         <label>{{ theme }}</label>
         <label>{{ data.field }}</label>
       </div>

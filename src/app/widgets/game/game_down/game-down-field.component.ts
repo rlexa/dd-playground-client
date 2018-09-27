@@ -17,6 +17,8 @@ export class GameDownFieldComponent implements OnDestroy {
   @Input() set data(val: GameDownStateField) { this.data$.next(val); }
   @Input() set theme(val: string) { this.theme$.next(val); }
 
+  @Input() viewDebug = false;
+
   ngOnDestroy() {
     this.done$.done();
     rxComplete(this.data$, this.theme$);

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService } from 'app/redux';
 import { GAME_DOWN_FIELD_H, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
 import { DoneSubject } from 'app/rx';
+import { shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-down-scene',
@@ -18,6 +19,8 @@ export class GameDownSceneComponent implements OnDestroy {
 
   readonly theme$ = this.redux.watch(state => state.game.down.scene.theme, this.done$);
   readonly fields$ = this.redux.watch(state => state.game.down.scene.fields, this.done$);
+
+  readonly viewDebug$ = this.redux.watch(state => state.game.down.viewDebug, this.done$).pipe(shareReplay());
 
   ngOnDestroy() { this.done$.done(); }
 }

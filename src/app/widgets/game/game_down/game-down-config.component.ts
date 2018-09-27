@@ -35,6 +35,7 @@ export class GameDownConfigComponent implements OnDestroy {
 
   readonly theme$ = this.redux.watch(state => state.game.down.scene.theme, this.done$);
   readonly themes$ = this.redux.watch(state => state.game.down.themeValues, this.done$);
+  readonly viewDebug$ = this.redux.watch(state => state.game.down.viewDebug, this.done$);
 
   readonly sceneFieldsPresets$ = new BehaviorSubject<{ [key: string]: GameDownStateFields }>(
     {
@@ -43,7 +44,8 @@ export class GameDownConfigComponent implements OnDestroy {
     });
   readonly sceneFieldsPresetsKeys$ = this.sceneFieldsPresets$.pipe(map(Object.keys));
 
-  onSelectTheme = this.reduxSet.setSceneTheme;
+  onSetTheme = this.reduxSet.setSceneTheme;
+  onSetViewDebug = this.reduxSet.setViewDebug;
 
   trackByIndex = trackByIndex;
 
@@ -54,5 +56,5 @@ export class GameDownConfigComponent implements OnDestroy {
     );
   }
 
-  onSelectFieldsPresetKey = (key: string) => key in this.sceneFieldsPresets$.value ? this.reduxSet.setSceneFields(this.sceneFieldsPresets$.value[key]) : {};
+  onSetFieldsPresetKey = (key: string) => key in this.sceneFieldsPresets$.value ? this.reduxSet.setSceneFields(this.sceneFieldsPresets$.value[key]) : {};
 }
