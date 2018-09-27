@@ -20,6 +20,7 @@ const KEY_SCE_FIE = 'fields';
 const KEY_SCE_FMA = 'factorMax';
 const KEY_SCE_FMI = 'factorMin';
 const KEY_SCE_HOV = 'hoveredIndex';
+const KEY_SCE_SEL = 'selectedIndex';
 const KEY_SCE_THE = 'theme';
 export interface GameDownStateScene {
   factor: number,
@@ -27,6 +28,7 @@ export interface GameDownStateScene {
   factorMin: number,
   fields: GameDownStateFields,
   hoveredIndex: number,
+  selectedIndex: number,
   theme: string,
 }
 
@@ -71,18 +73,20 @@ const actions = {
   SET_SCE_FIE: 'SET_' + INTERFIX + '_' + KEY_SCE + '_FIELD',
   SET_SCE_FIS: 'SET_' + INTERFIX + '_' + KEY_SCE + '_FIELDS',
   SET_SCE_HOV: 'SET_' + INTERFIX + '_' + KEY_SCE + '_HOVERED',
+  SET_SCE_SEL: 'SET_' + INTERFIX + '_' + KEY_SCE + '_SELECTED',
   SET_SCE_THE: 'SET_' + INTERFIX + '_' + KEY_SCE + '_THEME',
   SET_THV: 'SET_' + INTERFIX + '_THEME_VALUES',
   SET_VID: 'SET_' + INTERFIX + '_VIEW_DEBUG',
 }
 
-interface IndexValue<T> { index: number, value: T }
+export interface IndexValue<T> { index: number, value: T }
 
 export const actSetGameDownFieldValues = action_<string[]>(actions.SET_FIV);
 export const actSetGameDownStateSceneFactor = action_<number>(actions.SET_SCE_FAC);
 export const actSetGameDownStateSceneField = action_<IndexValue<GameDownStateField>>(actions.SET_SCE_FIE);
 export const actSetGameDownStateSceneFields = action_<GameDownStateFields>(actions.SET_SCE_FIS);
-export const actSetGameDownStateSceneHovered = action_<number>(actions.SET_SCE_HOV);
+export const actSetGameDownStateSceneHoveredIndex = action_<number>(actions.SET_SCE_HOV);
+export const actSetGameDownStateSceneSelectedIndex = action_<number>(actions.SET_SCE_SEL);
 export const actSetGameDownStateSceneTheme = action_<string>(actions.SET_SCE_THE);
 export const actSetGameDownThemeValues = action_<string[]>(actions.SET_THV);
 export const actSetGameDownViewDebug = action_<boolean>(actions.SET_VID);
@@ -109,6 +113,7 @@ export const redGameDownState = combineReducers(<ReducersMapObject<GameDownState
       [KEY_SCE_FMA]: reduce_(2),
       [KEY_SCE_FMI]: reduce_(.5),
       [KEY_SCE_HOV]: reduce_(<number>null, { [actions.SET_SCE_HOV]: reduceSet }),
+      [KEY_SCE_SEL]: reduce_(<number>null, { [actions.SET_SCE_SEL]: reduceSet }),
       [KEY_SCE_THE]: reduce_(DEF_Theme, { [actions.SET_SCE_THE]: reduceSet }),
     }),
   [KEY_THV]: reduce_(Object.freeze(DEF_ThemeValues), { [actions.SET_THV]: reduceSet }),

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService, ReduxSetGameDownService } from 'app/redux';
-import { DEF_GameDownStateFields, FieldValueWater, GameDownStateFields, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
+import { DEF_GameDownStateFields, FieldValueWater, GameDownStateField, GameDownStateFields, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
 import { DoneSubject, rxComplete } from 'app/rx';
 import { trackByIndex } from 'app/widgets/util';
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, of } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
 
 const WW = GAME_DOWN_FIELD_W;
 const FieldsPreset_Situation1 = <GameDownStateFields>
@@ -36,9 +36,14 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly factor$ = this.redux.watch(state => state.game.down.scene.factor, this.done$);
   readonly factorMax$ = this.redux.watch(state => state.game.down.scene.factorMax, this.done$);
   readonly factorMin$ = this.redux.watch(state => state.game.down.scene.factorMin, this.done$);
+  readonly fields$ = this.redux.watch(state => state.game.down.fieldValues, this.done$);
+  readonly selectedFieldIndex$ = this.redux.watch(state => state.game.down.scene.selectedIndex, this.done$);
   readonly theme$ = this.redux.watch(state => state.game.down.scene.theme, this.done$);
   readonly themes$ = this.redux.watch(state => state.game.down.themeValues, this.done$);
   readonly viewDebug$ = this.redux.watch(state => state.game.down.viewDebug, this.done$);
+
+  readonly selectedField$ = combineLatest(this.selectedFieldIndex$, this.redux.watch(state => state.game.down.scene.fields, this.done$))
+    .pipe(map(([index, fields]) => fields[index] || null), takeUntil(this.done$));
 
   readonly sceneFieldsPresets$ = new BehaviorSubject<{ [key: string]: GameDownStateFields }>(
     {
@@ -59,6 +64,10 @@ export class GameDownConfigComponent implements OnDestroy {
       this.sceneFieldsPresets$,
     );
   }
+
+  onMergeSelectedField = (field: GameDownStateField, merge: GameDownStateField) => of({ field, merge, index: this.selectedFieldIndex$.value })
+    .pipe(filter(_ => Object.keys(merge).length > 0 && Object.keys(merge).every(key => key in field)))
+    .subscribe(_ => this.reduxSet.setSceneField(_.index, { ..._.field, ..._.merge }));
 
   onSetFieldsPresetKey = (key: string) => key in this.sceneFieldsPresets$.value ? this.reduxSet.setSceneFields(this.sceneFieldsPresets$.value[key]) : {};
 }
