@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { ReduxService } from 'app/redux';
+import { ReduxService, ReduxSetGameDownService } from 'app/redux';
 import { GAME_DOWN_FIELD_H, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
 import { DoneSubject } from 'app/rx';
 import { shareReplay } from 'rxjs/operators';
@@ -10,7 +10,10 @@ import { shareReplay } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameDownSceneComponent implements OnDestroy {
-  constructor(private readonly redux: ReduxService) { }
+  constructor(
+    private readonly redux: ReduxService,
+    private readonly reduxSet: ReduxSetGameDownService,
+  ) { }
 
   private readonly done$ = new DoneSubject();
 
@@ -18,9 +21,11 @@ export class GameDownSceneComponent implements OnDestroy {
   readonly WIDTH = Array.from(Array(GAME_DOWN_FIELD_W), (_, index) => index);
 
   readonly theme$ = this.redux.watch(state => state.game.down.scene.theme, this.done$);
+  readonly factor$ = this.redux.watch(state => state.game.down.scene.factor, this.done$);
   readonly fields$ = this.redux.watch(state => state.game.down.scene.fields, this.done$);
-
   readonly viewDebug$ = this.redux.watch(state => state.game.down.viewDebug, this.done$).pipe(shareReplay());
 
   ngOnDestroy() { this.done$.done(); }
+
+  onHover = (index: number, hovered: boolean) => this.reduxSet.setSceneHoveredIndex(hovered ? index : null);
 }

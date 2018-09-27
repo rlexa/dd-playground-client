@@ -33,6 +33,9 @@ export class GameDownConfigComponent implements OnDestroy {
 
   private readonly done$ = new DoneSubject();
 
+  readonly factor$ = this.redux.watch(state => state.game.down.scene.factor, this.done$);
+  readonly factorMax$ = this.redux.watch(state => state.game.down.scene.factorMax, this.done$);
+  readonly factorMin$ = this.redux.watch(state => state.game.down.scene.factorMin, this.done$);
   readonly theme$ = this.redux.watch(state => state.game.down.scene.theme, this.done$);
   readonly themes$ = this.redux.watch(state => state.game.down.themeValues, this.done$);
   readonly viewDebug$ = this.redux.watch(state => state.game.down.viewDebug, this.done$);
@@ -44,6 +47,7 @@ export class GameDownConfigComponent implements OnDestroy {
     });
   readonly sceneFieldsPresetsKeys$ = this.sceneFieldsPresets$.pipe(map(Object.keys));
 
+  onSetFactor = this.reduxSet.setSceneFactor;
   onSetTheme = this.reduxSet.setSceneTheme;
   onSetViewDebug = this.reduxSet.setViewDebug;
 

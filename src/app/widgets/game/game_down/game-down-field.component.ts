@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { GameDownStateField } from 'app/redux/game/down';
 import { DoneSubject, rxComplete } from 'app/rx';
 import { BehaviorSubject } from 'rxjs';
@@ -19,8 +19,14 @@ export class GameDownFieldComponent implements OnDestroy {
 
   @Input() viewDebug = false;
 
+  @Output() hover = new EventEmitter<boolean>();
+
   ngOnDestroy() {
+    this.hover.emit(false);
     this.done$.done();
     rxComplete(this.data$, this.theme$);
   }
+
+  onMouseEnter = () => this.hover.emit(true);
+  onMouseLeave = () => this.hover.emit(false);
 }

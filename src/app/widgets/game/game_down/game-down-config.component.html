@@ -11,6 +11,13 @@
     <mat-list class="mat-list-auto-height">
       <h3 mat-subheader>Scene</h3>
       <mat-list-item>
+        <div ddFlexbox="hyc">
+          <label mat-line>Size:</label>
+          <mat-slider [max]="factorMax$ | async" [min]="factorMin$ | async" [step]=".1" [value]="factor$ | async" [thumbLabel]="true"
+            (change)="onSetFactor($event.value)"></mat-slider>
+        </div>
+      </mat-list-item>
+      <mat-list-item>
         <mat-form-field *ngIf="sceneFieldsPresetsKeys$ | async as sceneFieldsPresetsKeys">
           <mat-select #sceneFieldsPreset placeholder="Field Presets" (valueChange)="onSetFieldsPresetKey($event); sceneFieldsPreset.value = null;">
             <mat-option [value]="null">-</mat-option>
