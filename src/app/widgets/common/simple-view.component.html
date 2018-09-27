@@ -14,7 +14,7 @@
             </td>
             <!-- <td class="contenthv" [style.verticalAlign]="'top'">{{ types[iindex] }}</td> -->
             <td>
-              <mat-list-item>
+              <mat-list-item [@TRIGGER_WobbleX]="model[key]">
                 <span class="break-text" [ngClass]="{'value-numeric': types[iindex] === 'number', 'size-data-label': isWidthConstrained}">
                   <ng-container [ngSwitch]="types[iindex]">
                     <a *ngSwitchCase="'url'" [href]="model[key]">{{ model[key] }}</a>

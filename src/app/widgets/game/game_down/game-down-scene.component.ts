@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService } from 'app/redux';
-import { GAME_DOWN_FIELD_H, GAME_DOWN_FIELD_Q, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
+import { GAME_DOWN_FIELD_H, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
 import { DoneSubject } from 'app/rx';
 
 @Component({
@@ -9,7 +9,7 @@ import { DoneSubject } from 'app/rx';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameDownSceneComponent implements OnDestroy {
-  constructor(private redux: ReduxService) { }
+  constructor(private readonly redux: ReduxService) { }
 
   private readonly done$ = new DoneSubject();
 
@@ -17,7 +17,7 @@ export class GameDownSceneComponent implements OnDestroy {
   readonly WIDTH = Array.from(Array(GAME_DOWN_FIELD_W), (_, index) => index);
 
   readonly theme$ = this.redux.watch(state => state.game.down.scene.theme, this.done$);
-  readonly fields_$ = Array.from(Array(GAME_DOWN_FIELD_Q), (_, index) => this.redux.watch(state => state.game.down.scene.fields[index], this.done$));
+  readonly fields$ = this.redux.watch(state => state.game.down.scene.fields, this.done$);
 
   ngOnDestroy() { this.done$.done(); }
 }

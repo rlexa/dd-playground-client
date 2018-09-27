@@ -8,7 +8,7 @@ import { DoneSubject } from 'app/rx';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameDownComponent implements OnDestroy {
-  constructor(private redux: ReduxService) { }
+  constructor(private readonly redux: ReduxService) { }
 
   private readonly done$ = new DoneSubject();
 

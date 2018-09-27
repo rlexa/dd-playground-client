@@ -5,7 +5,7 @@ import { MatAutocompleteModule, MatButtonModule, MatCardModule, MatFormFieldModu
 import { RouterModule } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { FlexboxModule } from 'dd-flexbox';
-import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownFieldComponent, GameDownSceneComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
+import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
 
 @NgModule({
   imports: [
@@ -37,6 +37,7 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
     DiagramPolynomComponent,
     EmptyComponent,
     GameDownComponent,
+    GameDownConfigComponent,
     GameDownFieldComponent,
     GameDownSceneComponent,
     GraphTopLevelComponent,

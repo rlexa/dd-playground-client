@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { TRIGGER_WobbleX } from 'app/animations';
 import { FORMAT_DATE_TIMESTAMP } from 'app/presets';
 import { isNumeric, isWeb } from 'app/util';
 import { WithDataProperty } from 'app/widgets/util';
@@ -10,6 +11,7 @@ type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string'
   selector: 'app-simple-view',
   templateUrl: './simple-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [TRIGGER_WobbleX],
 })
 export class SimpleViewComponent extends WithDataProperty<Object>  {
   readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;

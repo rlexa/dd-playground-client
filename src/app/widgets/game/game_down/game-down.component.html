@@ -8,6 +8,13 @@
   </mat-card>
 
   <mat-card class="childhv">
+    <mat-card-title>Config</mat-card-title>
+    <mat-card-content>
+      <app-game-down-config></app-game-down-config>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="childhv">
     <mat-card-title>State</mat-card-title>
     <mat-card-content>
       <app-simple-view [data]="state$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
