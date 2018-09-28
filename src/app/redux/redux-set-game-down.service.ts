@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { actSetGameDownFieldValues, actSetGameDownStateSceneFactor, actSetGameDownStateSceneField, actSetGameDownStateSceneFields, actSetGameDownStateSceneHoveredIndex, actSetGameDownStateSceneSelectedIndex, actSetGameDownStateSceneTheme, actSetGameDownThemeValues, actSetGameDownViewDebug, DEF_Field, DEF_GameDownStateFields, DEF_SceneFactor, DEF_Theme, GameDownStateField, GameDownStateFields, IndexValue } from 'app/redux/game/down';
+import { Theme, THEME_MISSING } from 'app/game';
+import { actSetGameDownFieldValues, actSetGameDownStateSceneFactor, actSetGameDownStateSceneField, actSetGameDownStateSceneFields, actSetGameDownStateSceneHoveredIndex, actSetGameDownStateSceneSelectedIndex, actSetGameDownStateSceneTheme, actSetGameDownThemes, actSetGameDownViewDebug, DEF_Field, DEF_GameDownStateFields, DEF_SceneFactor, DEF_Theme, GameDownColorMap, GameDownStateField, GameDownStateFields, IndexValue } from 'app/redux/game/down';
 import { Store } from 'redux';
 import { ReduxMutator } from './redux-mutator';
 import { AppState } from './state';
@@ -18,6 +19,6 @@ export class ReduxSetGameDownService extends ReduxMutator {
   setSceneHoveredIndex = (val: number) => this.do(this.state().scene.hoveredIndex, typeof val === 'number' ? val : <number>null, actSetGameDownStateSceneHoveredIndex);
   setSceneSelectedIndex = (val: number) => this.do(this.state().scene.selectedIndex, typeof val === 'number' ? val : <number>null, actSetGameDownStateSceneSelectedIndex);
   setSceneTheme = (val: string) => this.do(this.state().scene.theme, val || DEF_Theme, actSetGameDownStateSceneTheme);
-  setThemeValues = (val: string[]) => this.do(this.state().themeValues, val || [DEF_Theme], actSetGameDownThemeValues);
+  setThemes = (val: Theme<GameDownColorMap>[]) => this.do(this.state().themes, val || [THEME_MISSING], actSetGameDownThemes);
   setViewDebug = (val: boolean) => this.do(this.state().viewDebug, !!val, actSetGameDownViewDebug);
 }

@@ -1,7 +1,16 @@
+import { StringToString, Theme, THEME_MISSING } from 'app/game';
 import { ActionValue, action_, reduceSet, reduce_ } from 'app/redux/util';
 import { isEqualValue } from 'app/util';
 import { AnyAction, combineReducers, ReducersMapObject } from 'redux';
 import { INTERFIX } from './parent';
+
+// THEME
+
+export interface GameDownColorMap extends StringToString {
+  fieldBackground: string,
+  fieldGround: string,
+  fieldWater: string,
+}
 
 // STATE
 
@@ -34,12 +43,12 @@ export interface GameDownStateScene {
 
 const KEY_FIV = 'fieldValues';
 const KEY_SCE = 'scene';
-const KEY_THV = 'themeValues';
+const KEY_THE = 'themes';
 const KEY_VID = 'viewDebug';
 export interface GameDownState {
   fieldValues: string[],
   scene: GameDownStateScene,
-  themeValues: string[],
+  themes: Theme<GameDownColorMap>[],
   viewDebug: boolean,
 }
 
@@ -75,7 +84,7 @@ const actions = {
   SET_SCE_HOV: 'SET_' + INTERFIX + '_' + KEY_SCE + '_HOVERED',
   SET_SCE_SEL: 'SET_' + INTERFIX + '_' + KEY_SCE + '_SELECTED',
   SET_SCE_THE: 'SET_' + INTERFIX + '_' + KEY_SCE + '_THEME',
-  SET_THV: 'SET_' + INTERFIX + '_THEME_VALUES',
+  SET_THE: 'SET_' + INTERFIX + '_THEMES',
   SET_VID: 'SET_' + INTERFIX + '_VIEW_DEBUG',
 }
 
@@ -88,7 +97,7 @@ export const actSetGameDownStateSceneFields = action_<GameDownStateFields>(actio
 export const actSetGameDownStateSceneHoveredIndex = action_<number>(actions.SET_SCE_HOV);
 export const actSetGameDownStateSceneSelectedIndex = action_<number>(actions.SET_SCE_SEL);
 export const actSetGameDownStateSceneTheme = action_<string>(actions.SET_SCE_THE);
-export const actSetGameDownThemeValues = action_<string[]>(actions.SET_THV);
+export const actSetGameDownThemes = action_<Theme<GameDownColorMap>[]>(actions.SET_THE);
 export const actSetGameDownViewDebug = action_<boolean>(actions.SET_VID);
 
 // REDUCER
@@ -116,6 +125,6 @@ export const redGameDownState = combineReducers(<ReducersMapObject<GameDownState
       [KEY_SCE_SEL]: reduce_(<number>null, { [actions.SET_SCE_SEL]: reduceSet }),
       [KEY_SCE_THE]: reduce_(DEF_Theme, { [actions.SET_SCE_THE]: reduceSet }),
     }),
-  [KEY_THV]: reduce_(Object.freeze(DEF_ThemeValues), { [actions.SET_THV]: reduceSet }),
-  [KEY_VID]: reduce_(true, { [actions.SET_VID]: reduceSet }),
+  [KEY_THE]: reduce_(Object.freeze([THEME_MISSING]), { [actions.SET_THE]: reduceSet }),
+  [KEY_VID]: reduce_(false, { [actions.SET_VID]: reduceSet }),
 });

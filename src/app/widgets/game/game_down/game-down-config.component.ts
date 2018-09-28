@@ -39,7 +39,7 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly fields$ = this.redux.watch(state => state.game.down.fieldValues, this.done$);
   readonly selectedFieldIndex$ = this.redux.watch(state => state.game.down.scene.selectedIndex, this.done$);
   readonly theme$ = this.redux.watch(state => state.game.down.scene.theme, this.done$);
-  readonly themes$ = this.redux.watch(state => state.game.down.themeValues, this.done$);
+  readonly themes$ = this.redux.watch(state => state.game.down.themes, this.done$).pipe(map(_ => _.map(ii => ii.name)));
   readonly viewDebug$ = this.redux.watch(state => state.game.down.viewDebug, this.done$);
 
   readonly selectedField$ = combineLatest(this.selectedFieldIndex$, this.redux.watch(state => state.game.down.scene.fields, this.done$))

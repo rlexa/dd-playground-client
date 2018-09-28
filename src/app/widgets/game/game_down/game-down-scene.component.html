@@ -1,5 +1,5 @@
 <div class="border" [style.fontSize]="(factor$ | async) + 'rem'" [style.backgroundColor]="'white'">
-  <table>
+  <table [style.border]="'none'" [attr.cellspacing]="'0'" [attr.cellpadding]="'0'">
     <ng-container *ngIf="fields$ | async as fields">
       <tr *ngFor="let yy of HEIGHT">
         <td *ngFor="let xx of WIDTH">
