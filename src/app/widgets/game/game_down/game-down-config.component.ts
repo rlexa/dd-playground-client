@@ -1,24 +1,43 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService, ReduxSetGameDownService } from 'app/redux';
-import { DEF_GameDownStateFields, FIELD_WATER, GameDownStateField, GameDownStateFields, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
+import { DEF_GameDownStateField, DEF_GameDownStateFields, entitiesToModifiers, ENTITY_FOREST, FIELD_WATER, GameDownStateField, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
 import { DoneSubject, rxComplete } from 'app/rx';
 import { trackByIndex } from 'app/widgets/util';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
 const WW = GAME_DOWN_FIELD_W;
-const FieldsPreset_Situation1 = <GameDownStateFields>
-  {
-    ...DEF_GameDownStateFields,
-    [0 * WW + 0]: { field: FIELD_WATER }, [0 * WW + 1]: { field: FIELD_WATER },
-    [1 * WW + 0]: { field: FIELD_WATER },
-    [2 * WW + 0]: { field: FIELD_WATER },
-    [3 * WW + 0]: { field: FIELD_WATER },
-    [4 * WW + 0]: { field: FIELD_WATER },
-    [5 * WW + 0]: { field: FIELD_WATER },
-    [6 * WW + 0]: { field: FIELD_WATER }, [6 * WW + 1]: { field: FIELD_WATER },
-    [7 * WW + 0]: { field: FIELD_WATER }, [7 * WW + 1]: { field: FIELD_WATER },
-  };
+
+const build_Situation_1 = () => {
+  const fields = [...DEF_GameDownStateFields];
+
+  fields[0 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+  fields[0 * WW + 1] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+  fields[0 * WW + 2] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST] };
+
+  fields[1 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+  fields[1 * WW + 2] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST] };
+
+  fields[2 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+  fields[2 * WW + 4] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST] };
+
+  fields[3 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+  fields[3 * WW + 2] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST] };
+
+  fields[4 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+  fields[4 * WW + 6] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST] };
+
+  fields[5 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+
+  fields[6 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+  fields[6 * WW + 1] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+  fields[6 * WW + 6] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST] };
+
+  fields[7 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+  fields[7 * WW + 1] = { ...DEF_GameDownStateField, field: FIELD_WATER };
+
+  return fields;
+}
 
 @Component({
   selector: 'app-game-down-config',
@@ -46,11 +65,13 @@ export class GameDownConfigComponent implements OnDestroy {
 
   readonly selectedField$ = combineLatest(this.selectedFieldIndex$, this.redux.watch(state => state.game.down.scene.fields, this.done$))
     .pipe(map(([index, fields]) => fields[index] || null), takeUntil(this.done$));
+  readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => _.entities.map(ii => ii.name)));
+  readonly selectedFieldModifiers$ = this.selectedField$.pipe(map(_ => _.entities), map(entitiesToModifiers));
 
-  readonly sceneFieldsPresets$ = new BehaviorSubject<{ [key: string]: GameDownStateFields }>(
+  readonly sceneFieldsPresets$ = new BehaviorSubject<{ [key: string]: GameDownStateField[] }>(
     {
-      'Default': DEF_GameDownStateFields,
-      'Situation 1': FieldsPreset_Situation1,
+      'Default': [...DEF_GameDownStateFields],
+      'Situation 1': build_Situation_1(),
     });
   readonly sceneFieldsPresetsKeys$ = this.sceneFieldsPresets$.pipe(map(Object.keys));
 
@@ -68,9 +89,11 @@ export class GameDownConfigComponent implements OnDestroy {
     );
   }
 
-  onMergeSelectedField = (field: GameDownStateField, merge: GameDownStateField) => of({ field, merge, index: this.selectedFieldIndex$.value })
-    .pipe(filter(_ => Object.keys(merge).length > 0 && Object.keys(merge).every(key => key in field)))
-    .subscribe(_ => this.reduxSet.setSceneField(_.index, { ..._.field, ..._.merge }));
+  onMergeSelectedField_Field = (into: GameDownStateField, field: string) => this.onMergeSelectedField(into, { field });
 
   onSetFieldsPresetKey = (key: string) => key in this.sceneFieldsPresets$.value ? this.reduxSet.setSceneFields(this.sceneFieldsPresets$.value[key]) : {};
+
+  private onMergeSelectedField = (into: GameDownStateField, merge: GameDownStateField) => of({ into, merge, index: this.selectedFieldIndex$.value })
+    .pipe(filter(_ => Object.keys(merge).length > 0 && Object.keys(merge).every(key => key in into)))
+    .subscribe(_ => this.reduxSet.setSceneField(_.index, { ..._.into, ..._.merge }));
 }

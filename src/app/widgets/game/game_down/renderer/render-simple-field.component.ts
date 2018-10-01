@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
-import { Theme, themeColor_ } from 'app/game';
+import { Theme } from 'app/game';
 import { GameDownColorMap, GameDownStateField } from 'app/redux/game/down';
 import { DoneSubject, rxComplete } from 'app/rx';
 import { BehaviorSubject, combineLatest } from 'rxjs';
@@ -19,10 +19,8 @@ export class RenderSimpleFieldComponent implements OnDestroy {
   readonly selected$ = new BehaviorSubject(false);
   readonly theme$ = new BehaviorSubject(<Theme<GameDownColorMap>>null);
 
-  readonly colorBg$ = this.theme$.pipe(map(themeColor_(ii => ii.fieldBackground)));
-  readonly colorField$ = combineLatest(this.data$, this.theme$).pipe(map(([data, theme]) => fieldToColor(data, theme)));
-
   readonly colorBorder$ = combineLatest(this.hovered$, this.selected$).pipe(map(([hovered, selected]) => hovered ? 'black' : selected ? 'red' : 'transparent'));
+  readonly colorField$ = combineLatest(this.data$, this.theme$).pipe(map(([data, theme]) => fieldToColor(data, theme)));
 
   @Input() set data(val: GameDownStateField) { this.data$.next(val); }
   @Input() set hovered(val: boolean) { this.hovered$.next(!!val); }

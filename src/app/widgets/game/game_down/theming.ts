@@ -53,7 +53,7 @@ export const theme_down_default = reduceThemes('invalid', [THEME_MISSING as Them
 
 export const themes = [
   theme_down_default,
-  reduceThemes('forest', [theme_down_default, { color: gd_color_green }]),
-  reduceThemes('desert', [theme_down_default, { color: gd_color_yellow }]),
-  reduceThemes('iceage', [theme_down_default, { color: gd_color_white }]),
+  reduceThemes('green', [theme_down_default, { color: gd_color_green }]),
+  reduceThemes('yellow', [theme_down_default, { color: gd_color_yellow }]),
+  reduceThemes('white', [theme_down_default, { color: gd_color_white }]),
 ];

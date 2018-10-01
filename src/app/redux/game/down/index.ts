@@ -14,11 +14,15 @@ export interface GameDownColorMap extends StringToString {
 
 // STATE
 
-export interface GameDownStateField {
-  field: string,
+export interface GameDownStateFieldEntity {
+  modifiers: string[],
+  name: string,
 }
 
-export interface GameDownStateFields { [key: number]: GameDownStateField }
+export interface GameDownStateField {
+  entities?: GameDownStateFieldEntity[],
+  field?: string,
+}
 
 const KEY_SCE_FAC = 'factor';
 const KEY_SCE_FIE = 'fields';
@@ -32,7 +36,7 @@ export interface GameDownStateScene {
   factor: number,
   factorMax: number,
   factorMin: number,
-  fields: GameDownStateFields,
+  fields: GameDownStateField[],
   hoveredIndex: number,
   renderer: string,
   selectedIndex: number,
@@ -40,12 +44,14 @@ export interface GameDownStateScene {
 }
 
 const KEY_FIV = 'fieldValues';
+const KEY_MOD = 'modifierValues';
 const KEY_REN = 'rendererValues';
 const KEY_SCE = 'scene';
 const KEY_THE = 'themes';
 const KEY_VID = 'viewDebug';
 export interface GameDownState {
   fieldValues: string[],
+  modifierValues: string[],
   rendererValues: string[],
   scene: GameDownStateScene,
   themes: Theme<GameDownColorMap>[],
@@ -60,18 +66,27 @@ export const GAME_DOWN_FIELD_Q = GAME_DOWN_FIELD_H * GAME_DOWN_FIELD_W;
 
 export const DEF_SceneFactor = 1;
 
+export const MODIFIER_FLAMMABLE = 'flammable';
+export const DEF_ModifierValues = [MODIFIER_FLAMMABLE];
+
+export const ENTITY_FOREST = Object.freeze(
+  <GameDownStateFieldEntity>{
+    modifiers: [MODIFIER_FLAMMABLE],
+    name: 'forest',
+  });
+
 export const FIELD_GROUND = 'ground';
 export const FIELD_WATER = 'water';
 export const DEF_FieldValues = [FIELD_GROUND, FIELD_WATER];
 export const DEF_Field = FIELD_GROUND;
 
-export const DEF_GameDownStateField = Object.freeze(<GameDownStateField>{
-  field: DEF_Field,
-});
+export const DEF_GameDownStateField = Object.freeze(
+  <GameDownStateField>{
+    entities: [],
+    field: DEF_Field,
+  });
 
-export const DEF_GameDownStateFields: GameDownStateFields = Object.freeze(
-  Array.from(Array(GAME_DOWN_FIELD_Q)).reduce((acc, _, index) => ({ ...acc, [index]: DEF_GameDownStateField }), {})
-);
+export const DEF_GameDownStateFields = Object.freeze(Array.from(Array(GAME_DOWN_FIELD_Q), () => DEF_GameDownStateField));
 
 export const RENDERER_SIMPLE = 'simple';
 export const DEF_Renderer = RENDERER_SIMPLE;
@@ -80,7 +95,6 @@ export const DEF_RendererValues = Object.freeze([RENDERER_SIMPLE]);
 // ACTION
 
 const actions = {
-  SET_FIV: 'SET_' + INTERFIX + '_FIELD_VALUES',
   SET_SCE_FAC: 'SET_' + INTERFIX + '_' + KEY_SCE + '_FACTOR',
   SET_SCE_FIE: 'SET_' + INTERFIX + '_' + KEY_SCE + '_FIELD',
   SET_SCE_FIS: 'SET_' + INTERFIX + '_' + KEY_SCE + '_FIELDS',
@@ -94,10 +108,9 @@ const actions = {
 
 export interface IndexValue<T> { index: number, value: T }
 
-export const actSetGameDownFieldValues = action_<string[]>(actions.SET_FIV);
 export const actSetGameDownStateSceneFactor = action_<number>(actions.SET_SCE_FAC);
 export const actSetGameDownStateSceneField = action_<IndexValue<GameDownStateField>>(actions.SET_SCE_FIE);
-export const actSetGameDownStateSceneFields = action_<GameDownStateFields>(actions.SET_SCE_FIS);
+export const actSetGameDownStateSceneFields = action_<GameDownStateField[]>(actions.SET_SCE_FIS);
 export const actSetGameDownStateSceneHoveredIndex = action_<number>(actions.SET_SCE_HOV);
 export const actSetGameDownStateSceneRenderer = action_<string>(actions.SET_SCE_REN);
 export const actSetGameDownStateSceneSelectedIndex = action_<number>(actions.SET_SCE_SEL);
@@ -107,15 +120,24 @@ export const actSetGameDownViewDebug = action_<boolean>(actions.SET_VID);
 
 // REDUCER
 
-const reduceSetOverwriteIndexed = <T>(state: { [key: number]: T }, action: ActionValue<IndexValue<T>>) => {
+export const entitiesToModifiers = (entities: GameDownStateFieldEntity[]) => (entities || []).map(_ => _.modifiers || [])
+  .reduceRight((acc, _) => {
+    _.filter(mod => !acc.includes(mod)).forEach(mod => acc.push(mod));
+    return acc;
+  }, <string[]>[]);
+
+const reduceSetOverwriteIndexed = <T>(state: T[], action: ActionValue<IndexValue<T>>) => {
   if (!action.value || !(action.value.index in state) || !action.value.value || isEqualValue(state[action.value.index], action.value.value)) {
     return state;
   }
-  return Object.freeze({ ...state, [action.value.index]: Object.freeze(action.value.value) });
+  const ret = [...state];
+  ret[action.value.index] = Object.freeze(action.value.value);
+  return ret;
 }
 
 export const redGameDownState = combineReducers(<ReducersMapObject<GameDownState, AnyAction>>{
-  [KEY_FIV]: reduce_(DEF_FieldValues, { [actions.SET_FIV]: reduceSet }),
+  [KEY_FIV]: reduce_(DEF_FieldValues),
+  [KEY_MOD]: reduce_(DEF_ModifierValues),
   [KEY_REN]: reduce_(DEF_RendererValues),
   [KEY_SCE]: combineReducers(<ReducersMapObject<GameDownStateScene, AnyAction>>
     {
