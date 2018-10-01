@@ -1,0 +1,6 @@
+<ng-container *ngIf="theme$ | async as theme">
+  <ng-container *ngIf="data$ | async as data">
+    <div class="position-absolute match-parent " [style.border]="'1px solid ' + (colorBorder$ | async)" [style.backgroundColor]="colorField$ | async">
+    </div>
+  </ng-container>
+</ng-container>

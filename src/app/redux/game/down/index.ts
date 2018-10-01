@@ -14,10 +14,6 @@ export interface GameDownColorMap extends StringToString {
 
 // STATE
 
-export const GAME_DOWN_FIELD_H = 8;
-export const GAME_DOWN_FIELD_W = 8;
-export const GAME_DOWN_FIELD_Q = GAME_DOWN_FIELD_H * GAME_DOWN_FIELD_W;
-
 export interface GameDownStateField {
   field: string,
 }
@@ -29,6 +25,7 @@ const KEY_SCE_FIE = 'fields';
 const KEY_SCE_FMA = 'factorMax';
 const KEY_SCE_FMI = 'factorMin';
 const KEY_SCE_HOV = 'hoveredIndex';
+const KEY_SCE_REN = 'renderer';
 const KEY_SCE_SEL = 'selectedIndex';
 const KEY_SCE_THE = 'theme';
 export interface GameDownStateScene {
@@ -37,16 +34,19 @@ export interface GameDownStateScene {
   factorMin: number,
   fields: GameDownStateFields,
   hoveredIndex: number,
+  renderer: string,
   selectedIndex: number,
   theme: string,
 }
 
 const KEY_FIV = 'fieldValues';
+const KEY_REN = 'rendererValues';
 const KEY_SCE = 'scene';
 const KEY_THE = 'themes';
 const KEY_VID = 'viewDebug';
 export interface GameDownState {
   fieldValues: string[],
+  rendererValues: string[],
   scene: GameDownStateScene,
   themes: Theme<GameDownColorMap>[],
   viewDebug: boolean,
@@ -54,17 +54,16 @@ export interface GameDownState {
 
 // DEFAULTS
 
+export const GAME_DOWN_FIELD_H = 8;
+export const GAME_DOWN_FIELD_W = 8;
+export const GAME_DOWN_FIELD_Q = GAME_DOWN_FIELD_H * GAME_DOWN_FIELD_W;
+
 export const DEF_SceneFactor = 1;
 
-export const FieldValueGround = 'ground';
-export const FieldValueWater = 'water';
-export const DEF_FieldValues = [FieldValueGround, FieldValueWater];
-export const DEF_Field = FieldValueGround;
-
-export const ThemeValueGreen = 'green';
-export const ThemeValueWhite = 'white';
-export const DEF_ThemeValues = [ThemeValueGreen, ThemeValueWhite];
-export const DEF_Theme = ThemeValueGreen;
+export const FIELD_GROUND = 'ground';
+export const FIELD_WATER = 'water';
+export const DEF_FieldValues = [FIELD_GROUND, FIELD_WATER];
+export const DEF_Field = FIELD_GROUND;
 
 export const DEF_GameDownStateField = Object.freeze(<GameDownStateField>{
   field: DEF_Field,
@@ -74,6 +73,10 @@ export const DEF_GameDownStateFields: GameDownStateFields = Object.freeze(
   Array.from(Array(GAME_DOWN_FIELD_Q)).reduce((acc, _, index) => ({ ...acc, [index]: DEF_GameDownStateField }), {})
 );
 
+export const RENDERER_SIMPLE = 'simple';
+export const DEF_Renderer = RENDERER_SIMPLE;
+export const DEF_RendererValues = Object.freeze([RENDERER_SIMPLE]);
+
 // ACTION
 
 const actions = {
@@ -82,6 +85,7 @@ const actions = {
   SET_SCE_FIE: 'SET_' + INTERFIX + '_' + KEY_SCE + '_FIELD',
   SET_SCE_FIS: 'SET_' + INTERFIX + '_' + KEY_SCE + '_FIELDS',
   SET_SCE_HOV: 'SET_' + INTERFIX + '_' + KEY_SCE + '_HOVERED',
+  SET_SCE_REN: 'SET_' + INTERFIX + '_' + KEY_SCE + '_RENDERER',
   SET_SCE_SEL: 'SET_' + INTERFIX + '_' + KEY_SCE + '_SELECTED',
   SET_SCE_THE: 'SET_' + INTERFIX + '_' + KEY_SCE + '_THEME',
   SET_THE: 'SET_' + INTERFIX + '_THEMES',
@@ -95,6 +99,7 @@ export const actSetGameDownStateSceneFactor = action_<number>(actions.SET_SCE_FA
 export const actSetGameDownStateSceneField = action_<IndexValue<GameDownStateField>>(actions.SET_SCE_FIE);
 export const actSetGameDownStateSceneFields = action_<GameDownStateFields>(actions.SET_SCE_FIS);
 export const actSetGameDownStateSceneHoveredIndex = action_<number>(actions.SET_SCE_HOV);
+export const actSetGameDownStateSceneRenderer = action_<string>(actions.SET_SCE_REN);
 export const actSetGameDownStateSceneSelectedIndex = action_<number>(actions.SET_SCE_SEL);
 export const actSetGameDownStateSceneTheme = action_<string>(actions.SET_SCE_THE);
 export const actSetGameDownThemes = action_<Theme<GameDownColorMap>[]>(actions.SET_THE);
@@ -110,7 +115,8 @@ const reduceSetOverwriteIndexed = <T>(state: { [key: number]: T }, action: Actio
 }
 
 export const redGameDownState = combineReducers(<ReducersMapObject<GameDownState, AnyAction>>{
-  [KEY_FIV]: reduce_(Object.freeze(DEF_FieldValues), { [actions.SET_FIV]: reduceSet }),
+  [KEY_FIV]: reduce_(DEF_FieldValues, { [actions.SET_FIV]: reduceSet }),
+  [KEY_REN]: reduce_(DEF_RendererValues),
   [KEY_SCE]: combineReducers(<ReducersMapObject<GameDownStateScene, AnyAction>>
     {
       [KEY_SCE_FAC]: reduce_(DEF_SceneFactor, { [actions.SET_SCE_FAC]: reduceSet }),
@@ -122,8 +128,9 @@ export const redGameDownState = combineReducers(<ReducersMapObject<GameDownState
       [KEY_SCE_FMA]: reduce_(2),
       [KEY_SCE_FMI]: reduce_(.5),
       [KEY_SCE_HOV]: reduce_(<number>null, { [actions.SET_SCE_HOV]: reduceSet }),
+      [KEY_SCE_REN]: reduce_(DEF_Renderer, { [actions.SET_SCE_REN]: reduceSet }),
       [KEY_SCE_SEL]: reduce_(<number>null, { [actions.SET_SCE_SEL]: reduceSet }),
-      [KEY_SCE_THE]: reduce_(DEF_Theme, { [actions.SET_SCE_THE]: reduceSet }),
+      [KEY_SCE_THE]: reduce_(<string>null, { [actions.SET_SCE_THE]: reduceSet }),
     }),
   [KEY_THE]: reduce_(Object.freeze([THEME_MISSING]), { [actions.SET_THE]: reduceSet }),
   [KEY_VID]: reduce_(false, { [actions.SET_VID]: reduceSet }),

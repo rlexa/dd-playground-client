@@ -3,9 +3,32 @@
     <ng-container *ngIf="fields$ | async as fields">
       <tr *ngFor="let yy of HEIGHT">
         <td *ngFor="let xx of WIDTH">
-          <app-game-down-field [theme]="theme$ | async" [data]="fields[yy * WIDTH.length + xx]" [hovered]="(hovered$ | async) === yy * WIDTH.length + xx"
-            [selected]="(selected$ | async) === yy * WIDTH.length + xx" [viewDebug]="viewDebug$ | async" (mouseenter)="onHover(yy * WIDTH.length + xx, true)"
-            (mouseleave)="onHover(yy * WIDTH.length + xx, false)" (click)="onClick(yy * WIDTH.length + xx)"></app-game-down-field>
+          <app-game-down-field [theme]="theme$ | async" (mouseenter)="onHover(yy * WIDTH.length + xx, true)" (mouseleave)="onHover(yy * WIDTH.length + xx, false)"
+            (click)="onClick(yy * WIDTH.length + xx)">
+
+            <ng-container [ngSwitch]="renderer$ | async">
+
+              <app-render-simple-field *ngSwitchCase="RENDERER_SIMPLE" [theme]="theme$ | async" [data]="fields[yy * WIDTH.length + xx]"
+                [hovered]="(hovered$ | async) === yy * WIDTH.length + xx" [selected]="(selected$ | async) === yy * WIDTH.length + xx">
+              </app-render-simple-field>
+
+            </ng-container>
+
+            <div *ngIf="viewDebug$ | async" ddFlexbox="vxeye" class="position-absolute match-parent border-radius value-numeric"
+              [style.fontSize]="'1.5em'" [style.border]="'.2em solid transparent'">
+              <label>
+                {{
+                (((hovered$ | async) === yy * WIDTH.length + xx) ? 'H' : '_')
+                + ' ' +
+                (((selected$ | async) === yy * WIDTH.length + xx) ? 'S' : '_')
+                }}
+              </label>
+              <label>{{ (renderer$ | async) || '!renderer!' }}</label>
+              <label>{{ (theme$ | async)?.name || '!theme!' }}</label>
+              <label>{{ fields[yy * WIDTH.length + xx].field || '!field!' }}</label>
+            </div>
+
+          </app-game-down-field>
         </td>
       </tr>
     </ng-container>

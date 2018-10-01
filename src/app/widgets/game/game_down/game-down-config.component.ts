@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService, ReduxSetGameDownService } from 'app/redux';
-import { DEF_GameDownStateFields, FieldValueWater, GameDownStateField, GameDownStateFields, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
+import { DEF_GameDownStateFields, FIELD_WATER, GameDownStateField, GameDownStateFields, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
 import { DoneSubject, rxComplete } from 'app/rx';
 import { trackByIndex } from 'app/widgets/util';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
@@ -10,14 +10,14 @@ const WW = GAME_DOWN_FIELD_W;
 const FieldsPreset_Situation1 = <GameDownStateFields>
   {
     ...DEF_GameDownStateFields,
-    [0 * WW + 0]: { field: FieldValueWater }, [0 * WW + 1]: { field: FieldValueWater },
-    [1 * WW + 0]: { field: FieldValueWater },
-    [2 * WW + 0]: { field: FieldValueWater },
-    [3 * WW + 0]: { field: FieldValueWater },
-    [4 * WW + 0]: { field: FieldValueWater },
-    [5 * WW + 0]: { field: FieldValueWater },
-    [6 * WW + 0]: { field: FieldValueWater }, [6 * WW + 1]: { field: FieldValueWater },
-    [7 * WW + 0]: { field: FieldValueWater }, [7 * WW + 1]: { field: FieldValueWater },
+    [0 * WW + 0]: { field: FIELD_WATER }, [0 * WW + 1]: { field: FIELD_WATER },
+    [1 * WW + 0]: { field: FIELD_WATER },
+    [2 * WW + 0]: { field: FIELD_WATER },
+    [3 * WW + 0]: { field: FIELD_WATER },
+    [4 * WW + 0]: { field: FIELD_WATER },
+    [5 * WW + 0]: { field: FIELD_WATER },
+    [6 * WW + 0]: { field: FIELD_WATER }, [6 * WW + 1]: { field: FIELD_WATER },
+    [7 * WW + 0]: { field: FIELD_WATER }, [7 * WW + 1]: { field: FIELD_WATER },
   };
 
 @Component({
@@ -37,6 +37,8 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly factorMax$ = this.redux.watch(state => state.game.down.scene.factorMax, this.done$);
   readonly factorMin$ = this.redux.watch(state => state.game.down.scene.factorMin, this.done$);
   readonly fields$ = this.redux.watch(state => state.game.down.fieldValues, this.done$);
+  readonly renderer$ = this.redux.watch(state => state.game.down.scene.renderer, this.done$);
+  readonly renderers$ = this.redux.watch(state => state.game.down.rendererValues, this.done$);
   readonly selectedFieldIndex$ = this.redux.watch(state => state.game.down.scene.selectedIndex, this.done$);
   readonly theme$ = this.redux.watch(state => state.game.down.scene.theme, this.done$);
   readonly themes$ = this.redux.watch(state => state.game.down.themes, this.done$).pipe(map(_ => _.map(ii => ii.name)));
@@ -53,6 +55,7 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly sceneFieldsPresetsKeys$ = this.sceneFieldsPresets$.pipe(map(Object.keys));
 
   onSetFactor = this.reduxSet.setSceneFactor;
+  onSetRenderer = this.reduxSet.setSceneRenderer;
   onSetTheme = this.reduxSet.setSceneTheme;
   onSetViewDebug = this.reduxSet.setViewDebug;
 

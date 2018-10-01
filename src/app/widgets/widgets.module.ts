@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { FlexboxModule } from 'dd-flexbox';
 import 'hammerjs';
-import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
+import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RenderSimpleFieldComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
 
 @NgModule({
   imports: [
@@ -47,6 +47,7 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
     GraphWalkerComponent,
     MlPolynomialComponent,
     OverviewComponent,
+    RenderSimpleFieldComponent,
     RoutedContentComponent,
     SimpleViewComponent,
     VersionComponent,
