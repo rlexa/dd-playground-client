@@ -8,7 +8,7 @@ export interface Color<C extends StringToString> {
 
 export interface Theme<C extends StringToString> {
   color: Color<C>,
-  name: string,
+  name?: string,
 }
 
 export const CLR_MISSING = 'hsla(309, 89%, 77%, 1)';

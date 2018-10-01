@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
-import { Theme, themeColor, themeColor_ } from 'app/game';
-import { FIELD_GROUND, FIELD_WATER, GameDownColorMap, GameDownStateField } from 'app/redux/game/down';
+import { Theme, themeColor_ } from 'app/game';
+import { GameDownColorMap, GameDownStateField } from 'app/redux/game/down';
 import { DoneSubject, rxComplete } from 'app/rx';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-const fieldToColor = (data: GameDownStateField, theme: Theme<GameDownColorMap>) => !data || !theme ? null :
-  themeColor(theme, _ => data.field === FIELD_GROUND ? _.fieldGround : data.field === FIELD_WATER ? _.fieldWater : null);
+import { fieldToColor } from './util';
 
 @Component({
   selector: 'app-render-simple-field',
