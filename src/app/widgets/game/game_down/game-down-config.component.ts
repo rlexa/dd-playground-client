@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService, ReduxSetGameDownService } from 'app/redux';
-import { DEF_GameDownStateField, DEF_GameDownStateFields, entitiesToModifiers, ENTITY_FOREST, FIELD_WATER, GameDownStateField, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
+import { DEF_GameDownStateField, DEF_GameDownStateFields, ENTITY_FOREST, FIELD_WATER, GameDownStateField, GAME_DOWN_FIELD_W } from 'app/redux/game/down';
 import { DoneSubject, rxComplete } from 'app/rx';
 import { trackByIndex } from 'app/widgets/util';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
@@ -66,7 +66,6 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly selectedField$ = combineLatest(this.selectedFieldIndex$, this.redux.watch(state => state.game.down.scene.fields, this.done$))
     .pipe(map(([index, fields]) => fields[index] || null), takeUntil(this.done$));
   readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => _.entities.map(ii => ii.name)));
-  readonly selectedFieldModifiers$ = this.selectedField$.pipe(map(_ => _.entities), map(entitiesToModifiers));
 
   readonly sceneFieldsPresets$ = new BehaviorSubject<{ [key: string]: GameDownStateField[] }>(
     {

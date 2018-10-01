@@ -22,6 +22,7 @@ export interface GameDownStateFieldEntity {
 export interface GameDownStateField {
   entities?: GameDownStateFieldEntity[],
   field?: string,
+  modifiers?: string[],
 }
 
 const KEY_SCE_FAC = 'factor';
@@ -84,6 +85,7 @@ export const DEF_GameDownStateField = Object.freeze(
   <GameDownStateField>{
     entities: [],
     field: DEF_Field,
+    modifiers: [],
   });
 
 export const DEF_GameDownStateFields = Object.freeze(Array.from(Array(GAME_DOWN_FIELD_Q), () => DEF_GameDownStateField));
@@ -119,12 +121,6 @@ export const actSetGameDownThemes = action_<Theme<GameDownColorMap>[]>(actions.S
 export const actSetGameDownViewDebug = action_<boolean>(actions.SET_VID);
 
 // REDUCER
-
-export const entitiesToModifiers = (entities: GameDownStateFieldEntity[]) => (entities || []).map(_ => _.modifiers || [])
-  .reduceRight((acc, _) => {
-    _.filter(mod => !acc.includes(mod)).forEach(mod => acc.push(mod));
-    return acc;
-  }, <string[]>[]);
 
 const reduceSetOverwriteIndexed = <T>(state: T[], action: ActionValue<IndexValue<T>>) => {
   if (!action.value || !(action.value.index in state) || !action.value.value || isEqualValue(state[action.value.index], action.value.value)) {

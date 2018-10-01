@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService, ReduxSetGameDownService } from 'app/redux';
-import { entitiesToModifiers, GAME_DOWN_FIELD_H, GAME_DOWN_FIELD_W, RENDERER_SIMPLE } from 'app/redux/game/down';
+import { GAME_DOWN_FIELD_H, GAME_DOWN_FIELD_W, RENDERER_SIMPLE } from 'app/redux/game/down';
 import { DoneSubject } from 'app/rx';
 import { combineLatest } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -33,7 +33,7 @@ export class GameDownSceneComponent implements OnDestroy {
   readonly theme$ = combineLatest(this.themeName$, this.redux.watch(state => state.game.down.themes, this.done$))
     .pipe(map(([name, themes]) => themes.find(_ => _.name === name)));
 
-  readonly fieldsModifiers$ = this.fields$.pipe(map(_ => _.map(ii => ii.entities).map(entitiesToModifiers).map(ii => ii.map(jj => jj.toLocaleUpperCase().substr(0, 1)))));
+  readonly modifiers$ = this.fields$.pipe(map(_ => _.map(ii => ii.modifiers.map(jj => jj.substr(0, 1).toLocaleUpperCase()))))
 
   ngOnDestroy() { this.done$.done(); }
 

@@ -18,9 +18,9 @@
         {{
         (modifiers[index].join(''))
         + ' ' +
-        (((hovered$ | async) === index) ? 'H' : '_')
-        + ' ' +
         (((selected$ | async) === index) ? 'S' : '_')
+        +
+        (((hovered$ | async) === index) ? 'H' : '_')
         }}
       </label>
     </div>
@@ -31,10 +31,10 @@
 <div class="border" [style.fontSize]="(factor$ | async) + 'rem'" [style.backgroundColor]="'white'">
   <table [style.border]="'none'" [attr.cellspacing]="'0'" [attr.cellpadding]="'0'">
     <ng-container *ngIf="fields$ | async as fields">
-      <ng-container *ngIf="fieldsModifiers$ | async as fieldsModifiers">
+      <ng-container *ngIf="modifiers$ | async as modifiers">
         <tr *ngFor="let yy of HEIGHT">
           <td *ngFor="let xx of WIDTH">
-            <ng-container *ngTemplateOutlet="templateIndexedField; context: {$implicit: yy * WIDTH.length + xx, fields: fields, modifiers: fieldsModifiers}"></ng-container>
+            <ng-container *ngTemplateOutlet="templateIndexedField; context: {$implicit: yy * WIDTH.length + xx, fields: fields, modifiers: modifiers}"></ng-container>
           </td>
         </tr>
       </ng-container>

@@ -1,10 +1,18 @@
 import { Inject, Injectable } from '@angular/core';
 import { Theme, THEME_MISSING } from 'app/game';
-import { actSetGameDownStateSceneFactor, actSetGameDownStateSceneField, actSetGameDownStateSceneFields, actSetGameDownStateSceneHoveredIndex, actSetGameDownStateSceneRenderer, actSetGameDownStateSceneSelectedIndex, actSetGameDownStateSceneTheme, actSetGameDownThemes, actSetGameDownViewDebug, DEF_GameDownStateFields, DEF_SceneFactor, GameDownColorMap, GameDownStateField, IndexValue } from 'app/redux/game/down';
+import { actSetGameDownStateSceneFactor, actSetGameDownStateSceneField, actSetGameDownStateSceneFields, actSetGameDownStateSceneHoveredIndex, actSetGameDownStateSceneRenderer, actSetGameDownStateSceneSelectedIndex, actSetGameDownStateSceneTheme, actSetGameDownThemes, actSetGameDownViewDebug, DEF_GameDownStateFields, DEF_SceneFactor, GameDownColorMap, GameDownStateField, GameDownStateFieldEntity, IndexValue } from 'app/redux/game/down';
 import { Store } from 'redux';
 import { ReduxMutator } from './redux-mutator';
 import { AppState } from './state';
 import { AppStore } from './store';
+
+const entitiesToModifiers = (entities: GameDownStateFieldEntity[]) => (entities || []).map(_ => _.modifiers || [])
+  .reduceRight((acc, _) => {
+    _.filter(mod => !acc.includes(mod)).forEach(mod => acc.push(mod));
+    return acc;
+  }, <string[]>[]);
+
+const normaliseField = (field: GameDownStateField) => !field ? field : <GameDownStateField>{ ...field, modifiers: entitiesToModifiers(field.entities), };
 
 @Injectable({ providedIn: 'root' })
 export class ReduxSetGameDownService extends ReduxMutator {
@@ -13,8 +21,11 @@ export class ReduxSetGameDownService extends ReduxMutator {
 
   setSceneFactor = (val: number) => this.do(this.state().scene.factor, typeof val !== 'number' ? DEF_SceneFactor :
     Math.max(this.state().scene.factorMin, Math.min(this.state().scene.factorMax, val)), actSetGameDownStateSceneFactor);
-  setSceneField = (index: number, value: GameDownStateField) => this.dispatch(actSetGameDownStateSceneField(<IndexValue<GameDownStateField>>{ index, value }));
-  setSceneFields = (val: GameDownStateField[]) => this.do(this.state().scene.fields, val || DEF_GameDownStateFields, actSetGameDownStateSceneFields);
+
+  setSceneField = (index: number, value: GameDownStateField) => this.dispatch(actSetGameDownStateSceneField(
+    <IndexValue<GameDownStateField>>{ index, value: normaliseField(value) }));
+  setSceneFields = (val: GameDownStateField[]) => this.do(this.state().scene.fields, (val || DEF_GameDownStateFields).map(normaliseField), actSetGameDownStateSceneFields);
+
   setSceneHoveredIndex = (val: number) => this.do(this.state().scene.hoveredIndex, typeof val === 'number' ? val : <number>null, actSetGameDownStateSceneHoveredIndex);
   setSceneRenderer = (val: string) => this.do(this.state().scene.renderer, val || null, actSetGameDownStateSceneRenderer);
   setSceneSelectedIndex = (val: number) => this.do(this.state().scene.selectedIndex, typeof val === 'number' ? val : <number>null, actSetGameDownStateSceneSelectedIndex);
