@@ -65,7 +65,7 @@
         <ng-container *ngIf="entities.length">
           <h3 mat-subheader>Field Entities</h3>
           <mat-list-item *ngFor="let item of entities">
-            <p mat-line>{{ item }}</p>
+            <p mat-line>{{ item.name + ' HP:' + (item.health || 0) + ' V:' + (item.variant || 0) }}</p>
           </mat-list-item>
         </ng-container>
       </ng-container>

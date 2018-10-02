@@ -20,6 +20,10 @@ const gd_theme_invalid = <Theme<GameDownColorMap>>{
 const gd_color_preset = <Color<GameDownColorMap>>{
   name: 'preset',
   map: <GameDownColorMap>{
+    entityBuilding: 'hsla(273, 48%, 48%, 1)',
+    entityForest: 'hsla(111, 48%, 51%, 1)',
+    entityLoot: 'hsla(51, 100%, 50%, 1)',
+    entityMountain: 'hsla(111, 8%, 53%, 1)',
     fieldWater: 'hsla(239, 48%, 77%, 1)',
   }
 }

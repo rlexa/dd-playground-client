@@ -1,6 +1,10 @@
 <ng-container *ngIf="theme$ | async as theme">
   <ng-container *ngIf="data$ | async as data">
-    <div class="position-absolute match-parent " [style.border]="'1px solid ' + (colorBorder$ | async)" [style.backgroundColor]="colorField$ | async">
+    <div class="position-absolute match-parent" [style.border]="'1px solid ' + (colorBorder$ | async)" [style.backgroundColor]="colorField$ | async">
+      <div *ngIf="colorsEntities$ | async as colorsEntities" ddFlexbox="hyscsw" class="position-absolute match-parent">
+        <div *ngFor="let colorEntity of colorsEntities; trackBy: trackBy;" [style.margin]="'1%'" [style.width]="'23%'" [style.height]="'23%'"
+          [style.backgroundColor]="colorEntity"></div>
+      </div>
     </div>
   </ng-container>
 </ng-container>

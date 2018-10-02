@@ -7,6 +7,10 @@ import { INTERFIX } from './parent';
 // THEME
 
 export interface GameDownColorMap extends StringToString {
+  entityBuilding: string,
+  entityForest: string,
+  entityLoot: string,
+  entityMountain: string,
   fieldBackground: string,
   fieldGround: string,
   fieldWater: string,
@@ -15,8 +19,10 @@ export interface GameDownColorMap extends StringToString {
 // STATE
 
 export interface GameDownStateFieldEntity {
+  health: number,
   modifiers: string[],
   name: string,
+  variant: number,
 }
 
 export interface GameDownStateField {
@@ -67,14 +73,21 @@ export const GAME_DOWN_FIELD_Q = GAME_DOWN_FIELD_H * GAME_DOWN_FIELD_W;
 
 export const DEF_SceneFactor = 1;
 
+export const MODIFIER_BLOCKS = 'blocking';
+export const MODIFIER_DESTRUCTIBLE = 'destructible';
 export const MODIFIER_FLAMMABLE = 'flammable';
-export const DEF_ModifierValues = [MODIFIER_FLAMMABLE];
+export const MODIFIER_LOOTABLE = 'lootable';
+export const DEF_ModifierValues = [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE, MODIFIER_FLAMMABLE, MODIFIER_LOOTABLE];
 
-export const ENTITY_FOREST = Object.freeze(
-  <GameDownStateFieldEntity>{
-    modifiers: [MODIFIER_FLAMMABLE],
-    name: 'forest',
-  });
+export const VARIANT_DEFAULT = 0;
+export const VARIANT_BUILDING_SINGLE = VARIANT_DEFAULT;
+export const VARIANT_BUILDING_DOUBLE = VARIANT_BUILDING_SINGLE + 1;
+
+const ENTITY_BASE = <GameDownStateFieldEntity>{ health: 1, variant: VARIANT_DEFAULT };
+export const ENTITY_BUILDING = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'building' });
+export const ENTITY_FOREST = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, modifiers: [MODIFIER_DESTRUCTIBLE, MODIFIER_FLAMMABLE], name: 'tree' });
+export const ENTITY_LOOT = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, modifiers: [MODIFIER_DESTRUCTIBLE, MODIFIER_LOOTABLE], name: 'loot' });
+export const ENTITY_MOUNTAIN = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, health: 2, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'mountain' });
 
 export const FIELD_GROUND = 'ground';
 export const FIELD_WATER = 'water';
