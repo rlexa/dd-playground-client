@@ -6,13 +6,13 @@ import { ReduxMutator } from './redux-mutator';
 import { AppState } from './state';
 import { AppStore } from './store';
 
-const entitiesToModifiers = (entities: GameDownStateFieldEntity[]) => (entities || []).map(_ => _.modifiers || [])
+const entitiesToModifiers = (entities: GameDownStateFieldEntity[]) => (entities || []).filter(_ => !!_ && !!_.modifiers && _.modifiers.length).map(_ => _.modifiers || [])
   .reduceRight((acc, _) => {
     _.filter(mod => !acc.includes(mod)).forEach(mod => acc.push(mod));
     return acc;
   }, <string[]>[]);
 
-const normaliseField = (field: GameDownStateField) => !field ? field : <GameDownStateField>{ ...field, modifiers: entitiesToModifiers(field.entities), };
+const normaliseField = (field: GameDownStateField) => !field ? field : <GameDownStateField>{ ...field, modifiers: entitiesToModifiers([...field.entities, field.actor]), };
 
 @Injectable({ providedIn: 'root' })
 export class ReduxSetGameDownService extends ReduxMutator {

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService, ReduxSetGameDownService } from 'app/redux';
-import { DEF_GameDownStateField, DEF_GameDownStateFields, ENTITY_BUILDING, ENTITY_FOREST, ENTITY_LOOT, ENTITY_MOUNTAIN, FIELD_WATER, GameDownStateField, GAME_DOWN_FIELD_W, VARIANT_BUILDING_DOUBLE } from 'app/redux/game/down';
+import { ACTOR_BOT_ARTILLERY, ACTOR_BOT_HEAVY, ACTOR_BOT_TANK, ACTOR_BUG_BARFER, ACTOR_BUG_CRAWLER, ACTOR_BUG_FLIER, ACTOR_BUG_SPITTER, DEF_GameDownStateField, DEF_GameDownStateFields, ENTITY_BUILDING, ENTITY_FOREST, ENTITY_LOOT, ENTITY_MOUNTAIN, FIELD_WATER, GameDownStateField, GAME_DOWN_FIELD_W, VARIANT_BUILDING_DOUBLE } from 'app/redux/game/down';
 import { DoneSubject, rxComplete } from 'app/rx';
 import { trackByIndex } from 'app/widgets/util';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
@@ -21,16 +21,19 @@ const build_Situation_1 = () => {
   fields[1 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
   fields[1 * WW + 1] = { ...DEF_GameDownStateField, entities: [ENTITY_BUILDING] };
   fields[1 * WW + 2] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST] };
+  fields[1 * WW + 4] = { ...DEF_GameDownStateField, actor: ACTOR_BOT_ARTILLERY };
   fields[1 * WW + 5] = { ...DEF_GameDownStateField, entities: [ENTITY_BUILDING] };
   fields[1 * WW + 6] = { ...DEF_GameDownStateField, entities: [ENTITY_BUILDING] };
   fields[1 * WW + 7] = { ...DEF_GameDownStateField, entities: [ENTITY_MOUNTAIN] };
 
   fields[2 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
-  fields[1 * WW + 1] = { ...DEF_GameDownStateField, entities: [ENTITY_BUILDING] };
-  fields[2 * WW + 4] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST] };
+  fields[2 * WW + 1] = { ...DEF_GameDownStateField, entities: [ENTITY_BUILDING] };
+  fields[2 * WW + 4] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST], actor: ACTOR_BOT_HEAVY };
 
   fields[3 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
   fields[3 * WW + 2] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST] };
+  fields[3 * WW + 3] = { ...DEF_GameDownStateField, actor: ACTOR_BOT_TANK };
+  fields[3 * WW + 5] = { ...DEF_GameDownStateField, actor: ACTOR_BUG_BARFER };
 
   fields[4 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
   fields[4 * WW + 1] = { ...DEF_GameDownStateField, entities: [{ ...ENTITY_BUILDING, variant: VARIANT_BUILDING_DOUBLE }] };
@@ -39,10 +42,13 @@ const build_Situation_1 = () => {
   fields[5 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
   fields[5 * WW + 1] = { ...DEF_GameDownStateField, entities: [{ ...ENTITY_BUILDING, variant: VARIANT_BUILDING_DOUBLE }] };
   fields[5 * WW + 5] = { ...DEF_GameDownStateField, entities: [{ ...ENTITY_BUILDING, variant: VARIANT_BUILDING_DOUBLE }] };
+  fields[5 * WW + 6] = { ...DEF_GameDownStateField, actor: ACTOR_BUG_FLIER };
 
   fields[6 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
   fields[6 * WW + 1] = { ...DEF_GameDownStateField, field: FIELD_WATER };
   fields[6 * WW + 2] = { ...DEF_GameDownStateField, entities: [ENTITY_LOOT] };
+  fields[6 * WW + 3] = { ...DEF_GameDownStateField, actor: ACTOR_BUG_SPITTER };
+  fields[6 * WW + 4] = { ...DEF_GameDownStateField, actor: ACTOR_BUG_CRAWLER };
   fields[6 * WW + 6] = { ...DEF_GameDownStateField, entities: [ENTITY_FOREST] };
 
   fields[7 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
@@ -78,6 +84,7 @@ export class GameDownConfigComponent implements OnDestroy {
 
   readonly selectedField$ = combineLatest(this.selectedFieldIndex$, this.redux.watch(state => state.game.down.scene.fields, this.done$))
     .pipe(map(([index, fields]) => fields[index] || null), takeUntil(this.done$));
+  readonly selectedFieldActor$ = this.selectedField$.pipe(map(_ => _.actor));
   readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => _.entities));
 
   readonly sceneFieldsPresets$ = new BehaviorSubject<{ [key: string]: GameDownStateField[] }>(

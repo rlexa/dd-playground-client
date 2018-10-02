@@ -69,6 +69,20 @@
           </mat-list-item>
         </ng-container>
       </ng-container>
+
+      <ng-container *ngIf="selectedFieldActor$ | async as item">
+        <h3 mat-subheader>Field Actor</h3>
+        <mat-list-item>
+          <p mat-line>
+            {{
+            (item.isNpc ? 'NPC ' : '')
+            + item.name
+            + ' HP:' + (item.health || 0) + '/' + (item.healthMax || 0)
+            + ' V:' + (item.variant|| 0)
+            }}
+          </p>
+        </mat-list-item>
+      </ng-container>
     </mat-list>
   </div>
 

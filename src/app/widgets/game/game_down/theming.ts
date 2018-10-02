@@ -20,6 +20,8 @@ const gd_theme_invalid = <Theme<GameDownColorMap>>{
 const gd_color_preset = <Color<GameDownColorMap>>{
   name: 'preset',
   map: <GameDownColorMap>{
+    actorNpc: 'hsla(0, 100%, 50%, 1)',
+    actorPc: 'hsla(241, 100%, 50%, 1)',
     entityBuilding: 'hsla(273, 48%, 48%, 1)',
     entityForest: 'hsla(111, 48%, 51%, 1)',
     entityLoot: 'hsla(51, 100%, 50%, 1)',

@@ -7,6 +7,8 @@ import { INTERFIX } from './parent';
 // THEME
 
 export interface GameDownColorMap extends StringToString {
+  actorNpc: string,
+  actorPc: string,
   entityBuilding: string,
   entityForest: string,
   entityLoot: string,
@@ -25,7 +27,13 @@ export interface GameDownStateFieldEntity {
   variant: number,
 }
 
+export interface GameDownStateFieldActor extends GameDownStateFieldEntity {
+  healthMax: number,
+  isNpc: boolean,
+}
+
 export interface GameDownStateField {
+  actor?: GameDownStateFieldActor,
   entities?: GameDownStateFieldEntity[],
   field?: string,
   modifiers?: string[],
@@ -76,8 +84,9 @@ export const DEF_SceneFactor = 1;
 export const MODIFIER_BLOCKS = 'blocking';
 export const MODIFIER_DESTRUCTIBLE = 'destructible';
 export const MODIFIER_FLAMMABLE = 'flammable';
+export const MODIFIER_HOVERING = 'hovering';
 export const MODIFIER_LOOTABLE = 'lootable';
-export const DEF_ModifierValues = [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE, MODIFIER_FLAMMABLE, MODIFIER_LOOTABLE];
+export const DEF_ModifierValues = [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE, MODIFIER_FLAMMABLE, MODIFIER_HOVERING, MODIFIER_LOOTABLE];
 
 export const VARIANT_DEFAULT = 0;
 export const VARIANT_BUILDING_SINGLE = VARIANT_DEFAULT;
@@ -88,6 +97,15 @@ export const ENTITY_BUILDING = Object.freeze(<GameDownStateFieldEntity>{ ...ENTI
 export const ENTITY_FOREST = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, modifiers: [MODIFIER_DESTRUCTIBLE, MODIFIER_FLAMMABLE], name: 'tree' });
 export const ENTITY_LOOT = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, modifiers: [MODIFIER_DESTRUCTIBLE, MODIFIER_LOOTABLE], name: 'loot' });
 export const ENTITY_MOUNTAIN = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, health: 2, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'mountain' });
+
+export const ACTOR_BOT_ARTILLERY = Object.freeze(<GameDownStateFieldActor>{ ...ENTITY_BASE, health: 2, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'bot_artillery', healthMax: 2, isNpc: false });
+export const ACTOR_BOT_HEAVY = Object.freeze(<GameDownStateFieldActor>{ ...ENTITY_BASE, health: 4, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'bot_heavy', healthMax: 4, isNpc: false });
+export const ACTOR_BOT_TANK = Object.freeze(<GameDownStateFieldActor>{ ...ENTITY_BASE, health: 3, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'bot_tank', healthMax: 3, isNpc: false });
+
+export const ACTOR_BUG_BARFER = Object.freeze(<GameDownStateFieldActor>{ ...ENTITY_BASE, health: 3, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'bug_barfer', healthMax: 3, isNpc: true });
+export const ACTOR_BUG_CRAWLER = Object.freeze(<GameDownStateFieldActor>{ ...ENTITY_BASE, health: 3, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'bug_crawler', healthMax: 3, isNpc: true });
+export const ACTOR_BUG_FLIER = Object.freeze(<GameDownStateFieldActor>{ ...ENTITY_BASE, health: 2, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE, MODIFIER_HOVERING], name: 'bug_flier', healthMax: 2, isNpc: true });
+export const ACTOR_BUG_SPITTER = Object.freeze(<GameDownStateFieldActor>{ ...ENTITY_BASE, health: 2, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'bug_spitter', healthMax: 2, isNpc: true });
 
 export const FIELD_GROUND = 'ground';
 export const FIELD_WATER = 'water';
