@@ -33,8 +33,6 @@ export class GameDownSceneComponent implements OnDestroy {
   readonly theme$ = combineLatest(this.themeName$, this.redux.watch(state => state.game.down.themes, this.done$))
     .pipe(map(([name, themes]) => themes.find(_ => _.name === name)));
 
-  readonly modifiers$ = this.fields$.pipe(map(_ => _.map(ii => ii.modifiers.map(jj => jj.substr(0, 1).toLocaleUpperCase()))))
-
   ngOnDestroy() { this.done$.done(); }
 
   onClick = (index: number) => this.reduxSet.setSceneSelectedIndex(this.redux.state.game.down.scene.selectedIndex === index ? null : index);

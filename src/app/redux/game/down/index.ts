@@ -82,6 +82,7 @@ export const GAME_DOWN_FIELD_Q = GAME_DOWN_FIELD_H * GAME_DOWN_FIELD_W;
 export const DEF_SceneFactor = 1;
 
 export const MODIFIER_BLOCKS = 'blocking';
+export const MODIFIER_DAMAGE_MAX_1 = 'damage-max-1';
 export const MODIFIER_DESTRUCTIBLE = 'destructible';
 export const MODIFIER_FLAMMABLE = 'flammable';
 export const MODIFIER_HOVERING = 'hovering';
@@ -96,7 +97,7 @@ const ENTITY_BASE = <GameDownStateFieldEntity>{ health: 1, variant: VARIANT_DEFA
 export const ENTITY_BUILDING = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'building' });
 export const ENTITY_FOREST = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, modifiers: [MODIFIER_DESTRUCTIBLE, MODIFIER_FLAMMABLE], name: 'tree' });
 export const ENTITY_LOOT = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, modifiers: [MODIFIER_DESTRUCTIBLE, MODIFIER_LOOTABLE], name: 'loot' });
-export const ENTITY_MOUNTAIN = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, health: 2, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'mountain' });
+export const ENTITY_MOUNTAIN = Object.freeze(<GameDownStateFieldEntity>{ ...ENTITY_BASE, health: 2, modifiers: [MODIFIER_BLOCKS, MODIFIER_DAMAGE_MAX_1, MODIFIER_DESTRUCTIBLE], name: 'mountain' });
 
 export const ACTOR_BOT_ARTILLERY = Object.freeze(<GameDownStateFieldActor>{ ...ENTITY_BASE, health: 2, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'bot_artillery', healthMax: 2, isNpc: false });
 export const ACTOR_BOT_HEAVY = Object.freeze(<GameDownStateFieldActor>{ ...ENTITY_BASE, health: 4, modifiers: [MODIFIER_BLOCKS, MODIFIER_DESTRUCTIBLE], name: 'bot_heavy', healthMax: 4, isNpc: false });

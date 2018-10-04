@@ -1,4 +1,4 @@
-<ng-template #templateIndexedField let-index let-fields="fields" let-modifiers="modifiers">
+<ng-template #templateIndexedField let-index let-fields="fields">
   <app-game-down-field [theme]="theme$ | async" (mouseenter)="onHover(index, true)" (mouseleave)="onHover(index, false)" (click)="onClick(index)">
 
     <ng-container [ngSwitch]="renderer$ | async">
@@ -16,8 +16,6 @@
       <label>{{ fields[index].field || '!field!' }}</label>
       <label>
         {{
-        (modifiers[index].join(''))
-        + ' ' +
         (((selected$ | async) === index) ? 'S' : '_')
         +
         (((hovered$ | async) === index) ? 'H' : '_')
@@ -31,13 +29,11 @@
 <div class="border" [style.fontSize]="(factor$ | async) + 'rem'" [style.backgroundColor]="'white'">
   <table [style.border]="'none'" [attr.cellspacing]="'0'" [attr.cellpadding]="'0'">
     <ng-container *ngIf="fields$ | async as fields">
-      <ng-container *ngIf="modifiers$ | async as modifiers">
-        <tr *ngFor="let yy of HEIGHT">
-          <td *ngFor="let xx of WIDTH">
-            <ng-container *ngTemplateOutlet="templateIndexedField; context: {$implicit: yy * WIDTH.length + xx, fields: fields, modifiers: modifiers}"></ng-container>
-          </td>
-        </tr>
-      </ng-container>
+      <tr *ngFor="let yy of HEIGHT">
+        <td *ngFor="let xx of WIDTH">
+          <ng-container *ngTemplateOutlet="templateIndexedField; context: {$implicit: yy * WIDTH.length + xx, fields: fields}"></ng-container>
+        </td>
+      </tr>
     </ng-container>
   </table>
 </div>
