@@ -28,8 +28,8 @@ module.exports = setupForCorporateProxy([
   {
     context: '/samplerest',
     pathRewrite: { '^/samplerest': '' },
-    target: 'http://jsonplaceholder.typicode.com',
-    secure: false,
+    target: 'https://jsonplaceholder.typicode.com',
+    secure: true,
     changeOrigin: true,
     logLevel: 'debug',
   },
