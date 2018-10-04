@@ -4,6 +4,7 @@ export * from './crypto';
 export * from './dashboard';
 export * from './diagram';
 export * from './game';
+export * from './ghibli';
 export * from './graph';
 export * from './overview';
 export * from './playground';

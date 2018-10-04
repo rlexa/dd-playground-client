@@ -9,6 +9,7 @@ export const ROUTE_CONFIGURATION = 'configuration';
 export const ROUTE_CURRENT = 'current';
 export const ROUTE_CRYPTO = 'crypto';
 export const ROUTE_DASHBOARD = 'dashboard';
+export const ROUTE_DEMO_GHIBLI = 'demoghibli';
 export const ROUTE_DEMO_MISC = 'demomisc';
 export const ROUTE_DEMO_STATE = 'demostate';
 export const ROUTE_GAME = 'game';

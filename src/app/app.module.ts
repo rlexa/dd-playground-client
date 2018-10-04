@@ -6,9 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { AppStore, createAppStore, GlobalFlags, ReduxService, ReduxSetGlobalService } from 'app/redux';
-import { BuildComponent, ConfigComponent, CryptoComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GameDownComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, WidgetsModule } from 'app/widgets/widgets.module';
+import { BuildComponent, ConfigComponent, CryptoComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GameDownComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, WidgetsModule } from 'app/widgets/widgets.module';
 import { AppComponent } from './app.component';
-import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BLOCKCHAIN, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CRYPTO, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WALKER, ROUTE_WILDCARD } from './routing';
+import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BLOCKCHAIN, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CRYPTO, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_GHIBLI, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WALKER, ROUTE_WILDCARD } from './routing';
 
 async function loadHttp(path: string, http: HttpClient, handler: (data: any) => void, parseAs: 'json' | 'text' = 'json') {
   try {
@@ -82,7 +82,8 @@ const appRoutes: Routes = [
         children: [
           { path: ROUTE_ROOT, redirectTo: ROUTE_DEMO_MISC, pathMatch: 'full' },
           { path: ROUTE_DEMO_MISC, children: [{ path: ROUTE_ROOT, component: DemoMiscComponent }] },
-          { path: ROUTE_DEMO_STATE, children: [{ path: ROUTE_ROOT, component: DemoStateComponent }] }
+          { path: ROUTE_DEMO_STATE, children: [{ path: ROUTE_ROOT, component: DemoStateComponent }] },
+          { path: ROUTE_DEMO_GHIBLI, children: [{ path: ROUTE_ROOT, component: GhibliComponent }] },
         ]
       },
       {

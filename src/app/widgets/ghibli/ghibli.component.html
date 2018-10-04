@@ -1,0 +1,28 @@
+<div ddFlexbox="hyscsw">
+
+  <mat-card class="childhv">
+    <mat-card-title>Queries</mat-card-title>
+    <mat-card-content>
+      <div ddFlexbox="vys">
+        <mat-list class="mat-list-auto-height">
+
+          <h3 mat-subheader>API</h3>
+          <mat-list-item><button mat-raised-button (click)="getFilms()">Films</button></mat-list-item>
+          <mat-list-item><button mat-raised-button (click)="getLocations()">Locations</button></mat-list-item>
+          <mat-list-item><button mat-raised-button (click)="getPersons()">People</button></mat-list-item>
+          <mat-list-item><button mat-raised-button (click)="getSpeciess()">Species</button></mat-list-item>
+          <mat-list-item><button mat-raised-button (click)="getVehicles()">Vehicles</button></mat-list-item>
+
+        </mat-list>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="childhv">
+    <mat-card-title>Output</mat-card-title>
+    <mat-card-content>
+      <app-simple-view [data]="anyData$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+    </mat-card-content>
+  </mat-card>
+
+</div>
