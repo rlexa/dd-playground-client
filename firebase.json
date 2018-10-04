@@ -8,13 +8,13 @@
     ],
     "redirects": [
       {
-        "source": "/bc1/**",
-        "destination": "https://blockchain.info",
+        "source": "/bc1/:any*",
+        "destination": "https://blockchain.info/:any*",
         "type": 301
       },
       {
-        "source": "/samplerest/**",
-        "destination": "https://jsonplaceholder.typicode.com",
+        "source": "/samplerest/:any*",
+        "destination": "https://jsonplaceholder.typicode.com/:any*",
         "type": 301
       }
     ],
