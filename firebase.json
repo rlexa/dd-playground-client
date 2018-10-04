@@ -14,11 +14,15 @@
       },
       {
         "source": "/samplerest/*",
-        "destination": "http://jsonplaceholder.typicode.com",
+        "destination": "https://jsonplaceholder.typicode.com",
         "type": 301
       }
     ],
     "rewrites": [
+      {
+        "source": "/samplerest",
+        "destination": "/samplerest"
+      },
       {
         "source": "**",
         "destination": "/index.html"
