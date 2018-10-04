@@ -8,6 +8,7 @@ export const ICON_MAP: { [key: string]: string } = {
   collapse: 'expand_less',
   configuration: 'perm_data_setting',
   create: 'add',
+  cryptocurrency: 'monetization_on',
   current: 'new_releases',
   delete: 'delete',
   done: 'done',

@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { FlexboxModule } from 'dd-flexbox';
 import 'hammerjs';
-import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RenderSimpleFieldComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
+import { BuildComponent, ConfigComponent, CryptoComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RenderSimpleFieldComponent, RoutedContentComponent, SimpleViewComponent, VersionComponent } from '.';
 
 @NgModule({
   imports: [
@@ -34,6 +34,7 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
   declarations: [
     BuildComponent,
     ConfigComponent,
+    CryptoComponent,
     DashboardComponent,
     DemoMiscComponent,
     DemoStateComponent,
@@ -55,6 +56,7 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
   exports: [
     BuildComponent,
     ConfigComponent,
+    CryptoComponent,
     DashboardComponent,
     DemoMiscComponent,
     DemoStateComponent,
@@ -69,5 +71,4 @@ import { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent,
 })
 export class WidgetsModule { }
 
-export { BuildComponent, ConfigComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GameDownComponent, GraphTopLevelComponent, GraphWalkerComponent, EmptyComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, };
-
+export { BuildComponent, ConfigComponent, CryptoComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GameDownComponent, GraphTopLevelComponent, GraphWalkerComponent, EmptyComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, };

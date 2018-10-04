@@ -3,9 +3,11 @@ import { Router } from '@angular/router';
 /* ROUTE PARTS */
 
 export const ROUTE_AI = 'ai';
+export const ROUTE_BLOCKCHAIN = 'blockchain';
 export const ROUTE_BUILDCONFIG = 'buildconfig';
 export const ROUTE_CONFIGURATION = 'configuration';
 export const ROUTE_CURRENT = 'current';
+export const ROUTE_CRYPTO = 'crypto';
 export const ROUTE_DASHBOARD = 'dashboard';
 export const ROUTE_DEMO_MISC = 'demomisc';
 export const ROUTE_DEMO_STATE = 'demostate';

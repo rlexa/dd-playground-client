@@ -35,7 +35,7 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": "TODO this kills export enum (tensorflowjs)",
+              "buildOptimizer": "AR TODO this kills export enum (tensorflowjs)",
               "buildOptimizer": false,
               "fileReplacements": [
                 {
@@ -49,7 +49,13 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "dd-playground-client:build"
+            "browserTarget": "dd-playground-client:build",
+            "ssl": "AR TODO this works somewhat but not needed for local for now",
+            "ssl": false,
+            "sslKey": "./server.key",
+            "sslCert": "./server.crt",
+            "proxyConfig": "Need to setup like that for external APIs",
+            "proxyConfig": "proxy.conf.js"
           },
           "configurations": {
             "production": {

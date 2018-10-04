@@ -1,4 +1,5 @@
-import { HttpClient, HttpHeaders, HttpParams, HttpUrlEncodingCodec } from '@angular/common/http';
+import { HttpHeaders, HttpParams, HttpUrlEncodingCodec } from '@angular/common/http';
+import { isArray } from 'util';
 
 export class HackQueryEncoder extends HttpUrlEncodingCodec {
   encodeKey(value: string) { return super.encodeKey(value).replace(/\+/gi, '%2B'); }
@@ -18,14 +19,18 @@ export const b64DecodeUnicode = (value: string) => decodeURIComponent(atob(value
 
 export const cleanParams = (params?: any) => Object
   .entries(params || {})
-  .filter(([key, value]) => value !== undefined && value !== null && value !== '')
+  .filter(([key, value]) => value !== undefined && value !== null && value !== '' && (!isArray(value) || value['length'] > 0))
   .reduce((acc, [key, value]) => acc.append(key, value.toString()), new HttpParams({ encoder: new HackQueryEncoder() }));
 
-export const getHeaders = (auth?: string, contentType?: string) =>
-  new HttpHeaders()
+export const getHeaders = (auth?: string, contentType?: string) => {
+  let ret = new HttpHeaders()
     .set('cache-control', 'no-cache')
-    .set('content-type', contentType || 'text/plain;charset=utf-8')
-    .set('authorization', auth || '');
+    .set('content-type', contentType || 'text/plain;charset=utf-8');
+  if (auth) {
+    ret = ret.set('authorization', auth || '');
+  }
+  return ret;
+}
 
 export const getJsonHeaders = (auth?: string) => getHeaders(auth, 'application/json').set('accept', 'application/json');
 
@@ -55,3 +60,9 @@ export function httpErrorToString(err) {
   }
   return ret;
 }
+
+export const toFormUrlencoded = val => Object
+  .entries(val || {})
+  .filter(([key, value]) => !!key && value !== null && value !== undefined)
+  .map(([key, value]) => encodeURI(key) + '=' + encodeURI(value.toString()))
+  .join('&');

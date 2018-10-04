@@ -26,6 +26,11 @@ The client is intended to be dev-oriented only and doesn't contain any localizat
 
 [Jest] is used for unit testing (using matching-snapshot testing for components).
 
+### Misc.
+
+* Following files used (via openssl) for localhost SSL/HTTPS serving:
+  * rootCA.key, rootCA.pem, rootCA.srl, server.crt, server.csr, server.key, v3.ext
+
 ### CI
 
 [Travis] is used for continuous integration incl. testing and deploying to [Firebase] for hosting.

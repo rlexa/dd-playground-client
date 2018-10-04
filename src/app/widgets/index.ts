@@ -1,5 +1,6 @@
 export * from './ai';
 export * from './common';
+export * from './crypto';
 export * from './dashboard';
 export * from './diagram';
 export * from './game';
