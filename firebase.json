@@ -11,17 +11,12 @@
         "source": "/bc1/*",
         "destination": "https://blockchain.info",
         "type": 301
-      },
-      {
-        "source": "/samplerest/*",
-        "destination": "https://jsonplaceholder.typicode.com",
-        "type": 301
       }
     ],
     "rewrites": [
       {
-        "source": "/samplerest",
-        "destination": "/samplerest"
+        "source": "/samplerest/**",
+        "destination": "https://jsonplaceholder.typicode.com/**"
       },
       {
         "source": "**",
