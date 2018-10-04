@@ -14,7 +14,7 @@ export class CryptoApiService {
   private readonly API_BLOCKCHAIN_1 = 'bc1';
 
   bitcoinTransactions$ = (req: RequestAddressItems) => this
-    .httpGetRest$({ api: this.API_BLOCKCHAIN_1, url: `/rawaddr/${req.address || 'null'}`, params: { limit: req.take, offset: req.skip } })
+    .httpGetRest$({ api: this.API_BLOCKCHAIN_1, url: `/rawaddr/${req.address || 'null'}`, params: { limit: req.take, offset: req.skip, cors: true } })
     .pipe(map(_ => _));
 
   private httpGetRest$ = (val: { api: string, url: string, params?: any, auth?: string }) => this.http
