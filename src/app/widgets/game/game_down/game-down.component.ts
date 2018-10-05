@@ -19,7 +19,7 @@ export class GameDownComponent implements OnDestroy {
 
   private readonly done$ = new DoneSubject();
 
-  readonly state$ = this.redux.watch(state => state.game.down, this.done$);
+  readonly state$ = this.redux.watch(state => state.game.down.scene, this.done$);
 
   ngOnDestroy() { this.done$.done(); }
 }
