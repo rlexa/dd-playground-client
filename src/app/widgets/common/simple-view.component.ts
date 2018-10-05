@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { TRIGGER_WobbleX } from 'app/animations';
 import { FORMAT_DATE_TIMESTAMP } from 'app/presets';
 import { isNumeric, isWeb } from 'app/util';
@@ -18,11 +18,18 @@ export class SimpleViewComponent extends WithDataProperty<Object>  {
 
   readonly keys$ = this.data$.pipe(map(_ => Object.keys(_ || {})));
   readonly types$ = this.keys$.pipe(map(_ => _.map(key => this.data$.value[key]).map(this.guessType)));
+  readonly clickables$ = this.data$.pipe(map(_ => Object.entries(_ || {})
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: !this.isClickable ? false : this.isClickable(key, value) }), <{ [key: string]: boolean }>{})));
 
   @Input() isWidthConstrained = true;
+  @Input() isClickable: (key: string, val: any) => boolean = null;
   @Input() isDense = false;
   @Input() isExpanded = true;
   @Input() isExpandable = false;
+
+  @Output() clicked = new EventEmitter<{ key: string, value: any }>();
+
+  onClicked = (key: string, value: any) => this.clicked.emit({ key, value });
 
   private guessType = (val: any): CellType => val === null || val === undefined ? 'void' :
     typeof val === 'object' ? val instanceof Date ? 'timestamp' : 'recursive' :

@@ -25,12 +25,4 @@ module.exports = setupForCorporateProxy([
     changeOrigin: true,
     logLevel: 'debug',
   },
-  {
-    context: '/samplerest',
-    pathRewrite: { '^/samplerest': '' },
-    target: 'https://jsonplaceholder.typicode.com',
-    secure: true,
-    changeOrigin: true,
-    logLevel: 'debug',
-  },
 ]);

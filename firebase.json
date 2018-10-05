@@ -12,11 +12,6 @@
         "destination": "https://blockchain.info/:any*",
         "type": 301
       },
-      {
-        "source": "/samplerest/:any*",
-        "destination": "https://jsonplaceholder.typicode.com/:any*",
-        "type": 301
-      }
     ],
     "rewrites": [
       {
