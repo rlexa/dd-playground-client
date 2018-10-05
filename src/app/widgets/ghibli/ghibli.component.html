@@ -14,11 +14,19 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="childhv">
-    <mat-card-title>Output</mat-card-title>
+  <mat-card *ngIf="tableAllData$ | async as tableAllData" class="childhv">
+    <mat-card-title>List</mat-card-title>
     <mat-card-content>
       <app-loading-bar [show]="(busyCount$ | async) > 0"></app-loading-bar>
-      <app-simple-view [data]="anyData$ | async" [isWidthConstrained]="false" [isDense]="true" [isClickable]="clickableValue" (clicked)="onClickedValue($event.key, $event.value)"></app-simple-view>
+      <app-simple-table [style.maxWidth]="'100rem'" [data]="tableAllData"></app-simple-table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="anyData$ | async as anyData" class="childhv">
+    <mat-card-title>Details</mat-card-title>
+    <mat-card-content class="scroll-y-auto" [style.maxHeight]="'60rem'">
+      <app-loading-bar [show]="(busyCount$ | async) > 0"></app-loading-bar>
+      <app-simple-view [data]="anyData" [isWidthConstrained]="false" [isDense]="true" [isClickable]="clickableValue" (clicked)="onClickedValue($event.key, $event.value)"></app-simple-view>
     </mat-card-content>
   </mat-card>
 

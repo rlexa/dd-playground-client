@@ -1,15 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { GhibliApiService, GHIBLI_TYPES, GHIBLI_TYPE_FILM, GHIBLI_TYPE_LOCATION, GHIBLI_TYPE_PEOPLE, GHIBLI_TYPE_SPECIES, GHIBLI_TYPE_VEHICLES } from 'app/ghibli';
 import { DoneSubject, rxComplete, rxNext_ } from 'app/rx';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { filter, finalize, switchMap, tap } from 'rxjs/operators';
+import { filter, finalize, map, switchMap, tap } from 'rxjs/operators';
+import { isArray } from 'util';
 
 @Component({
   selector: 'app-ghibli',
   templateUrl: './ghibli.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GhibliComponent implements OnDestroy {
+export class GhibliComponent implements OnDestroy, OnInit {
   constructor(
     private readonly api: GhibliApiService,
   ) { }
@@ -35,10 +36,14 @@ export class GhibliComponent implements OnDestroy {
   readonly anyData$ = new Subject();
   readonly busyCount$ = new BehaviorSubject(0);
 
+  readonly tableAllData$ = this.anyData$.pipe(map(_ => isArray(_) ? _ : null));
+
   ngOnDestroy() {
     this.done$.done();
     rxComplete(this.anyData$, this.busyCount$);
   }
+
+  ngOnInit() { }
 
   clickableValue = (key: string, value: any) => typeof value === 'string' && GHIBLI_TYPES.findIndex(_ => value.includes(_)) >= 0;
 
