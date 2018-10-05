@@ -11,7 +11,7 @@
         "source": "/bc1/:any*",
         "destination": "https://blockchain.info/:any*",
         "type": 301
-      },
+      }
     ],
     "rewrites": [
       {
