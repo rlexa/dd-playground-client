@@ -30,6 +30,10 @@ export class CryptoComponent implements OnDestroy, OnInit {
     .pipe(switchMap(_ => this.api.blockchainSingleAddress$({ address: _ })))
     .subscribe(rxNext_(this.anyData$), rxNext_(this.anyData$));
 
+  apiBlockCypherBitcoinAddress = () => of(this.bitcoinAddress$.value || null)
+    .pipe(switchMap(_ => this.api.blockcypherSingleAddress$({ address: _ })))
+    .subscribe(rxNext_(this.anyData$), rxNext_(this.anyData$));
+
   wsBlockchainPing = () => of(null)
     .pipe(switchMap(_ => this.api.wsBlockchainPing$()))
     .subscribe(rxNext_(this.anyData$), rxNext_(this.anyData$));

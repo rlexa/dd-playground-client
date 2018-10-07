@@ -25,4 +25,12 @@ module.exports = setupForCorporateProxy([
     changeOrigin: true,
     logLevel: 'debug',
   },
+  {
+    context: '/blockcypher',
+    pathRewrite: { '^/blockcypher': '' },
+    target: 'https://api.blockcypher.com/v1',
+    secure: true,
+    changeOrigin: true,
+    logLevel: 'debug',
+  },
 ]);

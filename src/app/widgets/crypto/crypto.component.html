@@ -22,9 +22,14 @@
               <mat-form-field class="childh value-numeric">
                 <input matInput [ngModel]="bitcoinAddress$ | async" (ngModelChange)="bitcoinAddress$.next($event)" placeholder="Bitcoin Address">
               </mat-form-field>
-              <button mat-button (click)="apiBlockchainBitcoinAddress()">Blockchain API</button>
-              <button mat-button (click)="wsBlockchainAddressLatestTransaction()">Blockchain WS</button>
-              <button mat-button (click)="wsBlockCypherAddressConfirmedTx()">BlockCypher WS</button>
+              <div ddFlexbox="vys">
+                <button mat-button (click)="apiBlockchainBitcoinAddress()">Blockchain API</button>
+                <button mat-button (click)="wsBlockchainAddressLatestTransaction()">Blockchain WS</button>
+              </div>
+              <div ddFlexbox="vys">
+                <button mat-button (click)="apiBlockCypherBitcoinAddress()">BlockCypher API</button>
+                <button mat-button (click)="wsBlockCypherAddressConfirmedTx()">BlockCypher WS</button>
+              </div>
             </div>
           </mat-list-item>
 
