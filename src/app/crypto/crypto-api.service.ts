@@ -11,10 +11,10 @@ export interface RequestAddressItems extends RequestSkipTake { address: string }
 export class CryptoApiService {
   constructor(private readonly http: HttpClient, ) { }
 
-  private readonly API_BLOCKCHAIN_1 = 'bc1';
+  private readonly API_BLOCKCHAIN = 'https://blockchain.info';
 
   bitcoinTransactions$ = (req: RequestAddressItems) => this
-    .httpGetRest$({ api: this.API_BLOCKCHAIN_1, url: `/rawaddr/${req.address || 'null'}`, params: { limit: req.take, offset: req.skip, cors: true } })
+    .httpGetRest$({ api: this.API_BLOCKCHAIN, url: `/rawaddr/${req.address || 'null'}`, params: { limit: req.take, offset: req.skip, cors: true } })
     .pipe(map(_ => _));
 
   private httpGetRest$ = (val: { api: string, url: string, params?: any }) => this.http
