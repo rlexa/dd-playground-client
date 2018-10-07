@@ -82,7 +82,7 @@ export const GAME_DOWN_FIELD_Q = GAME_DOWN_FIELD_H * GAME_DOWN_FIELD_W;
 export const DEF_SceneFactor = 1;
 
 export const MODIFIER_BLOCKS = 'blocking';
-export const MODIFIER_DAMAGE_MAX_1 = 'damage-max-1';
+export const MODIFIER_DAMAGE_MAX_1 = 'damage-max-in-1';
 export const MODIFIER_DESTRUCTIBLE = 'destructible';
 export const MODIFIER_FLAMMABLE = 'flammable';
 export const MODIFIER_HOVERING = 'hovering';
