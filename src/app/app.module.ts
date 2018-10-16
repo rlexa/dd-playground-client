@@ -4,11 +4,11 @@ import { MatNativeDateModule, NativeDateModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { GeneralModule } from 'app/general/general.module';
 import { AppStore, createAppStore, GlobalFlags, ReduxService, ReduxSetGlobalService } from 'app/redux';
-import { BuildComponent, ConfigComponent, CryptoComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GameDownComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, WidgetsModule } from 'app/widgets/widgets.module';
+import { FlexboxModule } from 'dd-flexbox';
+import 'hammerjs';
 import { AppComponent } from './app.component';
-import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BLOCKCHAIN, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CRYPTO, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_GHIBLI, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WALKER, ROUTE_WILDCARD } from './routing';
+import { ROUTE_DASHBOARD, ROUTE_ROOT, ROUTE_WILDCARD } from './routing';
 
 async function loadHttp(path: string, http: HttpClient, handler: (data: any) => void, parseAs: 'json' | 'text' = 'json') {
   try {
@@ -31,72 +31,7 @@ export function beforeInit(http: HttpClient, reduxSet: ReduxSetGlobalService) {
 }
 
 const appRoutes: Routes = [
-  {
-    path: ROUTE_DASHBOARD,
-    component: DashboardComponent,
-    children: [
-      { path: ROUTE_ROOT, redirectTo: ROUTE_OVERVIEW, pathMatch: 'full' },
-      {
-        path: ROUTE_OVERVIEW,
-        component: RoutedContentComponent,
-        children: [
-          { path: ROUTE_ROOT, redirectTo: ROUTE_CURRENT, pathMatch: 'full' },
-          { path: ROUTE_CURRENT, children: [{ path: ROUTE_ROOT, component: OverviewComponent }] }
-        ]
-      },
-      {
-        path: ROUTE_GAME,
-        component: RoutedContentComponent,
-        children: [
-          { path: ROUTE_ROOT, redirectTo: ROUTE_GAME_DOWN, pathMatch: 'full' },
-          { path: ROUTE_GAME_DOWN, children: [{ path: ROUTE_ROOT, component: GameDownComponent }] }
-        ]
-      },
-      {
-        path: ROUTE_GRAPH,
-        component: GraphTopLevelComponent,
-        children: [
-          { path: ROUTE_ROOT, redirectTo: ROUTE_WALKER, pathMatch: 'full' },
-          { path: ROUTE_WALKER, children: [{ path: ROUTE_ROOT, component: GraphWalkerComponent }] }
-        ]
-      },
-      {
-        path: ROUTE_AI,
-        component: RoutedContentComponent,
-        children: [
-          { path: ROUTE_ROOT, redirectTo: ROUTE_APPROXPOLYNOM, pathMatch: 'full' },
-          { path: ROUTE_APPROXPOLYNOM, children: [{ path: ROUTE_ROOT, component: MlPolynomialComponent }] }
-        ]
-      },
-      {
-        path: ROUTE_CRYPTO,
-        component: RoutedContentComponent,
-        children: [
-          { path: ROUTE_ROOT, redirectTo: ROUTE_BLOCKCHAIN, pathMatch: 'full' },
-          { path: ROUTE_BLOCKCHAIN, children: [{ path: ROUTE_ROOT, component: CryptoComponent }] }
-        ]
-      },
-      {
-        path: ROUTE_PLAYGROUND,
-        component: RoutedContentComponent,
-        children: [
-          { path: ROUTE_ROOT, redirectTo: ROUTE_DEMO_MISC, pathMatch: 'full' },
-          { path: ROUTE_DEMO_MISC, children: [{ path: ROUTE_ROOT, component: DemoMiscComponent }] },
-          { path: ROUTE_DEMO_STATE, children: [{ path: ROUTE_ROOT, component: DemoStateComponent }] },
-          { path: ROUTE_DEMO_GHIBLI, children: [{ path: ROUTE_ROOT, component: GhibliComponent }] },
-        ]
-      },
-      {
-        path: ROUTE_SETTINGS,
-        component: RoutedContentComponent,
-        children: [
-          { path: ROUTE_ROOT, redirectTo: ROUTE_CONFIGURATION, pathMatch: 'full' },
-          { path: ROUTE_CONFIGURATION, children: [{ path: ROUTE_ROOT, component: ConfigComponent }] },
-          { path: ROUTE_BUILDCONFIG, children: [{ path: ROUTE_ROOT, component: BuildComponent }] }
-        ]
-      }
-    ]
-  },
+  { path: ROUTE_DASHBOARD, loadChildren: 'app/module/widget/dashboard/dashboard.module#DashboardModule' },
   { path: ROUTE_ROOT, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full' },
   { path: ROUTE_WILDCARD, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full' }
 ];
@@ -118,9 +53,7 @@ const appRoutes: Routes = [
     // 3rd party
     MatNativeDateModule,
     NativeDateModule,
-    // own
-    GeneralModule,
-    WidgetsModule,
+    FlexboxModule,
     // routing
     RouterModule.forRoot(appRoutes, { enableTracing: false })
   ],

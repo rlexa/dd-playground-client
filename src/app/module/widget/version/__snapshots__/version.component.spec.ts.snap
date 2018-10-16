@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VersionComponent is created 1`] = `
+<app-version
+  done$={[Function DoneSubject]}
+  onGotoSettings={[Function Function]}
+  redux={[Function ReduxService]}
+  router={[Function Router]}
+  version$={[Function BehaviorSubject]}
+>
+  <button
+    class="auto-line-height mat-button _mat-animation-noopable"
+    mat-button=""
+  >
+    <span
+      class="mat-button-wrapper"
+    >
+      <label
+        class="deadclick-force"
+      >
+        v null
+      </label>
+    </span>
+    <div
+      class="mat-button-ripple mat-ripple"
+      matripple=""
+      ng-reflect-centered="false"
+      ng-reflect-disabled="false"
+      ng-reflect-trigger="[object HTMLButtonElement]"
+    />
+    <div
+      class="mat-button-focus-overlay"
+    />
+  </button>
+</app-version>
+`;

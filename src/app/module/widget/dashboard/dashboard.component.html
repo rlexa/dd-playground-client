@@ -5,7 +5,7 @@
       <mat-toolbar color="primary">
         <span class="mat-toolbar-filler"></span>
         <nav class="mat-nav-list">
-          <ng-container *ngFor="let ii of routes;">
+          <ng-container *ngFor="let ii of ROUTES;">
             <a mat-button [style.min-width]="'auto'" [routerLink]="'/' + ROUTE_ROOT + '/' + ii.route" routerLinkActive="active" [matTooltip]="ii.label">
               <i class="material-icons transition-transform active-scale">{{ ii.icon | icon }}</i>
             </a>

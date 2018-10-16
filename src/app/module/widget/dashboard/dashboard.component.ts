@@ -33,7 +33,7 @@ export class DashboardComponent implements OnDestroy {
 
   readonly ROUTE_ROOT = ROUTE_DASHBOARD;
 
-  readonly routes = <RouteDef[]>[
+  readonly ROUTES = <RouteDef[]>[
     {
       icon: 'overview', route: ROUTE_OVERVIEW, label: 'Overview', subs: [
         { icon: 'current', route: ROUTE_CURRENT, label: 'Current', subs: [] }
@@ -74,20 +74,20 @@ export class DashboardComponent implements OnDestroy {
     }
   ];
 
-  isVisibleFooter$ = this.redux.watch(state => state.ui.dashboard.isVisibleFooter, this.done$);
-  isVisibleHeader$ = this.redux.watch(state => state.ui.dashboard.isVisibleHeader, this.done$);
-  isVisibleSide$ = this.redux.watch(state => state.ui.dashboard.isVisibleSide, this.done$);
+  readonly isVisibleFooter$ = this.redux.watch(state => state.ui.dashboard.isVisibleFooter, this.done$);
+  readonly isVisibleHeader$ = this.redux.watch(state => state.ui.dashboard.isVisibleHeader, this.done$);
+  readonly isVisibleSide$ = this.redux.watch(state => state.ui.dashboard.isVisibleSide, this.done$);
 
-  subRoute$ = this.redux.watch(state => state.globalValues.route, this.done$)
+  readonly subRoute$ = this.redux.watch(state => state.globalValues.route, this.done$)
     .pipe(map(url => {
       const paths = url.split('/');
       const indexMe = paths.indexOf(ROUTE_DASHBOARD);
       return indexMe >= 0 && paths.length > indexMe + 1 ? paths[indexMe + 1] : null;
     }));
 
-  subRoutes$ = this.subRoute$
+  readonly subRoutes$ = this.subRoute$
     .pipe(map(subRoute => {
-      const route = this.routes.find(ii => ii.route === subRoute);
+      const route = this.ROUTES.find(ii => ii.route === subRoute);
       return route ? route.subs : [];
     }));
 

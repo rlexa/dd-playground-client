@@ -5,8 +5,7 @@ import { MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModul
 import { RouterModule } from '@angular/router';
 import { GeneralModule } from 'app/general/general.module';
 import { FlexboxModule } from 'dd-flexbox';
-import 'hammerjs';
-import { BuildComponent, ConfigComponent, CryptoComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, LoadingBarComponent, MlPolynomialComponent, OverviewComponent, RenderSimpleFieldComponent, RoutedContentComponent, SimpleTableComponent, SimpleViewComponent, VersionComponent } from '.';
+import { BuildComponent, ConfigComponent, CryptoComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, LoadingBarComponent, MlPolynomialComponent, OverviewComponent, RenderSimpleFieldComponent, RoutedContentComponent, SimpleTableComponent, SimpleViewComponent } from '.';
 
 @NgModule({
   imports: [
@@ -39,7 +38,6 @@ import { BuildComponent, ConfigComponent, CryptoComponent, DashboardComponent, D
     BuildComponent,
     ConfigComponent,
     CryptoComponent,
-    DashboardComponent,
     DemoMiscComponent,
     DemoStateComponent,
     DiagramPolynomComponent,
@@ -58,13 +56,11 @@ import { BuildComponent, ConfigComponent, CryptoComponent, DashboardComponent, D
     RoutedContentComponent,
     SimpleTableComponent,
     SimpleViewComponent,
-    VersionComponent,
   ],
   exports: [
     BuildComponent,
     ConfigComponent,
     CryptoComponent,
-    DashboardComponent,
     DemoMiscComponent,
     DemoStateComponent,
     EmptyComponent,
@@ -78,6 +74,3 @@ import { BuildComponent, ConfigComponent, CryptoComponent, DashboardComponent, D
   ]
 })
 export class WidgetsModule { }
-
-export { BuildComponent, ConfigComponent, CryptoComponent, DashboardComponent, DemoMiscComponent, DemoStateComponent, GameDownComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, EmptyComponent, MlPolynomialComponent, OverviewComponent, RoutedContentComponent, };
-

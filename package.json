@@ -13,6 +13,7 @@
     "build:stats": "ng build --prod --stats-json",
     "test": "jest --ci --logHeapUsage",
     "test:watch": "jest --watchAll",
+    "test:wu": "jest --watchAll -u",
     "test:watch:single": "jest --watchAll --runInBand",
     "test:coverage": "jest --coverage",
     "lint": "ng lint",
