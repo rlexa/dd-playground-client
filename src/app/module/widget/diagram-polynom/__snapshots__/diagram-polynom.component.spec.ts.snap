@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DiagramPolynomComponent is created 1`] = `
+<app-diagram-polynom
+  CSS_AXIS_X={[Function String]}
+  CSS_AXIS_Y={[Function String]}
+  CSS_CONTENT={[Function String]}
+  CSS_PATH={[Function String]}
+  CSS_POINT={[Function String]}
+  DEF_HSL_PREFIX={[Function String]}
+  DEF_HSL_SUFFIX={[Function String]}
+  DEF_MAX_X={[Function Number]}
+  DEF_MAX_Y={[Function Number]}
+  DEF_MIN_X={[Function Number]}
+  DEF_MIN_Y={[Function Number]}
+  DEF_POINT_COLOR={[Function String]}
+  DEF_POLYNOM_COLORS={[Function Array]}
+  MIN_MAX_BUFFER={[Function Number]}
+  PLOT_RESOLUTION={[Function Number]}
+  chart={[Function Object]}
+  clrPoint$={[Function BehaviorSubject]}
+  getHslColor={[Function Function]}
+  hoveredPoint={[Function EventEmitter]}
+  onWindowResize={[Function Function]}
+  polynomColors$={[Function BehaviorSubject]}
+  polynomWeights$={[Function BehaviorSubject]}
+  triggerRender$={[Function Subject]}
+  triggerResized$={[Function Subject]}
+  xyPoints$={[Function BehaviorSubject]}
+>
+  <div
+    class="svg-container position-relative"
+  >
+    <svg
+      id="svgChart"
+      preserveAspectRatio="xMinYMin meet"
+      viewBox="0 0 55 375"
+    >
+      <g
+        transform="translate(35, 5)"
+      >
+        <rect
+          class="filler"
+          height="100%"
+          style="fill: transparent;"
+          width="100%"
+        />
+        <g
+          class="content"
+        />
+        <g
+          class="axis-x"
+          transform="translate(0,350)"
+        />
+        <g
+          class="axis-y"
+        />
+      </g>
+    </svg>
+  </div>
+</app-diagram-polynom>
+`;

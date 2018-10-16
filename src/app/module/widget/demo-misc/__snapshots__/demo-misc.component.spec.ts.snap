@@ -1,0 +1,387 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DemoMiscComponent is created 1`] = `
+<app-demo-misc
+  graphsky={[Function GraphskyService]}
+  graphskyAddTestData={[Function Function]}
+  graphskyAll$={[Function Observable]}
+  graphskyDiversity$={[Function Observable]}
+  graphskyDrop={[Function Function]}
+  graphskyLiked$={[Function Observable]}
+  graphskyLog$={[Function BehaviorSubject]}
+  graphskyNodes$={[Function BehaviorSubject]}
+  reSamplePolynomPoints={[Function Function]}
+  samplePolynomPoints$={[Function BehaviorSubject]}
+  samplePolynomPointsRange={[Function Number]}
+  transitionalPolynomPoint={[Function Array]}
+>
+  <div
+    ddflexbox="vyt"
+    ng-reflect-dd-flexbox="vyt"
+    style="display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; align-content: stretch; flex-wrap: no-wrap;"
+  >
+    <mat-card
+      class="childv mat-card"
+    >
+      <mat-card-title
+        class="mat-card-title"
+      >
+        Polynomial (0, 0)
+      </mat-card-title>
+      <mat-card-content
+        class="mat-card-content"
+      >
+        <div
+          ddflexbox="vys"
+          ng-reflect-dd-flexbox="vys"
+          style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+        >
+          <app-diagram-polynom
+            ddflexitem="at"
+            ng-reflect-dd-flexitem="at"
+            ng-reflect-points="49.959640971935286,27.07881402"
+            ng-reflect-polynomials="1,1,1,1,1,1,1,1,1,1"
+          >
+            <div
+              class="svg-container position-relative"
+            >
+              <svg
+                id="svgChart"
+                preserveAspectRatio="xMinYMin meet"
+                viewBox="0 0 55 375"
+              >
+                <g
+                  transform="translate(35, 5)"
+                >
+                  <rect
+                    class="filler"
+                    height="100%"
+                    style="fill: transparent;"
+                    width="100%"
+                  />
+                  <g
+                    class="content"
+                  />
+                  <g
+                    class="axis-x"
+                    transform="translate(0,350)"
+                  />
+                  <g
+                    class="axis-y"
+                  />
+                </g>
+              </svg>
+            </div>
+          </app-diagram-polynom>
+          <div
+            ddflexbox="hyc"
+            ng-reflect-dd-flexbox="hyc"
+            style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
+          >
+            <button
+              class="mat-raised-button mat-accent _mat-animation-noopable"
+              color="accent"
+              mat-raised-button=""
+              ng-reflect-color="accent"
+            >
+              <span
+                class="mat-button-wrapper"
+              >
+                POINTS
+              </span>
+              <div
+                class="mat-button-ripple mat-ripple"
+                matripple=""
+                ng-reflect-centered="false"
+                ng-reflect-disabled="false"
+                ng-reflect-trigger="[object HTMLButtonElement]"
+              />
+              <div
+                class="mat-button-focus-overlay"
+              />
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card
+      class="childv mat-card"
+    >
+      <mat-card-title
+        class="mat-card-title"
+      >
+        Graphsky
+      </mat-card-title>
+      <mat-card-content
+        class="mat-card-content"
+      >
+        <div
+          ddflexbox="vys"
+          ng-reflect-dd-flexbox="vys"
+          style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+        >
+          <div
+            ddflexbox="hycw"
+            ng-reflect-dd-flexbox="hycw"
+            style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: wrap;"
+          >
+            <button
+              class="mat-button mat-accent _mat-animation-noopable"
+              color="accent"
+              mat-button=""
+              ng-reflect-color="accent"
+            >
+              <span
+                class="mat-button-wrapper"
+              >
+                + TEST
+              </span>
+              <div
+                class="mat-button-ripple mat-ripple"
+                matripple=""
+                ng-reflect-centered="false"
+                ng-reflect-disabled="false"
+                ng-reflect-trigger="[object HTMLButtonElement]"
+              />
+              <div
+                class="mat-button-focus-overlay"
+              />
+            </button>
+            <button
+              class="mat-button mat-warn _mat-animation-noopable"
+              color="warn"
+              mat-button=""
+              ng-reflect-color="warn"
+            >
+              <span
+                class="mat-button-wrapper"
+              >
+                DROP
+              </span>
+              <div
+                class="mat-button-ripple mat-ripple"
+                matripple=""
+                ng-reflect-centered="false"
+                ng-reflect-disabled="false"
+                ng-reflect-trigger="[object HTMLButtonElement]"
+              />
+              <div
+                class="mat-button-focus-overlay"
+              />
+            </button>
+          </div>
+          <app-simple-view
+            class="ng-tns-c2-0"
+            ng-reflect-data="[object Object]"
+            ng-reflect-is-dense="true"
+            ng-reflect-is-width-constrained="false"
+          >
+            
+            <div
+              class="position-relative ng-tns-c2-0 ng-star-inserted"
+            >
+              <div
+                class="scroll-x-auto"
+                ddflexbox="hys"
+                ng-reflect-dd-flexbox="hys"
+                style="max-width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+              >
+                
+                
+                <mat-list
+                  class="mat-list-auto-height mat-list ng-tns-c2-0 ng-star-inserted"
+                  dense="true"
+                >
+                  
+                  <table
+                    class="ng-tns-c2-0 ng-star-inserted"
+                  >
+                    <tbody
+                      class="ng-tns-c2-0"
+                    >
+                      
+                      
+                      
+                      
+                      
+                      <tr
+                        class="ng-tns-c2-0 ng-star-inserted"
+                      >
+                        <td
+                          class="ng-tns-c2-0"
+                          style="vertical-align: top;"
+                        >
+                          <mat-list-item
+                            class="mat-list-item"
+                          >
+                            <div
+                              class="mat-list-item-content"
+                            >
+                              <div
+                                class="mat-list-item-ripple mat-ripple"
+                                mat-ripple=""
+                                ng-reflect-disabled="true"
+                                ng-reflect-trigger="[object HTMLUnknownElement]"
+                              />
+                              <div
+                                class="mat-list-text"
+                              />
+                              <span
+                                class="no-break-text ng-tns-c2-0"
+                              >
+                                Links
+                              </span>
+                            </div>
+                          </mat-list-item>
+                        </td>
+                        <td
+                          class="ng-tns-c2-0"
+                        >
+                          <mat-list-item
+                            class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                            style=""
+                          >
+                            <div
+                              class="mat-list-item-content"
+                            >
+                              <div
+                                class="mat-list-item-ripple mat-ripple"
+                                mat-ripple=""
+                                ng-reflect-disabled="true"
+                                ng-reflect-trigger="[object HTMLUnknownElement]"
+                              />
+                              <div
+                                class="mat-list-text"
+                              />
+                              <span
+                                class="break-text ng-tns-c2-0 value-numeric"
+                                ng-reflect-klass="break-text"
+                                ng-reflect-ng-class="[object Object]"
+                              >
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                <span
+                                  class="ng-tns-c2-0 ng-star-inserted"
+                                  ng-reflect-ng-class="[object Object]"
+                                  style=""
+                                >
+                                   0 
+                                </span>
+                              </span>
+                            </div>
+                          </mat-list-item>
+                        </td>
+                      </tr>
+                      <tr
+                        class="ng-tns-c2-0 ng-star-inserted"
+                      >
+                        <td
+                          class="ng-tns-c2-0"
+                          style="vertical-align: top;"
+                        >
+                          <mat-list-item
+                            class="mat-list-item"
+                          >
+                            <div
+                              class="mat-list-item-content"
+                            >
+                              <div
+                                class="mat-list-item-ripple mat-ripple"
+                                mat-ripple=""
+                                ng-reflect-disabled="true"
+                                ng-reflect-trigger="[object HTMLUnknownElement]"
+                              />
+                              <div
+                                class="mat-list-text"
+                              />
+                              <span
+                                class="no-break-text ng-tns-c2-0"
+                              >
+                                Nodes
+                              </span>
+                            </div>
+                          </mat-list-item>
+                        </td>
+                        <td
+                          class="ng-tns-c2-0"
+                        >
+                          <mat-list-item
+                            class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                            style=""
+                          >
+                            <div
+                              class="mat-list-item-content"
+                            >
+                              <div
+                                class="mat-list-item-ripple mat-ripple"
+                                mat-ripple=""
+                                ng-reflect-disabled="true"
+                                ng-reflect-trigger="[object HTMLUnknownElement]"
+                              />
+                              <div
+                                class="mat-list-text"
+                              />
+                              <span
+                                class="break-text ng-tns-c2-0 value-numeric"
+                                ng-reflect-klass="break-text"
+                                ng-reflect-ng-class="[object Object]"
+                              >
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                <span
+                                  class="ng-tns-c2-0 ng-star-inserted"
+                                  ng-reflect-ng-class="[object Object]"
+                                  style=""
+                                >
+                                   0 
+                                </span>
+                              </span>
+                            </div>
+                          </mat-list-item>
+                        </td>
+                      </tr>
+                      
+                      
+                    </tbody>
+                  </table>
+                </mat-list>
+              </div>
+            </div>
+          </app-simple-view>
+          <div
+            ddflexbox="hysw"
+            ng-reflect-dd-flexbox="hysw"
+            style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: wrap;"
+          >
+            <pre
+              class="childhv contenthv border"
+            >
+              All: {}
+            </pre>
+            <pre
+              class="childhv contenthv border"
+            >
+              Likes: {}
+            </pre>
+            <pre
+              class="childhv contenthv border"
+            >
+              Diversity: {}
+            </pre>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</app-demo-misc>
+`;

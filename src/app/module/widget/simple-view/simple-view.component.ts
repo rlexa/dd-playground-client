@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { TRIGGER_WobbleX } from 'app/animations';
 import { FORMAT_DATE_TIMESTAMP } from 'app/presets';
-import { isNumeric, isWeb } from 'app/util';
-import { WithDataProperty } from 'app/widgets/util';
+import { isNumeric, isWeb, WithDataProperty } from 'app/util';
 import { map } from 'rxjs/operators';
 
 type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string' | 'void';

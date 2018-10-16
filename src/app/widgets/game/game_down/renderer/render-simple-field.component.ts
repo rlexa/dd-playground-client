@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/c
 import { Theme } from 'app/game';
 import { GameDownColorMap, GameDownStateField } from 'app/redux/game/down';
 import { DoneSubject, rxComplete } from 'app/rx';
-import { trackByIndex } from 'app/widgets/util';
+import { trackByIndex } from 'app/util';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { actorToColor, entityToColor, fieldToColor } from './util';

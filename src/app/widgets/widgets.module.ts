@@ -10,7 +10,7 @@ import { StartuppercasePipeModule } from 'app/module/pipe/startuppercase';
 import { RoutedContentModule } from 'app/module/widget/routed-content';
 import { SimpleViewModule } from 'app/module/widget/simple-view';
 import { FlexboxModule } from 'dd-flexbox';
-import { CryptoComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, LoadingBarComponent, MlPolynomialComponent, OverviewComponent, RenderSimpleFieldComponent, SimpleTableComponent } from '.';
+import { CryptoComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, LoadingBarComponent, RenderSimpleFieldComponent, SimpleTableComponent } from '.';
 
 @NgModule({
   imports: [
@@ -47,9 +47,6 @@ import { CryptoComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomC
   ],
   declarations: [
     CryptoComponent,
-    DemoMiscComponent,
-    DemoStateComponent,
-    DiagramPolynomComponent,
     EmptyComponent,
     GameDownComponent,
     GameDownConfigComponent,
@@ -59,22 +56,16 @@ import { CryptoComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomC
     GraphTopLevelComponent,
     GraphWalkerComponent,
     LoadingBarComponent,
-    MlPolynomialComponent,
-    OverviewComponent,
     RenderSimpleFieldComponent,
     SimpleTableComponent,
   ],
   exports: [
     CryptoComponent,
-    DemoMiscComponent,
-    DemoStateComponent,
     EmptyComponent,
     GameDownComponent,
     GhibliComponent,
     GraphTopLevelComponent,
     GraphWalkerComponent,
-    MlPolynomialComponent,
-    OverviewComponent,
   ]
 })
 export class WidgetsModule { }

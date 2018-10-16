@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { cleanParams, getJsonHeaders } from 'app/util-http';
+import { cleanParams, getJsonHeaders } from 'app/util';
 import { of } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { WebSocketSubject } from 'rxjs/webSocket';

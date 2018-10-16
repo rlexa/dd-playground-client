@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { DEF_OPTIMIZER, detectPolynom, generatePolynomialPoints, OPTIMIZERS } from 'app/ai';
 import { ReduxService, ReduxSetUiAiService } from 'app/redux';
 import { DoneSubject, rxComplete } from 'app/rx';
-import { trackByIndex } from 'app/widgets/util';
+import { trackByIndex } from 'app/util';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, tap } from 'rxjs/operators';
 

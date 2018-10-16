@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FORMAT_DATE_TIMESTAMP } from 'app/presets';
 import { DoneSubject, rxComplete, rxNext_, rxNull, rxTrue } from 'app/rx';
+import { trackByIndex } from 'app/util';
 import { BehaviorSubject, combineLatest, merge } from 'rxjs';
 import { debounceTime, filter, map, takeUntil } from 'rxjs/operators';
 
@@ -43,6 +44,8 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   setSortAsc = rxNext_(this.sortAsc$);
   setSortBy = rxNext_(this.sortBy$);
 
+  trackByIndex = trackByIndex;
+
   @Output() dblClick = new EventEmitter<any>();
 
   @Input() set data(val: any[]) { this.data$.next(val); }
@@ -72,7 +75,6 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
       });
   }
 
-  trackByIndex = (index: number, item: any) => index;
   onRowDoubleClick = (item: any) => this.dblClick.emit(item);
 
   onSortChange = (sortBy: string, sortAsc: boolean) => {

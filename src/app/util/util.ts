@@ -116,6 +116,8 @@ export const toRange = (count: number, optTo?: number) =>
 
 export const toWebAddress = (value: string) => ('' + value).startsWith('http') ? value : 'http://' + value;
 
+export const trackByIndex = (index: number, _: any) => index;
+
 export const WEB_REGEXP_VALUE = '(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}' +
   '|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})'
 export const WEB_REGEXP = new RegExp(WEB_REGEXP_VALUE);
