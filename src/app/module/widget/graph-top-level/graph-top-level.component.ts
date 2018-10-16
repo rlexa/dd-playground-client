@@ -1,8 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GraphskyService, IGraphskyLinkRequest } from 'app/graphsky';
+import { GraphskyService, IGraphskyData, IGraphskyLinkRequest } from 'app/module/service/graphsky-api';
+import { TAG_TYPE } from 'app/module/widget/graph-walker';
 import { map, tap } from 'rxjs/operators';
-import { TypedNode } from './data';
+
+interface TypedNode extends IGraphskyData {
+  [TAG_TYPE]: string;
+}
 
 const csvToObjects = (type: string, csv: string, separator = ';') => {
   const ret = <TypedNode[]>[];

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { GraphskyService } from 'app/graphsky';
+import { GraphskyService } from 'app/module/service/graphsky-api';
 import { arrayFrom } from 'app/util';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';

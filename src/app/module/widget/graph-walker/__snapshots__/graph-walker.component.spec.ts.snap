@@ -1,0 +1,636 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GraphWalkerComponent is created 1`] = `
+<app-graph-walker
+  CMPS={[Function Array]}
+  GRID={[Function String]}
+  GRID_CURRENT={[Function String]}
+  GRID_FROM={[Function String]}
+  GRID_SIZE={[Function String]}
+  GRID_TO={[Function String]}
+  curNode$={[Function BehaviorSubject]}
+  curTag$={[Function BehaviorSubject]}
+  curType$={[Function BehaviorSubject]}
+  curTypeFirstNode$={[Function AnonymousSubject]}
+  curTypeKeyTagValues$={[Function Observable]}
+  curTypeKeyTagValuesFiltered$={[Function Observable]}
+  curTypeKeys$={[Function AnonymousSubject]}
+  curTypeKeysFiltered$={[Function Observable]}
+  curVal$={[Function BehaviorSubject]}
+  dbNodeTypeCount$={[Function Observable]}
+  dbState$={[Function BehaviorSubject]}
+  dbTypes$={[Function Observable]}
+  graphsky={[Function GraphskyService]}
+  tryQuery={[Function Function]}
+>
+  <div
+    ddflexbox="vyt"
+    ng-reflect-dd-flexbox="vyt"
+    style="display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; align-content: stretch; flex-wrap: no-wrap;"
+  >
+    <div
+      ddflexbox="hysw"
+      ng-reflect-dd-flexbox="hysw"
+      style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: wrap;"
+    >
+      <mat-card
+        class="childhv mat-card"
+      >
+        <mat-card-title
+          class="mat-card-title"
+        >
+          DB Stats: Overall
+        </mat-card-title>
+        <mat-card-content
+          class="mat-card-content"
+        >
+          <app-simple-view
+            class="ng-tns-c0-0"
+            ng-reflect-data="[object Object]"
+            ng-reflect-is-dense="true"
+            ng-reflect-is-width-constrained="false"
+          >
+            
+            <div
+              class="position-relative ng-tns-c0-0 ng-star-inserted"
+            >
+              <div
+                class="scroll-x-auto"
+                ddflexbox="hys"
+                ng-reflect-dd-flexbox="hys"
+                style="max-width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+              >
+                
+                
+                <mat-list
+                  class="mat-list-auto-height mat-list ng-tns-c0-0 ng-star-inserted"
+                  dense="true"
+                >
+                  
+                  <table
+                    class="ng-tns-c0-0 ng-star-inserted"
+                  >
+                    <tbody
+                      class="ng-tns-c0-0"
+                    >
+                      
+                      
+                      
+                      
+                      
+                      <tr
+                        class="ng-tns-c0-0 ng-star-inserted"
+                      >
+                        <td
+                          class="ng-tns-c0-0"
+                          style="vertical-align: top;"
+                        >
+                          <mat-list-item
+                            class="mat-list-item"
+                          >
+                            <div
+                              class="mat-list-item-content"
+                            >
+                              <div
+                                class="mat-list-item-ripple mat-ripple"
+                                mat-ripple=""
+                                ng-reflect-disabled="true"
+                                ng-reflect-trigger="[object HTMLUnknownElement]"
+                              />
+                              <div
+                                class="mat-list-text"
+                              />
+                              <span
+                                class="no-break-text ng-tns-c0-0"
+                              >
+                                Links
+                              </span>
+                            </div>
+                          </mat-list-item>
+                        </td>
+                        <td
+                          class="ng-tns-c0-0"
+                        >
+                          <mat-list-item
+                            class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                            style=""
+                          >
+                            <div
+                              class="mat-list-item-content"
+                            >
+                              <div
+                                class="mat-list-item-ripple mat-ripple"
+                                mat-ripple=""
+                                ng-reflect-disabled="true"
+                                ng-reflect-trigger="[object HTMLUnknownElement]"
+                              />
+                              <div
+                                class="mat-list-text"
+                              />
+                              <span
+                                class="break-text ng-tns-c0-0 value-numeric"
+                                ng-reflect-klass="break-text"
+                                ng-reflect-ng-class="[object Object]"
+                              >
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                <span
+                                  class="ng-tns-c0-0 ng-star-inserted"
+                                  ng-reflect-ng-class="[object Object]"
+                                  style=""
+                                >
+                                   0 
+                                </span>
+                              </span>
+                            </div>
+                          </mat-list-item>
+                        </td>
+                      </tr>
+                      <tr
+                        class="ng-tns-c0-0 ng-star-inserted"
+                      >
+                        <td
+                          class="ng-tns-c0-0"
+                          style="vertical-align: top;"
+                        >
+                          <mat-list-item
+                            class="mat-list-item"
+                          >
+                            <div
+                              class="mat-list-item-content"
+                            >
+                              <div
+                                class="mat-list-item-ripple mat-ripple"
+                                mat-ripple=""
+                                ng-reflect-disabled="true"
+                                ng-reflect-trigger="[object HTMLUnknownElement]"
+                              />
+                              <div
+                                class="mat-list-text"
+                              />
+                              <span
+                                class="no-break-text ng-tns-c0-0"
+                              >
+                                Nodes
+                              </span>
+                            </div>
+                          </mat-list-item>
+                        </td>
+                        <td
+                          class="ng-tns-c0-0"
+                        >
+                          <mat-list-item
+                            class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                            style=""
+                          >
+                            <div
+                              class="mat-list-item-content"
+                            >
+                              <div
+                                class="mat-list-item-ripple mat-ripple"
+                                mat-ripple=""
+                                ng-reflect-disabled="true"
+                                ng-reflect-trigger="[object HTMLUnknownElement]"
+                              />
+                              <div
+                                class="mat-list-text"
+                              />
+                              <span
+                                class="break-text ng-tns-c0-0 value-numeric"
+                                ng-reflect-klass="break-text"
+                                ng-reflect-ng-class="[object Object]"
+                              >
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                <span
+                                  class="ng-tns-c0-0 ng-star-inserted"
+                                  ng-reflect-ng-class="[object Object]"
+                                  style=""
+                                >
+                                   0 
+                                </span>
+                              </span>
+                            </div>
+                          </mat-list-item>
+                        </td>
+                      </tr>
+                      
+                      
+                    </tbody>
+                  </table>
+                </mat-list>
+              </div>
+            </div>
+          </app-simple-view>
+        </mat-card-content>
+      </mat-card>
+      <mat-card
+        class="childhv mat-card"
+      >
+        <mat-card-title
+          class="mat-card-title"
+        >
+          DB Stats: Node Types
+        </mat-card-title>
+        <mat-card-content
+          class="mat-card-content"
+        >
+          <app-simple-view
+            class="ng-tns-c0-1"
+            ng-reflect-is-dense="true"
+            ng-reflect-is-width-constrained="false"
+          >
+            
+          </app-simple-view>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div
+      ddflexbox="hycw"
+      ng-reflect-dd-flexbox="hycw"
+      style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: wrap;"
+    >
+      <label>
+        Query first node of:
+      </label>
+      <mat-form-field
+        class="margin-left childhv mat-form-field ng-tns-c2-2 mat-primary mat-form-field-type-mat-select mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
+        hintlabel="Type"
+        ng-reflect-hint-label="Type"
+      >
+        <div
+          class="mat-form-field-wrapper"
+        >
+          <div
+            class="mat-form-field-flex"
+          >
+            
+            
+            <div
+              class="mat-form-field-infix"
+            >
+              <mat-select
+                aria-describedby="mat-hint-0"
+                aria-disabled="false"
+                aria-invalid="false"
+                aria-multiselectable="false"
+                aria-required="false"
+                class="mat-select ng-tns-c3-3 ng-star-inserted"
+                id="mat-select-0"
+                role="listbox"
+                tabindex="0"
+              >
+                <div
+                  aria-hidden="true"
+                  cdk-overlay-origin=""
+                  class="mat-select-trigger"
+                >
+                  <div
+                    class="mat-select-value"
+                    ng-reflect-ng-switch="true"
+                  >
+                    
+                    <span
+                      class="mat-select-placeholder ng-tns-c3-3 ng-star-inserted"
+                    >
+                       
+                    </span>
+                    
+                  </div>
+                  <div
+                    class="mat-select-arrow-wrapper"
+                  >
+                    <div
+                      class="mat-select-arrow"
+                    />
+                  </div>
+                </div>
+                
+              </mat-select>
+              <span
+                class="mat-form-field-label-wrapper"
+              >
+                
+              </span>
+            </div>
+            
+          </div>
+          
+          <div
+            class="mat-form-field-underline ng-tns-c2-2 ng-star-inserted"
+          >
+            <span
+              class="mat-form-field-ripple"
+            />
+          </div>
+          <div
+            class="mat-form-field-subscript-wrapper"
+            ng-reflect-ng-switch="hint"
+          >
+            
+            
+            <div
+              class="mat-form-field-hint-wrapper ng-tns-c2-2 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+              style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+            >
+              
+              <div
+                class="mat-hint ng-tns-c2-2 ng-star-inserted"
+                id="mat-hint-0"
+                style=""
+              >
+                Type
+              </div>
+              <div
+                class="mat-form-field-hint-spacer"
+              />
+            </div>
+          </div>
+        </div>
+      </mat-form-field>
+      <mat-form-field
+        class="margin-left childhv mat-form-field ng-tns-c2-4 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
+        hintlabel="Tag"
+        ng-reflect-hint-label="Tag"
+      >
+        <div
+          class="mat-form-field-wrapper"
+        >
+          <div
+            class="mat-form-field-flex"
+          >
+            
+            
+            <div
+              class="mat-form-field-infix"
+            >
+              <input
+                aria-autocomplete="list"
+                aria-describedby="mat-hint-2"
+                aria-expanded="false"
+                aria-invalid="false"
+                aria-required="false"
+                autocomplete="off"
+                class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
+                id="mat-input-0"
+                matinput=""
+                ng-reflect-autocomplete="[object Object]"
+                role="combobox"
+              />
+              <mat-autocomplete
+                class="mat-autocomplete"
+              >
+                
+              </mat-autocomplete>
+              <span
+                class="mat-form-field-label-wrapper"
+              >
+                
+              </span>
+            </div>
+            
+          </div>
+          
+          <div
+            class="mat-form-field-underline ng-tns-c2-4 ng-star-inserted"
+          >
+            <span
+              class="mat-form-field-ripple"
+            />
+          </div>
+          <div
+            class="mat-form-field-subscript-wrapper"
+            ng-reflect-ng-switch="hint"
+          >
+            
+            
+            <div
+              class="mat-form-field-hint-wrapper ng-tns-c2-4 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+              style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+            >
+              
+              <div
+                class="mat-hint ng-tns-c2-4 ng-star-inserted"
+                id="mat-hint-2"
+                style=""
+              >
+                Tag
+              </div>
+              <div
+                class="mat-form-field-hint-spacer"
+              />
+            </div>
+          </div>
+        </div>
+      </mat-form-field>
+      
+      <button
+        class="mat-mini-fab mat-accent _mat-animation-noopable ng-star-inserted"
+        mat-mini-fab=""
+      >
+        <span
+          class="mat-button-wrapper"
+        >
+          &lt;
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple mat-button-ripple-round"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </button>
+      <button
+        class="mat-mini-fab mat-accent _mat-animation-noopable ng-star-inserted"
+        mat-mini-fab=""
+      >
+        <span
+          class="mat-button-wrapper"
+        >
+          &lt;=
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple mat-button-ripple-round"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </button>
+      <button
+        class="mat-mini-fab mat-accent _mat-animation-noopable ng-star-inserted"
+        mat-mini-fab=""
+      >
+        <span
+          class="mat-button-wrapper"
+        >
+          !=
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple mat-button-ripple-round"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </button>
+      <button
+        class="mat-mini-fab mat-accent _mat-animation-noopable ng-star-inserted"
+        mat-mini-fab=""
+      >
+        <span
+          class="mat-button-wrapper"
+        >
+          =
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple mat-button-ripple-round"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </button>
+      <button
+        class="mat-mini-fab mat-accent _mat-animation-noopable ng-star-inserted"
+        mat-mini-fab=""
+      >
+        <span
+          class="mat-button-wrapper"
+        >
+          &gt;=
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple mat-button-ripple-round"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </button>
+      <button
+        class="mat-mini-fab mat-accent _mat-animation-noopable ng-star-inserted"
+        mat-mini-fab=""
+      >
+        <span
+          class="mat-button-wrapper"
+        >
+          &gt;
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple mat-button-ripple-round"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </button>
+      <mat-form-field
+        class="margin-left childhv mat-form-field ng-tns-c2-5 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
+        hintlabel="Value"
+        ng-reflect-hint-label="Value"
+      >
+        <div
+          class="mat-form-field-wrapper"
+        >
+          <div
+            class="mat-form-field-flex"
+          >
+            
+            
+            <div
+              class="mat-form-field-infix"
+            >
+              <input
+                aria-autocomplete="list"
+                aria-describedby="mat-hint-4"
+                aria-expanded="false"
+                aria-invalid="false"
+                aria-required="false"
+                autocomplete="off"
+                class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
+                id="mat-input-1"
+                matinput=""
+                ng-reflect-autocomplete="[object Object]"
+                role="combobox"
+              />
+              <mat-autocomplete
+                class="mat-autocomplete"
+              >
+                
+              </mat-autocomplete>
+              <span
+                class="mat-form-field-label-wrapper"
+              >
+                
+              </span>
+            </div>
+            
+          </div>
+          
+          <div
+            class="mat-form-field-underline ng-tns-c2-5 ng-star-inserted"
+          >
+            <span
+              class="mat-form-field-ripple"
+            />
+          </div>
+          <div
+            class="mat-form-field-subscript-wrapper"
+            ng-reflect-ng-switch="hint"
+          >
+            
+            
+            <div
+              class="mat-form-field-hint-wrapper ng-tns-c2-5 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+              style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+            >
+              
+              <div
+                class="mat-hint ng-tns-c2-5 ng-star-inserted"
+                id="mat-hint-4"
+                style=""
+              >
+                Value
+              </div>
+              <div
+                class="mat-form-field-hint-spacer"
+              />
+            </div>
+          </div>
+        </div>
+      </mat-form-field>
+    </div>
+    
+  </div>
+</app-graph-walker>
+`;

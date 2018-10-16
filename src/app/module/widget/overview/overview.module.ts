@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ROUTE_ROOT, ROUTE_WILDCARD } from 'app/routing';
 import { imports } from './imports';
 import { OverviewComponent } from './overview.component';
 
-const ROUTING = [
+const ROUTING = <Routes>[
   { path: ROUTE_ROOT, component: OverviewComponent },
   { path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full' },
 ];

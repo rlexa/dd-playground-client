@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { RoutedContentComponent } from 'app/module/widget/routed-content';
-import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CRYPTO, ROUTE_CURRENT, ROUTE_DEMO_GHIBLI, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WALKER, ROUTE_WILDCARD } from 'app/routing';
-import { GameDownComponent, GraphTopLevelComponent, GraphWalkerComponent } from 'app/widgets';
+import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CRYPTO, ROUTE_CURRENT, ROUTE_DEMO_GHIBLI, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WILDCARD } from 'app/routing';
+import { GameDownComponent } from 'app/widgets';
 import { DashboardComponent } from './dashboard.component';
 import { imports } from './imports';
 
-const ROUTING = [
+const ROUTING = <Routes>[
   {
     path: ROUTE_ROOT, component: DashboardComponent, children: [
       {
@@ -25,14 +25,7 @@ const ROUTING = [
           { path: ROUTE_GAME_DOWN, children: [{ path: ROUTE_ROOT, component: GameDownComponent }] }
         ]
       },
-      {
-        path: ROUTE_GRAPH,
-        component: GraphTopLevelComponent,
-        children: [
-          { path: ROUTE_ROOT, redirectTo: ROUTE_WALKER, pathMatch: 'full' },
-          { path: ROUTE_WALKER, children: [{ path: ROUTE_ROOT, component: GraphWalkerComponent }] }
-        ]
-      },
+      { path: ROUTE_GRAPH, loadChildren: 'app/module/widget/graph-top-level/graph-top-level.module#GraphTopLevelModule' },
       {
         path: ROUTE_AI,
         component: RoutedContentComponent,

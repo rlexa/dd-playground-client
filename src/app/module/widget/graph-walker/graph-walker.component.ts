@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { GraphskyService, IGraphskyNode } from 'app/graphsky';
+import { GraphskyService, IGraphskyNode } from 'app/module/service/graphsky-api';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
-import { TAG_TYPE } from './data';
+
+export const TAG_TYPE = '_type';
 
 const CMP_EQ = '=';
 const CMP_NE = '!=';
