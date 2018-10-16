@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { GhibliApiService, GHIBLI_TYPES, GHIBLI_TYPE_FILM, GHIBLI_TYPE_LOCATION, GHIBLI_TYPE_PEOPLE, GHIBLI_TYPE_SPECIES, GHIBLI_TYPE_VEHICLES } from 'app/ghibli';
+import { GhibliApiService, GHIBLI_TYPES, GHIBLI_TYPE_FILM, GHIBLI_TYPE_LOCATION, GHIBLI_TYPE_PEOPLE, GHIBLI_TYPE_SPECIES, GHIBLI_TYPE_VEHICLES } from 'app/module/service/ghibli-api';
 import { DoneSubject, rxComplete, rxNext_ } from 'app/rx';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { filter, finalize, map, switchMap, tap } from 'rxjs/operators';

@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SimpleTableComponent is created 1`] = `
+<app-simple-table
+  FORMAT_DATE_TIMESTAMP={[Function String]}
+  columns$={[Function AnonymousSubject]}
+  data$={[Function BehaviorSubject]}
+  dataBatch$={[Function Observable]}
+  dataFiltered$={[Function Observable]}
+  dblClick={[Function EventEmitter]}
+  done$={[Function DoneSubject]}
+  filter$={[Function BehaviorSubject]}
+  onRowDoubleClick={[Function Function]}
+  onSortChange={[Function Function]}
+  page$={[Function BehaviorSubject]}
+  pageSize$={[Function BehaviorSubject]}
+  setFilter={[Function Function]}
+  setPage={[Function Function]}
+  setSortAsc={[Function Function]}
+  setSortBy={[Function Function]}
+  sortAsc$={[Function BehaviorSubject]}
+  sortBy$={[Function BehaviorSubject]}
+  styleDisplay={[Function String]}
+  styleFlexDirection={[Function String]}
+  total$={[Function Observable]}
+  trackByIndex={[Function Function]}
+>
+  
+</app-simple-table>
+`;

@@ -7,10 +7,12 @@ import { D3numberPipeModule } from 'app/module/pipe/d3number';
 import { IconPipeModule } from 'app/module/pipe/icon';
 import { RipupperPipeModule } from 'app/module/pipe/ripupper';
 import { StartuppercasePipeModule } from 'app/module/pipe/startuppercase';
+import { LoadingBarModule } from 'app/module/widget/loading-bar';
 import { RoutedContentModule } from 'app/module/widget/routed-content';
+import { SimpleTableModule } from 'app/module/widget/simple-table';
 import { SimpleViewModule } from 'app/module/widget/simple-view';
 import { FlexboxModule } from 'dd-flexbox';
-import { CryptoComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, LoadingBarComponent, RenderSimpleFieldComponent, SimpleTableComponent } from '.';
+import { CryptoComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GraphTopLevelComponent, GraphWalkerComponent, RenderSimpleFieldComponent } from '.';
 
 @NgModule({
   imports: [
@@ -42,28 +44,24 @@ import { CryptoComponent, EmptyComponent, GameDownComponent, GameDownConfigCompo
     RipupperPipeModule,
     StartuppercasePipeModule,
 
+    LoadingBarModule,
     RoutedContentModule,
+    SimpleTableModule,
     SimpleViewModule,
   ],
   declarations: [
     CryptoComponent,
-    EmptyComponent,
     GameDownComponent,
     GameDownConfigComponent,
     GameDownFieldComponent,
     GameDownSceneComponent,
-    GhibliComponent,
     GraphTopLevelComponent,
     GraphWalkerComponent,
-    LoadingBarComponent,
     RenderSimpleFieldComponent,
-    SimpleTableComponent,
   ],
   exports: [
     CryptoComponent,
-    EmptyComponent,
     GameDownComponent,
-    GhibliComponent,
     GraphTopLevelComponent,
     GraphWalkerComponent,
   ]

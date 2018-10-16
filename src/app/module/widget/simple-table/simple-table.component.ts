@@ -15,6 +15,7 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   @HostBinding('style.flexDirection') readonly styleFlexDirection = 'column';
 
   private readonly done$ = new DoneSubject();
+  private readonly data$ = new BehaviorSubject([]);
 
   readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;
 
@@ -24,15 +25,18 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   readonly page$ = new BehaviorSubject(0);
   readonly pageSize$ = new BehaviorSubject(10);
 
-  readonly data$ = new BehaviorSubject([]);
-  readonly total$ = this.data$.pipe(map(_ => (_ || []).length));
-
   readonly columns$ = this.data$.pipe(map(_ => Object.entries((_ || [])[0] || {}).filter(([key, val]) => typeof val !== 'object').map(([key, val]) => key)));
-  readonly dataBatch$ = combineLatest(this.page$, this.pageSize$, this.filter$, this.sortAsc$, this.sortBy$, this.columns$, this.data$)
+  private readonly dataFiltered$ = combineLatest(this.data$, this.columns$, this.filter$).pipe(
+    debounceTime(0),
+    map(([data, columns, filtering]) => (data || [])
+      .filter(item => !filtering || columns.some(col => (item[col] || '').toString().toLocaleLowerCase().includes(filtering.toLocaleLowerCase())))),
+    takeUntil(this.done$));
+  readonly total$ = this.dataFiltered$.pipe(map(_ => (_ || []).length));
+
+  readonly dataBatch$ = combineLatest(this.page$, this.pageSize$, this.sortAsc$, this.sortBy$, this.dataFiltered$)
     .pipe(
       debounceTime(0),
-      map(([page, size, filtering, sortAsc, sortBy, columns, data]) => (data || [])
-        .filter(item => !filtering || columns.some(col => (item[col] || '').toString().toLocaleLowerCase().includes(filtering.toLocaleLowerCase())))
+      map(([page, size, sortAsc, sortBy, data]) => (data || [])
         .sort((aa, bb) => {
           return sortBy ? (typeof aa[sortBy] === 'string' ? (aa[sortBy] as string).localeCompare(bb[sortBy]) : aa[sortBy] - bb[sortBy]) * (sortAsc ? 1 : -1) : 0;
         })
@@ -63,7 +67,7 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    merge(this.data$, this.pageSize$, this.filter$, this.sortAsc$, this.sortBy$)
+    merge(this.dataFiltered$, this.pageSize$, this.filter$, this.sortAsc$, this.sortBy$)
       .pipe(map(() => 0), filter(_ => _ !== this.page$.value), takeUntil(this.done$))
       .subscribe(rxNext_(this.page$));
 

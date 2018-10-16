@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingBarComponent is created 1`] = `
+<app-loading-bar
+  show="false"
+  styleDisplay={[Function String]}
+  styleMarginTop={[Function String]}
+  styleMinHeight={[Function String]}
+>
+  
+</app-loading-bar>
+`;

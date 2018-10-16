@@ -39,7 +39,7 @@ exports[`DemoMiscComponent is created 1`] = `
           <app-diagram-polynom
             ddflexitem="at"
             ng-reflect-dd-flexitem="at"
-            ng-reflect-points="49.959640971935286,27.07881402"
+            ng-reflect-points="21.455877053254085,-24.7710432"
             ng-reflect-polynomials="1,1,1,1,1,1,1,1,1,1"
           >
             <div

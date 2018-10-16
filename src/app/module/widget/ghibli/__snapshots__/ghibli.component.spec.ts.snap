@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GhibliComponent is created 1`] = `
+<app-ghibli
+  TYPES_LISTS={[Function Array]}
+  TYPE_TO_GET_DETAILS={[Function Object]}
+  TYPE_TO_GET_LIST={[Function Object]}
+  anyData$={[Function Subject]}
+  api={[Function GhibliApiService]}
+  busyCount$={[Function BehaviorSubject]}
+  clickableValue={[Function Function]}
+  done$={[Function DoneSubject]}
+  onClickedValue={[Function Function]}
+  tableAllData$={[Function AnonymousSubject]}
+  toAnyData={[Function Function]}
+>
+  <div
+    ddflexbox="hyscsw"
+    ng-reflect-dd-flexbox="hyscsw"
+    style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
+  >
+    <mat-card
+      class="childhv mat-card"
+    >
+      <mat-card-title
+        class="mat-card-title"
+      >
+        Queries
+      </mat-card-title>
+      <mat-card-content
+        class="mat-card-content"
+      >
+        <div
+          ddflexbox="vys"
+          ng-reflect-dd-flexbox="vys"
+          style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+        >
+          <mat-list
+            class="mat-list-auto-height mat-list"
+          >
+            <h3
+              class="mat-subheader"
+              mat-subheader=""
+            >
+              API
+            </h3>
+            
+            <mat-list-item
+              class="mat-list-item"
+            >
+              <div
+                class="mat-list-item-content"
+              >
+                <div
+                  class="mat-list-item-ripple mat-ripple"
+                  mat-ripple=""
+                  ng-reflect-disabled="true"
+                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                />
+                <div
+                  class="mat-list-text"
+                />
+                <button
+                  class="mat-raised-button _mat-animation-noopable"
+                  mat-raised-button=""
+                >
+                  <span
+                    class="mat-button-wrapper"
+                  >
+                    /films/
+                  </span>
+                  <div
+                    class="mat-button-ripple mat-ripple"
+                    matripple=""
+                    ng-reflect-centered="false"
+                    ng-reflect-disabled="false"
+                    ng-reflect-trigger="[object HTMLButtonElement]"
+                  />
+                  <div
+                    class="mat-button-focus-overlay"
+                  />
+                </button>
+              </div>
+            </mat-list-item>
+            <mat-list-item
+              class="mat-list-item"
+            >
+              <div
+                class="mat-list-item-content"
+              >
+                <div
+                  class="mat-list-item-ripple mat-ripple"
+                  mat-ripple=""
+                  ng-reflect-disabled="true"
+                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                />
+                <div
+                  class="mat-list-text"
+                />
+                <button
+                  class="mat-raised-button _mat-animation-noopable"
+                  mat-raised-button=""
+                >
+                  <span
+                    class="mat-button-wrapper"
+                  >
+                    /locations/
+                  </span>
+                  <div
+                    class="mat-button-ripple mat-ripple"
+                    matripple=""
+                    ng-reflect-centered="false"
+                    ng-reflect-disabled="false"
+                    ng-reflect-trigger="[object HTMLButtonElement]"
+                  />
+                  <div
+                    class="mat-button-focus-overlay"
+                  />
+                </button>
+              </div>
+            </mat-list-item>
+            <mat-list-item
+              class="mat-list-item"
+            >
+              <div
+                class="mat-list-item-content"
+              >
+                <div
+                  class="mat-list-item-ripple mat-ripple"
+                  mat-ripple=""
+                  ng-reflect-disabled="true"
+                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                />
+                <div
+                  class="mat-list-text"
+                />
+                <button
+                  class="mat-raised-button _mat-animation-noopable"
+                  mat-raised-button=""
+                >
+                  <span
+                    class="mat-button-wrapper"
+                  >
+                    /people/
+                  </span>
+                  <div
+                    class="mat-button-ripple mat-ripple"
+                    matripple=""
+                    ng-reflect-centered="false"
+                    ng-reflect-disabled="false"
+                    ng-reflect-trigger="[object HTMLButtonElement]"
+                  />
+                  <div
+                    class="mat-button-focus-overlay"
+                  />
+                </button>
+              </div>
+            </mat-list-item>
+            <mat-list-item
+              class="mat-list-item"
+            >
+              <div
+                class="mat-list-item-content"
+              >
+                <div
+                  class="mat-list-item-ripple mat-ripple"
+                  mat-ripple=""
+                  ng-reflect-disabled="true"
+                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                />
+                <div
+                  class="mat-list-text"
+                />
+                <button
+                  class="mat-raised-button _mat-animation-noopable"
+                  mat-raised-button=""
+                >
+                  <span
+                    class="mat-button-wrapper"
+                  >
+                    /species/
+                  </span>
+                  <div
+                    class="mat-button-ripple mat-ripple"
+                    matripple=""
+                    ng-reflect-centered="false"
+                    ng-reflect-disabled="false"
+                    ng-reflect-trigger="[object HTMLButtonElement]"
+                  />
+                  <div
+                    class="mat-button-focus-overlay"
+                  />
+                </button>
+              </div>
+            </mat-list-item>
+            <mat-list-item
+              class="mat-list-item"
+            >
+              <div
+                class="mat-list-item-content"
+              >
+                <div
+                  class="mat-list-item-ripple mat-ripple"
+                  mat-ripple=""
+                  ng-reflect-disabled="true"
+                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                />
+                <div
+                  class="mat-list-text"
+                />
+                <button
+                  class="mat-raised-button _mat-animation-noopable"
+                  mat-raised-button=""
+                >
+                  <span
+                    class="mat-button-wrapper"
+                  >
+                    /vehicles/
+                  </span>
+                  <div
+                    class="mat-button-ripple mat-ripple"
+                    matripple=""
+                    ng-reflect-centered="false"
+                    ng-reflect-disabled="false"
+                    ng-reflect-trigger="[object HTMLButtonElement]"
+                  />
+                  <div
+                    class="mat-button-focus-overlay"
+                  />
+                </button>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+    
+  </div>
+</app-ghibli>
+`;
