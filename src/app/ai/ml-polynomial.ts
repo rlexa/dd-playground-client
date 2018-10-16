@@ -1,4 +1,4 @@
-import { Rank, Tensor, scalar, tensor1d, tidy, train, variable } from '@tensorflow/tfjs';
+import { Rank, scalar, Tensor, tensor1d, tidy, train, variable } from '@tensorflow/tfjs';
 import { times } from './util';
 
 export const DEF_LEARNINGRATE = .05;
