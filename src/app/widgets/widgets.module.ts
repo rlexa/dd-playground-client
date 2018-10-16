@@ -3,9 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatPaginatorModule, MatProgressBarModule, MatSelectModule, MatSliderModule, MatSortModule, MatTableModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
-import { GeneralModule } from 'app/general/general.module';
+import { D3numberPipeModule } from 'app/module/pipe/d3number';
+import { IconPipeModule } from 'app/module/pipe/icon';
+import { RipupperPipeModule } from 'app/module/pipe/ripupper';
+import { StartuppercasePipeModule } from 'app/module/pipe/startuppercase';
+import { RoutedContentModule } from 'app/module/widget/routed-content';
+import { SimpleViewModule } from 'app/module/widget/simple-view';
 import { FlexboxModule } from 'dd-flexbox';
-import { BuildComponent, ConfigComponent, CryptoComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, LoadingBarComponent, MlPolynomialComponent, OverviewComponent, RenderSimpleFieldComponent, RoutedContentComponent, SimpleTableComponent, SimpleViewComponent } from '.';
+import { CryptoComponent, DemoMiscComponent, DemoStateComponent, DiagramPolynomComponent, EmptyComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, LoadingBarComponent, MlPolynomialComponent, OverviewComponent, RenderSimpleFieldComponent, SimpleTableComponent } from '.';
 
 @NgModule({
   imports: [
@@ -32,11 +37,15 @@ import { BuildComponent, ConfigComponent, CryptoComponent, DemoMiscComponent, De
 
     FlexboxModule,
 
-    GeneralModule,
+    D3numberPipeModule,
+    IconPipeModule,
+    RipupperPipeModule,
+    StartuppercasePipeModule,
+
+    RoutedContentModule,
+    SimpleViewModule,
   ],
   declarations: [
-    BuildComponent,
-    ConfigComponent,
     CryptoComponent,
     DemoMiscComponent,
     DemoStateComponent,
@@ -53,13 +62,9 @@ import { BuildComponent, ConfigComponent, CryptoComponent, DemoMiscComponent, De
     MlPolynomialComponent,
     OverviewComponent,
     RenderSimpleFieldComponent,
-    RoutedContentComponent,
     SimpleTableComponent,
-    SimpleViewComponent,
   ],
   exports: [
-    BuildComponent,
-    ConfigComponent,
     CryptoComponent,
     DemoMiscComponent,
     DemoStateComponent,
@@ -70,7 +75,6 @@ import { BuildComponent, ConfigComponent, CryptoComponent, DemoMiscComponent, De
     GraphWalkerComponent,
     MlPolynomialComponent,
     OverviewComponent,
-    RoutedContentComponent,
   ]
 })
 export class WidgetsModule { }

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SimpleViewComponent is created 1`] = `
+<app-simple-view
+  FORMAT_DATE_TIMESTAMP={[Function String]}
+  clickables$={[Function AnonymousSubject]}
+  clicked={[Function EventEmitter]}
+  data$={[Function BehaviorSubject]}
+  guessType={[Function Function]}
+  isClickable="null"
+  isDense="false"
+  isExpandable="false"
+  isExpanded={[Function Boolean]}
+  isWidthConstrained={[Function Boolean]}
+  keys$={[Function AnonymousSubject]}
+  onClicked={[Function Function]}
+  types$={[Function AnonymousSubject]}
+>
+  
+</app-simple-view>
+`;

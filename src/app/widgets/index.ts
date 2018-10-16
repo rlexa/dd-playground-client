@@ -7,6 +7,5 @@ export * from './ghibli';
 export * from './graph';
 export * from './overview';
 export * from './playground';
-export * from './system';
 export * from './util';
 
