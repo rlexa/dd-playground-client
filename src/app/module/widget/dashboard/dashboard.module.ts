@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { RoutedContentComponent } from 'app/module/widget/routed-content';
-import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BLOCKCHAIN, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CRYPTO, ROUTE_DEMO_GHIBLI, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WALKER, ROUTE_WILDCARD } from 'app/routing';
+import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BLOCKCHAIN, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CRYPTO, ROUTE_CURRENT, ROUTE_DEMO_GHIBLI, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WALKER, ROUTE_WILDCARD } from 'app/routing';
 import { CryptoComponent, DemoMiscComponent, DemoStateComponent, GameDownComponent, GhibliComponent, GraphTopLevelComponent, GraphWalkerComponent, MlPolynomialComponent } from 'app/widgets';
 import { DashboardComponent } from './dashboard.component';
 import { imports } from './imports';
@@ -9,7 +9,14 @@ import { imports } from './imports';
 const ROUTING = [
   {
     path: ROUTE_ROOT, component: DashboardComponent, children: [
-      { path: ROUTE_OVERVIEW, loadChildren: 'app/module/widget/overview/overview.module#OverviewModule' },
+      {
+        path: ROUTE_OVERVIEW, component: RoutedContentComponent,
+        children: [
+          { path: ROUTE_CURRENT, loadChildren: 'app/module/widget/overview/overview.module#OverviewModule' },
+          { path: ROUTE_ROOT, redirectTo: ROUTE_CURRENT, pathMatch: 'full' },
+          { path: ROUTE_WILDCARD, redirectTo: ROUTE_CURRENT, pathMatch: 'full' },
+        ]
+      },
       {
         path: ROUTE_GAME,
         component: RoutedContentComponent,
