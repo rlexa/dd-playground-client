@@ -52,7 +52,7 @@ exports[`DashboardComponent is created 1`] = `
             ng-reflect-router-link="/dashboard/overview"
             ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="min-width: auto;"
+            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -88,7 +88,7 @@ exports[`DashboardComponent is created 1`] = `
             ng-reflect-router-link="/dashboard/graph"
             ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="min-width: auto;"
+            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -124,7 +124,7 @@ exports[`DashboardComponent is created 1`] = `
             ng-reflect-router-link="/dashboard/ai"
             ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="min-width: auto;"
+            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -160,7 +160,7 @@ exports[`DashboardComponent is created 1`] = `
             ng-reflect-router-link="/dashboard/crypto"
             ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="min-width: auto;"
+            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -196,7 +196,7 @@ exports[`DashboardComponent is created 1`] = `
             ng-reflect-router-link="/dashboard/game"
             ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="min-width: auto;"
+            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -232,7 +232,7 @@ exports[`DashboardComponent is created 1`] = `
             ng-reflect-router-link="/dashboard/playground"
             ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="min-width: auto;"
+            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -268,7 +268,7 @@ exports[`DashboardComponent is created 1`] = `
             ng-reflect-router-link="/dashboard/settings"
             ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="min-width: auto;"
+            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { CryptoApiService } from 'app/crypto';
+import { CryptoApiService } from 'app/module/service/crypto-api';
 import { DoneSubject, rxComplete, rxNext_ } from 'app/rx';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';

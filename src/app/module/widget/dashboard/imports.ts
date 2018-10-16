@@ -6,6 +6,7 @@ import { RoutedContentModule } from 'app/module/widget/routed-content';
 import { VersionModule } from 'app/module/widget/version';
 import { WidgetsModule } from 'app/widgets/widgets.module';
 import { FlexboxModule } from 'dd-flexbox';
+import 'hammerjs';
 
 export const imports = [
   CommonModule, RouterModule,

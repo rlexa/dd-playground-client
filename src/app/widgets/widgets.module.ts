@@ -12,7 +12,7 @@ import { RoutedContentModule } from 'app/module/widget/routed-content';
 import { SimpleTableModule } from 'app/module/widget/simple-table';
 import { SimpleViewModule } from 'app/module/widget/simple-view';
 import { FlexboxModule } from 'dd-flexbox';
-import { CryptoComponent, GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GraphTopLevelComponent, GraphWalkerComponent, RenderSimpleFieldComponent } from '.';
+import { GameDownComponent, GameDownConfigComponent, GameDownFieldComponent, GameDownSceneComponent, GraphTopLevelComponent, GraphWalkerComponent, RenderSimpleFieldComponent } from '.';
 
 @NgModule({
   imports: [
@@ -50,7 +50,6 @@ import { CryptoComponent, GameDownComponent, GameDownConfigComponent, GameDownFi
     SimpleViewModule,
   ],
   declarations: [
-    CryptoComponent,
     GameDownComponent,
     GameDownConfigComponent,
     GameDownFieldComponent,
@@ -60,7 +59,6 @@ import { CryptoComponent, GameDownComponent, GameDownConfigComponent, GameDownFi
     RenderSimpleFieldComponent,
   ],
   exports: [
-    CryptoComponent,
     GameDownComponent,
     GraphTopLevelComponent,
     GraphWalkerComponent,

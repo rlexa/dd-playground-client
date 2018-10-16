@@ -1,0 +1,332 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CryptoComponent is created 1`] = `
+<app-crypto
+  anyData$={[Function Subject]}
+  api={[Function CryptoApiService]}
+  apiBlockCypherBitcoinAddress={[Function Function]}
+  apiBlockchainBitcoinAddress={[Function Function]}
+  bitcoinAddress$={[Function BehaviorSubject]}
+  done$={[Function DoneSubject]}
+  wsBlockCypherAddressConfirmedTx={[Function Function]}
+  wsBlockCypherPing={[Function Function]}
+  wsBlockchainAddressLatestTransaction={[Function Function]}
+  wsBlockchainPing={[Function Function]}
+>
+  <div
+    ddflexbox="hyscsw"
+    ng-reflect-dd-flexbox="hyscsw"
+    style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
+  >
+    <mat-card
+      class="childhv mat-card"
+    >
+      <mat-card-title
+        class="mat-card-title"
+      >
+        Actions: API
+      </mat-card-title>
+      <mat-card-content
+        class="mat-card-content"
+      >
+        <div
+          ddflexbox="vys"
+          ng-reflect-dd-flexbox="vys"
+          style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+        >
+          <h1
+            class="color-warn"
+          >
+            CORS/PROXY KILLS API.
+          </h1>
+          <mat-list
+            class="mat-list-auto-height mat-list"
+          >
+            <h3
+              class="mat-subheader"
+              mat-subheader=""
+            >
+              Ping
+            </h3>
+            <mat-list-item
+              class="mat-list-item"
+            >
+              <div
+                class="mat-list-item-content"
+              >
+                <div
+                  class="mat-list-item-ripple mat-ripple"
+                  mat-ripple=""
+                  ng-reflect-disabled="true"
+                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                />
+                <div
+                  class="mat-list-text"
+                />
+                <div
+                  ddflexbox="hyc"
+                  ng-reflect-dd-flexbox="hyc"
+                  style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
+                >
+                  <button
+                    class="mat-button _mat-animation-noopable"
+                    mat-button=""
+                  >
+                    <span
+                      class="mat-button-wrapper"
+                    >
+                      Blockchain WS
+                    </span>
+                    <div
+                      class="mat-button-ripple mat-ripple"
+                      matripple=""
+                      ng-reflect-centered="false"
+                      ng-reflect-disabled="false"
+                      ng-reflect-trigger="[object HTMLButtonElement]"
+                    />
+                    <div
+                      class="mat-button-focus-overlay"
+                    />
+                  </button>
+                  <button
+                    class="mat-button _mat-animation-noopable"
+                    mat-button=""
+                  >
+                    <span
+                      class="mat-button-wrapper"
+                    >
+                      BlockCypher WS
+                    </span>
+                    <div
+                      class="mat-button-ripple mat-ripple"
+                      matripple=""
+                      ng-reflect-centered="false"
+                      ng-reflect-disabled="false"
+                      ng-reflect-trigger="[object HTMLButtonElement]"
+                    />
+                    <div
+                      class="mat-button-focus-overlay"
+                    />
+                  </button>
+                </div>
+              </div>
+            </mat-list-item>
+            <h3
+              class="mat-subheader"
+              mat-subheader=""
+            >
+              Address
+            </h3>
+            <mat-list-item
+              class="mat-list-item"
+            >
+              <div
+                class="mat-list-item-content"
+              >
+                <div
+                  class="mat-list-item-ripple mat-ripple"
+                  mat-ripple=""
+                  ng-reflect-disabled="true"
+                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                />
+                <div
+                  class="mat-list-text"
+                />
+                <div
+                  ddflexbox="hyc"
+                  ng-reflect-dd-flexbox="hyc"
+                  style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
+                >
+                  <mat-form-field
+                    class="childh value-numeric mat-form-field ng-tns-c3-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
+                  >
+                    <div
+                      class="mat-form-field-wrapper"
+                    >
+                      <div
+                        class="mat-form-field-flex"
+                      >
+                        
+                        
+                        <div
+                          class="mat-form-field-infix"
+                        >
+                          <input
+                            aria-invalid="false"
+                            aria-required="false"
+                            class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
+                            id="mat-input-0"
+                            matinput=""
+                            ng-reflect-model="1BoatSLRHtKNngkdXEeobR76b53LET"
+                            ng-reflect-placeholder="Bitcoin Address"
+                            placeholder="Bitcoin Address"
+                          />
+                          <span
+                            class="mat-form-field-label-wrapper"
+                          >
+                            
+                            <label
+                              aria-owns="mat-input-0"
+                              class="mat-form-field-label ng-tns-c3-0 mat-empty mat-form-field-empty ng-star-inserted"
+                              for="mat-input-0"
+                              id="mat-form-field-label-1"
+                              ng-reflect-ng-switch="false"
+                            >
+                              
+                              
+                              Bitcoin Address
+                              
+                              
+                            </label>
+                          </span>
+                        </div>
+                        
+                      </div>
+                      
+                      <div
+                        class="mat-form-field-underline ng-tns-c3-0 ng-star-inserted"
+                      >
+                        <span
+                          class="mat-form-field-ripple"
+                        />
+                      </div>
+                      <div
+                        class="mat-form-field-subscript-wrapper"
+                        ng-reflect-ng-switch="hint"
+                      >
+                        
+                        
+                        <div
+                          class="mat-form-field-hint-wrapper ng-tns-c3-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                          style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+                        >
+                          
+                          <div
+                            class="mat-form-field-hint-spacer"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </mat-form-field>
+                  <div
+                    ddflexbox="vys"
+                    ng-reflect-dd-flexbox="vys"
+                    style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                  >
+                    <button
+                      class="mat-button _mat-animation-noopable"
+                      mat-button=""
+                    >
+                      <span
+                        class="mat-button-wrapper"
+                      >
+                        Blockchain API
+                      </span>
+                      <div
+                        class="mat-button-ripple mat-ripple"
+                        matripple=""
+                        ng-reflect-centered="false"
+                        ng-reflect-disabled="false"
+                        ng-reflect-trigger="[object HTMLButtonElement]"
+                      />
+                      <div
+                        class="mat-button-focus-overlay"
+                      />
+                    </button>
+                    <button
+                      class="mat-button _mat-animation-noopable"
+                      mat-button=""
+                    >
+                      <span
+                        class="mat-button-wrapper"
+                      >
+                        Blockchain WS
+                      </span>
+                      <div
+                        class="mat-button-ripple mat-ripple"
+                        matripple=""
+                        ng-reflect-centered="false"
+                        ng-reflect-disabled="false"
+                        ng-reflect-trigger="[object HTMLButtonElement]"
+                      />
+                      <div
+                        class="mat-button-focus-overlay"
+                      />
+                    </button>
+                  </div>
+                  <div
+                    ddflexbox="vys"
+                    ng-reflect-dd-flexbox="vys"
+                    style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                  >
+                    <button
+                      class="mat-button _mat-animation-noopable"
+                      mat-button=""
+                    >
+                      <span
+                        class="mat-button-wrapper"
+                      >
+                        BlockCypher API
+                      </span>
+                      <div
+                        class="mat-button-ripple mat-ripple"
+                        matripple=""
+                        ng-reflect-centered="false"
+                        ng-reflect-disabled="false"
+                        ng-reflect-trigger="[object HTMLButtonElement]"
+                      />
+                      <div
+                        class="mat-button-focus-overlay"
+                      />
+                    </button>
+                    <button
+                      class="mat-button _mat-animation-noopable"
+                      mat-button=""
+                    >
+                      <span
+                        class="mat-button-wrapper"
+                      >
+                        BlockCypher WS
+                      </span>
+                      <div
+                        class="mat-button-ripple mat-ripple"
+                        matripple=""
+                        ng-reflect-centered="false"
+                        ng-reflect-disabled="false"
+                        ng-reflect-trigger="[object HTMLButtonElement]"
+                      />
+                      <div
+                        class="mat-button-focus-overlay"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card
+      class="childhv mat-card"
+    >
+      <mat-card-title
+        class="mat-card-title"
+      >
+        Actions: Output
+      </mat-card-title>
+      <mat-card-content
+        class="mat-card-content"
+      >
+        <app-simple-view
+          class="ng-tns-c4-1"
+          ng-reflect-is-dense="true"
+          ng-reflect-is-width-constrained="false"
+        >
+          
+        </app-simple-view>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</app-crypto>
+`;

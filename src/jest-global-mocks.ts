@@ -17,6 +17,9 @@ Object.defineProperty(window, 'getComputedStyle', { value: () => ['-webkit-appea
 // deterministic now() function
 Date.now = () => 1482363367071;
 
+// deterministic random() function
+Math.random = () => .12345;
+
 // transform - workaround for JSDOM missing transform property when using Angular Material
 Object.defineProperty(document.body.style, 'transform', { value: () => ({ enumerable: true, configurable: true }) });
 
