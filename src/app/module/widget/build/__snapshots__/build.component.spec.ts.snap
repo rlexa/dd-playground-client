@@ -38,16 +38,18 @@ exports[`BuildComponent is created 1`] = `
               class="mat-list-auto-height mat-list ng-tns-c1-0 ng-star-inserted"
             >
               
+              
+              
+              
+              
+              
+              
               <table
                 class="ng-tns-c1-0 ng-star-inserted"
               >
                 <tbody
                   class="ng-tns-c1-0"
                 >
-                  
-                  
-                  
-                  
                   
                   <tr
                     class="ng-tns-c1-0 ng-star-inserted"
@@ -661,10 +663,10 @@ exports[`BuildComponent is created 1`] = `
                       </mat-list-item>
                     </td>
                   </tr>
-                  
-                  
                 </tbody>
               </table>
+              
+              
             </mat-list>
           </div>
         </div>

@@ -15,19 +15,21 @@
   <mat-card class="childv">
     <mat-card-title>Graphsky</mat-card-title>
     <mat-card-content>
-      <div ddFlexbox="vys">
-        <div ddFlexbox="hycw">
-          <button mat-button color="accent" (click)="graphskyAddTestData()">+ TEST</button>
-          <button mat-button color="warn" (click)="graphskyDrop()">DROP</button>
+      <div ddFlexbox="hysw">
+
+        <div ddFlexbox="vys">
+          <div ddFlexbox="hyc">
+            <button mat-button color="accent" (click)="graphskyAddTestData()">+ TEST</button>
+            <button mat-button color="warn" (click)="graphskyDrop()">DROP</button>
+          </div>
+          <app-simple-view class="hovered-elevated" subheader="Stats" [data]="graphskyLog$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
         </div>
 
-        <app-simple-view [data]="graphskyLog$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+        <app-simple-view class="hovered-elevated" subheader="All" [data]="graphskyAll$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+        <app-simple-view class="hovered-elevated" subheader="Likes" [data]="graphskyLiked$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+        <app-simple-view class="hovered-elevated" subheader="Diversity" [data]="graphskyDiversity$ | async" [isWidthConstrained]="false"
+          [isDense]="true"></app-simple-view>
 
-        <div ddFlexbox="hysw">
-          <pre class="childhv contenthv border">{{ 'All: ' + (graphskyAll$ | async | json) }}</pre>
-          <pre class="childhv contenthv border">{{ 'Likes: ' + (graphskyLiked$ | async | json) }}</pre>
-          <pre class="childhv contenthv border">{{ 'Diversity: ' + (graphskyDiversity$ | async | json) }}</pre>
-        </div>
       </div>
     </mat-card-content>
   </mat-card>

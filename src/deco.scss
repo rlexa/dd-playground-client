@@ -451,3 +451,18 @@ app-busy-backdrop {
   background: $clr-default-bg;
   opacity: .7;
 }
+
+.elevated-animation {
+  @include mat-elevation-transition;
+}
+
+.elevated-1 {
+  @include mat-elevation(1);
+}
+
+.hovered-elevated {
+  @extend .elevated-animation;
+  &:hover {
+    @extend .elevated-1;
+  }
+}

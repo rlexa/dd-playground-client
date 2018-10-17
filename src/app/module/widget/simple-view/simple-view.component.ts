@@ -25,6 +25,7 @@ export class SimpleViewComponent extends WithDataProperty<Object>  {
   @Input() isDense = false;
   @Input() isExpanded = true;
   @Input() isExpandable = false;
+  @Input() subheader = <string>null;
 
   @Output() clicked = new EventEmitter<{ key: string, value: any }>();
 

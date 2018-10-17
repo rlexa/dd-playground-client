@@ -14,6 +14,7 @@ exports[`SimpleViewComponent is created 1`] = `
   isWidthConstrained={[Function Boolean]}
   keys$={[Function AnonymousSubject]}
   onClicked={[Function Function]}
+  subheader="null"
   types$={[Function AnonymousSubject]}
 >
   

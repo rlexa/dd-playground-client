@@ -46,16 +46,18 @@ exports[`DemoStateComponent is created 1`] = `
                 dense="true"
               >
                 
+                
+                
+                
+                
+                
+                
                 <table
                   class="ng-tns-c1-0 ng-star-inserted"
                 >
                   <tbody
                     class="ng-tns-c1-0"
                   >
-                    
-                    
-                    
-                    
                     
                     <tr
                       class="ng-tns-c1-0 ng-star-inserted"
@@ -396,10 +398,10 @@ exports[`DemoStateComponent is created 1`] = `
                         </mat-list-item>
                       </td>
                     </tr>
-                    
-                    
                   </tbody>
                 </table>
+                
+                
               </mat-list>
             </div>
           </div>

@@ -1,5 +1,9 @@
 @import 'md-custom-theme.scss';
 
+$clr-primary: mat-color($primary);
+$clr-secondary: mat-color($accent);
+$clr-warn: mat-color($warn);
+
 $border-radius: .5rem;
 $border-radius-wide: 2.5rem;
 
@@ -23,13 +27,10 @@ $clr-mat-light-icon: $clr-mat-light;
 $clr-mat-light-row-hover: #f1f1f1;
 $clr-mat-light-secondary: fade-out(white, .3);
 $clr-mat-table-dialog-color: #f9f9f9;
-$clr-primary: map-get($candy-app-primary, 500);
 $clr-primeng-ui-widget-content: white;
 $clr-scrollbar-thumb: fade-out(black, 0.5);
 $clr-scrollbar-track: fade-out(black, 0.9);
-$clr-secondary: map-get($candy-app-accent, 500);
 $clr-transparent: fade-out(black, 1);
-$clr-warn: map-get($candy-app-warn, 500);
 
 $font-family-root: Roboto,
 "Helvetica Neue",

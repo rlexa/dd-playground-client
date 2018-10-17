@@ -5,7 +5,6 @@ import { IconPipeModule } from 'app/module/pipe/icon';
 import { RoutedContentModule } from 'app/module/widget/routed-content';
 import { VersionModule } from 'app/module/widget/version';
 import { FlexboxModule } from 'dd-flexbox';
-import 'hammerjs';
 
 export const imports = [
   CommonModule, RouterModule,

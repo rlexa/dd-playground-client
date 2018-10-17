@@ -116,69 +116,275 @@ exports[`DemoMiscComponent is created 1`] = `
         class="mat-card-content"
       >
         <div
-          ddflexbox="vys"
-          ng-reflect-dd-flexbox="vys"
-          style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+          ddflexbox="hysw"
+          ng-reflect-dd-flexbox="hysw"
+          style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: wrap;"
         >
           <div
-            ddflexbox="hycw"
-            ng-reflect-dd-flexbox="hycw"
-            style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: wrap;"
+            ddflexbox="vys"
+            ng-reflect-dd-flexbox="vys"
+            style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
           >
-            <button
-              class="mat-button mat-accent _mat-animation-noopable"
-              color="accent"
-              mat-button=""
-              ng-reflect-color="accent"
+            <div
+              ddflexbox="hyc"
+              ng-reflect-dd-flexbox="hyc"
+              style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
             >
-              <span
-                class="mat-button-wrapper"
+              <button
+                class="mat-button mat-accent _mat-animation-noopable"
+                color="accent"
+                mat-button=""
+                ng-reflect-color="accent"
               >
-                + TEST
-              </span>
-              <div
-                class="mat-button-ripple mat-ripple"
-                matripple=""
-                ng-reflect-centered="false"
-                ng-reflect-disabled="false"
-                ng-reflect-trigger="[object HTMLButtonElement]"
-              />
-              <div
-                class="mat-button-focus-overlay"
-              />
-            </button>
-            <button
-              class="mat-button mat-warn _mat-animation-noopable"
-              color="warn"
-              mat-button=""
-              ng-reflect-color="warn"
+                <span
+                  class="mat-button-wrapper"
+                >
+                  + TEST
+                </span>
+                <div
+                  class="mat-button-ripple mat-ripple"
+                  matripple=""
+                  ng-reflect-centered="false"
+                  ng-reflect-disabled="false"
+                  ng-reflect-trigger="[object HTMLButtonElement]"
+                />
+                <div
+                  class="mat-button-focus-overlay"
+                />
+              </button>
+              <button
+                class="mat-button mat-warn _mat-animation-noopable"
+                color="warn"
+                mat-button=""
+                ng-reflect-color="warn"
+              >
+                <span
+                  class="mat-button-wrapper"
+                >
+                  DROP
+                </span>
+                <div
+                  class="mat-button-ripple mat-ripple"
+                  matripple=""
+                  ng-reflect-centered="false"
+                  ng-reflect-disabled="false"
+                  ng-reflect-trigger="[object HTMLButtonElement]"
+                />
+                <div
+                  class="mat-button-focus-overlay"
+                />
+              </button>
+            </div>
+            <app-simple-view
+              class="hovered-elevated ng-tns-c2-0"
+              ng-reflect-data="[object Object]"
+              ng-reflect-is-dense="true"
+              ng-reflect-is-width-constrained="false"
+              ng-reflect-subheader="Stats"
+              subheader="Stats"
             >
-              <span
-                class="mat-button-wrapper"
+              
+              <div
+                class="position-relative ng-tns-c2-0 ng-star-inserted"
               >
-                DROP
-              </span>
-              <div
-                class="mat-button-ripple mat-ripple"
-                matripple=""
-                ng-reflect-centered="false"
-                ng-reflect-disabled="false"
-                ng-reflect-trigger="[object HTMLButtonElement]"
-              />
-              <div
-                class="mat-button-focus-overlay"
-              />
-            </button>
+                <div
+                  class="scroll-x-auto"
+                  ddflexbox="hys"
+                  ng-reflect-dd-flexbox="hys"
+                  style="max-width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                >
+                  
+                  
+                  <mat-list
+                    class="mat-list-auto-height mat-list ng-tns-c2-0 ng-star-inserted"
+                    dense="true"
+                  >
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <h4
+                      class="mat-subheader ng-tns-c2-0 ng-star-inserted"
+                      mat-subheader=""
+                    >
+                      Stats
+                    </h4>
+                    <table
+                      class="ng-tns-c2-0 ng-star-inserted"
+                    >
+                      <tbody
+                        class="ng-tns-c2-0"
+                      >
+                        
+                        <tr
+                          class="ng-tns-c2-0 ng-star-inserted"
+                        >
+                          <td
+                            class="ng-tns-c2-0"
+                            style="vertical-align: top;"
+                          >
+                            <mat-list-item
+                              class="mat-list-item"
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="no-break-text ng-tns-c2-0"
+                                >
+                                  Links
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                          <td
+                            class="ng-tns-c2-0"
+                          >
+                            <mat-list-item
+                              class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                              style=""
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="break-text ng-tns-c2-0 value-numeric"
+                                  ng-reflect-klass="break-text"
+                                  ng-reflect-ng-class="[object Object]"
+                                >
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  <span
+                                    class="ng-tns-c2-0 ng-star-inserted"
+                                    ng-reflect-ng-class="[object Object]"
+                                    style=""
+                                  >
+                                     0 
+                                  </span>
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                        </tr>
+                        <tr
+                          class="ng-tns-c2-0 ng-star-inserted"
+                        >
+                          <td
+                            class="ng-tns-c2-0"
+                            style="vertical-align: top;"
+                          >
+                            <mat-list-item
+                              class="mat-list-item"
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="no-break-text ng-tns-c2-0"
+                                >
+                                  Nodes
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                          <td
+                            class="ng-tns-c2-0"
+                          >
+                            <mat-list-item
+                              class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                              style=""
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="break-text ng-tns-c2-0 value-numeric"
+                                  ng-reflect-klass="break-text"
+                                  ng-reflect-ng-class="[object Object]"
+                                >
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  <span
+                                    class="ng-tns-c2-0 ng-star-inserted"
+                                    ng-reflect-ng-class="[object Object]"
+                                    style=""
+                                  >
+                                     0 
+                                  </span>
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    
+                    
+                  </mat-list>
+                </div>
+              </div>
+            </app-simple-view>
           </div>
           <app-simple-view
-            class="ng-tns-c2-0"
+            class="hovered-elevated ng-tns-c2-1"
             ng-reflect-data="[object Object]"
             ng-reflect-is-dense="true"
             ng-reflect-is-width-constrained="false"
+            ng-reflect-subheader="All"
+            subheader="All"
           >
             
             <div
-              class="position-relative ng-tns-c2-0 ng-star-inserted"
+              class="position-relative ng-tns-c2-1 ng-star-inserted"
             >
               <div
                 class="scroll-x-auto"
@@ -189,196 +395,141 @@ exports[`DemoMiscComponent is created 1`] = `
                 
                 
                 <mat-list
-                  class="mat-list-auto-height mat-list ng-tns-c2-0 ng-star-inserted"
+                  class="mat-list-auto-height mat-list ng-tns-c2-1 ng-star-inserted"
                   dense="true"
                 >
                   
+                  
+                  
+                  
+                  
+                  
+                  
+                  <h4
+                    class="mat-subheader ng-tns-c2-1 ng-star-inserted"
+                    mat-subheader=""
+                  >
+                    All
+                  </h4>
                   <table
-                    class="ng-tns-c2-0 ng-star-inserted"
+                    class="ng-tns-c2-1 ng-star-inserted"
                   >
                     <tbody
-                      class="ng-tns-c2-0"
+                      class="ng-tns-c2-1"
                     >
-                      
-                      
-                      
-                      
-                      
-                      <tr
-                        class="ng-tns-c2-0 ng-star-inserted"
-                      >
-                        <td
-                          class="ng-tns-c2-0"
-                          style="vertical-align: top;"
-                        >
-                          <mat-list-item
-                            class="mat-list-item"
-                          >
-                            <div
-                              class="mat-list-item-content"
-                            >
-                              <div
-                                class="mat-list-item-ripple mat-ripple"
-                                mat-ripple=""
-                                ng-reflect-disabled="true"
-                                ng-reflect-trigger="[object HTMLUnknownElement]"
-                              />
-                              <div
-                                class="mat-list-text"
-                              />
-                              <span
-                                class="no-break-text ng-tns-c2-0"
-                              >
-                                Links
-                              </span>
-                            </div>
-                          </mat-list-item>
-                        </td>
-                        <td
-                          class="ng-tns-c2-0"
-                        >
-                          <mat-list-item
-                            class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
-                            style=""
-                          >
-                            <div
-                              class="mat-list-item-content"
-                            >
-                              <div
-                                class="mat-list-item-ripple mat-ripple"
-                                mat-ripple=""
-                                ng-reflect-disabled="true"
-                                ng-reflect-trigger="[object HTMLUnknownElement]"
-                              />
-                              <div
-                                class="mat-list-text"
-                              />
-                              <span
-                                class="break-text ng-tns-c2-0 value-numeric"
-                                ng-reflect-klass="break-text"
-                                ng-reflect-ng-class="[object Object]"
-                              >
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                <span
-                                  class="ng-tns-c2-0 ng-star-inserted"
-                                  ng-reflect-ng-class="[object Object]"
-                                  style=""
-                                >
-                                   0 
-                                </span>
-                              </span>
-                            </div>
-                          </mat-list-item>
-                        </td>
-                      </tr>
-                      <tr
-                        class="ng-tns-c2-0 ng-star-inserted"
-                      >
-                        <td
-                          class="ng-tns-c2-0"
-                          style="vertical-align: top;"
-                        >
-                          <mat-list-item
-                            class="mat-list-item"
-                          >
-                            <div
-                              class="mat-list-item-content"
-                            >
-                              <div
-                                class="mat-list-item-ripple mat-ripple"
-                                mat-ripple=""
-                                ng-reflect-disabled="true"
-                                ng-reflect-trigger="[object HTMLUnknownElement]"
-                              />
-                              <div
-                                class="mat-list-text"
-                              />
-                              <span
-                                class="no-break-text ng-tns-c2-0"
-                              >
-                                Nodes
-                              </span>
-                            </div>
-                          </mat-list-item>
-                        </td>
-                        <td
-                          class="ng-tns-c2-0"
-                        >
-                          <mat-list-item
-                            class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
-                            style=""
-                          >
-                            <div
-                              class="mat-list-item-content"
-                            >
-                              <div
-                                class="mat-list-item-ripple mat-ripple"
-                                mat-ripple=""
-                                ng-reflect-disabled="true"
-                                ng-reflect-trigger="[object HTMLUnknownElement]"
-                              />
-                              <div
-                                class="mat-list-text"
-                              />
-                              <span
-                                class="break-text ng-tns-c2-0 value-numeric"
-                                ng-reflect-klass="break-text"
-                                ng-reflect-ng-class="[object Object]"
-                              >
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                <span
-                                  class="ng-tns-c2-0 ng-star-inserted"
-                                  ng-reflect-ng-class="[object Object]"
-                                  style=""
-                                >
-                                   0 
-                                </span>
-                              </span>
-                            </div>
-                          </mat-list-item>
-                        </td>
-                      </tr>
-                      
                       
                     </tbody>
                   </table>
+                  
+                  
                 </mat-list>
               </div>
             </div>
           </app-simple-view>
-          <div
-            ddflexbox="hysw"
-            ng-reflect-dd-flexbox="hysw"
-            style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: wrap;"
+          <app-simple-view
+            class="hovered-elevated ng-tns-c2-2"
+            ng-reflect-data="[object Object]"
+            ng-reflect-is-dense="true"
+            ng-reflect-is-width-constrained="false"
+            ng-reflect-subheader="Likes"
+            subheader="Likes"
           >
-            <pre
-              class="childhv contenthv border"
+            
+            <div
+              class="position-relative ng-tns-c2-2 ng-star-inserted"
             >
-              All: {}
-            </pre>
-            <pre
-              class="childhv contenthv border"
+              <div
+                class="scroll-x-auto"
+                ddflexbox="hys"
+                ng-reflect-dd-flexbox="hys"
+                style="max-width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+              >
+                
+                
+                <mat-list
+                  class="mat-list-auto-height mat-list ng-tns-c2-2 ng-star-inserted"
+                  dense="true"
+                >
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <h4
+                    class="mat-subheader ng-tns-c2-2 ng-star-inserted"
+                    mat-subheader=""
+                  >
+                    Likes
+                  </h4>
+                  <table
+                    class="ng-tns-c2-2 ng-star-inserted"
+                  >
+                    <tbody
+                      class="ng-tns-c2-2"
+                    >
+                      
+                    </tbody>
+                  </table>
+                  
+                  
+                </mat-list>
+              </div>
+            </div>
+          </app-simple-view>
+          <app-simple-view
+            class="hovered-elevated ng-tns-c2-3"
+            ng-reflect-data="[object Object]"
+            ng-reflect-is-dense="true"
+            ng-reflect-is-width-constrained="false"
+            ng-reflect-subheader="Diversity"
+            subheader="Diversity"
+          >
+            
+            <div
+              class="position-relative ng-tns-c2-3 ng-star-inserted"
             >
-              Likes: {}
-            </pre>
-            <pre
-              class="childhv contenthv border"
-            >
-              Diversity: {}
-            </pre>
-          </div>
+              <div
+                class="scroll-x-auto"
+                ddflexbox="hys"
+                ng-reflect-dd-flexbox="hys"
+                style="max-width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+              >
+                
+                
+                <mat-list
+                  class="mat-list-auto-height mat-list ng-tns-c2-3 ng-star-inserted"
+                  dense="true"
+                >
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <h4
+                    class="mat-subheader ng-tns-c2-3 ng-star-inserted"
+                    mat-subheader=""
+                  >
+                    Diversity
+                  </h4>
+                  <table
+                    class="ng-tns-c2-3 ng-star-inserted"
+                  >
+                    <tbody
+                      class="ng-tns-c2-3"
+                    >
+                      
+                    </tbody>
+                  </table>
+                  
+                  
+                </mat-list>
+              </div>
+            </div>
+          </app-simple-view>
         </div>
       </mat-card-content>
     </mat-card>
