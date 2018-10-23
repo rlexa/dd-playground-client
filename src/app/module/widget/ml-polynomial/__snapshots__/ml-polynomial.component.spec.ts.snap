@@ -49,6 +49,11 @@ exports[`MlPolynomialComponent is created 1`] = `
           ng-reflect-dd-flexbox="vys"
           style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
         >
+          <h1
+            class="color-warn"
+          >
+            CURRENTLY NOT WORKING as tfjs dependency is broken (waiting for fix)
+          </h1>
           <div
             class="childv"
             ddflexbox="hys"
@@ -614,7 +619,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                           aria-invalid="false"
                           aria-multiselectable="false"
                           aria-required="false"
-                          class="mat-select ng-tns-c3-2 ng-star-inserted"
+                          class="mat-select ng-tns-c3-2 mat-select-empty ng-star-inserted"
                           id="mat-select-0"
                           ng-reflect-value="adam"
                           role="listbox"

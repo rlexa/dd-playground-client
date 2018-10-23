@@ -170,6 +170,7 @@ exports[`CryptoComponent is created 1`] = `
                               class="mat-form-field-label ng-tns-c3-0 mat-empty mat-form-field-empty ng-star-inserted"
                               for="mat-input-0"
                               id="mat-form-field-label-1"
+                              ng-reflect-disabled="true"
                               ng-reflect-ng-switch="false"
                             >
                               
