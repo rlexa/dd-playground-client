@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { GhibliApiService, GHIBLI_TYPES, GHIBLI_TYPE_FILM, GHIBLI_TYPE_LOCATION, GHIBLI_TYPE_PEOPLE, GHIBLI_TYPE_SPECIES, GHIBLI_TYPE_VEHICLES } from 'app/module/service/ghibli-api';
-import { DoneSubject, rxComplete, rxNext_ } from 'app/rx';
+import { DoneSubject, rxComplete, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { filter, finalize, map, switchMap, tap } from 'rxjs/operators';
 import { isArray } from 'util';
@@ -38,10 +38,7 @@ export class GhibliComponent implements OnDestroy, OnInit {
 
   readonly tableAllData$ = this.anyData$.pipe(map(_ => isArray(_) ? _ : null));
 
-  ngOnDestroy() {
-    this.done$.done();
-    rxComplete(this.anyData$, this.busyCount$);
-  }
+  ngOnDestroy() { rxComplete(this.anyData$, this.busyCount$, this.done$); }
 
   ngOnInit() { }
 

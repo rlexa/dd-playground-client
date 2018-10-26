@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
 import { Theme } from 'app/game';
 import { GameDownColorMap, GameDownStateField } from 'app/redux/game/down';
-import { DoneSubject, rxComplete } from 'app/rx';
 import { trackByIndex } from 'app/util';
+import { DoneSubject, rxComplete } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { actorToColor, entityToColor, fieldToColor } from './util';
@@ -32,8 +32,5 @@ export class RenderSimpleFieldComponent implements OnDestroy {
   @Input() set selected(val: boolean) { this.selected$.next(!!val); }
   @Input() set theme(val: Theme<GameDownColorMap>) { this.theme$.next(val); }
 
-  ngOnDestroy() {
-    this.done$.done();
-    rxComplete(this.data$, this.hovered$, this.selected$, this.theme$);
-  }
+  ngOnDestroy() { rxComplete(this.data$, this.done$, this.hovered$, this.selected$, this.theme$); }
 }

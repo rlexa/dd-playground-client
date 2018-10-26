@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
 import { Theme, themeColor_ } from 'app/game';
 import { GameDownColorMap } from 'app/redux/game/down';
-import { DoneSubject, rxComplete } from 'app/rx';
+import { DoneSubject, rxComplete } from 'dd-rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -19,8 +19,5 @@ export class GameDownFieldComponent implements OnDestroy {
 
   @Input() set theme(val: Theme<GameDownColorMap>) { this.theme$.next(val); }
 
-  ngOnDestroy() {
-    this.done$.done();
-    rxComplete(this.theme$);
-  }
+  ngOnDestroy() { rxComplete(this.done$, this.theme$); }
 }

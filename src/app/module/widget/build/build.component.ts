@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService } from 'app/redux';
-import { DoneSubject } from 'app/rx';
+import { DoneSubject } from 'dd-rxjs';
 
 @Component({
   selector: 'app-build',

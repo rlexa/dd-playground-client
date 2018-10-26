@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReduxService } from 'app/redux';
 import { routeToSettings } from 'app/routing';
-import { DoneSubject } from 'app/rx';
+import { DoneSubject } from 'dd-rxjs';
 
 @Component({
   selector: 'app-version',

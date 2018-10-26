@@ -1,5 +1,5 @@
 import { Input, OnDestroy } from '@angular/core';
-import { rxComplete } from 'app/rx';
+import { rxComplete } from 'dd-rxjs';
 import { BehaviorSubject } from 'rxjs';
 
 export class WithDataProperty<T> implements OnDestroy {

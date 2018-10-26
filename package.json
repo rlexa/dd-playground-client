@@ -58,6 +58,7 @@
     "core-js": "^2.5.7",
     "d3": "^5.7.0",
     "dd-flexbox": "^0.10.2",
+    "dd-rxjs": "^1.0.1",
     "dd-virt-list": "^1.0.2",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",

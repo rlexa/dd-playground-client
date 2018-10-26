@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { CryptoApiService } from 'app/module/service/crypto-api';
-import { DoneSubject, rxComplete, rxNext_ } from 'app/rx';
+import { DoneSubject, rxComplete, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -19,10 +19,7 @@ export class CryptoComponent implements OnDestroy, OnInit {
   readonly bitcoinAddress$ = new BehaviorSubject('1BoatSLRHtKNngkdXEeobR76b53LETtpyT');
   readonly anyData$ = new Subject();
 
-  ngOnDestroy() {
-    this.done$.done();
-    rxComplete(this.anyData$, this.bitcoinAddress$);
-  }
+  ngOnDestroy() { rxComplete(this.anyData$, this.bitcoinAddress$, this.done$); }
 
   ngOnInit() { }
 

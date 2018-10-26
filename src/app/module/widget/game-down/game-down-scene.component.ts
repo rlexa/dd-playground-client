@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService, ReduxSetGameDownService } from 'app/redux';
 import { GAME_DOWN_FIELD_H, GAME_DOWN_FIELD_W, RENDERER_SIMPLE } from 'app/redux/game/down';
-import { DoneSubject } from 'app/rx';
+import { DoneSubject } from 'dd-rxjs';
 import { combineLatest } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FORMAT_DATE_TIMESTAMP } from 'app/presets';
-import { DoneSubject, rxComplete, rxNext_, rxNull, rxTrue } from 'app/rx';
 import { trackByIndex } from 'app/util';
+import { DoneSubject, rxComplete, rxNext_, rxNull, rxTrue } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest, merge } from 'rxjs';
 import { debounceTime, filter, map, takeUntil } from 'rxjs/operators';
 
@@ -55,9 +55,9 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   @Input() set data(val: any[]) { this.data$.next(val); }
 
   ngOnDestroy() {
-    this.done$.done();
     rxComplete(
       this.data$,
+      this.done$,
       this.filter$,
       this.page$,
       this.pageSize$,

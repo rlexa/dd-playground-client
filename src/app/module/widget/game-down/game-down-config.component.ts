@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService, ReduxSetGameDownService } from 'app/redux';
 import { ACTOR_BOT_ARTILLERY, ACTOR_BOT_HEAVY, ACTOR_BOT_TANK, ACTOR_BUG_BARFER, ACTOR_BUG_CRAWLER, ACTOR_BUG_FLIER, ACTOR_BUG_SPITTER, DEF_GameDownStateField, DEF_GameDownStateFields, ENTITY_BUILDING, ENTITY_FOREST, ENTITY_LOOT, ENTITY_MOUNTAIN, FIELD_WATER, GameDownStateField, GAME_DOWN_FIELD_W, VARIANT_BUILDING_DOUBLE } from 'app/redux/game/down';
-import { DoneSubject, rxComplete } from 'app/rx';
 import { trackByIndex } from 'app/util';
+import { DoneSubject, rxComplete } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
@@ -101,12 +101,7 @@ export class GameDownConfigComponent implements OnDestroy {
 
   trackByIndex = trackByIndex;
 
-  ngOnDestroy() {
-    this.done$.done();
-    rxComplete(
-      this.sceneFieldsPresets$,
-    );
-  }
+  ngOnDestroy() { rxComplete(this.done$, this.sceneFieldsPresets$); }
 
   onMergeSelectedField_Field = (into: GameDownStateField, field: string) => this.onMergeSelectedField(into, { field });
 

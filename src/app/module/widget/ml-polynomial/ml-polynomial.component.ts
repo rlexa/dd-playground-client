@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { DEF_OPTIMIZER, detectPolynom, generatePolynomialPoints, OPTIMIZERS } from 'app/ai';
 import { ReduxService, ReduxSetUiAiService } from 'app/redux';
-import { DoneSubject, rxComplete } from 'app/rx';
 import { trackByIndex } from 'app/util';
+import { DoneSubject, rxComplete } from 'dd-rxjs';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, tap } from 'rxjs/operators';
 
@@ -35,10 +35,7 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
   pointsCurrent$ = this.redux.watch(state => state.ui.ai.mlPolynomial.pointsCurrent, this.done$);
   optimizer$ = this.redux.watch(state => state.ui.ai.mlPolynomial.optimizer, this.done$);
 
-  ngOnDestroy() {
-    this.done$.done();
-    rxComplete(this.isBusy$, this.triggerDoPoints$);
-  }
+  ngOnDestroy() { rxComplete(this.done$, this.isBusy$, this.triggerDoPoints$); }
 
   ngOnInit() {
     this.triggerDoPoints$.pipe(debounceTime(1)).subscribe(() => this.doGeneratePoints());

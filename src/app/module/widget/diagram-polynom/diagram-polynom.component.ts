@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { rxComplete, rxNext_ } from 'app/rx';
 import { arrayFrom } from 'app/util';
 import { axisBottom, axisLeft, line, mouse, ScaleLinear, scaleLinear, select, Selection } from 'd3';
+import { rxComplete, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, merge, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
