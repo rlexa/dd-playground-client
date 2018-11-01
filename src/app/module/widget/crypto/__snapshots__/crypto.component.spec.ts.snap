@@ -6,6 +6,7 @@ exports[`CryptoComponent is created 1`] = `
   api={[Function CryptoApiService]}
   apiBlockCypherBitcoinAddress={[Function Function]}
   apiBlockchainBitcoinAddress={[Function Function]}
+  apiWebBitcoinStats={[Function Function]}
   bitcoinAddress$={[Function BehaviorSubject]}
   done$={[Function DoneSubject]}
   wsBlockCypherAddressConfirmedTx={[Function Function]}
@@ -288,6 +289,61 @@ exports[`CryptoComponent is created 1`] = `
                         class="mat-button-wrapper"
                       >
                         BlockCypher WS
+                      </span>
+                      <div
+                        class="mat-button-ripple mat-ripple"
+                        matripple=""
+                        ng-reflect-centered="false"
+                        ng-reflect-disabled="false"
+                        ng-reflect-trigger="[object HTMLButtonElement]"
+                      />
+                      <div
+                        class="mat-button-focus-overlay"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </mat-list-item>
+            <h3
+              class="mat-subheader"
+              mat-subheader=""
+            >
+              Stats
+            </h3>
+            <mat-list-item
+              class="mat-list-item"
+            >
+              <div
+                class="mat-list-item-content"
+              >
+                <div
+                  class="mat-list-item-ripple mat-ripple"
+                  mat-ripple=""
+                  ng-reflect-disabled="true"
+                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                />
+                <div
+                  class="mat-list-text"
+                />
+                <div
+                  ddflexbox="hyc"
+                  ng-reflect-dd-flexbox="hyc"
+                  style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
+                >
+                  <div
+                    ddflexbox="vys"
+                    ng-reflect-dd-flexbox="vys"
+                    style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                  >
+                    <button
+                      class="mat-button _mat-animation-noopable"
+                      mat-button=""
+                    >
+                      <span
+                        class="mat-button-wrapper"
+                      >
+                        WebBitcoin API
                       </span>
                       <div
                         class="mat-button-ripple mat-ripple"

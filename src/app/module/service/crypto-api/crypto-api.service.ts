@@ -30,6 +30,7 @@ export class CryptoApiService {
 
   private readonly API_BLOCKCHAIN = 'https://blockchain.info';
   private readonly API_BLOCKCYPHER = 'https://api.blockcypher.com/v1';
+  private readonly API_WEBBITCOIN = 'http://webbtc.com';
   private readonly WS_BLOCKCHAIN = 'wss://ws.blockchain.info/inv';
   private readonly WS_BLOCKCYPHER = 'wss://socket.blockcypher.com/v1/btc/main';
 
@@ -46,6 +47,8 @@ export class CryptoApiService {
   blockcypherSingleAddress$ = (req: RequestAddressItems) => this
     .httpGetRest$({ api: this.API_BLOCKCYPHER, url: `/btc/main/addrs/${req.address || 'null'}`, params: { limit: req.take, offset: req.skip } })
     .pipe(map(_ => _));
+
+  webbitcoinStats$ = () => this.httpGetRest$({ api: this.API_WEBBITCOIN, url: `/stats.json` }).pipe(map(_ => _));
 
   private httpGetRest$ = (val: { api: string, url: string, params?: any }) => this.http
     .get(val.api + val.url, { headers: getJsonHeaders(), params: cleanParams(val.params) });
