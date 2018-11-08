@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { GraphskyService, IGraphskyNode } from 'app/module/service/graphsky-api';
+import { RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
 
@@ -55,10 +56,10 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
 
   readonly CMPS = [CMP_LT, CMP_LE, CMP_NE, CMP_EQ, CMP_GE, CMP_GT];
 
-  readonly curType$ = new BehaviorSubject(<string>null);
-  readonly curTag$ = new BehaviorSubject(<string>null);
-  readonly curVal$ = new BehaviorSubject(<string>null);
-  readonly curNode$ = new BehaviorSubject(<IGraphskyNode>null);
+  @RxCleanup() readonly curType$ = new BehaviorSubject(<string>null);
+  @RxCleanup() readonly curTag$ = new BehaviorSubject(<string>null);
+  @RxCleanup() readonly curVal$ = new BehaviorSubject(<string>null);
+  @RxCleanup() readonly curNode$ = new BehaviorSubject(<IGraphskyNode>null);
 
   readonly dbState$ = this.graphsky.log$;
   readonly dbNodeTypeCount$ = this.graphsky.change$.pipe(debounceTime(200), map(() =>
@@ -84,14 +85,7 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
   readonly curTypeKeyTagValuesFiltered$ = combineLatest(this.curVal$, this.curTypeKeyTagValues$).pipe(
     map(([val, vals]) => !val || !val.length ? vals || [] : (vals || []).filter(ii => ii.toLocaleLowerCase().includes(val.toLocaleLowerCase())).sort()));
 
-  ngOnDestroy() {
-    [
-      this.curNode$,
-      this.curTag$,
-      this.curType$,
-      this.curVal$,
-    ].forEach(ii => ii.complete());
-  }
+  ngOnDestroy() { }
 
   ngOnInit() {
     this.dbTypes$

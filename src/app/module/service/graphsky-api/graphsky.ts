@@ -1,3 +1,5 @@
+import { OnDestroy } from '@angular/core';
+import { RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -47,17 +49,17 @@ interface IGraphsky {
   unlink: (data: IGraphskyData[]) => void;
   query: <T extends any>(whatever: (nodes: IGraphskyNode[], links: IGraphskyLink[]) => T) => T;
   drop: () => void;
-  destroy: () => void;
+  ngOnDestroy: () => void;
 }
 
-export class Graphsky implements IGraphsky {
-  private readonly nodes$ = new BehaviorSubject(<IGraphskyNode[]>[]);
-  private readonly links$ = new BehaviorSubject(<IGraphskyLink[]>[]);
+export class Graphsky implements IGraphsky, OnDestroy {
+  @RxCleanup() private readonly nodes$ = new BehaviorSubject(<IGraphskyNode[]>[]);
+  @RxCleanup() private readonly links$ = new BehaviorSubject(<IGraphskyLink[]>[]);
 
   readonly change$ = merge(this.links$, this.nodes$).pipe(map(() => { }));
-  readonly log$ = new BehaviorSubject(<IGraphskyState>{ links: 0, nodes: 0 });
-  readonly nodeCount$ = new BehaviorSubject(0);
-  readonly linkCount$ = new BehaviorSubject(0);
+  @RxCleanup() readonly log$ = new BehaviorSubject(<IGraphskyState>{ links: 0, nodes: 0 });
+  @RxCleanup() readonly nodeCount$ = new BehaviorSubject(0);
+  @RxCleanup() readonly linkCount$ = new BehaviorSubject(0);
 
   constructor() {
     this.change$.subscribe(() => {
@@ -69,9 +71,7 @@ export class Graphsky implements IGraphsky {
     this.linkCount$.subscribe(links => this.log$.next({ ...this.log$.value, links }));
   }
 
-  destroy = () => {
-    [this.links$, this.linkCount$, this.log$, this.nodes$, this.nodeCount$].forEach(ii => ii.complete());
-  }
+  ngOnDestroy() { }
 
   add = (nodes: IGraphskyData[]) => this.nodes$.next(
     this.nodes$.value.concat((nodes || [])

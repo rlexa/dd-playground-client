@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { arrayFrom } from 'app/util';
 import { axisBottom, axisLeft, line, mouse, ScaleLinear, scaleLinear, select, Selection } from 'd3';
-import { rxComplete, rxNext_ } from 'dd-rxjs';
+import { RxCleanup, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, merge, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -36,13 +36,13 @@ export class DiagramPolynomComponent implements OnDestroy, OnInit, AfterViewInit
   private readonly MIN_MAX_BUFFER = 1;
   private readonly PLOT_RESOLUTION = 1000;
 
-  private readonly clrPoint$ = new BehaviorSubject(this.DEF_POINT_COLOR);
-  private readonly polynomColors$ = new BehaviorSubject(this.DEF_POLYNOM_COLORS);
-  private readonly polynomWeights$ = new BehaviorSubject(<number[][]>[]);
-  private readonly xyPoints$ = new BehaviorSubject(<number[][]>[]);
+  @RxCleanup() private readonly clrPoint$ = new BehaviorSubject(this.DEF_POINT_COLOR);
+  @RxCleanup() private readonly polynomColors$ = new BehaviorSubject(this.DEF_POLYNOM_COLORS);
+  @RxCleanup() private readonly polynomWeights$ = new BehaviorSubject(<number[][]>[]);
+  @RxCleanup() private readonly xyPoints$ = new BehaviorSubject(<number[][]>[]);
 
-  private readonly triggerResized$ = new Subject();
-  private readonly triggerRender$ = new Subject();
+  @RxCleanup() private readonly triggerResized$ = new Subject();
+  @RxCleanup() private readonly triggerRender$ = new Subject();
 
   private chart = <Chart>null;
 
@@ -63,9 +63,7 @@ export class DiagramPolynomComponent implements OnDestroy, OnInit, AfterViewInit
 
   @HostListener('window:resize') onWindowResize = () => this.triggerResized$.next();
 
-  ngOnDestroy() {
-    rxComplete(this.clrPoint$, this.polynomColors$, this.polynomWeights$, this.triggerRender$, this.triggerResized$, this.xyPoints$);
-  }
+  ngOnDestroy() { }
 
   ngOnInit() {
     this.triggerResized$.pipe(debounceTime(100)).subscribe(() => this.rechart());

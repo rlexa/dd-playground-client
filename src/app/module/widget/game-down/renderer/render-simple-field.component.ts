@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/c
 import { Theme } from 'app/game';
 import { GameDownColorMap, GameDownStateField } from 'app/redux/game/down';
 import { trackByIndex } from 'app/util';
-import { DoneSubject, rxComplete } from 'dd-rxjs';
+import { RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { actorToColor, entityToColor, fieldToColor } from './util';
@@ -13,12 +13,10 @@ import { actorToColor, entityToColor, fieldToColor } from './util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RenderSimpleFieldComponent implements OnDestroy {
-  private readonly done$ = new DoneSubject();
-
-  readonly data$ = new BehaviorSubject(<GameDownStateField>null);
-  readonly hovered$ = new BehaviorSubject(false);
-  readonly selected$ = new BehaviorSubject(false);
-  readonly theme$ = new BehaviorSubject(<Theme<GameDownColorMap>>null);
+  @RxCleanup() readonly data$ = new BehaviorSubject(<GameDownStateField>null);
+  @RxCleanup() readonly hovered$ = new BehaviorSubject(false);
+  @RxCleanup() readonly selected$ = new BehaviorSubject(false);
+  @RxCleanup() readonly theme$ = new BehaviorSubject(<Theme<GameDownColorMap>>null);
 
   readonly colorActor$ = combineLatest(this.data$, this.theme$).pipe(map(([data, theme]) => actorToColor(data.actor, theme)));
   readonly colorBorder$ = combineLatest(this.hovered$, this.selected$).pipe(map(([hovered, selected]) => hovered ? 'black' : selected ? 'red' : 'transparent'));
@@ -32,5 +30,5 @@ export class RenderSimpleFieldComponent implements OnDestroy {
   @Input() set selected(val: boolean) { this.selected$.next(!!val); }
   @Input() set theme(val: Theme<GameDownColorMap>) { this.theme$.next(val); }
 
-  ngOnDestroy() { rxComplete(this.data$, this.done$, this.hovered$, this.selected$, this.theme$); }
+  ngOnDestroy() { }
 }

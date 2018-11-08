@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FORMAT_DATE_TIMESTAMP } from 'app/presets';
 import { trackByIndex } from 'app/util';
-import { DoneSubject, rxComplete, rxNext_, rxNull, rxTrue } from 'dd-rxjs';
+import { DoneSubject, RxCleanup, rxNext_, rxNull, rxTrue } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest, merge } from 'rxjs';
 import { debounceTime, filter, map, takeUntil } from 'rxjs/operators';
 
@@ -14,16 +14,16 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   @HostBinding('style.display') readonly styleDisplay = 'flex';
   @HostBinding('style.flexDirection') readonly styleFlexDirection = 'column';
 
-  private readonly done$ = new DoneSubject();
-  private readonly data$ = new BehaviorSubject([]);
+  @RxCleanup() private readonly done$ = new DoneSubject();
+  @RxCleanup() private readonly data$ = new BehaviorSubject([]);
 
   readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;
 
-  readonly filter$ = new BehaviorSubject(<string>null);
-  readonly sortAsc$ = new BehaviorSubject(true);
-  readonly sortBy$ = new BehaviorSubject(<string>null);
-  readonly page$ = new BehaviorSubject(0);
-  readonly pageSize$ = new BehaviorSubject(10);
+  @RxCleanup() readonly filter$ = new BehaviorSubject(<string>null);
+  @RxCleanup() readonly sortAsc$ = new BehaviorSubject(true);
+  @RxCleanup() readonly sortBy$ = new BehaviorSubject(<string>null);
+  @RxCleanup() readonly page$ = new BehaviorSubject(0);
+  @RxCleanup() readonly pageSize$ = new BehaviorSubject(10);
 
   readonly columns$ = this.data$.pipe(map(_ => Object.entries((_ || [])[0] || {}).filter(([key, val]) => typeof val !== 'object').map(([key, val]) => key)));
   private readonly dataFiltered$ = combineLatest(this.data$, this.columns$, this.filter$).pipe(
@@ -54,17 +54,7 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
 
   @Input() set data(val: any[]) { this.data$.next(val); }
 
-  ngOnDestroy() {
-    rxComplete(
-      this.data$,
-      this.done$,
-      this.filter$,
-      this.page$,
-      this.pageSize$,
-      this.sortAsc$,
-      this.sortBy$,
-    );
-  }
+  ngOnDestroy() { }
 
   ngOnInit() {
     merge(this.dataFiltered$, this.pageSize$, this.filter$, this.sortAsc$, this.sortBy$)

@@ -3,5 +3,5 @@ import { Graphsky } from './graphsky';
 
 @Injectable()
 export class GraphskyService extends Graphsky implements OnDestroy {
-  ngOnDestroy() { this.destroy(); }
+  ngOnDestroy() { super.ngOnDestroy(); }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { TRIGGER_WobbleX } from 'app/animations';
 import { FORMAT_DATE_TIMESTAMP } from 'app/presets';
 import { isNumeric, isWeb, WithDataProperty } from 'app/util';
@@ -12,7 +12,7 @@ type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string'
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [TRIGGER_WobbleX],
 })
-export class SimpleViewComponent extends WithDataProperty<Object>  {
+export class SimpleViewComponent extends WithDataProperty<Object> implements OnDestroy {
   readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;
 
   readonly keys$ = this.data$.pipe(map(_ => Object.keys(_ || {})));
@@ -28,6 +28,8 @@ export class SimpleViewComponent extends WithDataProperty<Object>  {
   @Input() subheader = <string>null;
 
   @Output() clicked = new EventEmitter<{ key: string, value: any }>();
+
+  ngOnDestroy() { super.ngOnDestroy(); }
 
   onClicked = (key: string, value: any) => this.clicked.emit({ key, value });
 

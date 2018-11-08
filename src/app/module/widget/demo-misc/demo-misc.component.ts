@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { GraphskyService } from 'app/module/service/graphsky-api';
 import { arrayFrom } from 'app/util';
+import { RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -12,11 +13,11 @@ const createSamplePoints = (range = 100) => arrayFrom(10 * 2).map(ii => Math.ran
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [GraphskyService],
 })
-export class DemoMiscComponent {
+export class DemoMiscComponent implements OnDestroy {
   constructor(private readonly graphsky: GraphskyService) { }
 
   private readonly samplePolynomPointsRange = 100;
-  readonly samplePolynomPoints$ = new BehaviorSubject(createSamplePoints(this.samplePolynomPointsRange));
+  @RxCleanup() readonly samplePolynomPoints$ = new BehaviorSubject(createSamplePoints(this.samplePolynomPointsRange));
   transitionalPolynomPoint = [0, 0];
 
   readonly graphskyLog$ = this.graphsky.log$;
@@ -51,6 +52,8 @@ export class DemoMiscComponent {
           [node.data['sex'].toString()]: (acc[node.data['sex'].toString()] || 0) + 1
         }), {})
   )));
+
+  ngOnDestroy() { }
 
   reSamplePolynomPoints = () => this.samplePolynomPoints$.next(createSamplePoints(this.samplePolynomPointsRange));
 

@@ -3,6 +3,7 @@ import { DateAdapter, NativeDateAdapter } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { ReduxService, ReduxSetGlobalService } from 'app/redux';
+import { RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -38,11 +39,9 @@ export class AppComponent implements OnDestroy {
 
   readonly isBrowserChrome = isBrowserChrome;
   readonly isBrowserIE = isBrowserIE;
-  readonly isForcingStart$ = new BehaviorSubject(false);
+  @RxCleanup() readonly isForcingStart$ = new BehaviorSubject(false);
 
-  ngOnDestroy() {
-    this.isForcingStart$.complete();
-  }
+  ngOnDestroy() { }
 
   onForceStart() {
     this.isForcingStart$.next(true);

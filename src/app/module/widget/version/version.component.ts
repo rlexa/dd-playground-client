@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReduxService } from 'app/redux';
 import { routeToSettings } from 'app/routing';
-import { DoneSubject } from 'dd-rxjs';
+import { DoneSubject, RxCleanup } from 'dd-rxjs';
 
 @Component({
   selector: 'app-version',
@@ -11,11 +11,8 @@ import { DoneSubject } from 'dd-rxjs';
 })
 export class VersionComponent implements OnDestroy {
   constructor(private redux: ReduxService, private router: Router) { }
-
-  private readonly done$ = new DoneSubject();
+  @RxCleanup() private readonly done$ = new DoneSubject();
   readonly version$ = this.redux.watch(state => state.globalValues.flags.version, this.done$);
-
-  ngOnDestroy() { this.done$.done(); }
-
+  ngOnDestroy() { }
   onGotoSettings = () => routeToSettings(this.router);
 }

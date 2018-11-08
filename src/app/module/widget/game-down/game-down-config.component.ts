@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService, ReduxSetGameDownService } from 'app/redux';
 import { ACTOR_BOT_ARTILLERY, ACTOR_BOT_HEAVY, ACTOR_BOT_TANK, ACTOR_BUG_BARFER, ACTOR_BUG_CRAWLER, ACTOR_BUG_FLIER, ACTOR_BUG_SPITTER, DEF_GameDownStateField, DEF_GameDownStateFields, ENTITY_BUILDING, ENTITY_FOREST, ENTITY_LOOT, ENTITY_MOUNTAIN, FIELD_WATER, GameDownStateField, GAME_DOWN_FIELD_W, VARIANT_BUILDING_DOUBLE } from 'app/redux/game/down';
 import { trackByIndex } from 'app/util';
-import { DoneSubject, rxComplete } from 'dd-rxjs';
+import { DoneSubject, RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
@@ -69,7 +69,7 @@ export class GameDownConfigComponent implements OnDestroy {
     private readonly reduxSet: ReduxSetGameDownService,
   ) { }
 
-  private readonly done$ = new DoneSubject();
+  @RxCleanup() private readonly done$ = new DoneSubject();
 
   readonly factor$ = this.redux.watch(state => state.game.down.scene.factor, this.done$);
   readonly factorMax$ = this.redux.watch(state => state.game.down.scene.factorMax, this.done$);
@@ -87,7 +87,7 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly selectedFieldActor$ = this.selectedField$.pipe(map(_ => _.actor));
   readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => _.entities));
 
-  readonly sceneFieldsPresets$ = new BehaviorSubject<{ [key: string]: GameDownStateField[] }>(
+  @RxCleanup() readonly sceneFieldsPresets$ = new BehaviorSubject<{ [key: string]: GameDownStateField[] }>(
     {
       'Default': [...DEF_GameDownStateFields],
       'Situation 1': build_Situation_1(),
@@ -101,7 +101,7 @@ export class GameDownConfigComponent implements OnDestroy {
 
   trackByIndex = trackByIndex;
 
-  ngOnDestroy() { rxComplete(this.done$, this.sceneFieldsPresets$); }
+  ngOnDestroy() { }
 
   onMergeSelectedField_Field = (into: GameDownStateField, field: string) => this.onMergeSelectedField(into, { field });
 

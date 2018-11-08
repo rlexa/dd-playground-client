@@ -27,7 +27,7 @@ describe('Graphsky', () => {
     spyOn(spy, func);
     db.change$.pipe(finalize(spy[func])).subscribe();
     expect(spy[func]).not.toHaveBeenCalled();
-    db.destroy();
+    db.ngOnDestroy();
     expect(spy[func]).toHaveBeenCalled();
   }));
 
@@ -37,7 +37,7 @@ describe('Graphsky', () => {
     db.add(NODES);
     db.link(LINKS);
     expect(db.nodeCount$.value).toBe(NODES.length);
-    db.destroy();
+    db.ngOnDestroy();
   }));
 
   test('query all count', inject([], () => {
@@ -45,7 +45,7 @@ describe('Graphsky', () => {
     db.add(NODES);
     db.link(LINKS);
     expect(db.query((nodes, links) => [nodes.length, links.length])).toEqual([NODES.length, LINKS.length]);
-    db.destroy();
+    db.ngOnDestroy();
   }));
 
   test('query node value', inject([], () => {
@@ -53,7 +53,7 @@ describe('Graphsky', () => {
     db.add(NODES);
     db.link(LINKS);
     expect(db.query((nodes) => nodes.filter(ii => ii.data[TAG_NAME] === TAG_NAME_VALS[0])).length).toEqual(1);
-    db.destroy();
+    db.ngOnDestroy();
   }));
 
   test('query link value', inject([], () => {
@@ -61,7 +61,7 @@ describe('Graphsky', () => {
     db.add(NODES);
     db.link(LINKS);
     expect(db.query((nodes, links) => links.filter(ii => ii.data[TAG_FEEL] === TAG_FEEL_VALS[0])).length).toEqual(2);
-    db.destroy();
+    db.ngOnDestroy();
   }));
 
 });

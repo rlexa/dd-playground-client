@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService } from 'app/redux';
-import { DoneSubject } from 'dd-rxjs';
+import { DoneSubject, RxCleanup } from 'dd-rxjs';
 
 @Component({
   selector: 'app-build',
@@ -9,10 +9,7 @@ import { DoneSubject } from 'dd-rxjs';
 })
 export class BuildComponent implements OnDestroy {
   constructor(private redux: ReduxService) { }
-
-  private readonly done$ = new DoneSubject();
-
-  readonly data$ = this.redux.watch(state => state.globalValues.flags);
-
-  ngOnDestroy() { this.done$.done(); }
+  @RxCleanup() private readonly done$ = new DoneSubject();
+  readonly data$ = this.redux.watch(state => state.globalValues.flags, this.done$);
+  ngOnDestroy() { }
 }

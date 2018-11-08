@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ReduxService, ReduxSetGameDownService } from 'app/redux';
 import { GAME_DOWN_FIELD_H, GAME_DOWN_FIELD_W, RENDERER_SIMPLE } from 'app/redux/game/down';
-import { DoneSubject } from 'dd-rxjs';
+import { DoneSubject, RxCleanup } from 'dd-rxjs';
 import { combineLatest } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
@@ -16,7 +16,7 @@ export class GameDownSceneComponent implements OnDestroy {
     private readonly reduxSet: ReduxSetGameDownService,
   ) { }
 
-  private readonly done$ = new DoneSubject();
+  @RxCleanup() private readonly done$ = new DoneSubject();
   private readonly themeName$ = this.redux.watch(state => state.game.down.scene.theme, this.done$);
 
   readonly HEIGHT = Array.from(Array(GAME_DOWN_FIELD_H), (_, index) => index);
@@ -33,7 +33,7 @@ export class GameDownSceneComponent implements OnDestroy {
   readonly theme$ = combineLatest(this.themeName$, this.redux.watch(state => state.game.down.themes, this.done$))
     .pipe(map(([name, themes]) => themes.find(_ => _.name === name)));
 
-  ngOnDestroy() { this.done$.done(); }
+  ngOnDestroy() { }
 
   onClick = (index: number) => this.reduxSet.setSceneSelectedIndex(this.redux.state.game.down.scene.selectedIndex === index ? null : index);
   onHover = (index: number, hovered: boolean) => this.reduxSet.setSceneHoveredIndex(hovered ? index : null);
