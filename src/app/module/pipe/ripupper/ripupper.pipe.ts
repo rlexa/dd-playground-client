@@ -17,7 +17,7 @@ export class RipupperPipe implements PipeTransform {
     if (typeof (value) === 'string' && value.length >= 3) {
       const iis: number[] = [0];
       for (let ii = 2; ii < value.length - 1; ++ii) {
-        if (isUpperCase(value, ii)) {
+        if (isUpperCase(value, ii) && !isUpperCase(value, ii - 1)) {
           iis.push(ii);
         }
       }

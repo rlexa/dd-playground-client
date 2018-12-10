@@ -16,5 +16,6 @@ describe('RipupperPipe', () => {
     expect(pipe.transform('keynameVAlue')).toEqual('keyname VAlue');
     expect(pipe.transform('keyname Value')).toEqual('keyname Value');
     expect(pipe.transform('keyname_Value')).toEqual('keyname_Value');
+    expect(pipe.transform('KEYNAMEVALUE')).toEqual('KEYNAMEVALUE');
   });
 });
