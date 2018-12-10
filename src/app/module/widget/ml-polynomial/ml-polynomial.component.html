@@ -4,34 +4,34 @@
     <mat-card-content>
       <div ddFlexbox="vys">
 
-        <div ddFlexbox="hys" class="childv">
+        <div ddFlexbox="hyscsw" class="childhv">
 
-          <table *ngIf="factorsCurrent$ | async as factorsCurrent">
-            <tr>
-              <td></td>
-              <td *ngFor="let _ of factorsCurrent; let iFactor = index; trackBy: trackByIndex">
-                <mat-form-field class="width-short-input font-table-input mat-input-save-subspace childh">
-                  <input matInput type="number" [min]="-factorRange" [max]="factorRange" [disabled]="isBusy$ | async" required [value]="factorsCurrent[iFactor]"
-                    (change)="updateFactor(factorsCurrent, iFactor, +$event.target.value, $event.target)">
-                </mat-form-field>
-              </td>
-            </tr>
-            <tr *ngFor="let factors of [factorsCurrent, factorsTrained$ | async]; let iFactors = index;" [ngStyle]="{'color': colors[iFactors % colors.length], 'vertical-align': 'bottom'}">
-              <td class="text-nowrap">f(x) = </td>
-              <ng-container *ngFor="let factor of factors; let ii = index;">
-                <td>
-                  {{ (factor >= 0 ? ' +' : ' ') + (factor | d3number:'.2r') }}
-                  <ng-container *ngIf="ii+1 < factors.length">
-                    {{ 'x' }}
-                    <sup *ngIf="ii+2 < factors.length" class="font-small">{{ factors.length - 1 - ii }}</sup>
-                  </ng-container>
+          <div ddFlexbox="vys" class="container hovered-elevated">
+            <table *ngIf="factorsCurrent$ | async as factorsCurrent">
+              <tr>
+                <td></td>
+                <td *ngFor="let _ of factorsCurrent; let iFactor = index; trackBy: trackByIndex">
+                  <mat-form-field class="width-short-input font-table-input mat-input-save-subspace childh">
+                    <input matInput type="number" [min]="-factorRange" [max]="factorRange" [disabled]="isBusy$ | async" required [value]="factorsCurrent[iFactor]"
+                      (change)="updateFactor(factorsCurrent, iFactor, +$event.target.value, $event.target)">
+                  </mat-form-field>
                 </td>
-              </ng-container>
-            </tr>
-          </table>
+              </tr>
+              <tr *ngFor="let factors of [factorsCurrent, factorsTrained$ | async]; let iFactors = index;" [ngStyle]="{'color': colors[iFactors % colors.length], 'vertical-align': 'bottom'}">
+                <td class="text-nowrap">f(x) = </td>
+                <ng-container *ngFor="let factor of factors; let ii = index;">
+                  <td>
+                    {{ (factor >= 0 ? ' +' : ' ') + (factor | d3number:'.2r') }}
+                    <ng-container *ngIf="ii+1 < factors.length">
+                      {{ 'x' }}
+                      <sup *ngIf="ii+2 < factors.length" class="font-small">{{ factors.length - 1 - ii }}</sup>
+                    </ng-container>
+                  </td>
+                </ng-container>
+              </tr>
+            </table>
 
-          <div ddFlexbox="vys" class="childhv">
-            <div ddFlexbox="hyscsw" class="childhv">
+            <div ddFlexbox="hys">
               <div class="childh">
                 <button mat-raised-button (click)="generatePoints()" [disabled]="isBusy$ | async">NEW POINTS</button>
               </div>
@@ -39,11 +39,12 @@
                 <button mat-raised-button (click)="resetTrained()" [disabled]="isBusy$ | async">RESET TRAINED</button>
               </div>
             </div>
-            <div ddFlexbox="hyscsw" class="childhv">
-              <div ddFlexbox="hys" class="margin-top">
-                <label class="childhv">TFJS:</label>
-                <app-simple-view [isDense]="true" [isExpanded]="false" [isExpandable]="true" [data]="{'backend': tfjsBackend$ | async, 'memory': tfjsMemory$ | async}"></app-simple-view>
-              </div>
+          </div>
+
+          <app-simple-view class="childhv hovered-elevated" subheader="TFJS Memory" [isDense]="true" [isWidthConstrained]="false" [data]="tfjsMemory$ | async"></app-simple-view>
+
+          <div ddFlexbox="vys" class="childhv container hovered-elevated">
+            <div ddFlexbox="hye" class="childhv">
               <mat-form-field class="childh width-short-input font-table-input">
                 <input matInput type="number" placeholder="Rate" [disabled]="isBusy$ | async" step=".1" min="0.01" [value]="learningRate$ | async"
                   (change)="updateLearningRate(+$event.target.value)">
@@ -53,14 +54,16 @@
                   <mat-option *ngFor="let ii of optimizers" [value]="ii"> {{ ii }} </mat-option>
                 </mat-select>
               </mat-form-field>
+            </div>
+            <div ddFlexbox="hyscsw" class="childhv">
               <button *ngFor="let ii of [1, 5, 10, 100, 1000]; let iindex= index;" mat-raised-button class="auto-min-width" (click)="train(ii)"
                 [disabled]="isBusy$ | async">
                 {{ (iindex === 0 ? 'TRAIN ' : '') + 'x' + ii }}
               </button>
             </div>
           </div>
-
         </div>
+
         <app-diagram-polynom [style.minWidth]="'60rem'" ddFlexitem="at" [points]="pointsCurrent$ | async" [polynomials]="[factorsCurrent$ | async, factorsTrained$ | async]"
           [polynomialColors]="colors"></app-diagram-polynom>
       </div>

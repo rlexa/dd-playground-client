@@ -53,426 +53,425 @@ exports[`MlPolynomialComponent is created 1`] = `
           style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
         >
           <div
-            class="childv"
-            ddflexbox="hys"
-            ng-reflect-dd-flexbox="hys"
-            style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+            class="childhv"
+            ddflexbox="hyscsw"
+            ng-reflect-dd-flexbox="hyscsw"
+            style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
           >
-            
-            <table
-              class="ng-star-inserted"
-            >
-              <tbody>
-                <tr>
-                  <td />
-                  
-                  <td
-                    class="ng-star-inserted"
-                  >
-                    <mat-form-field
-                      class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-4 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
-                    >
-                      <div
-                        class="mat-form-field-wrapper"
-                      >
-                        <div
-                          class="mat-form-field-flex"
-                        >
-                          
-                          
-                          <div
-                            class="mat-form-field-infix"
-                          >
-                            <input
-                              aria-invalid="false"
-                              aria-required="true"
-                              class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
-                              id="mat-input-1"
-                              matinput=""
-                              max="10"
-                              min="-10"
-                              ng-reflect-disabled="false"
-                              ng-reflect-required=""
-                              ng-reflect-type="number"
-                              ng-reflect-value="1"
-                              required=""
-                              type="number"
-                            />
-                            <span
-                              class="mat-form-field-label-wrapper"
-                            >
-                              
-                            </span>
-                          </div>
-                          
-                        </div>
-                        
-                        <div
-                          class="mat-form-field-underline ng-tns-c1-4 ng-star-inserted"
-                        >
-                          <span
-                            class="mat-form-field-ripple"
-                          />
-                        </div>
-                        <div
-                          class="mat-form-field-subscript-wrapper"
-                          ng-reflect-ng-switch="hint"
-                        >
-                          
-                          
-                          <div
-                            class="mat-form-field-hint-wrapper ng-tns-c1-4 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                            style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
-                          >
-                            
-                            <div
-                              class="mat-form-field-hint-spacer"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </mat-form-field>
-                  </td>
-                  <td
-                    class="ng-star-inserted"
-                  >
-                    <mat-form-field
-                      class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-5 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
-                    >
-                      <div
-                        class="mat-form-field-wrapper"
-                      >
-                        <div
-                          class="mat-form-field-flex"
-                        >
-                          
-                          
-                          <div
-                            class="mat-form-field-infix"
-                          >
-                            <input
-                              aria-invalid="false"
-                              aria-required="true"
-                              class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
-                              id="mat-input-2"
-                              matinput=""
-                              max="10"
-                              min="-10"
-                              ng-reflect-disabled="false"
-                              ng-reflect-required=""
-                              ng-reflect-type="number"
-                              ng-reflect-value="1"
-                              required=""
-                              type="number"
-                            />
-                            <span
-                              class="mat-form-field-label-wrapper"
-                            >
-                              
-                            </span>
-                          </div>
-                          
-                        </div>
-                        
-                        <div
-                          class="mat-form-field-underline ng-tns-c1-5 ng-star-inserted"
-                        >
-                          <span
-                            class="mat-form-field-ripple"
-                          />
-                        </div>
-                        <div
-                          class="mat-form-field-subscript-wrapper"
-                          ng-reflect-ng-switch="hint"
-                        >
-                          
-                          
-                          <div
-                            class="mat-form-field-hint-wrapper ng-tns-c1-5 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                            style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
-                          >
-                            
-                            <div
-                              class="mat-form-field-hint-spacer"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </mat-form-field>
-                  </td>
-                  <td
-                    class="ng-star-inserted"
-                  >
-                    <mat-form-field
-                      class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-6 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
-                    >
-                      <div
-                        class="mat-form-field-wrapper"
-                      >
-                        <div
-                          class="mat-form-field-flex"
-                        >
-                          
-                          
-                          <div
-                            class="mat-form-field-infix"
-                          >
-                            <input
-                              aria-invalid="false"
-                              aria-required="true"
-                              class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
-                              id="mat-input-3"
-                              matinput=""
-                              max="10"
-                              min="-10"
-                              ng-reflect-disabled="false"
-                              ng-reflect-required=""
-                              ng-reflect-type="number"
-                              ng-reflect-value="1"
-                              required=""
-                              type="number"
-                            />
-                            <span
-                              class="mat-form-field-label-wrapper"
-                            >
-                              
-                            </span>
-                          </div>
-                          
-                        </div>
-                        
-                        <div
-                          class="mat-form-field-underline ng-tns-c1-6 ng-star-inserted"
-                        >
-                          <span
-                            class="mat-form-field-ripple"
-                          />
-                        </div>
-                        <div
-                          class="mat-form-field-subscript-wrapper"
-                          ng-reflect-ng-switch="hint"
-                        >
-                          
-                          
-                          <div
-                            class="mat-form-field-hint-wrapper ng-tns-c1-6 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                            style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
-                          >
-                            
-                            <div
-                              class="mat-form-field-hint-spacer"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </mat-form-field>
-                  </td>
-                  <td
-                    class="ng-star-inserted"
-                  >
-                    <mat-form-field
-                      class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-7 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
-                    >
-                      <div
-                        class="mat-form-field-wrapper"
-                      >
-                        <div
-                          class="mat-form-field-flex"
-                        >
-                          
-                          
-                          <div
-                            class="mat-form-field-infix"
-                          >
-                            <input
-                              aria-invalid="false"
-                              aria-required="true"
-                              class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
-                              id="mat-input-4"
-                              matinput=""
-                              max="10"
-                              min="-10"
-                              ng-reflect-disabled="false"
-                              ng-reflect-required=""
-                              ng-reflect-type="number"
-                              ng-reflect-value="1"
-                              required=""
-                              type="number"
-                            />
-                            <span
-                              class="mat-form-field-label-wrapper"
-                            >
-                              
-                            </span>
-                          </div>
-                          
-                        </div>
-                        
-                        <div
-                          class="mat-form-field-underline ng-tns-c1-7 ng-star-inserted"
-                        >
-                          <span
-                            class="mat-form-field-ripple"
-                          />
-                        </div>
-                        <div
-                          class="mat-form-field-subscript-wrapper"
-                          ng-reflect-ng-switch="hint"
-                        >
-                          
-                          
-                          <div
-                            class="mat-form-field-hint-wrapper ng-tns-c1-7 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                            style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
-                          >
-                            
-                            <div
-                              class="mat-form-field-hint-spacer"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </mat-form-field>
-                  </td>
-                </tr>
-                
-                <tr
-                  class="ng-star-inserted"
-                  ng-reflect-ng-style="[object Object]"
-                  style="color: rgb(0, 0, 255); vertical-align: bottom;"
-                >
-                  <td
-                    class="text-nowrap"
-                  >
-                    f(x) = 
-                  </td>
-                  
-                  
-                  <td
-                    class="ng-star-inserted"
-                  >
-                      +1.0 
-                    
-                    
-                     x 
-                    
-                    <sup
-                      class="font-small ng-star-inserted"
-                    >
-                      3
-                    </sup>
-                    
-                  </td>
-                  
-                  <td
-                    class="ng-star-inserted"
-                  >
-                      +1.0 
-                    
-                    
-                     x 
-                    
-                    <sup
-                      class="font-small ng-star-inserted"
-                    >
-                      2
-                    </sup>
-                    
-                  </td>
-                  
-                  <td
-                    class="ng-star-inserted"
-                  >
-                      +1.0 
-                    
-                    
-                     x 
-                    
-                    
-                  </td>
-                  
-                  <td
-                    class="ng-star-inserted"
-                  >
-                      +1.0 
-                    
-                  </td>
-                </tr>
-                <tr
-                  class="ng-star-inserted"
-                  ng-reflect-ng-style="[object Object]"
-                  style="color: rgb(255, 100, 100); vertical-align: bottom;"
-                >
-                  <td
-                    class="text-nowrap"
-                  >
-                    f(x) = 
-                  </td>
-                  
-                  
-                  <td
-                    class="ng-star-inserted"
-                  >
-                      +0.0 
-                    
-                    
-                     x 
-                    
-                    <sup
-                      class="font-small ng-star-inserted"
-                    >
-                      3
-                    </sup>
-                    
-                  </td>
-                  
-                  <td
-                    class="ng-star-inserted"
-                  >
-                      +0.0 
-                    
-                    
-                     x 
-                    
-                    <sup
-                      class="font-small ng-star-inserted"
-                    >
-                      2
-                    </sup>
-                    
-                  </td>
-                  
-                  <td
-                    class="ng-star-inserted"
-                  >
-                      +0.0 
-                    
-                    
-                     x 
-                    
-                    
-                  </td>
-                  
-                  <td
-                    class="ng-star-inserted"
-                  >
-                      +0.0 
-                    
-                  </td>
-                </tr>
-              </tbody>
-            </table>
             <div
-              class="childhv"
+              class="container hovered-elevated"
               ddflexbox="vys"
               ng-reflect-dd-flexbox="vys"
               style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
             >
+              
+              <table
+                class="ng-star-inserted"
+              >
+                <tbody>
+                  <tr>
+                    <td />
+                    
+                    <td
+                      class="ng-star-inserted"
+                    >
+                      <mat-form-field
+                        class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-4 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
+                      >
+                        <div
+                          class="mat-form-field-wrapper"
+                        >
+                          <div
+                            class="mat-form-field-flex"
+                          >
+                            
+                            
+                            <div
+                              class="mat-form-field-infix"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-required="true"
+                                class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
+                                id="mat-input-1"
+                                matinput=""
+                                max="10"
+                                min="-10"
+                                ng-reflect-disabled="false"
+                                ng-reflect-required=""
+                                ng-reflect-type="number"
+                                ng-reflect-value="1"
+                                required=""
+                                type="number"
+                              />
+                              <span
+                                class="mat-form-field-label-wrapper"
+                              >
+                                
+                              </span>
+                            </div>
+                            
+                          </div>
+                          
+                          <div
+                            class="mat-form-field-underline ng-tns-c1-4 ng-star-inserted"
+                          >
+                            <span
+                              class="mat-form-field-ripple"
+                            />
+                          </div>
+                          <div
+                            class="mat-form-field-subscript-wrapper"
+                            ng-reflect-ng-switch="hint"
+                          >
+                            
+                            
+                            <div
+                              class="mat-form-field-hint-wrapper ng-tns-c1-4 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                              style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+                            >
+                              
+                              <div
+                                class="mat-form-field-hint-spacer"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </mat-form-field>
+                    </td>
+                    <td
+                      class="ng-star-inserted"
+                    >
+                      <mat-form-field
+                        class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-5 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
+                      >
+                        <div
+                          class="mat-form-field-wrapper"
+                        >
+                          <div
+                            class="mat-form-field-flex"
+                          >
+                            
+                            
+                            <div
+                              class="mat-form-field-infix"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-required="true"
+                                class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
+                                id="mat-input-2"
+                                matinput=""
+                                max="10"
+                                min="-10"
+                                ng-reflect-disabled="false"
+                                ng-reflect-required=""
+                                ng-reflect-type="number"
+                                ng-reflect-value="1"
+                                required=""
+                                type="number"
+                              />
+                              <span
+                                class="mat-form-field-label-wrapper"
+                              >
+                                
+                              </span>
+                            </div>
+                            
+                          </div>
+                          
+                          <div
+                            class="mat-form-field-underline ng-tns-c1-5 ng-star-inserted"
+                          >
+                            <span
+                              class="mat-form-field-ripple"
+                            />
+                          </div>
+                          <div
+                            class="mat-form-field-subscript-wrapper"
+                            ng-reflect-ng-switch="hint"
+                          >
+                            
+                            
+                            <div
+                              class="mat-form-field-hint-wrapper ng-tns-c1-5 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                              style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+                            >
+                              
+                              <div
+                                class="mat-form-field-hint-spacer"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </mat-form-field>
+                    </td>
+                    <td
+                      class="ng-star-inserted"
+                    >
+                      <mat-form-field
+                        class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-6 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
+                      >
+                        <div
+                          class="mat-form-field-wrapper"
+                        >
+                          <div
+                            class="mat-form-field-flex"
+                          >
+                            
+                            
+                            <div
+                              class="mat-form-field-infix"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-required="true"
+                                class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
+                                id="mat-input-3"
+                                matinput=""
+                                max="10"
+                                min="-10"
+                                ng-reflect-disabled="false"
+                                ng-reflect-required=""
+                                ng-reflect-type="number"
+                                ng-reflect-value="1"
+                                required=""
+                                type="number"
+                              />
+                              <span
+                                class="mat-form-field-label-wrapper"
+                              >
+                                
+                              </span>
+                            </div>
+                            
+                          </div>
+                          
+                          <div
+                            class="mat-form-field-underline ng-tns-c1-6 ng-star-inserted"
+                          >
+                            <span
+                              class="mat-form-field-ripple"
+                            />
+                          </div>
+                          <div
+                            class="mat-form-field-subscript-wrapper"
+                            ng-reflect-ng-switch="hint"
+                          >
+                            
+                            
+                            <div
+                              class="mat-form-field-hint-wrapper ng-tns-c1-6 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                              style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+                            >
+                              
+                              <div
+                                class="mat-form-field-hint-spacer"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </mat-form-field>
+                    </td>
+                    <td
+                      class="ng-star-inserted"
+                    >
+                      <mat-form-field
+                        class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-7 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
+                      >
+                        <div
+                          class="mat-form-field-wrapper"
+                        >
+                          <div
+                            class="mat-form-field-flex"
+                          >
+                            
+                            
+                            <div
+                              class="mat-form-field-infix"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-required="true"
+                                class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
+                                id="mat-input-4"
+                                matinput=""
+                                max="10"
+                                min="-10"
+                                ng-reflect-disabled="false"
+                                ng-reflect-required=""
+                                ng-reflect-type="number"
+                                ng-reflect-value="1"
+                                required=""
+                                type="number"
+                              />
+                              <span
+                                class="mat-form-field-label-wrapper"
+                              >
+                                
+                              </span>
+                            </div>
+                            
+                          </div>
+                          
+                          <div
+                            class="mat-form-field-underline ng-tns-c1-7 ng-star-inserted"
+                          >
+                            <span
+                              class="mat-form-field-ripple"
+                            />
+                          </div>
+                          <div
+                            class="mat-form-field-subscript-wrapper"
+                            ng-reflect-ng-switch="hint"
+                          >
+                            
+                            
+                            <div
+                              class="mat-form-field-hint-wrapper ng-tns-c1-7 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                              style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+                            >
+                              
+                              <div
+                                class="mat-form-field-hint-spacer"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                  
+                  <tr
+                    class="ng-star-inserted"
+                    ng-reflect-ng-style="[object Object]"
+                    style="color: rgb(0, 0, 255); vertical-align: bottom;"
+                  >
+                    <td
+                      class="text-nowrap"
+                    >
+                      f(x) = 
+                    </td>
+                    
+                    
+                    <td
+                      class="ng-star-inserted"
+                    >
+                        +1.0 
+                      
+                      
+                       x 
+                      
+                      <sup
+                        class="font-small ng-star-inserted"
+                      >
+                        3
+                      </sup>
+                      
+                    </td>
+                    
+                    <td
+                      class="ng-star-inserted"
+                    >
+                        +1.0 
+                      
+                      
+                       x 
+                      
+                      <sup
+                        class="font-small ng-star-inserted"
+                      >
+                        2
+                      </sup>
+                      
+                    </td>
+                    
+                    <td
+                      class="ng-star-inserted"
+                    >
+                        +1.0 
+                      
+                      
+                       x 
+                      
+                      
+                    </td>
+                    
+                    <td
+                      class="ng-star-inserted"
+                    >
+                        +1.0 
+                      
+                    </td>
+                  </tr>
+                  <tr
+                    class="ng-star-inserted"
+                    ng-reflect-ng-style="[object Object]"
+                    style="color: rgb(255, 100, 100); vertical-align: bottom;"
+                  >
+                    <td
+                      class="text-nowrap"
+                    >
+                      f(x) = 
+                    </td>
+                    
+                    
+                    <td
+                      class="ng-star-inserted"
+                    >
+                        +0.0 
+                      
+                      
+                       x 
+                      
+                      <sup
+                        class="font-small ng-star-inserted"
+                      >
+                        3
+                      </sup>
+                      
+                    </td>
+                    
+                    <td
+                      class="ng-star-inserted"
+                    >
+                        +0.0 
+                      
+                      
+                       x 
+                      
+                      <sup
+                        class="font-small ng-star-inserted"
+                      >
+                        2
+                      </sup>
+                      
+                    </td>
+                    
+                    <td
+                      class="ng-star-inserted"
+                    >
+                        +0.0 
+                      
+                      
+                       x 
+                      
+                      
+                    </td>
+                    
+                    <td
+                      class="ng-star-inserted"
+                    >
+                        +0.0 
+                      
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
               <div
-                class="childhv"
-                ddflexbox="hyscsw"
-                ng-reflect-dd-flexbox="hyscsw"
-                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
+                ddflexbox="hys"
+                ng-reflect-dd-flexbox="hys"
+                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
               >
                 <div
                   class="childh"
@@ -525,70 +524,471 @@ exports[`MlPolynomialComponent is created 1`] = `
                   </button>
                 </div>
               </div>
+            </div>
+            <app-simple-view
+              class="childhv hovered-elevated ng-tns-c3-0"
+              ng-reflect-data="[object Object]"
+              ng-reflect-is-dense="true"
+              ng-reflect-is-width-constrained="false"
+              ng-reflect-subheader="TFJS Memory"
+              subheader="TFJS Memory"
+            >
+              
               <div
-                class="childhv"
-                ddflexbox="hyscsw"
-                ng-reflect-dd-flexbox="hyscsw"
-                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
+                class="position-relative ng-tns-c3-0 ng-star-inserted"
               >
                 <div
-                  class="margin-top"
+                  class="scroll-x-auto"
                   ddflexbox="hys"
                   ng-reflect-dd-flexbox="hys"
-                  style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                  style="max-width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
                 >
-                  <label
-                    class="childhv"
-                  >
-                    TFJS:
-                  </label>
-                  <app-simple-view
-                    class="ng-tns-c3-0"
-                    ng-reflect-data="[object Object]"
-                    ng-reflect-is-dense="true"
-                    ng-reflect-is-expandable="true"
-                    ng-reflect-is-expanded="false"
+                  
+                  
+                  <mat-list
+                    class="mat-list-auto-height mat-list ng-tns-c3-0 ng-star-inserted"
+                    dense="true"
                   >
                     
-                    <div
-                      class="position-relative ng-tns-c3-0 ng-star-inserted"
+                    
+                    
+                    
+                    
+                    
+                    
+                    <h4
+                      class="mat-subheader ng-tns-c3-0 ng-star-inserted"
+                      mat-subheader=""
                     >
-                      <div
-                        class="scroll-x-auto"
-                        ddflexbox="hys"
-                        ng-reflect-dd-flexbox="hys"
-                        style="max-width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                      TFJS Memory
+                    </h4>
+                    <table
+                      class="ng-tns-c3-0 ng-star-inserted"
+                    >
+                      <tbody
+                        class="ng-tns-c3-0"
                       >
                         
-                        <button
-                          class="inline-button mat-button ng-tns-c3-0 _mat-animation-noopable ng-star-inserted"
-                          mat-button=""
+                        <tr
+                          class="ng-tns-c3-0 ng-star-inserted"
                         >
-                          <span
-                            class="mat-button-wrapper"
+                          <td
+                            class="ng-tns-c3-0"
+                            style="vertical-align: top;"
                           >
-                            <i
-                              class="material-icons rot-90 ng-tns-c3-0"
+                            <mat-list-item
+                              class="mat-list-item"
                             >
-                              expand_more
-                            </i>
-                          </span>
-                          <div
-                            class="mat-button-ripple mat-ripple"
-                            matripple=""
-                            ng-reflect-centered="false"
-                            ng-reflect-disabled="false"
-                            ng-reflect-trigger="[object HTMLButtonElement]"
-                          />
-                          <div
-                            class="mat-button-focus-overlay"
-                          />
-                        </button>
-                        
-                      </div>
-                    </div>
-                  </app-simple-view>
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="no-break-text ng-tns-c3-0"
+                                >
+                                  Unreliable
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                          <td
+                            class="ng-tns-c3-0"
+                          >
+                            <mat-list-item
+                              class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                              style=""
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="break-text ng-tns-c3-0"
+                                  ng-reflect-klass="break-text"
+                                  ng-reflect-ng-class="[object Object]"
+                                >
+                                  
+                                  
+                                  
+                                  
+                                  
+                                   true 
+                                  
+                                  
+                                  
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                        </tr>
+                        <tr
+                          class="ng-tns-c3-0 ng-star-inserted"
+                        >
+                          <td
+                            class="ng-tns-c3-0"
+                            style="vertical-align: top;"
+                          >
+                            <mat-list-item
+                              class="mat-list-item"
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="no-break-text ng-tns-c3-0"
+                                >
+                                  Reasons
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                          <td
+                            class="ng-tns-c3-0"
+                          >
+                            <mat-list-item
+                              class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                              style=""
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="break-text ng-tns-c3-0"
+                                  ng-reflect-klass="break-text"
+                                  ng-reflect-ng-class="[object Object]"
+                                >
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  <app-simple-view
+                                    class="ng-tns-c3-8 ng-tns-c3-0 ng-star-inserted"
+                                    ng-reflect-data="The reported memory is an uppe"
+                                    ng-reflect-is-expandable="true"
+                                    ng-reflect-is-expanded="false"
+                                    ng-reflect-is-width-constrained="false"
+                                    style=""
+                                  >
+                                    
+                                    <div
+                                      class="position-relative ng-tns-c3-8 ng-star-inserted"
+                                    >
+                                      <div
+                                        class="scroll-x-auto"
+                                        ddflexbox="hys"
+                                        ng-reflect-dd-flexbox="hys"
+                                        style="max-width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                                      >
+                                        
+                                        <button
+                                          class="inline-button mat-button ng-tns-c3-8 _mat-animation-noopable ng-star-inserted"
+                                          mat-button=""
+                                        >
+                                          <span
+                                            class="mat-button-wrapper"
+                                          >
+                                            <i
+                                              class="material-icons rot-90 ng-tns-c3-8"
+                                            >
+                                              expand_more
+                                            </i>
+                                          </span>
+                                          <div
+                                            class="mat-button-ripple mat-ripple"
+                                            matripple=""
+                                            ng-reflect-centered="false"
+                                            ng-reflect-disabled="false"
+                                            ng-reflect-trigger="[object HTMLButtonElement]"
+                                          />
+                                          <div
+                                            class="mat-button-focus-overlay"
+                                          />
+                                        </button>
+                                        
+                                      </div>
+                                    </div>
+                                  </app-simple-view>
+                                  
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                        </tr>
+                        <tr
+                          class="ng-tns-c3-0 ng-star-inserted"
+                        >
+                          <td
+                            class="ng-tns-c3-0"
+                            style="vertical-align: top;"
+                          >
+                            <mat-list-item
+                              class="mat-list-item"
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="no-break-text ng-tns-c3-0"
+                                >
+                                  Num Tensors
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                          <td
+                            class="ng-tns-c3-0"
+                          >
+                            <mat-list-item
+                              class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                              style=""
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="break-text ng-tns-c3-0 value-numeric"
+                                  ng-reflect-klass="break-text"
+                                  ng-reflect-ng-class="[object Object]"
+                                >
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  <span
+                                    class="ng-tns-c3-0 ng-star-inserted"
+                                    ng-reflect-ng-class="[object Object]"
+                                    style=""
+                                  >
+                                     0 
+                                  </span>
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                        </tr>
+                        <tr
+                          class="ng-tns-c3-0 ng-star-inserted"
+                        >
+                          <td
+                            class="ng-tns-c3-0"
+                            style="vertical-align: top;"
+                          >
+                            <mat-list-item
+                              class="mat-list-item"
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="no-break-text ng-tns-c3-0"
+                                >
+                                  Num Data Buffers
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                          <td
+                            class="ng-tns-c3-0"
+                          >
+                            <mat-list-item
+                              class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                              style=""
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="break-text ng-tns-c3-0 value-numeric"
+                                  ng-reflect-klass="break-text"
+                                  ng-reflect-ng-class="[object Object]"
+                                >
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  <span
+                                    class="ng-tns-c3-0 ng-star-inserted"
+                                    ng-reflect-ng-class="[object Object]"
+                                    style=""
+                                  >
+                                     0 
+                                  </span>
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                        </tr>
+                        <tr
+                          class="ng-tns-c3-0 ng-star-inserted"
+                        >
+                          <td
+                            class="ng-tns-c3-0"
+                            style="vertical-align: top;"
+                          >
+                            <mat-list-item
+                              class="mat-list-item"
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="no-break-text ng-tns-c3-0"
+                                >
+                                  Num Bytes
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                          <td
+                            class="ng-tns-c3-0"
+                          >
+                            <mat-list-item
+                              class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                              style=""
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="break-text ng-tns-c3-0 value-numeric"
+                                  ng-reflect-klass="break-text"
+                                  ng-reflect-ng-class="[object Object]"
+                                >
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  <span
+                                    class="ng-tns-c3-0 ng-star-inserted"
+                                    ng-reflect-ng-class="[object Object]"
+                                    style=""
+                                  >
+                                     0 
+                                  </span>
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    
+                    
+                  </mat-list>
                 </div>
+              </div>
+            </app-simple-view>
+            <div
+              class="childhv container hovered-elevated"
+              ddflexbox="vys"
+              ng-reflect-dd-flexbox="vys"
+              style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+            >
+              <div
+                class="childhv"
+                ddflexbox="hye"
+                ng-reflect-dd-flexbox="hye"
+                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-end; align-content: stretch; flex-wrap: no-wrap;"
+              >
                 <mat-form-field
                   class="childh width-short-input font-table-input mat-form-field ng-tns-c1-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
                 >
@@ -769,6 +1169,13 @@ exports[`MlPolynomialComponent is created 1`] = `
                     </div>
                   </div>
                 </mat-form-field>
+              </div>
+              <div
+                class="childhv"
+                ddflexbox="hyscsw"
+                ng-reflect-dd-flexbox="hyscsw"
+                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
+              >
                 
                 <button
                   class="auto-min-width mat-raised-button _mat-animation-noopable ng-star-inserted"
