@@ -235,7 +235,7 @@
 }
 
 .mat-step-label-selected {
-   :not(.mat-step-optional) {
+  :not(.mat-step-optional) {
     font-style: italic;
   }
 }
@@ -250,6 +250,14 @@
 
 .mat-tab-body-content {
   position: relative;
+}
+
+.mat-toolbar {
+  &.mat-toolbar-single-row {
+    .mat-nav-list {
+      padding-top: 0px;
+    }
+  }
 }
 
 .mat-toolbar-filler {
