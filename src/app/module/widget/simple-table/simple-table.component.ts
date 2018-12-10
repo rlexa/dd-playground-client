@@ -43,6 +43,9 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
         .slice(page * size, page * size + size)),
       takeUntil(this.done$));
 
+  readonly dataBatchClickables$ = this.dataBatch$.pipe(
+    map(_ => _.map(item => Object.entries(item || {}).filter(([key, val]) => this.isClickable && this.isClickable(key, val)).map(([key]) => key))));
+
   setFilter = rxNext_(this.filter$);
   setPage = rxNext_(this.page$);
   setSortAsc = rxNext_(this.sortAsc$);
@@ -50,9 +53,11 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
 
   trackByIndex = trackByIndex;
 
+  @Output() clicked = new EventEmitter<{ key: string, value: any }>();
   @Output() dblClick = new EventEmitter<any>();
 
   @Input() set data(val: any[]) { this.data$.next(val); }
+  @Input() isClickable: (key: string, val: any) => boolean = null;
 
   ngOnDestroy() { }
 
@@ -69,6 +74,7 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
       });
   }
 
+  onClicked = (key: string, value: any) => this.clicked.emit({ key, value });
   onRowDoubleClick = (item: any) => this.dblClick.emit(item);
 
   onSortChange = (sortBy: string, sortAsc: boolean) => {

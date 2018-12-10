@@ -18,7 +18,7 @@
     <mat-card-title>List</mat-card-title>
     <mat-card-content>
       <app-loading-bar [show]="(busyCount$ | async) > 0"></app-loading-bar>
-      <app-simple-table [style.maxWidth]="'100rem'" [data]="tableAllData"></app-simple-table>
+      <app-simple-table [style.maxWidth]="'100rem'" [data]="tableAllData" [isClickable]="clickableValue" (clicked)="onClickedValue($event.key, $event.value)"></app-simple-table>
     </mat-card-content>
   </mat-card>
 
