@@ -4,8 +4,6 @@
     <mat-card-content>
       <div ddFlexbox="vys">
 
-        <h1 class="color-warn">CURRENTLY NOT WORKING as tfjs dependency is broken (waiting for fix)</h1>
-
         <div ddFlexbox="hys" class="childv">
 
           <table *ngIf="factorsCurrent$ | async as factorsCurrent">
@@ -19,7 +17,7 @@
               </td>
             </tr>
             <tr *ngFor="let factors of [factorsCurrent, factorsTrained$ | async]; let iFactors = index;" [ngStyle]="{'color': colors[iFactors % colors.length], 'vertical-align': 'bottom'}">
-              <td>f(x) = </td>
+              <td class="text-nowrap">f(x) = </td>
               <ng-container *ngFor="let factor of factors; let ii = index;">
                 <td>
                   {{ (factor >= 0 ? ' +' : ' ') + (factor | d3number:'.2r') }}
@@ -41,28 +39,25 @@
                 <button mat-raised-button (click)="resetTrained()" [disabled]="isBusy$ | async">RESET TRAINED</button>
               </div>
             </div>
-            <div ddFlexbox="hyscsw" class="childhv">
-              <div class="childh" [style.paddingTop]="'.39rem'">
-                <label>Rate: </label>
-                <mat-form-field class="width-short-input font-table-input mat-input-save-subspace">
-                  <input matInput type="number" [disabled]="isBusy$ | async" required [value]="learningRate$ | async" (change)="updateLearningRate(+$event.target.value)"
-                    step=".1" min="0.01">
-                </mat-form-field>
-              </div>
-              <mat-form-field class="childh width-shorter-input no-padding font-table-input mat-input-save-subspace">
+            <div ddFlexbox="hyecew" class="childhv">
+              <mat-form-field class="childh width-short-input font-table-input">
+                <input matInput type="number" placeholder="Rate" [disabled]="isBusy$ | async" step=".1" min="0.01" [value]="learningRate$ | async"
+                  (change)="updateLearningRate(+$event.target.value)">
+              </mat-form-field>
+              <mat-form-field class="childh width-shorter-input font-table-input">
                 <mat-select [value]="(optimizer$ | async) || optimizerDef" (selectionChange)="updateOptimizer($event.value)">
                   <mat-option *ngFor="let ii of optimizers" [value]="ii"> {{ ii }} </mat-option>
                 </mat-select>
               </mat-form-field>
-              <button *ngFor="let ii of [1, 5, 10, 100, 1000]; let iindex= index;" mat-raised-button class="auto-min-width" (click)="train(ii)"
-                [disabled]="isBusy$ | async">
+              <button *ngFor="let ii of [1, 5, 10, 100, 1000]; let iindex= index;" ddFlexitem="ac" mat-raised-button class="auto-min-width"
+                (click)="train(ii)" [disabled]="isBusy$ | async">
                 {{ (iindex === 0 ? 'TRAIN ' : '') + 'x' + ii }}
               </button>
             </div>
           </div>
 
         </div>
-        <app-diagram-polynom [style.minWidth]="'70rem'" ddFlexitem="at" [points]="pointsCurrent$ | async" [polynomials]="[factorsCurrent$ | async, factorsTrained$ | async]"
+        <app-diagram-polynom [style.minWidth]="'60rem'" ddFlexitem="at" [points]="pointsCurrent$ | async" [polynomials]="[factorsCurrent$ | async, factorsTrained$ | async]"
           [polynomialColors]="colors"></app-diagram-polynom>
       </div>
     </mat-card-content>

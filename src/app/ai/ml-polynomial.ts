@@ -1,8 +1,10 @@
+import { Rank, scalar, Tensor, tensor1d, tidy, train, variable } from '@tensorflow/tfjs';
+import { times } from 'app/ai/util';
 
 export const DEF_LEARNINGRATE = .05;
 export const DEF_LOOPS = 1;
 export const DEF_OPTIMIZER = 'adam';
-/*
+
 export async function detectPolynom({ xyFlatData = <number[]>[], initialWeights = <number[]>[], loops = DEF_LOOPS, learningRate = DEF_LEARNINGRATE, optimizer = DEF_OPTIMIZER }) {
   // VARIABLES
   const variables = initialWeights.map(ii => variable(scalar(ii || 0)));
@@ -39,8 +41,4 @@ export async function detectPolynom({ xyFlatData = <number[]>[], initialWeights 
   [...variables, xData, yData].forEach(ii => ii.dispose());
 
   return result;
-}
-*/
-export async function detectPolynom({ xyFlatData = <number[]>[], initialWeights = <number[]>[], loops = DEF_LOOPS, learningRate = DEF_LEARNINGRATE, optimizer = DEF_OPTIMIZER }) {
-  return [0]; // TODO wait for fix of dependency
 }
