@@ -39,18 +39,22 @@
                 <button mat-raised-button (click)="resetTrained()" [disabled]="isBusy$ | async">RESET TRAINED</button>
               </div>
             </div>
-            <div ddFlexbox="hyecew" class="childhv">
+            <div ddFlexbox="hyscsw" class="childhv">
+              <div ddFlexbox="hys" class="margin-top">
+                <label class="childhv">TFJS:</label>
+                <app-simple-view [isDense]="true" [isExpanded]="false" [isExpandable]="true" [data]="{'backend': tfjsBackend$ | async, 'memory': tfjsMemory$ | async}"></app-simple-view>
+              </div>
               <mat-form-field class="childh width-short-input font-table-input">
                 <input matInput type="number" placeholder="Rate" [disabled]="isBusy$ | async" step=".1" min="0.01" [value]="learningRate$ | async"
                   (change)="updateLearningRate(+$event.target.value)">
               </mat-form-field>
               <mat-form-field class="childh width-shorter-input font-table-input">
-                <mat-select [value]="(optimizer$ | async) || optimizerDef" (selectionChange)="updateOptimizer($event.value)">
+                <mat-select placeholder="Optimizer" [value]="(optimizer$ | async) || optimizerDef" (selectionChange)="updateOptimizer($event.value)">
                   <mat-option *ngFor="let ii of optimizers" [value]="ii"> {{ ii }} </mat-option>
                 </mat-select>
               </mat-form-field>
-              <button *ngFor="let ii of [1, 5, 10, 100, 1000]; let iindex= index;" ddFlexitem="ac" mat-raised-button class="auto-min-width"
-                (click)="train(ii)" [disabled]="isBusy$ | async">
+              <button *ngFor="let ii of [1, 5, 10, 100, 1000]; let iindex= index;" mat-raised-button class="auto-min-width" (click)="train(ii)"
+                [disabled]="isBusy$ | async">
                 {{ (iindex === 0 ? 'TRAIN ' : '') + 'x' + ii }}
               </button>
             </div>

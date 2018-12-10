@@ -19,6 +19,9 @@ exports[`MlPolynomialComponent is created 1`] = `
   redux={[Function ReduxService]}
   reduxSet={[Function ReduxSetUiAiService]}
   resetTrained={[Function Function]}
+  tfjs={[Function TfjsService]}
+  tfjsBackend$={[Function BehaviorSubject]}
+  tfjsMemory$={[Function BehaviorSubject]}
   trackByIndex={[Function Function]}
   triggerDoPoints$={[Function Subject]}
   updateFactor={[Function Function]}
@@ -67,73 +70,6 @@ exports[`MlPolynomialComponent is created 1`] = `
                     class="ng-star-inserted"
                   >
                     <mat-form-field
-                      class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-3 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
-                    >
-                      <div
-                        class="mat-form-field-wrapper"
-                      >
-                        <div
-                          class="mat-form-field-flex"
-                        >
-                          
-                          
-                          <div
-                            class="mat-form-field-infix"
-                          >
-                            <input
-                              aria-invalid="false"
-                              aria-required="true"
-                              class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
-                              id="mat-input-1"
-                              matinput=""
-                              max="10"
-                              min="-10"
-                              ng-reflect-disabled="false"
-                              ng-reflect-required=""
-                              ng-reflect-type="number"
-                              ng-reflect-value="1"
-                              required=""
-                              type="number"
-                            />
-                            <span
-                              class="mat-form-field-label-wrapper"
-                            >
-                              
-                            </span>
-                          </div>
-                          
-                        </div>
-                        
-                        <div
-                          class="mat-form-field-underline ng-tns-c1-3 ng-star-inserted"
-                        >
-                          <span
-                            class="mat-form-field-ripple"
-                          />
-                        </div>
-                        <div
-                          class="mat-form-field-subscript-wrapper"
-                          ng-reflect-ng-switch="hint"
-                        >
-                          
-                          
-                          <div
-                            class="mat-form-field-hint-wrapper ng-tns-c1-3 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                            style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
-                          >
-                            
-                            <div
-                              class="mat-form-field-hint-spacer"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </mat-form-field>
-                  </td>
-                  <td
-                    class="ng-star-inserted"
-                  >
-                    <mat-form-field
                       class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-4 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
                     >
                       <div
@@ -151,7 +87,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                               aria-invalid="false"
                               aria-required="true"
                               class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
-                              id="mat-input-2"
+                              id="mat-input-1"
                               matinput=""
                               max="10"
                               min="-10"
@@ -218,7 +154,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                               aria-invalid="false"
                               aria-required="true"
                               class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
-                              id="mat-input-3"
+                              id="mat-input-2"
                               matinput=""
                               max="10"
                               min="-10"
@@ -285,7 +221,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                               aria-invalid="false"
                               aria-required="true"
                               class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
-                              id="mat-input-4"
+                              id="mat-input-3"
                               matinput=""
                               max="10"
                               min="-10"
@@ -320,6 +256,73 @@ exports[`MlPolynomialComponent is created 1`] = `
                           
                           <div
                             class="mat-form-field-hint-wrapper ng-tns-c1-6 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                            style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+                          >
+                            
+                            <div
+                              class="mat-form-field-hint-spacer"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </mat-form-field>
+                  </td>
+                  <td
+                    class="ng-star-inserted"
+                  >
+                    <mat-form-field
+                      class="width-short-input font-table-input mat-input-save-subspace childh mat-form-field ng-tns-c1-7 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
+                    >
+                      <div
+                        class="mat-form-field-wrapper"
+                      >
+                        <div
+                          class="mat-form-field-flex"
+                        >
+                          
+                          
+                          <div
+                            class="mat-form-field-infix"
+                          >
+                            <input
+                              aria-invalid="false"
+                              aria-required="true"
+                              class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
+                              id="mat-input-4"
+                              matinput=""
+                              max="10"
+                              min="-10"
+                              ng-reflect-disabled="false"
+                              ng-reflect-required=""
+                              ng-reflect-type="number"
+                              ng-reflect-value="1"
+                              required=""
+                              type="number"
+                            />
+                            <span
+                              class="mat-form-field-label-wrapper"
+                            >
+                              
+                            </span>
+                          </div>
+                          
+                        </div>
+                        
+                        <div
+                          class="mat-form-field-underline ng-tns-c1-7 ng-star-inserted"
+                        >
+                          <span
+                            class="mat-form-field-ripple"
+                          />
+                        </div>
+                        <div
+                          class="mat-form-field-subscript-wrapper"
+                          ng-reflect-ng-switch="hint"
+                        >
+                          
+                          
+                          <div
+                            class="mat-form-field-hint-wrapper ng-tns-c1-7 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
                             style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
                           >
                             
@@ -524,12 +527,70 @@ exports[`MlPolynomialComponent is created 1`] = `
               </div>
               <div
                 class="childhv"
-                ddflexbox="hyecew"
-                ng-reflect-dd-flexbox="hyecew"
-                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-end; align-content: flex-end; flex-wrap: wrap;"
+                ddflexbox="hyscsw"
+                ng-reflect-dd-flexbox="hyscsw"
+                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
               >
+                <div
+                  class="margin-top"
+                  ddflexbox="hys"
+                  ng-reflect-dd-flexbox="hys"
+                  style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                >
+                  <label
+                    class="childhv"
+                  >
+                    TFJS:
+                  </label>
+                  <app-simple-view
+                    class="ng-tns-c3-0"
+                    ng-reflect-data="[object Object]"
+                    ng-reflect-is-dense="true"
+                    ng-reflect-is-expandable="true"
+                    ng-reflect-is-expanded="false"
+                  >
+                    
+                    <div
+                      class="position-relative ng-tns-c3-0 ng-star-inserted"
+                    >
+                      <div
+                        class="scroll-x-auto"
+                        ddflexbox="hys"
+                        ng-reflect-dd-flexbox="hys"
+                        style="max-width: 100%; display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                      >
+                        
+                        <button
+                          class="inline-button mat-button ng-tns-c3-0 _mat-animation-noopable ng-star-inserted"
+                          mat-button=""
+                        >
+                          <span
+                            class="mat-button-wrapper"
+                          >
+                            <i
+                              class="material-icons rot-90 ng-tns-c3-0"
+                            >
+                              expand_more
+                            </i>
+                          </span>
+                          <div
+                            class="mat-button-ripple mat-ripple"
+                            matripple=""
+                            ng-reflect-centered="false"
+                            ng-reflect-disabled="false"
+                            ng-reflect-trigger="[object HTMLButtonElement]"
+                          />
+                          <div
+                            class="mat-button-focus-overlay"
+                          />
+                        </button>
+                        
+                      </div>
+                    </div>
+                  </app-simple-view>
+                </div>
                 <mat-form-field
-                  class="childh width-short-input font-table-input mat-form-field ng-tns-c1-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
+                  class="childh width-short-input font-table-input mat-form-field ng-tns-c1-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
                 >
                   <div
                     class="mat-form-field-wrapper"
@@ -563,7 +624,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                           
                           <label
                             aria-owns="mat-input-0"
-                            class="mat-form-field-label ng-tns-c1-0 ng-star-inserted"
+                            class="mat-form-field-label ng-tns-c1-1 ng-star-inserted"
                             for="mat-input-0"
                             id="mat-form-field-label-1"
                             ng-reflect-disabled="true"
@@ -575,92 +636,6 @@ exports[`MlPolynomialComponent is created 1`] = `
                             
                             
                           </label>
-                        </span>
-                      </div>
-                      
-                    </div>
-                    
-                    <div
-                      class="mat-form-field-underline ng-tns-c1-0 ng-star-inserted"
-                    >
-                      <span
-                        class="mat-form-field-ripple"
-                      />
-                    </div>
-                    <div
-                      class="mat-form-field-subscript-wrapper"
-                      ng-reflect-ng-switch="hint"
-                    >
-                      
-                      
-                      <div
-                        class="mat-form-field-hint-wrapper ng-tns-c1-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                        style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
-                      >
-                        
-                        <div
-                          class="mat-form-field-hint-spacer"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </mat-form-field>
-                <mat-form-field
-                  class="childh width-shorter-input font-table-input mat-form-field ng-tns-c1-1 mat-primary mat-form-field-type-mat-select mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
-                >
-                  <div
-                    class="mat-form-field-wrapper"
-                  >
-                    <div
-                      class="mat-form-field-flex"
-                    >
-                      
-                      
-                      <div
-                        class="mat-form-field-infix"
-                      >
-                        <mat-select
-                          aria-disabled="false"
-                          aria-invalid="false"
-                          aria-multiselectable="false"
-                          aria-required="false"
-                          class="mat-select ng-tns-c3-2 mat-select-empty ng-star-inserted"
-                          id="mat-select-0"
-                          ng-reflect-value="adam"
-                          role="listbox"
-                          tabindex="0"
-                        >
-                          <div
-                            aria-hidden="true"
-                            cdk-overlay-origin=""
-                            class="mat-select-trigger"
-                          >
-                            <div
-                              class="mat-select-value"
-                              ng-reflect-ng-switch="true"
-                            >
-                              
-                              <span
-                                class="mat-select-placeholder ng-tns-c3-2 ng-star-inserted"
-                              >
-                                 
-                              </span>
-                              
-                            </div>
-                            <div
-                              class="mat-select-arrow-wrapper"
-                            >
-                              <div
-                                class="mat-select-arrow"
-                              />
-                            </div>
-                          </div>
-                          
-                        </mat-select>
-                        <span
-                          class="mat-form-field-label-wrapper"
-                        >
-                          
                         </span>
                       </div>
                       
@@ -691,12 +666,113 @@ exports[`MlPolynomialComponent is created 1`] = `
                     </div>
                   </div>
                 </mat-form-field>
+                <mat-form-field
+                  class="childh width-shorter-input font-table-input mat-form-field ng-tns-c1-2 mat-primary mat-form-field-type-mat-select mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
+                >
+                  <div
+                    class="mat-form-field-wrapper"
+                  >
+                    <div
+                      class="mat-form-field-flex"
+                    >
+                      
+                      
+                      <div
+                        class="mat-form-field-infix"
+                      >
+                        <mat-select
+                          aria-disabled="false"
+                          aria-invalid="false"
+                          aria-label="Optimizer"
+                          aria-multiselectable="false"
+                          aria-required="false"
+                          class="mat-select ng-tns-c4-3 mat-select-empty ng-star-inserted"
+                          id="mat-select-0"
+                          ng-reflect-placeholder="Optimizer"
+                          ng-reflect-value="adam"
+                          placeholder="Optimizer"
+                          role="listbox"
+                          tabindex="0"
+                        >
+                          <div
+                            aria-hidden="true"
+                            cdk-overlay-origin=""
+                            class="mat-select-trigger"
+                          >
+                            <div
+                              class="mat-select-value"
+                              ng-reflect-ng-switch="true"
+                            >
+                              
+                              <span
+                                class="mat-select-placeholder ng-tns-c4-3 ng-star-inserted"
+                              >
+                                Optimizer
+                              </span>
+                              
+                            </div>
+                            <div
+                              class="mat-select-arrow-wrapper"
+                            >
+                              <div
+                                class="mat-select-arrow"
+                              />
+                            </div>
+                          </div>
+                          
+                        </mat-select>
+                        <span
+                          class="mat-form-field-label-wrapper"
+                        >
+                          
+                          <label
+                            aria-owns="mat-select-0"
+                            class="mat-form-field-label ng-tns-c1-2 mat-empty mat-form-field-empty ng-star-inserted"
+                            for="mat-select-0"
+                            id="mat-form-field-label-3"
+                            ng-reflect-disabled="true"
+                            ng-reflect-ng-switch="false"
+                          >
+                            
+                            
+                            Optimizer
+                            
+                            
+                          </label>
+                        </span>
+                      </div>
+                      
+                    </div>
+                    
+                    <div
+                      class="mat-form-field-underline ng-tns-c1-2 ng-star-inserted"
+                    >
+                      <span
+                        class="mat-form-field-ripple"
+                      />
+                    </div>
+                    <div
+                      class="mat-form-field-subscript-wrapper"
+                      ng-reflect-ng-switch="hint"
+                    >
+                      
+                      
+                      <div
+                        class="mat-form-field-hint-wrapper ng-tns-c1-2 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                        style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
+                      >
+                        
+                        <div
+                          class="mat-form-field-hint-spacer"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </mat-form-field>
                 
                 <button
                   class="auto-min-width mat-raised-button _mat-animation-noopable ng-star-inserted"
-                  ddflexitem="ac"
                   mat-raised-button=""
-                  ng-reflect-dd-flexitem="ac"
                   ng-reflect-disabled="false"
                 >
                   <span
@@ -717,9 +793,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                 </button>
                 <button
                   class="auto-min-width mat-raised-button _mat-animation-noopable ng-star-inserted"
-                  ddflexitem="ac"
                   mat-raised-button=""
-                  ng-reflect-dd-flexitem="ac"
                   ng-reflect-disabled="false"
                 >
                   <span
@@ -740,9 +814,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                 </button>
                 <button
                   class="auto-min-width mat-raised-button _mat-animation-noopable ng-star-inserted"
-                  ddflexitem="ac"
                   mat-raised-button=""
-                  ng-reflect-dd-flexitem="ac"
                   ng-reflect-disabled="false"
                 >
                   <span
@@ -763,9 +835,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                 </button>
                 <button
                   class="auto-min-width mat-raised-button _mat-animation-noopable ng-star-inserted"
-                  ddflexitem="ac"
                   mat-raised-button=""
-                  ng-reflect-dd-flexitem="ac"
                   ng-reflect-disabled="false"
                 >
                   <span
@@ -786,9 +856,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                 </button>
                 <button
                   class="auto-min-width mat-raised-button _mat-animation-noopable ng-star-inserted"
-                  ddflexitem="ac"
                   mat-raised-button=""
-                  ng-reflect-dd-flexitem="ac"
                   ng-reflect-disabled="false"
                 >
                   <span

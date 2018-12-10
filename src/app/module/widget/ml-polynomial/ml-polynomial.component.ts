@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { DEF_OPTIMIZER, detectPolynom, generatePolynomialPoints, OPTIMIZERS } from 'app/ai';
+import { DEF_OPTIMIZER, detectPolynom, generatePolynomialPoints, tfjs_OPTIMIZERS } from 'app/ai';
+import { TfjsService } from 'app/ai/tfjs.service';
 import { ReduxService, ReduxSetUiAiService } from 'app/redux';
 import { trackByIndex } from 'app/util';
 import { DoneSubject, RxCleanup } from 'dd-rxjs';
@@ -15,6 +16,7 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
   constructor(
     private readonly redux: ReduxService,
     private readonly reduxSet: ReduxSetUiAiService,
+    private readonly tfjs: TfjsService,
   ) { }
 
   private readonly numPoints = 20;
@@ -25,7 +27,7 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
   readonly factorRange = 10;
   readonly colors = ['rgba(0, 0, 255, 200)', 'rgba(255, 100, 100, 255)'];
   readonly trackByIndex = trackByIndex;
-  readonly optimizers = OPTIMIZERS;
+  readonly optimizers = tfjs_OPTIMIZERS;
   readonly optimizerDef = DEF_OPTIMIZER;
   @RxCleanup() readonly isBusy$ = new BehaviorSubject(false);
 
@@ -34,11 +36,15 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
   learningRate$ = this.redux.watch(state => state.ui.ai.mlPolynomial.learningRate, this.done$);
   pointsCurrent$ = this.redux.watch(state => state.ui.ai.mlPolynomial.pointsCurrent, this.done$);
   optimizer$ = this.redux.watch(state => state.ui.ai.mlPolynomial.optimizer, this.done$);
+  tfjsBackend$ = this.redux.watch(state => state.ui.ai.tfjs.backend, this.done$);
+  tfjsMemory$ = this.redux.watch(state => state.ui.ai.tfjs.memory, this.done$);
 
   ngOnDestroy() { }
 
   ngOnInit() {
     this.triggerDoPoints$.pipe(debounceTime(1)).subscribe(() => this.doGeneratePoints());
+
+    this.tfjs.syncCurrentState();
   }
 
   updateFactor = (factors: number[], index: number, val: number, elem: HTMLInputElement) =>
@@ -74,6 +80,7 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
       this.reduxSet.setMlPolynomialFactorsTrained(trained);
     } finally {
       this.isBusy$.next(false);
+      this.tfjs.syncCurrentState();
     }
   }
 
