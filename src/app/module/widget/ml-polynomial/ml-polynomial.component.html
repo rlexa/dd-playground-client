@@ -41,17 +41,17 @@
             </div>
           </div>
 
-          <app-simple-view class="childhv hovered-elevated" subheader="TFJS Memory" [isDense]="true" [isWidthConstrained]="false" [data]="tfjsMemory$ | async"></app-simple-view>
+          <app-simple-view class="childhv hovered-elevated" subheader="TFJS Memory" [isDense]="true" [isWidthConstrained]="false" [data]="tfjsState$ | async"></app-simple-view>
 
           <div ddFlexbox="vys" class="childhv container hovered-elevated">
             <div ddFlexbox="hye" class="childhv">
               <mat-form-field class="childh width-short-input font-table-input">
                 <input matInput type="number" placeholder="Rate" [disabled]="isBusy$ | async" step=".1" min="0.01" [value]="learningRate$ | async"
-                  (change)="updateLearningRate(+$event.target.value)">
+                  (change)="setLearningRate(+$event.target.value)">
               </mat-form-field>
               <mat-form-field class="childh width-shorter-input font-table-input">
-                <mat-select placeholder="Optimizer" [value]="(optimizer$ | async) || optimizerDef" (selectionChange)="updateOptimizer($event.value)">
-                  <mat-option *ngFor="let ii of optimizers" [value]="ii"> {{ ii }} </mat-option>
+                <mat-select placeholder="Optimizer" [value]="(optimizer$ | async) || optimizerDef" (selectionChange)="setOptimizer($event.value)">
+                  <mat-option *ngFor="let ii of optimizers$ | async" [value]="ii"> {{ ii }} </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>

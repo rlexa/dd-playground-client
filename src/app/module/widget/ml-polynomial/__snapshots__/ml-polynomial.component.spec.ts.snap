@@ -3,31 +3,30 @@
 exports[`MlPolynomialComponent is created 1`] = `
 <app-ml-polynomial
   colors={[Function Array]}
-  doGeneratePoints={[Function Function]}
   done$={[Function DoneSubject]}
   factorRange={[Function Number]}
-  factorsCurrent$={[Function AnonymousSubject]}
+  factorsCurrent$={[Function BehaviorSubject]}
   factorsTrained$={[Function BehaviorSubject]}
   generatePoints={[Function Function]}
+  generatePointsNum$={[Function BehaviorSubject]}
+  generatePointsRangeFrom$={[Function BehaviorSubject]}
+  generatePointsRangeTo$={[Function BehaviorSubject]}
   isBusy$={[Function BehaviorSubject]}
   learningRate$={[Function BehaviorSubject]}
-  numPoints={[Function Number]}
   optimizer$={[Function BehaviorSubject]}
   optimizerDef={[Function String]}
-  optimizers={[Function Array]}
+  optimizers$={[Function BehaviorSubject]}
   pointsCurrent$={[Function BehaviorSubject]}
   redux={[Function ReduxService]}
   reduxSet={[Function ReduxSetUiAiService]}
   resetTrained={[Function Function]}
-  tfjs={[Function TfjsService]}
-  tfjsBackend$={[Function BehaviorSubject]}
-  tfjsMemory$={[Function BehaviorSubject]}
+  setLearningRate={[Function Function]}
+  setOptimizer={[Function Function]}
+  tf={[Function TfjsService]}
+  tfjsState$={[Function BehaviorSubject]}
   trackByIndex={[Function Function]}
-  triggerDoPoints$={[Function Subject]}
+  triggerGeneratePoints$={[Function Subject]}
   updateFactor={[Function Function]}
-  updateLearningRate={[Function Function]}
-  updateOptimizer={[Function Function]}
-  xRange={[Function Number]}
 >
   <div
     ddflexbox="vys"
@@ -569,6 +568,79 @@ exports[`MlPolynomialComponent is created 1`] = `
                         class="ng-tns-c3-0"
                       >
                         
+                        <tr
+                          class="ng-tns-c3-0 ng-star-inserted"
+                        >
+                          <td
+                            class="ng-tns-c3-0"
+                            style="vertical-align: top;"
+                          >
+                            <mat-list-item
+                              class="mat-list-item"
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="no-break-text ng-tns-c3-0"
+                                >
+                                  Backend
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                          <td
+                            class="ng-tns-c3-0"
+                          >
+                            <mat-list-item
+                              class="mat-list-item ng-trigger ng-trigger-TRIGGER_WobbleX ng-animating"
+                              style=""
+                            >
+                              <div
+                                class="mat-list-item-content"
+                              >
+                                <div
+                                  class="mat-list-item-ripple mat-ripple"
+                                  mat-ripple=""
+                                  ng-reflect-disabled="true"
+                                  ng-reflect-trigger="[object HTMLUnknownElement]"
+                                />
+                                <div
+                                  class="mat-list-text"
+                                />
+                                <span
+                                  class="break-text ng-tns-c3-0"
+                                  ng-reflect-klass="break-text"
+                                  ng-reflect-ng-class="[object Object]"
+                                >
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  <span
+                                    class="ng-tns-c3-0 ng-star-inserted"
+                                    ng-reflect-ng-class="[object Object]"
+                                    style=""
+                                  >
+                                     cpu 
+                                  </span>
+                                </span>
+                              </div>
+                            </mat-list-item>
+                          </td>
+                        </tr>
                         <tr
                           class="ng-tns-c3-0 ng-star-inserted"
                         >

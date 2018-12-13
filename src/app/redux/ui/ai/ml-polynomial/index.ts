@@ -10,11 +10,14 @@ const KEY_LEA = 'learningRate';
 const KEY_OPT = 'optimizer';
 const KEY_POI = 'pointsCurrent';
 export interface MlPolynomialState {
-  factorsCurrent?: number[];
-  factorsTrained?: number[];
-  learningRate?: number;
-  optimizer?: string;
-  pointsCurrent?: number[];
+  factorsCurrent?: number[],
+  factorsTrained?: number[],
+  generatePointsNum?: number,
+  generatePointsRangeFrom?: number,
+  generatePointsRangeTo?: number,
+  learningRate?: number,
+  optimizer?: string,
+  pointsCurrent?: number[],
 }
 
 // ACTION
@@ -41,4 +44,7 @@ export const redMlPolynomialState = combineReducers(<ReducersMapObject<MlPolynom
   [KEY_LEA]: reduce_(.1, { [actions.SET_LEA]: reduceSet }),
   [KEY_OPT]: reduce_(Object.freeze(null as string), { [actions.SET_OPT]: reduceSet }),
   [KEY_POI]: reduce_(Object.freeze([]), { [actions.SET_POI]: reduceSet }),
+  generatePointsNum: reduce_(50),
+  generatePointsRangeFrom: reduce_(-10),
+  generatePointsRangeTo: reduce_(10),
 });
