@@ -12,7 +12,7 @@
                 <td></td>
                 <td *ngFor="let _ of factorsCurrent; let iFactor = index; trackBy: trackByIndex">
                   <mat-form-field class="width-short-input font-table-input mat-input-save-subspace childh">
-                    <input matInput type="number" [min]="-factorRange" [max]="factorRange" [disabled]="isBusy$ | async" required [value]="factorsCurrent[iFactor]"
+                    <input matInput type="number" [min]="-factorRange" [max]="factorRange" [disabled]="busy$ | async" required [value]="factorsCurrent[iFactor]"
                       (change)="updateFactor(factorsCurrent, iFactor, +$event.target.value, $event.target)">
                   </mat-form-field>
                 </td>
@@ -33,10 +33,10 @@
 
             <div ddFlexbox="hys">
               <div class="childh">
-                <button mat-raised-button (click)="generatePoints()" [disabled]="isBusy$ | async">NEW POINTS</button>
+                <button mat-raised-button (click)="generatePoints()" [disabled]="busy$ | async">NEW POINTS</button>
               </div>
               <div class="childh">
-                <button mat-raised-button (click)="resetTrained()" [disabled]="isBusy$ | async">RESET TRAINED</button>
+                <button mat-raised-button (click)="resetTrained()" [disabled]="busy$ | async">RESET TRAINED</button>
               </div>
             </div>
           </div>
@@ -46,18 +46,18 @@
           <div ddFlexbox="vys" class="childhv container hovered-elevated">
             <div ddFlexbox="hye" class="childhv">
               <mat-form-field class="childh width-short-input font-table-input">
-                <input matInput type="number" placeholder="Rate" [disabled]="isBusy$ | async" step=".1" min="0.01" [value]="learningRate$ | async"
+                <input matInput type="number" placeholder="Rate" [disabled]="busy$ | async" step=".1" min="0.01" [value]="learningRate$ | async"
                   (change)="setLearningRate(+$event.target.value)">
               </mat-form-field>
               <mat-form-field class="childh width-shorter-input font-table-input">
-                <mat-select placeholder="Optimizer" [value]="(optimizer$ | async) || optimizerDef" (selectionChange)="setOptimizer($event.value)">
+                <mat-select placeholder="Optimizer" [value]="(optimizer$ | async)" (selectionChange)="setOptimizer($event.value)">
                   <mat-option *ngFor="let ii of optimizers$ | async" [value]="ii"> {{ ii }} </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
             <div ddFlexbox="hyscsw" class="childhv">
-              <button *ngFor="let ii of [1, 5, 10, 100, 1000]; let iindex= index;" mat-raised-button class="auto-min-width" (click)="train(ii)"
-                [disabled]="isBusy$ | async">
+              <button *ngFor="let ii of [1, 5, 10, 100, 1000]; let iindex= index;" mat-raised-button class="auto-min-width" (click)="trainMlPolynomial(ii)"
+                [disabled]="busy$ | async">
                 {{ (iindex === 0 ? 'TRAIN ' : '') + 'x' + ii }}
               </button>
             </div>

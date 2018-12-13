@@ -2,6 +2,7 @@
 
 exports[`MlPolynomialComponent is created 1`] = `
 <app-ml-polynomial
+  busy$={[Function AnonymousSubject]}
   colors={[Function Array]}
   done$={[Function DoneSubject]}
   factorRange={[Function Number]}
@@ -11,10 +12,8 @@ exports[`MlPolynomialComponent is created 1`] = `
   generatePointsNum$={[Function BehaviorSubject]}
   generatePointsRangeFrom$={[Function BehaviorSubject]}
   generatePointsRangeTo$={[Function BehaviorSubject]}
-  isBusy$={[Function BehaviorSubject]}
   learningRate$={[Function BehaviorSubject]}
   optimizer$={[Function BehaviorSubject]}
-  optimizerDef={[Function String]}
   optimizers$={[Function BehaviorSubject]}
   pointsCurrent$={[Function BehaviorSubject]}
   redux={[Function ReduxService]}
@@ -25,6 +24,7 @@ exports[`MlPolynomialComponent is created 1`] = `
   tf={[Function TfjsService]}
   tfjsState$={[Function BehaviorSubject]}
   trackByIndex={[Function Function]}
+  trainMlPolynomial={[Function Function]}
   triggerGeneratePoints$={[Function Subject]}
   updateFactor={[Function Function]}
 >

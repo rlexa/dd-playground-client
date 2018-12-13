@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { DEF_OPTIMIZER, detectPolynom, generatePolynomialPoints, TfjsService } from 'app/ai';
+import { generatePolynomialPoints, TfjsService } from 'app/ai';
 import { ReduxService, ReduxSetUiAiService } from 'app/redux';
 import { trackByIndex } from 'app/util';
 import { DoneSubject, RxCleanup, rxFire_ } from 'dd-rxjs';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime, map, withLatestFrom } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, map, shareReplay, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ml-polynomial',
@@ -28,9 +28,9 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
   readonly factorRange = 10;
   readonly colors = ['rgba(0, 0, 255, 200)', 'rgba(255, 100, 100, 255)'];
   readonly trackByIndex = trackByIndex;
+
+  readonly busy$ = this.tf.busy$.pipe(shareReplay());
   readonly optimizers$ = this.tf.tfOptimizers$;
-  readonly optimizerDef = DEF_OPTIMIZER;
-  @RxCleanup() readonly isBusy$ = new BehaviorSubject(false);
 
   readonly factorsCurrent$ = this.redux.watch(state => state.ui.ai.mlPolynomial.factorsCurrent, this.done$);
   readonly factorsTrained$ = this.redux.watch(state => state.ui.ai.mlPolynomial.factorsTrained, this.done$);
@@ -40,12 +40,16 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
   readonly tfjsState$ = this.redux.watch(state => ({ backend: state.ui.ai.tfjs.backend, ...state.ui.ai.tfjs.memory }), this.done$);
 
   generatePoints = rxFire_(this.triggerGeneratePoints$);
+  resetTrained = this.tf.trainMlPolynomialReset;
   setLearningRate = this.reduxSet.setMlPolynomialLearningRate;
   setOptimizer = this.reduxSet.setMlPolynomialOptimizer;
+  trainMlPolynomial = this.tf.trainMlPolynomial;
 
   ngOnDestroy() { }
 
   ngOnInit() {
+    this.tf.error$.pipe(takeUntil(this.done$)).subscribe(console.log);
+
     this.triggerGeneratePoints$
       .pipe(
         withLatestFrom(this.factorsCurrent$, this.generatePointsNum$, this.generatePointsRangeFrom$, this.generatePointsRangeTo$),
@@ -68,27 +72,4 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
         }
         return ret;
       }));
-
-  resetTrained = () => this.reduxSet.setMlPolynomialFactorsTrained(this.redux.state.ui.ai.mlPolynomial.factorsTrained.map(ii => 0));
-
-  async train(steps: number) {
-    if (this.isBusy$.value) {
-      return;
-    }
-    this.isBusy$.next(true);
-    try {
-      const state = this.redux.state.ui.ai.mlPolynomial;
-      const trained = await detectPolynom({
-        initialWeights: state.factorsTrained,
-        learningRate: state.learningRate,
-        loops: steps,
-        optimizer: state.optimizer,
-        xyFlatData: state.pointsCurrent
-      });
-      this.reduxSet.setMlPolynomialFactorsTrained(trained);
-    } finally {
-      this.isBusy$.next(false);
-      this.tf.triggerSync();
-    }
-  }
 }

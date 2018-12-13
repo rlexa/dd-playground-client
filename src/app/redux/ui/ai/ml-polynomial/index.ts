@@ -42,7 +42,7 @@ export const redMlPolynomialState = combineReducers(<ReducersMapObject<MlPolynom
   [KEY_FAC]: reduce_(Object.freeze([1, 1, 1, 1]), { [actions.SET_FAC]: reduceSet }),
   [KEY_FAT]: reduce_(Object.freeze([0, 0, 0, 0]), { [actions.SET_FAT]: reduceSet }),
   [KEY_LEA]: reduce_(.1, { [actions.SET_LEA]: reduceSet }),
-  [KEY_OPT]: reduce_(Object.freeze(null as string), { [actions.SET_OPT]: reduceSet }),
+  [KEY_OPT]: reduce_(<string>null, { [actions.SET_OPT]: reduceSet }),
   [KEY_POI]: reduce_(Object.freeze([]), { [actions.SET_POI]: reduceSet }),
   generatePointsNum: reduce_(50),
   generatePointsRangeFrom: reduce_(-10),
