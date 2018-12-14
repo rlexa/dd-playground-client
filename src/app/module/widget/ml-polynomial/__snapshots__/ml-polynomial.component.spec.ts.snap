@@ -21,6 +21,7 @@ exports[`MlPolynomialComponent is created 1`] = `
   resetTrained={[Function Function]}
   setLearningRate={[Function Function]}
   setOptimizer={[Function Function]}
+  testron={[Function Function]}
   tf={[Function TfjsService]}
   tfjsState$={[Function BehaviorSubject]}
   trackByIndex={[Function Function]}
@@ -1061,6 +1062,12 @@ exports[`MlPolynomialComponent is created 1`] = `
                 ng-reflect-dd-flexbox="hye"
                 style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-end; align-content: stretch; flex-wrap: no-wrap;"
               >
+                <h4
+                  ddflexitem="ac"
+                  ng-reflect-dd-flexitem="ac"
+                >
+                  Custom (no model):
+                </h4>
                 <mat-form-field
                   class="childh width-short-input font-table-input mat-form-field ng-tns-c1-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
                 >
@@ -1342,6 +1349,54 @@ exports[`MlPolynomialComponent is created 1`] = `
                     class="mat-button-wrapper"
                   >
                      x1000 
+                  </span>
+                  <div
+                    class="mat-button-ripple mat-ripple"
+                    matripple=""
+                    ng-reflect-centered="false"
+                    ng-reflect-disabled="false"
+                    ng-reflect-trigger="[object HTMLButtonElement]"
+                  />
+                  <div
+                    class="mat-button-focus-overlay"
+                  />
+                </button>
+              </div>
+            </div>
+            <div
+              class="childhv container hovered-elevated"
+              ddflexbox="vys"
+              ng-reflect-dd-flexbox="vys"
+              style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+            >
+              <div
+                class="childhv"
+                ddflexbox="hye"
+                ng-reflect-dd-flexbox="hye"
+                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-end; align-content: stretch; flex-wrap: no-wrap;"
+              >
+                <h4
+                  ddflexitem="ac"
+                  ng-reflect-dd-flexitem="ac"
+                >
+                  TODO Model: ...
+                </h4>
+              </div>
+              <div
+                class="childhv"
+                ddflexbox="hyscsw"
+                ng-reflect-dd-flexbox="hyscsw"
+                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
+              >
+                <button
+                  class="auto-min-width mat-raised-button _mat-animation-noopable"
+                  mat-raised-button=""
+                  ng-reflect-disabled="false"
+                >
+                  <span
+                    class="mat-button-wrapper"
+                  >
+                     test 
                   </span>
                   <div
                     class="mat-button-ripple mat-ripple"

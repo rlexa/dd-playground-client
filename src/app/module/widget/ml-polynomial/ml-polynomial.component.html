@@ -45,6 +45,7 @@
 
           <div ddFlexbox="vys" class="childhv container hovered-elevated">
             <div ddFlexbox="hye" class="childhv">
+              <h4 ddFlexitem="ac">Custom (no model):</h4>
               <mat-form-field class="childh width-short-input font-table-input">
                 <input matInput type="number" placeholder="Rate" [disabled]="busy$ | async" step=".1" min="0.01" [value]="learningRate$ | async"
                   (change)="setLearningRate(+$event.target.value)">
@@ -62,6 +63,18 @@
               </button>
             </div>
           </div>
+
+          <div ddFlexbox="vys" class="childhv container hovered-elevated">
+            <div ddFlexbox="hye" class="childhv">
+              <h4 ddFlexitem="ac">TODO Model: ...</h4>
+            </div>
+            <div ddFlexbox="hyscsw" class="childhv">
+              <button mat-raised-button class="auto-min-width" (click)="testron()" [disabled]="busy$ | async">
+                test
+              </button>
+            </div>
+          </div>
+
         </div>
 
         <app-diagram-polynom [style.minWidth]="'60rem'" ddFlexitem="at" [points]="pointsCurrent$ | async" [polynomials]="[factorsCurrent$ | async, factorsTrained$ | async]"

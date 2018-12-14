@@ -72,4 +72,6 @@ export class MlPolynomialComponent implements OnDestroy, OnInit {
         }
         return ret;
       }));
+
+  testron = () => this.tf.train();
 }

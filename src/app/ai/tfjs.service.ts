@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { Environment, train } from '@tensorflow/tfjs';
+import { Environment, losses, train } from '@tensorflow/tfjs';
 import { DEF_OPTIMIZER, detectPolynom } from 'app/ai/ml-polynomial';
+import { modelDispose, modelOutput, modelPolynomCreate, modelPolynomTrain, modelPredict } from 'app/ai/ml-polynomial-model';
 import { ReduxService, ReduxSetUiAiService } from 'app/redux';
 import { MlPolynomialState } from 'app/redux/ui/ai/ml-polynomial';
 import { DoneSubject, RxCleanup, rxFalse_, rxFire, rxFire_, rxNext_, rxTrue_ } from 'dd-rxjs';
@@ -25,6 +26,7 @@ export class TfjsService implements OnDestroy, OnInit {
 
   @RxCleanup() readonly busy$ = new BehaviorSubject(false);
   @RxCleanup() readonly error$ = new Subject<any>();
+  @RxCleanup() readonly tfLosses$ = new BehaviorSubject(Object.keys(losses));
   @RxCleanup() readonly tfOptimizers$ = new BehaviorSubject(Object.keys(train));
 
   triggerSync = rxFire_(this.triggerSync$);
@@ -53,6 +55,22 @@ export class TfjsService implements OnDestroy, OnInit {
       .subscribe(this.reduxSet.setMlPolynomialFactorsTrained);
 
     rxFire(this.triggerSync$);
+  }
+
+  train = async () => {
+    if (this.busy$.value) {
+      return;
+    }
+    this.busy$.next(true);
+    const model = modelPolynomCreate({});
+    await modelPolynomTrain({ model, loops: 250, weights: [0, 0], xyFlatData: [-1, 0, 1, 2, 3, 4].reduce((acc, val, ii) => [...acc, val, [-3, -1, 1, 3, 5, 7][ii]], []) });
+    const predict = await modelPredict({ model, xx: [20] });
+    console.log('predict', predict);
+    const result = await modelOutput(model);
+    console.log('read', result);
+    modelDispose(model);
+    console.log('disposed', Environment.memory());
+    this.busy$.next(false);
   }
 
   private trainMlPolynomial$_ = (steps: number, state: MlPolynomialState) => of({ steps, state })
