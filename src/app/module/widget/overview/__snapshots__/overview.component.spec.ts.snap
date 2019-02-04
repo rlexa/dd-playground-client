@@ -22,7 +22,7 @@ exports[`OverviewComponent is created 1`] = `
         class="mat-card-content"
       >
         <mat-list
-          class="mat-list"
+          class="mat-list mat-list-base"
         >
           <h4
             mat-header=""

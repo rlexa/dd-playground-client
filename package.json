@@ -57,7 +57,7 @@
     "@angular/router": "^7.0.0",
     "@tensorflow/tfjs": "^0.14.1",
     "core-js": "^2.5.7",
-    "d3": "^5.7.0",
+    "d3": "^5.8.0",
     "dd-flexbox": "^0.10.2",
     "dd-rx-state": "^1.0.1",
     "dd-rxjs": "^1.1.9",

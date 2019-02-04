@@ -64,7 +64,7 @@ exports[`GraphWalkerComponent is created 1`] = `
                   
                   
                   <mat-list
-                    class="mat-list-auto-height mat-list ng-tns-c0-0 ng-star-inserted"
+                    class="mat-list-auto-height mat-list mat-list-base ng-tns-c0-0 ng-star-inserted"
                     dense="true"
                   >
                     

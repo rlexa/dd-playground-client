@@ -36,7 +36,7 @@ exports[`GhibliComponent is created 1`] = `
           style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
         >
           <mat-list
-            class="mat-list-auto-height mat-list"
+            class="mat-list-auto-height mat-list mat-list-base"
           >
             <h3
               class="mat-subheader"

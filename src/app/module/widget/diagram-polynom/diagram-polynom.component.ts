@@ -172,7 +172,7 @@ export class DiagramPolynomComponent implements OnDestroy, OnInit, AfterViewInit
         .style('fill', 'none')
         .style('transition', 'cx 500ms, cy 500ms')
         .classed(this.CSS_POINT.substr(1), true);
-      item.merge(point)
+      item.merge(point as any)
         .attr('cx', ii => this.chart.x(ii[0]))
         .attr('cy', ii => this.chart.y(ii[1]));
       point.exit().remove();
@@ -202,7 +202,7 @@ export class DiagramPolynomComponent implements OnDestroy, OnInit, AfterViewInit
         .style('fill', 'none')
         .style('transition', 'd 500ms')
         .classed(this.CSS_PATH.substr(1), true);
-      item.merge(path)
+      item.merge(path as any)
         .attr('d', doLine);
       path.exit().remove();
     }

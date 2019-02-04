@@ -546,7 +546,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                   
                   
                   <mat-list
-                    class="mat-list-auto-height mat-list ng-tns-c3-0 ng-star-inserted"
+                    class="mat-list-auto-height mat-list mat-list-base ng-tns-c3-0 ng-star-inserted"
                     dense="true"
                   >
                     
@@ -1069,7 +1069,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                   Custom (no model):
                 </h4>
                 <mat-form-field
-                  class="childh width-short-input font-table-input mat-form-field ng-tns-c1-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder _mat-animation-noopable"
+                  class="childh width-short-input font-table-input mat-form-field ng-tns-c1-1 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-has-label mat-form-field-hide-placeholder _mat-animation-noopable"
                 >
                   <div
                     class="mat-form-field-wrapper"
@@ -1146,7 +1146,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                   </div>
                 </mat-form-field>
                 <mat-form-field
-                  class="childh width-shorter-input font-table-input mat-form-field ng-tns-c1-2 mat-primary mat-form-field-type-mat-select mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
+                  class="childh width-shorter-input font-table-input mat-form-field ng-tns-c1-2 mat-primary mat-form-field-type-mat-select mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-has-label mat-form-field-hide-placeholder _mat-animation-noopable"
                 >
                   <div
                     class="mat-form-field-wrapper"

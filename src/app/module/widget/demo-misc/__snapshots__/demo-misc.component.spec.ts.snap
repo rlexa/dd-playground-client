@@ -196,7 +196,7 @@ exports[`DemoMiscComponent is created 1`] = `
                   
                   
                   <mat-list
-                    class="mat-list-auto-height mat-list ng-tns-c2-0 ng-star-inserted"
+                    class="mat-list-auto-height mat-list mat-list-base ng-tns-c2-0 ng-star-inserted"
                     dense="true"
                   >
                     
@@ -395,7 +395,7 @@ exports[`DemoMiscComponent is created 1`] = `
                 
                 
                 <mat-list
-                  class="mat-list-auto-height mat-list ng-tns-c2-1 ng-star-inserted"
+                  class="mat-list-auto-height mat-list mat-list-base ng-tns-c2-1 ng-star-inserted"
                   dense="true"
                 >
                   
@@ -447,7 +447,7 @@ exports[`DemoMiscComponent is created 1`] = `
                 
                 
                 <mat-list
-                  class="mat-list-auto-height mat-list ng-tns-c2-2 ng-star-inserted"
+                  class="mat-list-auto-height mat-list mat-list-base ng-tns-c2-2 ng-star-inserted"
                   dense="true"
                 >
                   
@@ -499,7 +499,7 @@ exports[`DemoMiscComponent is created 1`] = `
                 
                 
                 <mat-list
-                  class="mat-list-auto-height mat-list ng-tns-c2-3 ng-star-inserted"
+                  class="mat-list-auto-height mat-list mat-list-base ng-tns-c2-3 ng-star-inserted"
                   dense="true"
                 >
                   

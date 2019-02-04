@@ -35,7 +35,7 @@ exports[`BuildComponent is created 1`] = `
             
             
             <mat-list
-              class="mat-list-auto-height mat-list ng-tns-c1-0 ng-star-inserted"
+              class="mat-list-auto-height mat-list mat-list-base ng-tns-c1-0 ng-star-inserted"
             >
               
               
