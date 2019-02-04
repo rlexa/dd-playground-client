@@ -1,3 +1,4 @@
+import 'hammerjs'; // for material snapshots
 import 'jest-preset-angular';
 import './jest-global-mocks';
 
