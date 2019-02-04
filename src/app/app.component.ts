@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { DateAdapter, NativeDateAdapter } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
-import { ReduxService, ReduxSetGlobalService } from 'app/redux';
+import { RxStateService, RxStateSetGlobalService } from 'app/rx-state';
 import { RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -22,13 +22,13 @@ export class AppComponent implements OnDestroy {
     title: Title,
     dateAdapter: DateAdapter<NativeDateAdapter>,
     router: Router,
-    redux: ReduxService,
-    reduxSet: ReduxSetGlobalService,
+    rxState: RxStateService,
+    rxStateMutate: RxStateSetGlobalService,
   ) {
     this.start = () => {
-      title.setTitle(redux.state.globalValues.flags.title);
+      title.setTitle(rxState.state.globalValues.flags.title);
       dateAdapter.setLocale('de-DE');
-      router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(ev => reduxSet.setRoute(router.routerState.snapshot.url));
+      router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(ev => rxStateMutate.setRoute(router.routerState.snapshot.url));
     };
     if (this.isBrowserChrome) {
       this.start();

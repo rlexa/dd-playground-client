@@ -3,7 +3,7 @@
 exports[`DemoStateComponent is created 1`] = `
 <app-demo-state
   done$={[Function DoneSubject]}
-  redux={[Function ReduxService]}
+  rxState={[Function RxStateService]}
   state$={[Function BehaviorSubject]}
 >
   <div

@@ -1,5 +1,5 @@
 import { Theme, themeColor } from 'app/game';
-import { ENTITY_BUILDING, ENTITY_FOREST, ENTITY_LOOT, ENTITY_MOUNTAIN, FIELD_GROUND, FIELD_WATER, GameDownColorMap, GameDownStateField, GameDownStateFieldActor, GameDownStateFieldEntity } from 'app/redux/game/down';
+import { ENTITY_BUILDING, ENTITY_FOREST, ENTITY_LOOT, ENTITY_MOUNTAIN, FIELD_GROUND, FIELD_WATER, GameDownColorMap, GameDownStateField, GameDownStateFieldActor, GameDownStateFieldEntity } from 'app/rx-state/state/state-game-down';
 
 export const actorToColor = (data: GameDownStateFieldActor, theme: Theme<GameDownColorMap>) => !data || !theme ? null :
   themeColor(theme, _ => data.isNpc ? _.actorNpc : _.actorPc);

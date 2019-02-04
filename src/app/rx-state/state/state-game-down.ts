@@ -1,8 +1,6 @@
 import { StringToString, Theme, THEME_MISSING } from 'app/game';
-import { ActionValue, action_, reduceSet, reduce_ } from 'app/redux/util';
-import { isEqualValue } from 'app/util';
-import { AnyAction, combineReducers, ReducersMapObject } from 'redux';
-import { INTERFIX } from './parent';
+import { actor, initReduceAssemble$_, jsonEqual, redSetPropertyIfNotEqual_, redSetPropertyIfNotSame_, setPropertyIfNotEqual, setPropertyIfNotSame, ValueReducer } from 'dd-rx-state';
+import { SUFFIX } from './state-game-down.suffix';
 
 // THEME
 
@@ -39,14 +37,6 @@ export interface GameDownStateField {
   modifiers?: string[],
 }
 
-const KEY_SCE_FAC = 'factor';
-const KEY_SCE_FIE = 'fields';
-const KEY_SCE_FMA = 'factorMax';
-const KEY_SCE_FMI = 'factorMin';
-const KEY_SCE_HOV = 'hoveredIndex';
-const KEY_SCE_REN = 'renderer';
-const KEY_SCE_SEL = 'selectedIndex';
-const KEY_SCE_THE = 'theme';
 export interface GameDownStateScene {
   factor: number,
   factorMax: number,
@@ -58,20 +48,29 @@ export interface GameDownStateScene {
   theme: string,
 }
 
-const KEY_FIV = 'fieldValues';
-const KEY_MOD = 'modifierValues';
-const KEY_REN = 'rendererValues';
-const KEY_SCE = 'scene';
-const KEY_THE = 'themes';
-const KEY_VID = 'viewDebug';
 export interface GameDownState {
-  fieldValues: string[],
-  modifierValues: string[],
-  rendererValues: string[],
-  scene: GameDownStateScene,
-  themes: Theme<GameDownColorMap>[],
-  viewDebug: boolean,
+  fieldValues?: string[],
+  modifierValues?: string[],
+  rendererValues?: string[],
+  scene?: GameDownStateScene,
+  themes?: Theme<GameDownColorMap>[],
+  viewDebug?: boolean,
 }
+
+export interface IndexValue<T> {
+  index: number,
+  value: T,
+}
+
+export const set_scene_factor = actor<number>('SET' + SUFFIX + 'scene' + 'factor');
+export const set_scene_field = actor<IndexValue<GameDownStateField>>('SET' + SUFFIX + 'scene' + 'field');
+export const set_scene_fields = actor<GameDownStateField[]>('SET' + SUFFIX + 'scene' + 'fields');
+export const set_scene_hoveredIndex = actor<number>('SET' + SUFFIX + 'scene' + 'hoveredIndex');
+export const set_scene_renderer = actor<string>('SET' + SUFFIX + 'scene' + 'renderer');
+export const set_scene_selectedIndex = actor<number>('SET' + SUFFIX + 'scene' + 'selectedIndex');
+export const set_scene_theme = actor<string>('SET' + SUFFIX + 'scene' + 'theme');
+export const set_themes = actor<Theme<GameDownColorMap>[]>('SET' + SUFFIX + 'themes');
+export const set_viewDebug = actor<boolean>('SET' + SUFFIX + 'viewDebug');
 
 // DEFAULTS
 
@@ -126,62 +125,48 @@ export const RENDERER_SIMPLE = 'simple';
 export const DEF_Renderer = RENDERER_SIMPLE;
 export const DEF_RendererValues = Object.freeze([RENDERER_SIMPLE]);
 
-// ACTION
-
-const actions = {
-  SET_SCE_FAC: 'SET_' + INTERFIX + '_' + KEY_SCE + '_FACTOR',
-  SET_SCE_FIE: 'SET_' + INTERFIX + '_' + KEY_SCE + '_FIELD',
-  SET_SCE_FIS: 'SET_' + INTERFIX + '_' + KEY_SCE + '_FIELDS',
-  SET_SCE_HOV: 'SET_' + INTERFIX + '_' + KEY_SCE + '_HOVERED',
-  SET_SCE_REN: 'SET_' + INTERFIX + '_' + KEY_SCE + '_RENDERER',
-  SET_SCE_SEL: 'SET_' + INTERFIX + '_' + KEY_SCE + '_SELECTED',
-  SET_SCE_THE: 'SET_' + INTERFIX + '_' + KEY_SCE + '_THEME',
-  SET_THE: 'SET_' + INTERFIX + '_THEMES',
-  SET_VID: 'SET_' + INTERFIX + '_VIEW_DEBUG',
-}
-
-export interface IndexValue<T> { index: number, value: T }
-
-export const actSetGameDownStateSceneFactor = action_<number>(actions.SET_SCE_FAC);
-export const actSetGameDownStateSceneField = action_<IndexValue<GameDownStateField>>(actions.SET_SCE_FIE);
-export const actSetGameDownStateSceneFields = action_<GameDownStateField[]>(actions.SET_SCE_FIS);
-export const actSetGameDownStateSceneHoveredIndex = action_<number>(actions.SET_SCE_HOV);
-export const actSetGameDownStateSceneRenderer = action_<string>(actions.SET_SCE_REN);
-export const actSetGameDownStateSceneSelectedIndex = action_<number>(actions.SET_SCE_SEL);
-export const actSetGameDownStateSceneTheme = action_<string>(actions.SET_SCE_THE);
-export const actSetGameDownThemes = action_<Theme<GameDownColorMap>[]>(actions.SET_THE);
-export const actSetGameDownViewDebug = action_<boolean>(actions.SET_VID);
-
 // REDUCER
 
-const reduceSetOverwriteIndexed = <T>(state: T[], action: ActionValue<IndexValue<T>>) => {
-  if (!action.value || !(action.value.index in state) || !action.value.value || isEqualValue(state[action.value.index], action.value.value)) {
-    return state;
-  }
-  const ret = [...state];
-  ret[action.value.index] = Object.freeze(action.value.value);
-  return ret;
-}
+const state_scene$ = initReduceAssemble$_(
+  <GameDownStateScene>{
+    factor: DEF_SceneFactor,
+    factorMax: 2,
+    factorMin: .5,
+    fields: DEF_GameDownStateFields,
+    hoveredIndex: null,
+    renderer: DEF_Renderer,
+    selectedIndex: null,
+    theme: null,
+  },
+  {
+    [set_scene_factor.type]: <ValueReducer<GameDownStateScene>>(
+      (state, val: number) => setPropertyIfNotSame(state, 'factor',
+        typeof val !== 'number' ? DEF_SceneFactor : Math.max(state.factorMin, Math.min(state.factorMax, val)))),
+    [set_scene_field.type]: <ValueReducer<GameDownStateScene>>(
+      (state, val: IndexValue<GameDownStateField>) => !val || !val.value || !(val.index in state.fields) || jsonEqual(val.value, state.fields[val.index]) ? state :
+        setPropertyIfNotEqual(state, 'fields', state.fields.map((_, ii) => ii === val.index ? val.value : _))),
+    [set_scene_fields.type]: redSetPropertyIfNotEqual_('fields'),
+    [set_scene_hoveredIndex.type]: redSetPropertyIfNotSame_('hoveredIndex'),
+    [set_scene_renderer.type]: redSetPropertyIfNotSame_('renderer'),
+    [set_scene_selectedIndex.type]: redSetPropertyIfNotSame_('selectedIndex'),
+    [set_scene_theme.type]: redSetPropertyIfNotSame_('theme'),
+  },
+);
 
-export const redGameDownState = combineReducers(<ReducersMapObject<GameDownState, AnyAction>>{
-  [KEY_FIV]: reduce_(DEF_FieldValues),
-  [KEY_MOD]: reduce_(DEF_ModifierValues),
-  [KEY_REN]: reduce_(DEF_RendererValues),
-  [KEY_SCE]: combineReducers(<ReducersMapObject<GameDownStateScene, AnyAction>>
-    {
-      [KEY_SCE_FAC]: reduce_(DEF_SceneFactor, { [actions.SET_SCE_FAC]: reduceSet }),
-      [KEY_SCE_FIE]: reduce_(DEF_GameDownStateFields,
-        {
-          [actions.SET_SCE_FIS]: reduceSet,
-          [actions.SET_SCE_FIE]: reduceSetOverwriteIndexed,
-        }),
-      [KEY_SCE_FMA]: reduce_(2),
-      [KEY_SCE_FMI]: reduce_(.5),
-      [KEY_SCE_HOV]: reduce_(<number>null, { [actions.SET_SCE_HOV]: reduceSet }),
-      [KEY_SCE_REN]: reduce_(DEF_Renderer, { [actions.SET_SCE_REN]: reduceSet }),
-      [KEY_SCE_SEL]: reduce_(<number>null, { [actions.SET_SCE_SEL]: reduceSet }),
-      [KEY_SCE_THE]: reduce_(<string>null, { [actions.SET_SCE_THE]: reduceSet }),
-    }),
-  [KEY_THE]: reduce_(Object.freeze([THEME_MISSING]), { [actions.SET_THE]: reduceSet }),
-  [KEY_VID]: reduce_(false, { [actions.SET_VID]: reduceSet }),
-});
+export const state_game_down$ = initReduceAssemble$_(
+  <GameDownState>{
+    fieldValues: DEF_FieldValues,
+    modifierValues: DEF_ModifierValues,
+    rendererValues: DEF_RendererValues,
+    scene: null,
+    themes: [THEME_MISSING],
+    viewDebug: false,
+  },
+  {
+    [set_themes.type]: redSetPropertyIfNotEqual_('themes'),
+    [set_viewDebug.type]: redSetPropertyIfNotSame_('viewDebug'),
+  },
+  {
+    scene: state_scene$,
+  }
+);

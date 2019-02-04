@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { ReduxService } from 'app/redux';
+import { RxStateService } from 'app/rx-state';
 import { DoneSubject, RxCleanup } from 'dd-rxjs';
 
 @Component({
@@ -8,8 +8,8 @@ import { DoneSubject, RxCleanup } from 'dd-rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DemoStateComponent implements OnDestroy {
-  constructor(private redux: ReduxService) { }
+  constructor(private rxState: RxStateService) { }
   @RxCleanup() private readonly done$ = new DoneSubject();
-  readonly state$ = this.redux.watch(state => state, this.done$);
+  readonly state$ = this.rxState.watch(state => state, this.done$);
   ngOnDestroy() { }
 }

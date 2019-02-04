@@ -20,7 +20,7 @@ The client is intended to be dev-oriented only and doesn't contain any localizat
 
 #### State Handling
 
-[Redux] is used for the majority of the UI state scope.
+[RxState] is used for the majority of the UI state scope.
 
 ### Testing
 
@@ -41,5 +41,5 @@ The client is intended to be dev-oriented only and doesn't contain any localizat
 [Jest]: https://facebook.github.io/jest
 [Material Design]: https://material.angular.io
 [Material Design Icons]: https://google.github.io/material-design-icons
-[Redux]: https://redux.js.org/docs/introduction
+[RxState]: https://github.com/rlexa/dd-rx-state
 [Travis]: https://travis-ci.org

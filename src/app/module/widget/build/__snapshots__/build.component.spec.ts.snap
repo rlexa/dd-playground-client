@@ -4,7 +4,7 @@ exports[`BuildComponent is created 1`] = `
 <app-build
   data$={[Function BehaviorSubject]}
   done$={[Function DoneSubject]}
-  redux={[Function ReduxService]}
+  rxState={[Function RxStateService]}
 >
   <mat-card
     class="mat-card ng-star-inserted"

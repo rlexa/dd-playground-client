@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { ReduxService } from 'app/redux';
 import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BLOCKCHAIN, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CRYPTO, ROUTE_CURRENT, ROUTE_DASHBOARD, ROUTE_DEMO_GHIBLI, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_SETTINGS, ROUTE_WALKER } from 'app/routing';
+import { RxStateService } from 'app/rx-state';
 import { DoneSubject, RxCleanup } from 'dd-rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,7 +17,7 @@ interface RouteDef {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnDestroy {
-  constructor(private redux: ReduxService) { }
+  constructor(private rxState: RxStateService) { }
 
   @RxCleanup() private readonly done$ = new DoneSubject();
 
@@ -74,11 +74,11 @@ export class DashboardComponent implements OnDestroy {
     }
   ];
 
-  readonly isVisibleFooter$ = this.redux.watch(state => state.ui.dashboard.isVisibleFooter, this.done$);
-  readonly isVisibleHeader$ = this.redux.watch(state => state.ui.dashboard.isVisibleHeader, this.done$);
-  readonly isVisibleSide$ = this.redux.watch(state => state.ui.dashboard.isVisibleSide, this.done$);
+  readonly isVisibleFooter$ = this.rxState.watch(state => state.ui.dashboard.isVisibleFooter, this.done$);
+  readonly isVisibleHeader$ = this.rxState.watch(state => state.ui.dashboard.isVisibleHeader, this.done$);
+  readonly isVisibleSide$ = this.rxState.watch(state => state.ui.dashboard.isVisibleSide, this.done$);
 
-  readonly subRoute$ = this.redux.watch(state => state.globalValues.route, this.done$)
+  readonly subRoute$ = this.rxState.watch(state => state.globalValues.route, this.done$)
     .pipe(map(url => {
       const paths = url.split('/');
       const indexMe = paths.indexOf(ROUTE_DASHBOARD);

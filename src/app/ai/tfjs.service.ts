@@ -2,8 +2,9 @@ import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Environment, losses, train } from '@tensorflow/tfjs';
 import { DEF_OPTIMIZER, detectPolynom } from 'app/ai/ml-polynomial';
 import { modelDispose, modelOutput, modelPolynomCreate, modelPolynomTrain, modelPredict } from 'app/ai/ml-polynomial-model';
-import { ReduxService, ReduxSetUiAiService } from 'app/redux';
-import { MlPolynomialState } from 'app/redux/ui/ai/ml-polynomial';
+import { RxStateService } from 'app/rx-state';
+import { RxStateSetUiAiService } from 'app/rx-state/rx-state-set-ui-ai.service';
+import { MlPolynomialState } from 'app/rx-state/state/state-ai';
 import { DoneSubject, RxCleanup, rxFalse_, rxFire, rxFire_, rxNext_, rxTrue_ } from 'dd-rxjs';
 import { BehaviorSubject, from, merge, of, Subject } from 'rxjs';
 import { catchError, distinctUntilChanged, filter, finalize, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
@@ -11,8 +12,8 @@ import { catchError, distinctUntilChanged, filter, finalize, map, switchMap, tap
 @Injectable({ providedIn: 'root' })
 export class TfjsService implements OnDestroy, OnInit {
   constructor(
-    private readonly redux: ReduxService,
-    private readonly reduxSet: ReduxSetUiAiService,
+    private readonly rxState: RxStateService,
+    private readonly rxStateMutate: RxStateSetUiAiService,
   ) {
     this.ngOnInit();
   }
@@ -22,7 +23,7 @@ export class TfjsService implements OnDestroy, OnInit {
   @RxCleanup() private readonly trainMlPolynomialReset$ = new Subject();
   @RxCleanup() private readonly trainMlPolynomialSteps$ = new Subject<number>();
 
-  private readonly stateMlPolynomial$ = this.redux.watch(state => state.ui.ai.mlPolynomial, this.done$);
+  private readonly stateMlPolynomial$ = this.rxState.watch(state => state.ui.ai.mlPolynomial, this.done$);
 
   @RxCleanup() readonly busy$ = new BehaviorSubject(false);
   @RxCleanup() readonly error$ = new Subject<any>();
@@ -36,11 +37,11 @@ export class TfjsService implements OnDestroy, OnInit {
   ngOnDestroy() { }
 
   ngOnInit() {
-    this.reduxSet.setMlPolynomialOptimizer(DEF_OPTIMIZER);
+    this.rxStateMutate.setMlPolynomialOptimizer(DEF_OPTIMIZER);
 
     this.triggerSync$.subscribe(() => {
-      this.reduxSet.setTfjsBackend(Environment.getBackend());
-      this.reduxSet.setTfjsMemory(Environment.memory());
+      this.rxStateMutate.setTfjsBackend(Environment.getBackend());
+      this.rxStateMutate.setTfjsMemory(Environment.memory());
     });
 
     merge(this.busy$.pipe(distinctUntilChanged(), filter(_ => !_))).subscribe(rxFire_(this.triggerSync$));
@@ -52,7 +53,7 @@ export class TfjsService implements OnDestroy, OnInit {
           withLatestFrom(this.busy$, this.stateMlPolynomial$),
           filter(([steps, busy, state]) => !busy && steps > 0 && !!state),
           switchMap(([steps, _, state]) => this.trainMlPolynomial$_(steps, state))))
-      .subscribe(this.reduxSet.setMlPolynomialFactorsTrained);
+      .subscribe(this.rxStateMutate.setMlPolynomialFactorsTrained);
 
     rxFire(this.triggerSync$);
   }

@@ -13,7 +13,7 @@ exports[`DashboardComponent is created 1`] = `
   isVisibleFooter$={[Function BehaviorSubject]}
   isVisibleHeader$={[Function BehaviorSubject]}
   isVisibleSide$={[Function BehaviorSubject]}
-  redux={[Function ReduxService]}
+  rxState={[Function RxStateService]}
   subRoute$={[Function AnonymousSubject]}
   subRoutes$={[Function AnonymousSubject]}
 >

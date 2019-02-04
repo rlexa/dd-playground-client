@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
 import { Theme, themeColor_ } from 'app/game';
-import { GameDownColorMap } from 'app/redux/game/down';
+import { GameDownColorMap } from 'app/rx-state/state/state-game-down';
 import { DoneSubject, RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';

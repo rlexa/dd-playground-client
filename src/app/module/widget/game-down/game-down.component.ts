@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { ReduxService, ReduxSetGameDownService } from 'app/redux';
+import { RxStateService, RxStateSetGameDownService } from 'app/rx-state';
 import { DoneSubject, RxCleanup } from 'dd-rxjs';
 import { themes, theme_down_default } from './theming';
 
@@ -10,14 +10,14 @@ import { themes, theme_down_default } from './theming';
 })
 export class GameDownComponent implements OnDestroy {
   constructor(
-    private readonly redux: ReduxService,
-    private readonly reduxSet: ReduxSetGameDownService,
+    private readonly rxState: RxStateService,
+    private readonly rxStateMutate: RxStateSetGameDownService,
   ) {
-    this.reduxSet.setThemes(themes);
-    this.reduxSet.setSceneTheme(themes.find(_ => _.name !== theme_down_default.name).name);
+    this.rxStateMutate.setThemes(themes);
+    this.rxStateMutate.setSceneTheme(themes.find(_ => _.name !== theme_down_default.name).name);
   }
 
   @RxCleanup() private readonly done$ = new DoneSubject();
-  readonly state$ = this.redux.watch(state => state.game.down.scene, this.done$);
+  readonly state$ = this.rxState.watch(state => state.game.down.scene, this.done$);
   ngOnDestroy() { }
 }

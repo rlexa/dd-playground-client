@@ -4,7 +4,7 @@ import { MatNativeDateModule, NativeDateModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { AppStore, createAppStore, GlobalFlags, ReduxService, ReduxSetGlobalService } from 'app/redux';
+import { AppRxStore, createAppRxStore, RxStateSetGlobalService } from 'app/rx-state';
 import { FlexboxModule } from 'dd-flexbox';
 import 'hammerjs';
 import { AppComponent } from './app.component';
@@ -20,12 +20,12 @@ async function loadHttp(path: string, http: HttpClient, handler: (data: any) => 
   }
 }
 
-export function beforeInit(http: HttpClient, reduxSet: ReduxSetGlobalService) {
+export function beforeInit(http: HttpClient, rxMutateGlobal: RxStateSetGlobalService) {
   return () => Promise.all([
     loadHttp('/assets/flags.json', http, data =>
-      reduxSet.mergeFlags({
+      rxMutateGlobal.mergeFlags({
         ...data,
-        ...<GlobalFlags>{ isProduction: data && data.buildVariant && data.buildVariant.toLowerCase() === 'prod' }
+        ...{ isProduction: data && data.buildVariant && data.buildVariant.toLowerCase() === 'prod' }
       }))
   ]);
 }
@@ -61,11 +61,10 @@ const appRoutes: Routes = [
   exports: [],
   /* PROVIDERS: all providers in any module imported in root have application scope */
   providers: [
-    { provide: AppStore, useFactory: createAppStore },
-    ReduxService,
+    { provide: AppRxStore, useFactory: createAppRxStore },
     {
       provide: APP_INITIALIZER,
-      deps: [HttpClient, ReduxSetGlobalService],
+      deps: [HttpClient, RxStateSetGlobalService],
       multi: true,
       useFactory: beforeInit
     }
