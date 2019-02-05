@@ -55,18 +55,22 @@
       </mat-list-item>
 
       <ng-container *ngIf="field.modifiers.length">
-        <h3 mat-subheader>Field Modifiers</h3>
         <mat-list-item *ngFor="let item of field.modifiers">
-          <p mat-line>{{ item }}</p>
+          <p mat-line>{{ item.type + (item.data === null ? '' : ' (' + item.data + ')') }}</p>
         </mat-list-item>
       </ng-container>
 
       <ng-container *ngIf="selectedFieldEntities$ | async as entities">
         <ng-container *ngIf="entities.length">
           <h3 mat-subheader>Field Entities</h3>
-          <mat-list-item *ngFor="let item of entities">
-            <p mat-line>{{ item.name + ' HP:' + (item.health || 0) + ' V:' + (item.variant || 0) }}</p>
-          </mat-list-item>
+          <ng-container *ngFor="let item of entities">
+            <mat-list-item>
+              <p mat-line>{{ item.name + ' ' + (item.variant || 0) }}</p>
+            </mat-list-item>
+            <p *ngFor="let mod of item.modifiers" [style.marginLeft]="'2.5rem'">
+              {{ mod.type + (mod.data === null ? '' : ' (' + mod.data + ')') }}
+            </p>
+          </ng-container>
         </ng-container>
       </ng-container>
 
@@ -77,11 +81,13 @@
             {{
             (item.isNpc ? 'NPC ' : '')
             + item.name
-            + ' HP:' + (item.health || 0) + '/' + (item.healthMax || 0)
-            + ' V:' + (item.variant|| 0)
+            + ' ' + (item.variant|| 0)
             }}
           </p>
         </mat-list-item>
+        <p *ngFor="let mod of item.modifiers" [style.marginLeft]="'2.5rem'">
+          {{ mod.type + (mod.data === null ? '' : ' (' + mod.data + ')') }}
+        </p>
       </ng-container>
     </mat-list>
   </div>

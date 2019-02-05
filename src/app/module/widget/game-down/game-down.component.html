@@ -1,6 +1,11 @@
 <div ddFlexbox="hyscsw">
 
-  <app-game-down-scene class="childhv scroll-x-auto"></app-game-down-scene>
+  <mat-card class="childhv">
+    <mat-card-title>Scene State</mat-card-title>
+    <mat-card-content>
+      <app-simple-view [data]="state$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+    </mat-card-content>
+  </mat-card>
 
   <mat-card class="childhv">
     <mat-card-title>Config</mat-card-title>
@@ -9,11 +14,6 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="childhv">
-    <mat-card-title>Scene State</mat-card-title>
-    <mat-card-content>
-      <app-simple-view [data]="state$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
-    </mat-card-content>
-  </mat-card>
+  <app-game-down-scene class="childhv scroll-x-auto"></app-game-down-scene>
 
 </div>
