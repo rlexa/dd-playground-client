@@ -90,29 +90,36 @@ export const modLootable = modifier_('lootable');
 
 export const modsHealthy = (val: number) => [modHealthMax(val), modHealth(val)];
 
+export const VARIANT_DEFAULT = 0;
+export const VARIANT_BUILDING_SINGLE = VARIANT_DEFAULT;
+export const VARIANT_BUILDING_DOUBLE = VARIANT_BUILDING_SINGLE + 1;
+
+export const entity = (name: string, variant: number, modifiers: GameDownModifier[]) => <GameDownStateFieldEntity>{ name, variant, modifiers };
+export const entity_ = (name: string, variant = VARIANT_DEFAULT) => (modifiers: GameDownModifier[] = []) => entity(name, variant, modifiers);
+export const actity = (name: string, variant: number, modifiers: GameDownModifier[], isNpc: boolean) => <GameDownStateFieldActor>{ name, variant, modifiers, isNpc };
+export const actity_ = (name: string, isNpc: boolean, variant = VARIANT_DEFAULT) => (modifiers: GameDownModifier[] = []) => actity(name, variant, modifiers, isNpc);
+export const npc_ = (name: string, variant = VARIANT_DEFAULT) => actity_(name, true, variant);
+export const ppc_ = (name: string, variant = VARIANT_DEFAULT) => actity_(name, false, variant);
+
+export const entityBuilding = (variant = VARIANT_DEFAULT) => entity_('building', variant)([...modsHealthy(1), modBlocking(), modDestructible()]);
+export const entityForest = (variant = VARIANT_DEFAULT) => entity_('tree', variant)([...modsHealthy(1), modDestructible(), modFlammable()]);
+export const entityLoot = (variant = VARIANT_DEFAULT) => entity_('loot', variant)([...modsHealthy(1), modDestructible(), modLootable()]);
+export const entityMountain = (variant = VARIANT_DEFAULT) => entity_('mountain', variant)([...modsHealthy(2), modBlocking(), modDamageMaxIncoming(1), modDestructible()]);
+
+export const ppcBotArtillery = (variant = VARIANT_DEFAULT) => ppc_('bot_artillery', variant)([...modsHealthy(2), modBlocking(), modDestructible()]);
+export const ppcBotHeavy = (variant = VARIANT_DEFAULT) => ppc_('bot_heavy', variant)([...modsHealthy(4), modBlocking(), modDestructible()]);
+export const ppcBotTank = (variant = VARIANT_DEFAULT) => ppc_('bot_tank', variant)([...modsHealthy(3), modBlocking(), modDestructible()]);
+
+export const npcBugBarfer = (variant = VARIANT_DEFAULT) => npc_('bug_barfer', variant)([...modsHealthy(3), modBlocking(), modDestructible()]);
+export const npcBugCrawler = (variant = VARIANT_DEFAULT) => npc_('bug_crawler', variant)([...modsHealthy(3), modBlocking(), modDestructible()]);
+export const npcBugFlyer = (variant = VARIANT_DEFAULT) => npc_('bug_flier', variant)([...modsHealthy(2), modBlocking(), modDestructible(), modHovering()]);
+export const npcBugSpitter = (variant = VARIANT_DEFAULT) => npc_('bug_spitter', variant)([...modsHealthy(2), modBlocking(), modDestructible()]);
+
 export const GAME_DOWN_FIELD_H = 8;
 export const GAME_DOWN_FIELD_W = 8;
 export const GAME_DOWN_FIELD_Q = GAME_DOWN_FIELD_H * GAME_DOWN_FIELD_W;
 
 export const DEF_SceneFactor = 1;
-
-export const VARIANT_DEFAULT = 0;
-export const VARIANT_BUILDING_SINGLE = VARIANT_DEFAULT;
-export const VARIANT_BUILDING_DOUBLE = VARIANT_BUILDING_SINGLE + 1;
-
-export const ENTITY_BUILDING = <GameDownStateFieldEntity>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(1), modBlocking(), modDestructible()], name: 'building' };
-export const ENTITY_FOREST = <GameDownStateFieldEntity>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(1), modDestructible(), modFlammable()], name: 'tree' };
-export const ENTITY_LOOT = <GameDownStateFieldEntity>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(1), modDestructible(), modLootable()], name: 'loot' };
-export const ENTITY_MOUNTAIN = <GameDownStateFieldEntity>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(2), modBlocking(), modDamageMaxIncoming(1), modDestructible()], name: 'mountain' };
-
-export const ACTOR_BOT_ARTILLERY = <GameDownStateFieldActor>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(2), modBlocking(), modDestructible()], name: 'bot_artillery', isNpc: false };
-export const ACTOR_BOT_HEAVY = <GameDownStateFieldActor>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(4), modBlocking(), modDestructible()], name: 'bot_heavy', isNpc: false };
-export const ACTOR_BOT_TANK = <GameDownStateFieldActor>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(3), modBlocking(), modDestructible()], name: 'bot_tank', isNpc: false };
-
-export const ACTOR_BUG_BARFER = <GameDownStateFieldActor>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(3), modBlocking(), modDestructible()], name: 'bug_barfer', isNpc: true };
-export const ACTOR_BUG_CRAWLER = <GameDownStateFieldActor>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(3), modBlocking(), modDestructible()], name: 'bug_crawler', isNpc: true };
-export const ACTOR_BUG_FLIER = <GameDownStateFieldActor>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(2), modBlocking(), modDestructible(), modHovering()], name: 'bug_flier', isNpc: true };
-export const ACTOR_BUG_SPITTER = <GameDownStateFieldActor>{ variant: VARIANT_DEFAULT, modifiers: [...modsHealthy(2), modBlocking(), modDestructible()], name: 'bug_spitter', isNpc: true };
 
 export const FIELD_GROUND = 'ground';
 export const FIELD_WATER = 'water';
