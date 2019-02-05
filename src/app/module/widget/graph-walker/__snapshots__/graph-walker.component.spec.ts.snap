@@ -15,12 +15,15 @@ exports[`GraphWalkerComponent is created 1`] = `
   curTypeKeyTagValues$={[Function Observable]}
   curTypeKeyTagValuesFiltered$={[Function Observable]}
   curTypeKeys$={[Function AnonymousSubject]}
-  curTypeKeysFiltered$={[Function Observable]}
   curVal$={[Function BehaviorSubject]}
   dbNodeTypeCount$={[Function Observable]}
   dbState$={[Function BehaviorSubject]}
   dbTypes$={[Function Observable]}
   graphsky={[Function GraphskyService]}
+  setCurNode={[Function Function]}
+  setCurTag={[Function Function]}
+  setCurType={[Function Function]}
+  setCurVal={[Function Function]}
   tryQuery={[Function Function]}
 >
   <mat-card
@@ -356,7 +359,7 @@ exports[`GraphWalkerComponent is created 1`] = `
             </div>
           </mat-form-field>
           <mat-form-field
-            class="margin-left childhv mat-form-field ng-tns-c2-4 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
+            class="margin-left childhv mat-form-field ng-tns-c2-4 mat-primary mat-form-field-type-mat-select mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
             hintlabel="Tag"
             ng-reflect-hint-label="Tag"
           >
@@ -371,24 +374,44 @@ exports[`GraphWalkerComponent is created 1`] = `
                 <div
                   class="mat-form-field-infix"
                 >
-                  <input
-                    aria-autocomplete="list"
+                  <mat-select
                     aria-describedby="mat-hint-2"
-                    aria-expanded="false"
+                    aria-disabled="false"
                     aria-invalid="false"
+                    aria-multiselectable="false"
                     aria-required="false"
-                    autocomplete="off"
-                    class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
-                    id="mat-input-0"
-                    matinput=""
-                    ng-reflect-autocomplete="[object Object]"
-                    role="combobox"
-                  />
-                  <mat-autocomplete
-                    class="mat-autocomplete"
+                    class="mat-select ng-tns-c3-5 mat-select-empty ng-star-inserted"
+                    id="mat-select-1"
+                    role="listbox"
+                    tabindex="0"
                   >
+                    <div
+                      aria-hidden="true"
+                      cdk-overlay-origin=""
+                      class="mat-select-trigger"
+                    >
+                      <div
+                        class="mat-select-value"
+                        ng-reflect-ng-switch="true"
+                      >
+                        
+                        <span
+                          class="mat-select-placeholder ng-tns-c3-5 ng-star-inserted"
+                        >
+                           
+                        </span>
+                        
+                      </div>
+                      <div
+                        class="mat-select-arrow-wrapper"
+                      >
+                        <div
+                          class="mat-select-arrow"
+                        />
+                      </div>
+                    </div>
                     
-                  </mat-autocomplete>
+                  </mat-select>
                   <span
                     class="mat-form-field-label-wrapper"
                   >
@@ -552,7 +575,7 @@ exports[`GraphWalkerComponent is created 1`] = `
             />
           </button>
           <mat-form-field
-            class="margin-left childhv mat-form-field ng-tns-c2-5 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
+            class="margin-left childhv mat-form-field ng-tns-c2-6 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-hide-placeholder _mat-animation-noopable"
             hintlabel="Value"
             ng-reflect-hint-label="Value"
           >
@@ -575,7 +598,7 @@ exports[`GraphWalkerComponent is created 1`] = `
                     aria-required="false"
                     autocomplete="off"
                     class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored"
-                    id="mat-input-1"
+                    id="mat-input-0"
                     matinput=""
                     ng-reflect-autocomplete="[object Object]"
                     role="combobox"
@@ -595,7 +618,7 @@ exports[`GraphWalkerComponent is created 1`] = `
               </div>
               
               <div
-                class="mat-form-field-underline ng-tns-c2-5 ng-star-inserted"
+                class="mat-form-field-underline ng-tns-c2-6 ng-star-inserted"
               >
                 <span
                   class="mat-form-field-ripple"
@@ -608,12 +631,12 @@ exports[`GraphWalkerComponent is created 1`] = `
                 
                 
                 <div
-                  class="mat-form-field-hint-wrapper ng-tns-c2-5 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                  class="mat-form-field-hint-wrapper ng-tns-c2-6 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
                   style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
                 >
                   
                   <div
-                    class="mat-hint ng-tns-c2-5 ng-star-inserted"
+                    class="mat-hint ng-tns-c2-6 ng-star-inserted"
                     id="mat-hint-4"
                     style=""
                   >
