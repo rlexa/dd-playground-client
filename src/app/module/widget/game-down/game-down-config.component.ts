@@ -33,8 +33,8 @@ export class GameDownConfigComponent implements OnDestroy {
 
   readonly selectedField$ = combineLatest(this.selectedFieldIndex$, this.rxState.watch(state => state.game.down.scene.fields, this.done$))
     .pipe(map(([index, fields]) => fields[index] || null), takeUntil(this.done$));
-  readonly selectedFieldActor$ = this.selectedField$.pipe(map(_ => _.actor));
-  readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => _.entities));
+  readonly selectedFieldActor$ = this.selectedField$.pipe(map(_ => !_ ? null : _.actor));
+  readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => !_ ? null : _.entities));
 
   @RxCleanup() readonly sceneFieldsPresets$ = new BehaviorSubject<{ [key: string]: GameDownStateField[] }>(
     {
