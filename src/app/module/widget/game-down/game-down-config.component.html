@@ -82,6 +82,7 @@
               <mat-list-item>
                 <p mat-line>{{ item.name + ' ' + (item.variant || 0) }}</p>
               </mat-list-item>
+              <p mat-line [style.marginLeft]="'2.5rem'">{{ 'Direction: ' + item.direction }}</p>
               <p *ngFor="let mod of item.modifiers" [style.marginLeft]="'2.5rem'">
                 {{ mod.type + (mod.data === null ? '' : ' (' + mod.data + ')') }}
               </p>
@@ -100,6 +101,7 @@
               }}
             </p>
           </mat-list-item>
+          <p mat-line [style.marginLeft]="'2.5rem'">{{ 'Direction: ' + item.direction }}</p>
           <p *ngFor="let mod of item.modifiers" [style.marginLeft]="'2.5rem'">
             {{ mod.type + (mod.data === null ? '' : ' (' + mod.data + ')') }}
           </p>
