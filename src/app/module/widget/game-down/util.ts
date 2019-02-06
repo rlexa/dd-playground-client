@@ -1,4 +1,5 @@
-import { DEF_GameDownStateField, DEF_GameDownStateFields, entityBuilding, entityForest, entityLoot, entityMountain, FIELD_WATER, GAME_DOWN_FIELD_W, npcBugBarfer, npcBugCrawler, npcBugFlyer, npcBugSpitter, ppcBotArtillery, ppcBotHeavy, ppcBotTank, VARIANT_BUILDING_DOUBLE } from 'app/rx-state/state/state-game-down';
+import { entityBuilding, entityForest, entityLoot, entityMountain, FIELD_WATER, npcBugBarfer, npcBugBomber, npcBugCrawler, npcBugFlyer, npcBugSpitter, ppcBotArtillery, ppcBotHeavy, ppcBotTank, VARIANT_BUILDING_DOUBLE } from 'app/module/widget/game-down/data';
+import { DEF_GameDownStateField, DEF_GameDownStateFields, GAME_DOWN_FIELD_W } from 'app/rx-state/state/state-game-down';
 
 const WW = GAME_DOWN_FIELD_W;
 
@@ -31,6 +32,7 @@ export const build_Situation_1 = () => {
 
   fields[4 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };
   fields[4 * WW + 1] = { ...DEF_GameDownStateField, entities: [entityBuilding(VARIANT_BUILDING_DOUBLE)] };
+  fields[4 * WW + 2] = { ...DEF_GameDownStateField, actor: npcBugBomber() };
   fields[4 * WW + 6] = { ...DEF_GameDownStateField, entities: [entityForest()] };
 
   fields[5 * WW + 0] = { ...DEF_GameDownStateField, field: FIELD_WATER };

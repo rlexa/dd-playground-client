@@ -1,5 +1,5 @@
 import { Color, reduceThemes, Theme, THEME_MISSING } from 'app/game';
-import { GameDownColorMap } from 'app/rx-state/state/state-game-down';
+import { GameDownColorMap } from 'app/module/widget/game-down/data';
 
 // DEFAULT
 

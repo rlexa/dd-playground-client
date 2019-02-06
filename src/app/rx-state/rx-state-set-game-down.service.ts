@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { THEME_MISSING } from 'app/game';
-import { DEF_GameDownStateFields, GameDownStateField, set_scene_factor, set_scene_field, set_scene_fields, set_scene_hoveredIndex, set_scene_renderer, set_scene_selectedIndex, set_scene_theme, set_themes, set_viewDebug } from 'app/rx-state/state/state-game-down';
+import { GameDownField } from 'app/module/widget/game-down/data';
+import { DEF_GameDownStateFields, set_scene_factor, set_scene_field, set_scene_fields, set_scene_hoveredIndex, set_scene_renderer, set_scene_selectedIndex, set_scene_theme, set_themes, set_viewDebug } from 'app/rx-state/state/state-game-down';
 import { forceBool, orNull, or_ } from 'dd-rx-state';
 import { RxStateService } from './rx-state.service';
 
@@ -17,5 +18,5 @@ export class RxStateSetGameDownService {
   setThemes = this.rxState.act_(set_themes, or_([THEME_MISSING]));
   setViewDebug = this.rxState.act_(set_viewDebug, forceBool);
 
-  setSceneField = (index: number, value: GameDownStateField) => this.rxState.act(set_scene_field, { index, value });
+  setSceneField = (index: number, value: GameDownField) => this.rxState.act(set_scene_field, { index, value });
 }
