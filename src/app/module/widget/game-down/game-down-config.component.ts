@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { build_Situation_1, checkProblems, DEF_GameDownStateFields, GameDownField } from 'app/module/widget/game-down/data';
+import { build_Situation_1, checkProblems, DEF_GameDownStateFields, GameDownField, modField } from 'app/module/widget/game-down/data';
 import { RxStateService, RxStateSetGameDownService } from 'app/rx-state';
 import { trackByIndex } from 'app/util';
 import { DoneSubject, RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { filter, map, shareReplay, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, shareReplay, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-down-config',
@@ -32,7 +32,8 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly viewDebug$ = this.rxState.watch(state => state.game.down.viewDebug, this.done$);
 
   readonly selectedField$ = combineLatest(this.selectedFieldIndex$, this.fields$)
-    .pipe(map(([index, fields]) => fields[index] || null), takeUntil(this.done$));
+    .pipe(map(([index, fields]) => fields[index] || null), distinctUntilChanged(), tap(console.log), shareReplay(), takeUntil(this.done$));
+  readonly selectedFieldField$ = this.selectedField$.pipe(map(modField.get));
   readonly selectedFieldActor$ = this.selectedField$.pipe(map(_ => !_ ? null : _.actor));
   readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => !_ ? null : _.entities));
 
@@ -57,11 +58,11 @@ export class GameDownConfigComponent implements OnDestroy {
 
   ngOnDestroy() { }
 
-  onMergeSelectedField_Field = (into: GameDownField, field: string) => this.onMergeSelectedField(into, { field });
+  onMergeSelectedField_Field = (into: GameDownField, val: string) => this.onMergeSelectedField(into, modField.set(into, val));
 
   onSetFieldsPresetKey = (key: string) => key in this.sceneFieldsPresets$.value ? this.rxStateMutate.setSceneFields(this.sceneFieldsPresets$.value[key]) : {};
 
   private onMergeSelectedField = (into: GameDownField, merge: GameDownField) => of({ into, merge, index: this.selectedFieldIndex$.value })
-    .pipe(filter(_ => Object.keys(merge).length > 0 && Object.keys(merge).every(key => key in into)))
+    .pipe(filter(_ => Object.keys(merge).length > 0 && Object.keys(merge).every(key => key in into) && Object.keys(merge).some(key => into[key] !== merge[key])))
     .subscribe(_ => this.rxStateMutate.setSceneField(_.index, { ..._.into, ..._.merge }));
 }

@@ -1,5 +1,5 @@
 import { Theme, themeColor } from 'app/game';
-import { entityBuilding, entityForest, entityLoot, entityMountain, FIELD_GROUND, FIELD_WATER, GameDownColorMap, GameDownField, GameDownFieldActor, GameDownFieldEntity } from 'app/module/widget/game-down/data';
+import { entityBuilding, entityForest, entityLoot, entityMountain, FIELD_GROUND, FIELD_WATER, GameDownColorMap, GameDownField, GameDownFieldActor, GameDownFieldEntity, modField } from 'app/module/widget/game-down/data';
 
 const ENTITY_BUILDING = entityBuilding().name;
 const ENTITY_FOREST = entityForest().name;
@@ -16,5 +16,6 @@ export const entityToColor = (data: GameDownFieldEntity, theme: Theme<GameDownCo
         data.name === ENTITY_LOOT ? _.entityLoot :
           data.name === ENTITY_MOUNTAIN ? _.entityMountain : null);
 
-export const fieldToColor = (data: GameDownField, theme: Theme<GameDownColorMap>) => !data || !theme ? null :
-  themeColor(theme, _ => data.field === FIELD_GROUND ? _.fieldGround : data.field === FIELD_WATER ? _.fieldWater : null);
+const fieldValueToColor = (field: string, theme: Theme<GameDownColorMap>) => !theme ? null :
+  themeColor(theme, _ => field === FIELD_GROUND ? _.fieldGround : field === FIELD_WATER ? _.fieldWater : null);
+export const fieldToColor = (field: GameDownField, theme: Theme<GameDownColorMap>) => fieldValueToColor(modField.get(field), theme);

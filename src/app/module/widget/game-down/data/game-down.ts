@@ -1,4 +1,5 @@
 import { StringToString } from 'app/game';
+import { copyJson } from 'app/util';
 
 export interface GameDownColorMap extends StringToString {
   actorNpc: string,
@@ -33,7 +34,6 @@ export interface GameDownFieldActor extends GameDownFieldEntity {
 export interface GameDownField extends GameDownModified {
   actor?: GameDownFieldActor,
   entities?: GameDownFieldEntity[],
-  field?: string,
 }
 
 export interface GameDownScene {
@@ -49,21 +49,42 @@ export interface GameDownScene {
 
 export class GameDownModify<T> {
   constructor(public readonly type: string, public readonly def: T = null) { }
+
+  private _find = (from: GameDownModifier[]) => !from ? null : from.find(_ => _.type === this.type);
+
   new = (val: T = this.def) => <GameDownModifier>{ type: this.type, data: val };
+
+  find = (obj: GameDownModified | GameDownModifier[]) => !obj ? null : this._find(Array.isArray(obj) ? obj : obj.modifiers);
+
   get = (obj: GameDownModified) => {
-    const mod = this.mod(obj);
+    const mod = this.find(obj);
     return !mod ? null : mod.data as T;
   }
-  mod = (obj: GameDownModified) => !obj || !obj.modifiers ? null : obj.modifiers.find(_ => _.type === this.type);
+
   set = (obj: GameDownModified, val: T = this.def) => {
     if (obj && obj.modifiers) {
-      const mod = this.mod(obj);
-      if (mod) {
-        mod.data = val;
-      } else {
-        obj.modifiers.push(this.new(val));
+      const modifiers = this.modify(obj.modifiers, val);
+      if (obj.modifiers !== modifiers) {
+        obj = { ...obj, modifiers };
       }
     }
+    return obj;
+  }
+
+  modify = (modifiers: GameDownModifier[], val: T = this.def) => {
+    if (modifiers) {
+      let mod = this.find(modifiers);
+      if (!mod || mod.data !== val) {
+        modifiers = copyJson(modifiers);
+        mod = this.find(modifiers);
+        if (mod) {
+          mod.data = val;
+        } else {
+          modifiers.push(this.new(val));
+        }
+      }
+    }
+    return modifiers;
   }
 }
 
@@ -79,7 +100,7 @@ export const DEF_DIRECTION = DIR_NORTH;
 export const FIELD_GROUND = 'ground';
 export const FIELD_WATER = 'water';
 export const DEF_FieldValues = [FIELD_GROUND, FIELD_WATER];
-export const DEF_Field = FIELD_GROUND;
+export const DEF_FIELD = FIELD_GROUND;
 
 export const VARIANT_DEFAULT = 0;
 

@@ -62,23 +62,22 @@
       <h3 mat-subheader>Field {{ selectedFieldIndex$ | async }}</h3>
       <mat-list-item>
         <mat-form-field *ngIf="fieldValues$ | async as fields">
-          <mat-select placeholder="Field" [ngModel]="field.field" (valueChange)="onMergeSelectedField_Field(field, $event);">
+          <mat-select placeholder="Field" [ngModel]="selectedFieldField$ | async"
+            (valueChange)="onMergeSelectedField_Field(field, $event);">
             <mat-option *ngFor="let key of fields; trackBy: trackByIndex;" [value]="key">{{ key }}</mat-option>
           </mat-select>
         </mat-form-field>
       </mat-list-item>
+
+      <p *ngFor="let mod of field.modifiers" [style.marginLeft]="'2.5rem'">
+        {{ mod.type + (mod.data === null ? '' : ' (' + mod.data + ')') }}
+      </p>
 
       <ng-container *ngIf="fieldProblems$ | async as fieldProblems">
         <h3 mat-subheader>{{ 'Problems: ' + fieldProblems.length }}</h3>
         <p *ngFor="let problem of fieldProblems" [style.marginLeft]="'2.5rem'">
           {{ problem }}
         </p>
-      </ng-container>
-
-      <ng-container *ngIf="field.modifiers.length">
-        <mat-list-item *ngFor="let item of field.modifiers">
-          <p mat-line>{{ item.type + (item.data === null ? '' : ' (' + item.data + ')') }}</p>
-        </mat-list-item>
       </ng-container>
 
       <ng-container *ngIf="selectedFieldEntities$ | async as entities">
