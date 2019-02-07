@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { build_Situation_1, DEF_GameDownStateFields, GameDownField } from 'app/module/widget/game-down/data';
+import { build_Situation_1, checkProblems, DEF_GameDownStateFields, GameDownField } from 'app/module/widget/game-down/data';
 import { RxStateService, RxStateSetGameDownService } from 'app/rx-state';
 import { trackByIndex } from 'app/util';
 import { DoneSubject, RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { filter, map, shareReplay, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-down-config',
@@ -42,6 +42,11 @@ export class GameDownConfigComponent implements OnDestroy {
       'Situation 1': build_Situation_1(),
     });
   readonly sceneFieldsPresetsKeys$ = this.sceneFieldsPresets$.pipe(map(Object.keys));
+
+  private readonly fieldsProblems$ = this.fields$.pipe(map(checkProblems), shareReplay());
+  readonly fieldsProblemsCount$ = this.fieldsProblems$.pipe(map(_ => _.filter(pp => pp.length).length), shareReplay());
+  readonly fieldProblems$ = combineLatest(this.selectedFieldIndex$, this.fieldsProblems$)
+    .pipe(map(([selectedFieldIndex, fieldsProblems]) => selectedFieldIndex < 0 ? [] : fieldsProblems[selectedFieldIndex]), takeUntil(this.done$));
 
   onSetFactor = this.rxStateMutate.setSceneFactor;
   onSetRenderer = this.rxStateMutate.setSceneRenderer;

@@ -3,12 +3,11 @@
     <div *ngIf="resolvedInitiativeIndices.length" ddFlexbox="vys">
       <mat-list class="mat-list-auto-height">
         <h3 mat-subheader>Initiative</h3>
-        <mat-list-item *ngFor="let ii of resolvedInitiativeIndices; trackBy: trackByIndex;" class="clickable" (mouseenter)="onHoverIndex(ii, true)"
-          (mouseleave)="onHoverIndex(ii, false)" (click)="onClickIndex(ii)">
-          <p mat-line [style.color]="ii === (hovered$ | async) ? 'red' : null">
-            {{ fields[ii].actor.name + ' ' + (fields[ii].actor.variant || 0) }}
-          </p>
-        </mat-list-item>
+        <p *ngFor="let ii of resolvedInitiativeIndices; trackBy: trackByIndex;" [style.marginLeft]="'2.5rem'" class="clickable"
+          (mouseenter)="onHoverIndex(ii, true)" (mouseleave)="onHoverIndex(ii, false)" (click)="onClickIndex(ii)"
+          [style.color]="ii === (hovered$ | async) ? 'red' : null">
+          {{ fields[ii].actor.name + ' ' + (fields[ii].actor.variant || 0) }}
+        </p>
       </mat-list>
     </div>
   </ng-container>
