@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { GameDownField, resolveInitiative as resolveInitiativeIndices } from 'app/module/widget/game-down/data';
-import { build_Situation_1 } from 'app/module/widget/game-down/util';
+import { build_Situation_1, DEF_GameDownStateFields, GameDownField } from 'app/module/widget/game-down/data';
 import { RxStateService, RxStateSetGameDownService } from 'app/rx-state';
-import { DEF_GameDownStateFields } from 'app/rx-state/state/state-game-down';
 import { trackByIndex } from 'app/util';
 import { DoneSubject, RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { filter, map, shareReplay, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-down-config',
@@ -26,15 +24,12 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly factorMin$ = this.rxState.watch(state => state.game.down.scene.factorMin, this.done$);
   readonly fields$ = this.rxState.watch(state => state.game.down.scene.fields, this.done$);
   readonly fieldValues$ = this.rxState.watch(state => state.game.down.fieldValues, this.done$);
-  readonly hovered$ = this.rxState.watch(state => state.game.down.scene.hoveredIndex, this.done$).pipe(shareReplay());
   readonly renderer$ = this.rxState.watch(state => state.game.down.scene.renderer, this.done$);
   readonly renderers$ = this.rxState.watch(state => state.game.down.rendererValues, this.done$);
   readonly selectedFieldIndex$ = this.rxState.watch(state => state.game.down.scene.selectedIndex, this.done$);
   readonly theme$ = this.rxState.watch(state => state.game.down.scene.theme, this.done$);
   readonly themes$ = this.rxState.watch(state => state.game.down.themes, this.done$).pipe(map(_ => _.map(ii => ii.name)));
   readonly viewDebug$ = this.rxState.watch(state => state.game.down.viewDebug, this.done$);
-
-  readonly resolvedInitiativeIndices$ = this.fields$.pipe(map(resolveInitiativeIndices));
 
   readonly selectedField$ = combineLatest(this.selectedFieldIndex$, this.fields$)
     .pipe(map(([index, fields]) => fields[index] || null), takeUntil(this.done$));
@@ -56,9 +51,6 @@ export class GameDownConfigComponent implements OnDestroy {
   trackByIndex = trackByIndex;
 
   ngOnDestroy() { }
-
-  onClickIndex = (index: number) => this.rxStateMutate.setSceneSelectedIndex(index);
-  onHoverIndex = (index: number, hovered: boolean) => this.rxStateMutate.setSceneHoveredIndex(hovered ? index : null);
 
   onMergeSelectedField_Field = (into: GameDownField, field: string) => this.onMergeSelectedField(into, { field });
 

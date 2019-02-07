@@ -1,5 +1,5 @@
 import { Theme, THEME_MISSING } from 'app/game';
-import { DEF_Field, DEF_FieldValues, GameDownColorMap, GameDownField, GameDownScene } from 'app/module/widget/game-down/data';
+import { DEF_FieldValues, DEF_GameDownStateFields, DEF_SceneFactor, GameDownColorMap, GameDownField, GameDownScene } from 'app/module/widget/game-down/data';
 import { actor, initReduceAssemble$_, jsonEqual, redSetPropertyIfNotEqual_, redSetPropertyIfNotSame_, setPropertyIfNotEqual, setPropertyIfNotSame, ValueReducer } from 'dd-rx-state';
 import { SUFFIX } from './state-game-down.suffix';
 
@@ -27,21 +27,6 @@ export const set_themes = actor<Theme<GameDownColorMap>[]>('SET' + SUFFIX + 'the
 export const set_viewDebug = actor<boolean>('SET' + SUFFIX + 'viewDebug');
 
 // DEFAULTS
-
-export const GAME_DOWN_FIELD_H = 8;
-export const GAME_DOWN_FIELD_W = 8;
-export const GAME_DOWN_FIELD_Q = GAME_DOWN_FIELD_H * GAME_DOWN_FIELD_W;
-
-export const DEF_SceneFactor = 1;
-
-export const DEF_GameDownStateField = Object.freeze(
-  <GameDownField>{
-    entities: [],
-    field: DEF_Field,
-    modifiers: [],
-  });
-
-export const DEF_GameDownStateFields = Array.from(Array(GAME_DOWN_FIELD_Q), () => DEF_GameDownStateField);
 
 export const RENDERER_SIMPLE = 'simple';
 export const DEF_Renderer = RENDERER_SIMPLE;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { THEME_MISSING } from 'app/game';
-import { GameDownField } from 'app/module/widget/game-down/data';
-import { DEF_GameDownStateFields, set_scene_factor, set_scene_field, set_scene_fields, set_scene_hoveredIndex, set_scene_renderer, set_scene_selectedIndex, set_scene_theme, set_themes, set_viewDebug } from 'app/rx-state/state/state-game-down';
+import { DEF_GameDownStateFields, GameDownField } from 'app/module/widget/game-down/data';
+import { set_scene_factor, set_scene_field, set_scene_fields, set_scene_hoveredIndex, set_scene_renderer, set_scene_selectedIndex, set_scene_theme, set_themes, set_viewDebug } from 'app/rx-state/state/state-game-down';
 import { forceBool, orNull, or_ } from 'dd-rx-state';
 import { RxStateService } from './rx-state.service';
 

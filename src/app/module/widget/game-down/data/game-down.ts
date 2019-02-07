@@ -17,9 +17,11 @@ export interface GameDownModifier {
   data: any,
 }
 
-export interface GameDownFieldEntity {
-  direction: string,
-  modifiers: GameDownModifier[],
+export interface GameDownModified {
+  modifiers?: GameDownModifier[],
+}
+
+export interface GameDownFieldEntity extends GameDownModified {
   name: string,
   variant: number,
 }
@@ -28,11 +30,10 @@ export interface GameDownFieldActor extends GameDownFieldEntity {
   isNpc: boolean,
 }
 
-export interface GameDownField {
+export interface GameDownField extends GameDownModified {
   actor?: GameDownFieldActor,
   entities?: GameDownFieldEntity[],
   field?: string,
-  modifiers?: GameDownModifier[],
 }
 
 export interface GameDownScene {
@@ -46,10 +47,32 @@ export interface GameDownScene {
   theme: string,
 }
 
-export const DIR_EAST = 'north';
+export class GameDownModify<T> {
+  constructor(public readonly type: string, public readonly def: T = null) { }
+  new = (val: T = this.def) => <GameDownModifier>{ type: this.type, data: val };
+  get = (obj: GameDownModified) => {
+    const mod = this.mod(obj);
+    return !mod ? null : mod.data as T;
+  }
+  mod = (obj: GameDownModified) => !obj || !obj.modifiers ? null : obj.modifiers.find(_ => _.type === this.type);
+  set = (obj: GameDownModified, val: T = this.def) => {
+    if (obj && obj.modifiers) {
+      const mod = this.mod(obj);
+      if (mod) {
+        mod.data = val;
+      } else {
+        obj.modifiers.push(this.new(val));
+      }
+    }
+  }
+}
+
+export const mod_ = <T>(type: string, def: T = null) => new GameDownModify<T>(type, def);
+
+export const DIR_EAST = 'east';
 export const DIR_NORTH = 'north';
-export const DIR_SOUTH = 'north';
-export const DIR_WEST = 'north';
+export const DIR_SOUTH = 'south';
+export const DIR_WEST = 'west';
 export const DEF_DirectionValues = [DIR_NORTH, DIR_EAST, DIR_SOUTH, DIR_WEST];
 export const DEF_DIRECTION = DIR_NORTH;
 
@@ -60,10 +83,7 @@ export const DEF_Field = FIELD_GROUND;
 
 export const VARIANT_DEFAULT = 0;
 
-export const modifier = (type: string, data: any) => <GameDownModifier>{ type, data: [null, undefined, ''].includes(data) ? null : data };
-export const modifier_ = (type: string) => (data: any = null) => modifier(type, data);
-
-export const entity = (name: string, variant: number, modifiers: GameDownModifier[]) => <GameDownFieldEntity>{ name, variant, modifiers, direction: DEF_DIRECTION };
+export const entity = (name: string, variant: number, modifiers: GameDownModifier[]) => <GameDownFieldEntity>{ name, variant, modifiers };
 export const entity_ = (name: string, variant = VARIANT_DEFAULT) => (modifiers: GameDownModifier[] = []) => entity(name, variant, modifiers);
 export const actity = (name: string, variant: number, modifiers: GameDownModifier[], isNpc: boolean) => <GameDownFieldActor>{ ...entity(name, variant, modifiers), isNpc };
 export const actity_ = (name: string, isNpc: boolean, variant = VARIANT_DEFAULT) => (modifiers: GameDownModifier[] = []) => actity(name, variant, modifiers, isNpc);
