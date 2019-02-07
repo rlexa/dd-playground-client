@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RoutedContentComponent } from 'app/module/widget/routed-content';
-import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CRYPTO, ROUTE_CURRENT, ROUTE_DEMO_GHIBLI, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WILDCARD } from 'app/routing';
+import { ROUTE_AI, ROUTE_APPROXPOLYNOM, ROUTE_BLOCKCHAIN, ROUTE_BUILDCONFIG, ROUTE_CONFIGURATION, ROUTE_CRYPTO, ROUTE_CURRENT, ROUTE_DEMO_GHIBLI, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_GAME, ROUTE_GAME_DOWN, ROUTE_GRAPH, ROUTE_OVERVIEW, ROUTE_PLAYGROUND, ROUTE_ROOT, ROUTE_SETTINGS, ROUTE_WILDCARD } from 'app/routing';
 import { DashboardComponent } from './dashboard.component';
 import { imports } from './imports';
 
@@ -39,9 +39,9 @@ const ROUTING = <Routes>[
         path: ROUTE_CRYPTO,
         component: RoutedContentComponent,
         children: [
-          { path: ROUTE_CRYPTO, loadChildren: 'app/module/widget/crypto/crypto.module#CryptoModule' },
-          { path: ROUTE_ROOT, redirectTo: ROUTE_CRYPTO, pathMatch: 'full' },
-          { path: ROUTE_WILDCARD, redirectTo: ROUTE_CRYPTO, pathMatch: 'full' },
+          { path: ROUTE_BLOCKCHAIN, loadChildren: 'app/module/widget/crypto/crypto.module#CryptoModule' },
+          { path: ROUTE_ROOT, redirectTo: ROUTE_BLOCKCHAIN, pathMatch: 'full' },
+          { path: ROUTE_WILDCARD, redirectTo: ROUTE_BLOCKCHAIN, pathMatch: 'full' },
         ]
       },
       {
