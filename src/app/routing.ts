@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 /* ROUTE PARTS */
 
 export const ROUTE_AI = 'ai';
+export const ROUTE_APPROXPOLYNOM = 'approxpolynom';
 export const ROUTE_BLOCKCHAIN = 'blockchain';
 export const ROUTE_BUILDCONFIG = 'buildconfig';
 export const ROUTE_CONFIGURATION = 'configuration';
@@ -17,7 +18,7 @@ export const ROUTE_GAME_DOWN = 'game_down';
 export const ROUTE_GRAPH = 'graph';
 export const ROUTE_OVERVIEW = 'overview';
 export const ROUTE_PLAYGROUND = 'playground';
-export const ROUTE_APPROXPOLYNOM = 'approxpolynom';
+export const ROUTE_RENDER_CANVAS = 'rendercanvas';
 export const ROUTE_ROOT = '';
 export const ROUTE_SETTINGS = 'settings';
 export const ROUTE_WALKER = 'walker';
