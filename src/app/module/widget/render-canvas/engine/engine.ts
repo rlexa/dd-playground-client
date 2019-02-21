@@ -1,53 +1,61 @@
-import { DoneSubject, RxCleanup, rxFalse, rxNext_, rxTrue_ } from 'dd-rxjs';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { filter, map, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
-import { fillCanvasColor_ } from './context2d';
+import { DoneSubject, RxCleanup, rxNext_ } from 'dd-rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
+import { catchError, map, startWith, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { EngineNodeFillCanvasColor } from './nodes-simple';
+import { EngineGlobal, EngineNode } from './types';
 
-export interface EngineNode {
-  render?: (ctx: CanvasRenderingContext2D) => void,
-}
+export class Engine implements EngineGlobal {
+  constructor() {
+    this.frame$
+      .pipe(
+        withLatestFrom(this.ctx$),
+        map(([msNow, ctx]) => {
+          const msDelta = msNow - this.msLast;
+          this.msLast = msNow;
+          return { msDelta, changes: this.changes$.value, ctx, root: this.root };
+        }),
+        tap(_ => {
+          if (_.changes > 0 && _.ctx && _.root) {
+            // console.log(`render ${_.changes} changes`);
+            _.root.render(_.ctx);
+            this.changes$.next(0);
+          }
+        }),
+        tap(_ => _.root ? _.root.frame({ msDelta: _.msDelta, parent: null }) : {}),
+        catchError(err => {
+          console.error(err);
+          return of(null);
+        }),
+        takeUntil(this.done$))
+      .subscribe(() => requestAnimationFrame(rxNext_(this.frame$)));
 
-export const renderEngineNode = (ctx: CanvasRenderingContext2D, node: EngineNode) => node.render ? node.render(ctx) : {};
+    this.msLast = performance.now();
+    requestAnimationFrame(rxNext_(this.frame$));
 
-export class Engine {
+    this.root = new EngineNodeFillCanvasColor(this, 'pink');
+  }
+
   @RxCleanup() private readonly done$ = new DoneSubject();
   @RxCleanup() private readonly canvasId$ = new Subject<string>();
   @RxCleanup() private readonly frame$ = new Subject<number>();
-  @RxCleanup() private readonly hasChanges = new BehaviorSubject(false);
-  @RxCleanup() private readonly root$ = new BehaviorSubject(<EngineNode>{});
+  @RxCleanup() private readonly changes$ = new BehaviorSubject(0);
+  private readonly root: EngineNode<any> = null;
 
   private msLast = 0;
 
   private readonly ctx$ = this.canvasId$.pipe(
+    startWith(null),
     map(id => {
       try { return (document.getElementById(id) as HTMLCanvasElement).getContext('2d'); } catch { }
       return null;
     }),
     takeUntil(this.done$));
 
-  constructor() {
-    this.ctx$.pipe(filter(_ => !!_)).subscribe(fillCanvasColor_('pink'));
-
-    this.frame$
-      .pipe(
-        withLatestFrom(this.hasChanges, this.ctx$, this.root$),
-        map(([msNow, hasChanges, ctx, root]) => {
-          const msDelta = msNow - this.msLast;
-          this.msLast = msNow;
-          return { msDelta, hasChanges, ctx, root };
-        }),
-        tap(_ => _.hasChanges && _.ctx ? renderEngineNode(_.ctx, _.root) : {}),
-        tap(_ => rxFalse(this.hasChanges)),
-        takeUntil(this.done$))
-      .subscribe(() => requestAnimationFrame(rxNext_(this.frame$)));
-
-    this.msLast = performance.now();
-    requestAnimationFrame(rxNext_(this.frame$));
-  }
-
   setCanvasId = rxNext_(this.canvasId$);
-  markChanges = rxTrue_(this.hasChanges);
+  markChanges = () => this.changes$.next(this.changes$.value + 1);
 
   // tslint:disable:use-life-cycle-interface
-  ngOnDestroy() { }
+  ngOnDestroy() {
+    if (this.root) { this.root.ngOnDestroy(); }
+  }
 }

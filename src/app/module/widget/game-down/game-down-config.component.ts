@@ -4,7 +4,7 @@ import { RxStateService, RxStateSetGameDownService } from 'app/rx-state';
 import { trackByIndex } from 'app/util';
 import { DoneSubject, RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, takeUntil, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, shareReplay, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-down-config',
@@ -32,7 +32,7 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly viewDebug$ = this.rxState.watch(state => state.game.down.viewDebug, this.done$);
 
   readonly selectedField$ = combineLatest(this.selectedFieldIndex$, this.fields$)
-    .pipe(map(([index, fields]) => fields[index] || null), distinctUntilChanged(), tap(console.log), shareReplay(), takeUntil(this.done$));
+    .pipe(map(([index, fields]) => fields[index] || null), distinctUntilChanged(), shareReplay(), takeUntil(this.done$));
   readonly selectedFieldField$ = this.selectedField$.pipe(map(modField.get));
   readonly selectedFieldActor$ = this.selectedField$.pipe(map(_ => !_ ? null : _.actor));
   readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => !_ ? null : _.entities));
