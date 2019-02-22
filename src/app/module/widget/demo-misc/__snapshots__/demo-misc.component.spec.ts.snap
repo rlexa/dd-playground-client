@@ -244,7 +244,7 @@ exports[`DemoMiscComponent is created 1`] = `
                                 <span
                                   class="no-break-text ng-tns-c2-0"
                                 >
-                                  Links
+                                   Links 
                                 </span>
                               </div>
                             </mat-list-item>
@@ -273,6 +273,7 @@ exports[`DemoMiscComponent is created 1`] = `
                                   ng-reflect-klass="break-text"
                                   ng-reflect-ng-class="[object Object]"
                                 >
+                                  
                                   
                                   
                                   
@@ -317,7 +318,7 @@ exports[`DemoMiscComponent is created 1`] = `
                                 <span
                                   class="no-break-text ng-tns-c2-0"
                                 >
-                                  Nodes
+                                   Nodes 
                                 </span>
                               </div>
                             </mat-list-item>
@@ -346,6 +347,7 @@ exports[`DemoMiscComponent is created 1`] = `
                                   ng-reflect-klass="break-text"
                                   ng-reflect-ng-class="[object Object]"
                                 >
+                                  
                                   
                                   
                                   

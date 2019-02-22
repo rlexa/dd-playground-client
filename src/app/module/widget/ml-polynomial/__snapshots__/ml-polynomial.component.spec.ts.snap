@@ -594,7 +594,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                 <span
                                   class="no-break-text ng-tns-c3-0"
                                 >
-                                  Backend
+                                   Backend 
                                 </span>
                               </div>
                             </mat-list-item>
@@ -623,6 +623,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                   ng-reflect-klass="break-text"
                                   ng-reflect-ng-class="[object Object]"
                                 >
+                                  
                                   
                                   
                                   
@@ -667,7 +668,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                 <span
                                   class="no-break-text ng-tns-c3-0"
                                 >
-                                  Unreliable
+                                   Unreliable 
                                 </span>
                               </div>
                             </mat-list-item>
@@ -705,6 +706,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                   
                                   
                                   
+                                  
                                 </span>
                               </div>
                             </mat-list-item>
@@ -735,7 +737,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                 <span
                                   class="no-break-text ng-tns-c3-0"
                                 >
-                                  Reasons
+                                   Reasons (1) 
                                 </span>
                               </div>
                             </mat-list-item>
@@ -818,6 +820,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                     </div>
                                   </app-simple-view>
                                   
+                                  
                                 </span>
                               </div>
                             </mat-list-item>
@@ -848,7 +851,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                 <span
                                   class="no-break-text ng-tns-c3-0"
                                 >
-                                  Num Tensors
+                                   Num Tensors 
                                 </span>
                               </div>
                             </mat-list-item>
@@ -877,6 +880,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                   ng-reflect-klass="break-text"
                                   ng-reflect-ng-class="[object Object]"
                                 >
+                                  
                                   
                                   
                                   
@@ -921,7 +925,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                 <span
                                   class="no-break-text ng-tns-c3-0"
                                 >
-                                  Num Data Buffers
+                                   Num Data Buffers 
                                 </span>
                               </div>
                             </mat-list-item>
@@ -950,6 +954,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                   ng-reflect-klass="break-text"
                                   ng-reflect-ng-class="[object Object]"
                                 >
+                                  
                                   
                                   
                                   
@@ -994,7 +999,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                 <span
                                   class="no-break-text ng-tns-c3-0"
                                 >
-                                  Num Bytes
+                                   Num Bytes 
                                 </span>
                               </div>
                             </mat-list-item>
@@ -1023,6 +1028,7 @@ exports[`MlPolynomialComponent is created 1`] = `
                                   ng-reflect-klass="break-text"
                                   ng-reflect-ng-class="[object Object]"
                                 >
+                                  
                                   
                                   
                                   

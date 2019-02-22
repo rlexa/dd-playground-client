@@ -84,7 +84,7 @@ exports[`DemoStateComponent is created 1`] = `
                             <span
                               class="no-break-text ng-tns-c1-0"
                             >
-                              Game
+                               Game 
                             </span>
                           </div>
                         </mat-list-item>
@@ -113,6 +113,7 @@ exports[`DemoStateComponent is created 1`] = `
                               ng-reflect-klass="break-text"
                               ng-reflect-ng-class="[object Object]"
                             >
+                              
                               
                               
                               
@@ -197,7 +198,7 @@ exports[`DemoStateComponent is created 1`] = `
                             <span
                               class="no-break-text ng-tns-c1-0"
                             >
-                              Global Values
+                               Global Values 
                             </span>
                           </div>
                         </mat-list-item>
@@ -226,6 +227,7 @@ exports[`DemoStateComponent is created 1`] = `
                               ng-reflect-klass="break-text"
                               ng-reflect-ng-class="[object Object]"
                             >
+                              
                               
                               
                               
@@ -310,7 +312,7 @@ exports[`DemoStateComponent is created 1`] = `
                             <span
                               class="no-break-text ng-tns-c1-0"
                             >
-                              Ui
+                               Ui 
                             </span>
                           </div>
                         </mat-list-item>
@@ -339,6 +341,7 @@ exports[`DemoStateComponent is created 1`] = `
                               ng-reflect-klass="break-text"
                               ng-reflect-ng-class="[object Object]"
                             >
+                              
                               
                               
                               

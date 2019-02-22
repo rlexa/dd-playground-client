@@ -76,7 +76,7 @@ exports[`BuildComponent is created 1`] = `
                           <span
                             class="no-break-text ng-tns-c1-0"
                           >
-                            Build Id
+                             Build Id 
                           </span>
                         </div>
                       </mat-list-item>
@@ -114,6 +114,7 @@ exports[`BuildComponent is created 1`] = `
                              - 
                             
                             
+                            
                           </span>
                         </div>
                       </mat-list-item>
@@ -144,7 +145,7 @@ exports[`BuildComponent is created 1`] = `
                           <span
                             class="no-break-text ng-tns-c1-0"
                           >
-                            Build Revision
+                             Build Revision 
                           </span>
                         </div>
                       </mat-list-item>
@@ -182,6 +183,7 @@ exports[`BuildComponent is created 1`] = `
                              - 
                             
                             
+                            
                           </span>
                         </div>
                       </mat-list-item>
@@ -212,7 +214,7 @@ exports[`BuildComponent is created 1`] = `
                           <span
                             class="no-break-text ng-tns-c1-0"
                           >
-                            Build System
+                             Build System 
                           </span>
                         </div>
                       </mat-list-item>
@@ -250,6 +252,7 @@ exports[`BuildComponent is created 1`] = `
                              - 
                             
                             
+                            
                           </span>
                         </div>
                       </mat-list-item>
@@ -280,7 +283,7 @@ exports[`BuildComponent is created 1`] = `
                           <span
                             class="no-break-text ng-tns-c1-0"
                           >
-                            Build Variant
+                             Build Variant 
                           </span>
                         </div>
                       </mat-list-item>
@@ -318,6 +321,7 @@ exports[`BuildComponent is created 1`] = `
                              - 
                             
                             
+                            
                           </span>
                         </div>
                       </mat-list-item>
@@ -348,7 +352,7 @@ exports[`BuildComponent is created 1`] = `
                           <span
                             class="no-break-text ng-tns-c1-0"
                           >
-                            Is Production
+                             Is Production 
                           </span>
                         </div>
                       </mat-list-item>
@@ -386,6 +390,7 @@ exports[`BuildComponent is created 1`] = `
                             
                             
                             
+                            
                           </span>
                         </div>
                       </mat-list-item>
@@ -416,7 +421,7 @@ exports[`BuildComponent is created 1`] = `
                           <span
                             class="no-break-text ng-tns-c1-0"
                           >
-                            Project
+                             Project 
                           </span>
                         </div>
                       </mat-list-item>
@@ -454,6 +459,7 @@ exports[`BuildComponent is created 1`] = `
                              - 
                             
                             
+                            
                           </span>
                         </div>
                       </mat-list-item>
@@ -484,7 +490,7 @@ exports[`BuildComponent is created 1`] = `
                           <span
                             class="no-break-text ng-tns-c1-0"
                           >
-                            Project Parent
+                             Project Parent 
                           </span>
                         </div>
                       </mat-list-item>
@@ -522,6 +528,7 @@ exports[`BuildComponent is created 1`] = `
                              - 
                             
                             
+                            
                           </span>
                         </div>
                       </mat-list-item>
@@ -552,7 +559,7 @@ exports[`BuildComponent is created 1`] = `
                           <span
                             class="no-break-text ng-tns-c1-0"
                           >
-                            Title
+                             Title 
                           </span>
                         </div>
                       </mat-list-item>
@@ -590,6 +597,7 @@ exports[`BuildComponent is created 1`] = `
                              - 
                             
                             
+                            
                           </span>
                         </div>
                       </mat-list-item>
@@ -620,7 +628,7 @@ exports[`BuildComponent is created 1`] = `
                           <span
                             class="no-break-text ng-tns-c1-0"
                           >
-                            Version
+                             Version 
                           </span>
                         </div>
                       </mat-list-item>
@@ -656,6 +664,7 @@ exports[`BuildComponent is created 1`] = `
                             
                             
                              - 
+                            
                             
                             
                           </span>

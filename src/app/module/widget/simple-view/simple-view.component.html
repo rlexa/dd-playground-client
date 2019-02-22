@@ -12,13 +12,16 @@
               <tr *ngFor="let key of keys; let iindex = index;">
                 <td [style.verticalAlign]="'top'">
                   <mat-list-item>
-                    <span class="no-break-text">{{ key | startuppercase | ripupper }}</span>
+                    <span class="no-break-text">
+                      {{ (key | startuppercase | ripupper) + (types[iindex] === 'array' ? ' (' + model[key].length + ')' : '') }}
+                    </span>
                   </mat-list-item>
                 </td>
                 <!-- <td class="contenthv" [style.verticalAlign]="'top'">{{ types[iindex] }}</td> -->
                 <td>
                   <mat-list-item [@TRIGGER_WobbleX]="['recursive'].includes(types[iindex]) ? null : model[key]">
-                    <span class="break-text" [ngClass]="{'value-numeric': types[iindex] === 'number', 'size-data-label': isWidthConstrained}">
+                    <span class="break-text"
+                      [ngClass]="{'value-numeric': types[iindex] === 'number', 'size-data-label': isWidthConstrained}">
                       <ng-container [ngSwitch]="types[iindex]">
                         <a *ngSwitchCase="'url'" [href]="model[key]">{{ model[key] }}</a>
                         <span *ngSwitchCase="'timestamp'" [ngClass]="{'clickable': clickables[key], 'color-accent': clickables[key]}"
@@ -27,9 +30,14 @@
                         </span>
                         <ng-container *ngSwitchCase="'json'"> {{ model[key] | json }} </ng-container>
                         <ng-container *ngSwitchCase="'void'"> {{ '-' }} </ng-container>
+                        <app-simple-view *ngSwitchCase="'array'" [data]="model[key]" [isWidthConstrained]="isWidthConstrained"
+                          [isExpandable]="true" [isExpanded]="false" [isClickable]="isClickable"
+                          (clicked)="onClicked($event.key, $event.value)"></app-simple-view>
                         <app-simple-view *ngSwitchCase="'recursive'" [data]="model[key]" [isWidthConstrained]="isWidthConstrained"
-                          [isExpandable]="true" [isExpanded]="false" [isClickable]="isClickable" (clicked)="onClicked($event.key, $event.value)"></app-simple-view>
-                        <span *ngSwitchDefault [ngClass]="{'clickable': clickables[key], 'color-accent': clickables[key]}" (click)="clickables[key] ? onClicked(key, model[key]) : {}">
+                          [isExpandable]="true" [isExpanded]="false" [isClickable]="isClickable"
+                          (clicked)="onClicked($event.key, $event.value)"></app-simple-view>
+                        <span *ngSwitchDefault [ngClass]="{'clickable': clickables[key], 'color-accent': clickables[key]}"
+                          (click)="clickables[key] ? onClicked(key, model[key]) : {}">
                           {{ model[key] }}
                         </span>
                       </ng-container>

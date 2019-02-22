@@ -1,8 +1,20 @@
 import { EngineNodeShell } from 'app/module/widget/render-canvas/engine/engine-node-shell';
 import { DoneSubject, RxCleanup, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, of, Subject } from 'rxjs';
-import { catchError, map, startWith, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, debounceTime, filter, map, startWith, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 import { EngineGlobal, EngineNode } from './types';
+
+export interface NodeStat<T> {
+  name?: string,
+  kids: NodeStat<any>[],
+  state?: T,
+}
+
+export const nodeToNodeStat = <T>(node: EngineNode<T>, index = 0) => !node ? null : <NodeStat<T>>{
+  name: index + (node.name ? ' ' + node.name : ''),
+  state: node.state,
+  kids: node.kids.map((_, ii) => nodeToNodeStat(_, ii)),
+};
 
 export class Engine implements EngineGlobal {
   constructor() {
@@ -29,17 +41,20 @@ export class Engine implements EngineGlobal {
         takeUntil(this.done$))
       .subscribe(() => requestAnimationFrame(rxNext_(this.frame$)));
 
+    this.changed$.pipe(debounceTime(0)).subscribe(this.buildNodeStat);
+
     this.msLast = performance.now();
     requestAnimationFrame(rxNext_(this.frame$));
 
-    this.root = new EngineNodeShell(this, null, 'root');
+    this.root = new EngineNodeShell(null, 'root');
+    this.root.engine = this;
   }
 
   @RxCleanup() private readonly done$ = new DoneSubject();
   @RxCleanup() private readonly canvasId$ = new Subject<string>();
   @RxCleanup() private readonly frame$ = new Subject<number>();
   @RxCleanup() private readonly changes$ = new BehaviorSubject(0);
-  readonly root: EngineNode<any> = null;
+  @RxCleanup() readonly nodeStat$ = new BehaviorSubject(<NodeStat<any>>null);
 
   private msLast = 0;
 
@@ -51,12 +66,39 @@ export class Engine implements EngineGlobal {
     }),
     takeUntil(this.done$));
 
-  setCanvasId = rxNext_(this.canvasId$);
+  readonly root: EngineNode<any> = null;
+  readonly changed$ = this.changes$.pipe(filter(_ => _ > 0));
 
-  markChanges = () => this.changes$.next(this.changes$.value + 1);
+  setCanvasId = rxNext_(this.canvasId$);
 
   // tslint:disable:use-life-cycle-interface
   ngOnDestroy() {
     if (this.root) { this.root.ngOnDestroy(); }
   }
+
+  markChanges = () => this.changes$.next(this.changes$.value + 1);
+
+  addNode = (kid: EngineNode<any>, parent = this.root) => {
+    if (kid && kid !== this.root && kid !== parent && kid.parent !== parent) {
+      kid.engine = this;
+      if (kid.parent) {
+        kid.parent.delNode(kid);
+      }
+      parent.kids = [...parent.kids, kid];
+      kid.parent = parent;
+    }
+  }
+
+  delNode = (kid: EngineNode<any>, destroy = false) => {
+    if (kid && kid !== this.root) {
+      if (kid.parent) {
+        kid.parent.kids = kid.parent.kids.filter(_ => _ !== kid);
+      }
+      if (destroy) {
+        kid.ngOnDestroy();
+      }
+    }
+  }
+
+  private buildNodeStat = () => this.nodeStat$.next(nodeToNodeStat(this.root));
 }

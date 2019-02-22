@@ -4,7 +4,7 @@ import { FORMAT_DATE_TIMESTAMP } from 'app/presets';
 import { isNumeric, isWeb, WithDataProperty } from 'app/util';
 import { map } from 'rxjs/operators';
 
-type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string' | 'void';
+type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string' | 'void' | 'array';
 
 @Component({
   selector: 'app-simple-view',
@@ -34,7 +34,7 @@ export class SimpleViewComponent extends WithDataProperty<Object> implements OnD
   onClicked = (key: string, value: any) => this.clicked.emit({ key, value });
 
   private guessType = (val: any): CellType => val === null || val === undefined ? 'void' :
-    typeof val === 'object' ? val instanceof Date ? 'timestamp' : 'recursive' :
+    typeof val === 'object' ? val instanceof Date ? 'timestamp' : Array.isArray(val) ? 'array' : 'recursive' :
       typeof val === 'number' ? 'number' :
         typeof val === 'string' ? isWeb(val) ? 'url' : isNumeric(val) ? 'number' : 'string' : 'json';
 

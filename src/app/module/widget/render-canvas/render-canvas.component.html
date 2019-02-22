@@ -1,3 +1,5 @@
 <div ddFlexbox="hyscsw">
   <canvas id="render-canvas" class="childhv" [width]="width$ | async" [height]="height$ | async"></canvas>
+
+  <app-simple-view [data]="nodeStat$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
 </div>

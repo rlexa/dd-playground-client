@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { DoneSubject, RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { Engine, EngineNodeFillCanvasColor } from './engine';
 
 @Component({
@@ -16,6 +16,8 @@ export class RenderCanvasComponent implements OnDestroy, OnInit {
   @RxCleanup() readonly width$ = new BehaviorSubject(400);
   @RxCleanup() readonly engine$ = new BehaviorSubject(new Engine());
 
+  readonly nodeStat$ = this.engine$.pipe(switchMap(_ => _.nodeStat$));
+
   ngOnDestroy() {
     this.engine$.value.ngOnDestroy();
   }
@@ -29,6 +31,6 @@ export class RenderCanvasComponent implements OnDestroy, OnInit {
       .subscribe(([engine]) => engine.setCanvasId('render-canvas'));
 
     of(this.engine$.value)
-      .subscribe(engine => engine.root.addNode(new EngineNodeFillCanvasColor(engine, 'pink', 'bg')));
+      .subscribe(engine => engine.addNode(new EngineNodeFillCanvasColor('pink', 'bg')));
   }
 }

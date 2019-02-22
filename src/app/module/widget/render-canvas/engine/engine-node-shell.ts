@@ -4,22 +4,44 @@ import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { EngineGlobal, EngineNode, FrameParam } from './types';
 
 export class EngineNodeShell<T> implements EngineNode<T> {
-  constructor(global: EngineGlobal, state: T | Observable<T>, public name: string = null) {
+  constructor(state: T | Observable<T>, name: string = null) {
+    this.name = name;
     this.init();
     if (isObservable(state)) {
       state.pipe(takeUntil(this.done$)).subscribe(_ => this.state = _);
     } else {
       this.state = state;
     }
-    if (typeof this.changed$ === 'function') {
-      this.changed$(this.state$).subscribe(global.markChanges);
+  }
+
+  private _engine = <EngineGlobal>null;
+  private _name = <string>null;
+  @RxCleanup() protected readonly done$ = new DoneSubject();
+  @RxCleanup() readonly state$ = new BehaviorSubject(<T>null);
+  parent = <EngineNode<any>>null;
+  kids = <EngineNode<any>[]>[];
+
+  get engine() { return this._engine; }
+  set engine(val: EngineGlobal) {
+    if (!this._engine) {
+      this._engine = val;
+      if (this._engine) {
+        if (typeof this.changed$ === 'function') {
+          this.changed$(this.state$).subscribe(this.engine.markChanges);
+        }
+      }
     }
   }
 
-  parent = <EngineNode<any>>null;
-  kids = <EngineNode<any>[]>[];
-  @RxCleanup() protected readonly done$ = new DoneSubject();
-  @RxCleanup() readonly state$ = new BehaviorSubject(<T>null);
+  get name() { return this._name; }
+  set name(val: string) {
+    if (this._name !== val) {
+      this._name = val;
+      if (this.engine) {
+        this.engine.markChanges();
+      }
+    }
+  }
 
   get state() { return this.state$.value; }
   set state(val: T) { this.state$.next(val); }
@@ -41,25 +63,8 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     this.kids.forEach(_ => _.ngOnDestroy());
   }
 
-  addNode = (kid: EngineNode<any>) => {
-    if (kid && kid.parent !== this) {
-      if (kid.parent) {
-        kid.parent.delNode(kid);
-      }
-      this.kids = [...this.kids, kid];
-      kid.parent = this;
-    }
-  }
-
-  delNode = (kid: EngineNode<any>, destroy?: boolean) => {
-    if (kid && kid.parent === this) {
-      this.kids = this.kids.filter(_ => _ !== kid);
-      kid.parent = null;
-      if (destroy) {
-        kid.ngOnDestroy();
-      }
-    }
-  }
+  addNode = (kid: EngineNode<any>) => this.engine ? this.engine.addNode(kid, this) : {};
+  delNode = (kid: EngineNode<any>, destroy = false) => this.engine ? this.engine.delNode(kid, destroy) : {};
 
   frame = (param: FrameParam) => [this.frame_self, this.frame_kids]
     .filter(_ => typeof _ === 'function')
