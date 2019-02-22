@@ -41,7 +41,7 @@ export class Engine implements EngineGlobal {
         takeUntil(this.done$))
       .subscribe(() => requestAnimationFrame(rxNext_(this.frame$)));
 
-    this.changed$.pipe(debounceTime(0)).subscribe(this.buildNodeStat);
+    this.changed$.pipe(debounceTime(0), map(() => this.nodeToStat(this.root))).subscribe(rxNext_(this.nodeStat$));
 
     this.msLast = performance.now();
     requestAnimationFrame(rxNext_(this.frame$));
@@ -69,6 +69,7 @@ export class Engine implements EngineGlobal {
   readonly root: EngineNode<any> = null;
   readonly changed$ = this.changes$.pipe(filter(_ => _ > 0));
 
+  nodeToStat = nodeToNodeStat;
   setCanvasId = rxNext_(this.canvasId$);
 
   // tslint:disable:use-life-cycle-interface
@@ -99,6 +100,4 @@ export class Engine implements EngineGlobal {
       }
     }
   }
-
-  private buildNodeStat = () => this.nodeStat$.next(nodeToNodeStat(this.root));
 }
