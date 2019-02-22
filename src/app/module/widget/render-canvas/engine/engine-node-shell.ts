@@ -1,21 +1,28 @@
-import { RxCleanup, rxNext_ } from 'dd-rxjs';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { DoneSubject, RxCleanup } from 'dd-rxjs';
+import { BehaviorSubject, isObservable, Observable } from 'rxjs';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { EngineGlobal, EngineNode, FrameParam } from './types';
 
 export class EngineNodeShell<T> implements EngineNode<T> {
-  constructor(global: EngineGlobal, state: T) {
+  constructor(global: EngineGlobal, state: T | Observable<T>, public name: string = null) {
     this.init();
-    this.state$.next(state);
+    if (isObservable(state)) {
+      state.pipe(takeUntil(this.done$)).subscribe(_ => this.state = _);
+    } else {
+      this.state = state;
+    }
     if (typeof this.changed$ === 'function') {
       this.changed$(this.state$).subscribe(global.markChanges);
     }
   }
 
+  parent = <EngineNode<any>>null;
   kids = <EngineNode<any>[]>[];
+  @RxCleanup() protected readonly done$ = new DoneSubject();
   @RxCleanup() readonly state$ = new BehaviorSubject(<T>null);
 
-  setState = rxNext_(this.state$);
+  get state() { return this.state$.value; }
+  set state(val: T) { this.state$.next(val); }
 
   protected changed$: (state$: Observable<T>) => Observable<any>;
 
@@ -34,6 +41,26 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     this.kids.forEach(_ => _.ngOnDestroy());
   }
 
+  addNode = (kid: EngineNode<any>) => {
+    if (kid && kid.parent !== this) {
+      if (kid.parent) {
+        kid.parent.delNode(kid);
+      }
+      this.kids = [...this.kids, kid];
+      kid.parent = this;
+    }
+  }
+
+  delNode = (kid: EngineNode<any>, destroy?: boolean) => {
+    if (kid && kid.parent === this) {
+      this.kids = this.kids.filter(_ => _ !== kid);
+      kid.parent = null;
+      if (destroy) {
+        kid.ngOnDestroy();
+      }
+    }
+  }
+
   frame = (param: FrameParam) => [this.frame_self, this.frame_kids]
     .filter(_ => typeof _ === 'function')
     .forEach(_ => _(param, this.state$.value));
@@ -43,10 +70,10 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     .forEach(_ => _(ctx, this.state$.value));
 
   protected init() {
-    this.changed$ = (state$) => state$.pipe(distinctUntilChanged());
     this.render_kids = (ctx, state) => this.kids.forEach(_ => _.render(ctx));
-    this.frame_kids = (param, state) => this.kids.forEach(_ => _.frame({ ...param, parent: this }));
+    this.frame_kids = (param, state) => this.kids.forEach(_ => _.frame(param));
     this.initFunctions();
+    this.changed$ = this.changed$ || ((state$) => state$.pipe(distinctUntilChanged()));
   }
 
   protected initFunctions() { }

@@ -1,7 +1,7 @@
+import { EngineNodeShell } from 'app/module/widget/render-canvas/engine/engine-node-shell';
 import { DoneSubject, RxCleanup, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { catchError, map, startWith, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
-import { EngineNodeFillCanvasColor } from './nodes-simple';
 import { EngineGlobal, EngineNode } from './types';
 
 export class Engine implements EngineGlobal {
@@ -21,7 +21,7 @@ export class Engine implements EngineGlobal {
             this.changes$.next(0);
           }
         }),
-        tap(_ => _.root ? _.root.frame({ msDelta: _.msDelta, parent: null }) : {}),
+        tap(_ => _.root ? _.root.frame({ msDelta: _.msDelta }) : {}),
         catchError(err => {
           console.error(err);
           return of(null);
@@ -32,14 +32,14 @@ export class Engine implements EngineGlobal {
     this.msLast = performance.now();
     requestAnimationFrame(rxNext_(this.frame$));
 
-    this.root = new EngineNodeFillCanvasColor(this, 'pink');
+    this.root = new EngineNodeShell(this, null, 'root');
   }
 
   @RxCleanup() private readonly done$ = new DoneSubject();
   @RxCleanup() private readonly canvasId$ = new Subject<string>();
   @RxCleanup() private readonly frame$ = new Subject<number>();
   @RxCleanup() private readonly changes$ = new BehaviorSubject(0);
-  private readonly root: EngineNode<any> = null;
+  readonly root: EngineNode<any> = null;
 
   private msLast = 0;
 
@@ -52,6 +52,7 @@ export class Engine implements EngineGlobal {
     takeUntil(this.done$));
 
   setCanvasId = rxNext_(this.canvasId$);
+
   markChanges = () => this.changes$.next(this.changes$.value + 1);
 
   // tslint:disable:use-life-cycle-interface
