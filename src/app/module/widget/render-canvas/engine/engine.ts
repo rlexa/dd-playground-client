@@ -61,7 +61,7 @@ export class Engine implements EngineGlobal {
   private readonly ctx$ = this.canvasId$.pipe(
     startWith(null),
     map(id => {
-      try { return (document.getElementById(id) as HTMLCanvasElement).getContext('2d'); } catch { }
+      try { return (document.getElementById(id) as HTMLCanvasElement).getContext('2d', { alpha: false }); } catch { }
       return null;
     }),
     takeUntil(this.done$));
