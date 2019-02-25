@@ -315,13 +315,13 @@ exports[`DashboardComponent is created 1`] = `
         />
       </mat-toolbar>
     </div>
-    <div
+    <main
       class="position-relative"
       ng-reflect-ng-style="[object Object]"
     >
       <router-outlet />
-    </div>
-    <div
+    </main>
+    <footer
       ng-reflect-ng-style="[object Object]"
     >
       
@@ -360,7 +360,7 @@ exports[`DashboardComponent is created 1`] = `
           </button>
         </app-version>
       </div>
-    </div>
+    </footer>
   </div>
 </app-dashboard>
 `;
