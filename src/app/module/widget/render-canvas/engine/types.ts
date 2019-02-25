@@ -1,3 +1,5 @@
+import { BehaviorSubject } from 'rxjs';
+
 export interface EngineGlobal {
   addNode: (kid: EngineNode<any>, parent: EngineNode<any>) => void;
   delNode: (kid: EngineNode<any>, destroy: boolean) => void;
@@ -5,15 +7,17 @@ export interface EngineGlobal {
 }
 
 export interface EngineNode<T> {
-  engine: EngineGlobal;
   parent: EngineNode<any>;
   kids: EngineNode<any>[];
-  name: string;
-  state: T;
+  state$: BehaviorSubject<T>;
+  name$: BehaviorSubject<string>;
+  setEngine: (engine: EngineGlobal) => void;
   addNode: (kid: EngineNode<any>) => void;
   delNode: (kid: EngineNode<any>, destroy?: boolean) => void;
   frame: (param: FrameParam) => void;
   render: (ctx: CanvasRenderingContext2D) => void;
+  setName: (val: string) => void;
+  setState: (val: T) => void;
   ngOnDestroy();
 }
 

@@ -11,8 +11,8 @@ export interface NodeStat<T> {
 }
 
 export const nodeToNodeStat = <T>(node: EngineNode<T>, index = 0) => !node ? null : <NodeStat<T>>{
-  name: index + (node.name ? ' ' + node.name : ''),
-  state: node.state,
+  name: index + (node.name$.value ? ' ' + node.name$.value : ''),
+  state: node.state$.value,
   kids: node.kids.map((_, ii) => nodeToNodeStat(_, ii)),
 };
 
@@ -47,7 +47,7 @@ export class Engine implements EngineGlobal {
     requestAnimationFrame(rxNext_(this.frame$));
 
     this.root = new EngineNodeShell(null, 'root');
-    this.root.engine = this;
+    this.root.setEngine(this);
   }
 
   @RxCleanup() private readonly done$ = new DoneSubject();
@@ -81,7 +81,7 @@ export class Engine implements EngineGlobal {
 
   addNode = (kid: EngineNode<any>, parent = this.root) => {
     if (kid && kid !== this.root && kid !== parent && kid.parent !== parent) {
-      kid.engine = this;
+      kid.setEngine(this);
       if (kid.parent) {
         kid.parent.delNode(kid);
       }

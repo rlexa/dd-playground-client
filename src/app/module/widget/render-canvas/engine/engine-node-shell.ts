@@ -1,4 +1,4 @@
-import { DoneSubject, RxCleanup } from 'dd-rxjs';
+import { DoneSubject, RxCleanup, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, isObservable, Observable } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { EngineGlobal, EngineNode, FrameParam } from './types';
@@ -20,7 +20,8 @@ export interface EngineNodeShellCfg<T> {
 
 export class EngineNodeShell<T> implements EngineNode<T> {
   constructor(state: T | Observable<T>, name: string = null, cfg: EngineNodeShellCfg<T> = {}) {
-    this.name = name;
+    this.setName(name);
+    this.name$.pipe(distinctUntilChanged()).subscribe(this.markChanges);
 
     this._cfg = {
       render_kids: (ctx, _state, kids) => kids.forEach(_ => _.render(ctx)),
@@ -30,44 +31,33 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     };
 
     if (isObservable(state)) {
-      state.pipe(takeUntil(this.done$)).subscribe(_ => this.state = _);
+      state.pipe(takeUntil(this.done$)).subscribe(this.setState);
     } else {
-      this.state = state;
+      this.setState(state);
     }
   }
 
+  private engine = <EngineGlobal>null;
   private _cfg = <EngineNodeShellCfg<T>>null;
-  private _engine = <EngineGlobal>null;
-  private _name = <string>null;
   @RxCleanup() protected readonly done$ = new DoneSubject();
+  @RxCleanup() readonly name$ = new BehaviorSubject(<string>null);
   @RxCleanup() readonly state$ = new BehaviorSubject(<T>null);
   parent = <EngineNode<any>>null;
   kids = <EngineNode<any>[]>[];
 
-  get engine() { return this._engine; }
-  set engine(val: EngineGlobal) {
-    if (!this._engine) {
-      this._engine = val;
-      if (this._engine) {
+  setName = rxNext_(this.name$);
+  setState = rxNext_(this.state$);
+
+  setEngine(val: EngineGlobal) {
+    if (!this.engine) {
+      this.engine = val;
+      if (this.engine) {
         if (typeof this._cfg.changed$ === 'function') {
-          this._cfg.changed$(this.state$).subscribe(this.engine.markChanges);
+          this._cfg.changed$(this.state$).subscribe(this.markChanges);
         }
       }
     }
   }
-
-  get name() { return this._name; }
-  set name(val: string) {
-    if (this._name !== val) {
-      this._name = val;
-      if (this.engine) {
-        this.engine.markChanges();
-      }
-    }
-  }
-
-  get state() { return this.state$.value; }
-  set state(val: T) { this.state$.next(val); }
 
   // tslint:disable:use-life-cycle-interface
   ngOnDestroy() {
@@ -85,4 +75,6 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     [this._cfg.render_pre, this._cfg.render_self, this._cfg.render_kids_pre, this._cfg.render_kids, this._cfg.render_kids_post, this._cfg.render_post]
       .filter(_ => typeof _ === 'function')
       .forEach(_ => _(ctx, this.state$.value, this.kids));
+
+  private markChanges = () => this.engine ? this.engine.markChanges() : {};
 }
