@@ -4,4 +4,4 @@ import { ValueOrStream } from './types';
 
 export const enEmpty = (name?: string) => new EngineNodeShell(null, name);
 export const enFillCanvas = (data: ValueOrStream<WithColor>, name?: string) => new EngineNodeShell(data, name, { render_self: fillCanvasWithColor });
-export const enText = (data: ValueOrStream<WithColor & WithText>, name?: string) => new EngineNodeShell(data, name, { render_self: renderText });
+export const enText = (data: ValueOrStream<WithText>, name?: string) => new EngineNodeShell(data, name, { render_self: renderText });

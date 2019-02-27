@@ -1,22 +1,36 @@
-export interface WithColor { color?: string, }
-export interface WithText { text?: string, font?: string, base?: CanvasTextBaseline, align?: CanvasTextAlign }
+export interface WithColor {
+  color?: string,
+}
 
-export const fillRect = (ctx: CanvasRenderingContext2D, xx: number, yy: number, ww: number, hh: number) => ctx.fillRect(xx, yy, ww, hh);
+export interface WithOffset {
+  offsetX?: number,
+  offsetY?: number,
+}
+
+export interface WithSize {
+  height?: number,
+  width?: number,
+}
+
+export interface WithRect extends WithOffset, WithSize { }
+
+export interface WithText extends WithColor, WithOffset {
+  align?: CanvasTextAlign,
+  base?: CanvasTextBaseline,
+  font?: string,
+  text?: string,
+}
+
+export const fillCanvas = (ctx: CanvasRenderingContext2D) => fillRect(ctx, { offsetX: 0, offsetY: 0, width: ctx.canvas.width, height: ctx.canvas.height });
 export const fillStyle = (ctx: CanvasRenderingContext2D, data: WithColor) => data && data.color ? ctx.fillStyle = data.color : {};
-export const fillText = (ctx: CanvasRenderingContext2D, data: WithText) => data && data.text ? ctx.fillText(data.text || '', 0, 0) : {};
+export const fillRect = (ctx: CanvasRenderingContext2D, data: WithRect) => data ? ctx.fillRect(data.offsetX || 0, data.offsetY || 0, data.width || 0, data.height || 0) : {};
+export const fillText = (ctx: CanvasRenderingContext2D, data: WithText) => data && data.text ? ctx.fillText(data.text || '', data.offsetX || 0, data.offsetY || 0) : {};
 export const textAlign = (ctx: CanvasRenderingContext2D, data: WithText) => data ? ctx.textAlign = data.align || 'left' : {};
 export const textBase = (ctx: CanvasRenderingContext2D, data: WithText) => data ? ctx.textBaseline = data.base || 'top' : {};
 export const textFont = (ctx: CanvasRenderingContext2D, data: WithText) => data && data.font ? ctx.font = data.font : {};
 
-export const fillCanvasWithColor = (ctx: CanvasRenderingContext2D, data: WithColor) => {
-  fillStyle(ctx, data);
-  fillRect(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height);
-}
+const each = <T>(ctx: CanvasRenderingContext2D, data: T, ...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) => (funcs || []).forEach(_ => _(ctx, data));
+const each_ = <T>(...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) => (ctx: CanvasRenderingContext2D, data: T) => each(ctx, data, ...funcs);
 
-export const renderText = (ctx: CanvasRenderingContext2D, data: WithText & WithColor) => {
-  textAlign(ctx, data);
-  textBase(ctx, data);
-  textFont(ctx, data);
-  fillStyle(ctx, data);
-  fillText(ctx, data);
-}
+export const fillCanvasWithColor = each_(fillStyle, fillCanvas);
+export const renderText = each_<WithText>(fillStyle, textAlign, textBase, textFont, fillText);
