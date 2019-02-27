@@ -1,7 +1,7 @@
 import { EngineNodeShell } from 'app/module/widget/render-canvas/engine/engine-node-shell';
 import { DoneSubject, RxCleanup, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, of, Subject } from 'rxjs';
-import { catchError, debounceTime, filter, map, startWith, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, filter, map, startWith, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 import { EngineGlobal, EngineNode } from './types';
 
 export interface NodeStat<T> {
@@ -41,8 +41,6 @@ export class Engine implements EngineGlobal {
         takeUntil(this.done$))
       .subscribe(() => requestAnimationFrame(rxNext_(this.frame$)));
 
-    this.changed$.pipe(debounceTime(0), map(() => this.nodeToStat(this.root))).subscribe(rxNext_(this.nodeStat$));
-
     this.msLast = performance.now();
     requestAnimationFrame(rxNext_(this.frame$));
 
@@ -54,7 +52,6 @@ export class Engine implements EngineGlobal {
   @RxCleanup() private readonly canvasId$ = new Subject<string>();
   @RxCleanup() private readonly frame$ = new Subject<number>();
   @RxCleanup() private readonly changes$ = new BehaviorSubject(0);
-  @RxCleanup() readonly nodeStat$ = new BehaviorSubject(<NodeStat<any>>null);
 
   private msLast = 0;
 
