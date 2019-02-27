@@ -1,7 +1,7 @@
 import { DoneSubject, RxCleanup, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, isObservable, Observable } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { EngineGlobal, EngineNode, FrameParam } from './types';
+import { EngineGlobal, EngineNode, FrameParam, ValueOrStream } from './types';
 
 export type HandleRender<T> = (ctx: CanvasRenderingContext2D, state: T, kids: EngineNode<any>[]) => void;
 export type HandleFrame<T> = (param: FrameParam, state: T, kids: EngineNode<any>[]) => void;
@@ -19,7 +19,7 @@ export interface EngineNodeShellCfg<T> {
 }
 
 export class EngineNodeShell<T> implements EngineNode<T> {
-  constructor(state: T | Observable<T>, name: string = null, cfg: EngineNodeShellCfg<T> = {}) {
+  constructor(state: ValueOrStream<T>, name: string = null, cfg: EngineNodeShellCfg<T> = {}) {
     this.setName(name);
     this.name$.pipe(distinctUntilChanged()).subscribe(this.markChanges);
 
@@ -64,7 +64,7 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     this.kids.forEach(_ => _.ngOnDestroy());
   }
 
-  addNode = (kid: EngineNode<any>) => this.engine ? this.engine.addNode(kid, this) : {};
+  addNode = (kid: EngineNode<any>) => this.engine ? this.engine.addNode(kid, this) : kid;
   delNode = (kid: EngineNode<any>, destroy = false) => this.engine ? this.engine.delNode(kid, destroy) : {};
 
   frame = (param: FrameParam) => [this._cfg.frame_self, this._cfg.frame_kids]

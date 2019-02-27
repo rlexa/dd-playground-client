@@ -1,7 +1,9 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+export type ValueOrStream<T> = T | Observable<T>;
 
 export interface EngineGlobal {
-  addNode: (kid: EngineNode<any>, parent: EngineNode<any>) => void;
+  addNode: (kid: EngineNode<any>, parent: EngineNode<any>) => EngineNode<any>;
   delNode: (kid: EngineNode<any>, destroy: boolean) => void;
   markChanges: () => void;
 }

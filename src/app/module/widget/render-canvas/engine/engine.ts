@@ -85,6 +85,7 @@ export class Engine implements EngineGlobal {
       parent.kids = [...parent.kids, kid];
       kid.parent = parent;
     }
+    return kid;
   }
 
   delNode = (kid: EngineNode<any>, destroy = false) => {
