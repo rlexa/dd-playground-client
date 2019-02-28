@@ -19,7 +19,7 @@ export interface EngineNode<T> {
   state$: BehaviorSubject<T>;
   name$: BehaviorSubject<string>;
   setEngine: (engine: EngineGlobal) => void;
-  addNode: (kid: EngineNode<any>) => void;
+  addNode: (kid: EngineNode<any>) => EngineNode<any>;
   delNode: (kid: EngineNode<any>, destroy?: boolean) => void;
   frame: (param: FrameParam) => void;
   render: (ctx: CanvasRenderingContext2D) => void;

@@ -31,6 +31,16 @@ export interface WithSize {
 
 export interface WithRect extends WithOffset, WithSize { }
 
+export interface WithTransform {
+  anchorX?: number,
+  anchorY?: number,
+  degrees?: number,
+  moveX?: number,
+  moveY?: number,
+  scaleX?: number,
+  scaleY?: number,
+}
+
 export interface WithText extends WithColor, WithOffset {
   align?: CanvasTextAlign,
   base?: CanvasTextBaseline,
@@ -69,6 +79,17 @@ export const fillText = (ctx: CanvasRenderingContext2D, data: WithText) => data 
 export const textAlign = (ctx: CanvasRenderingContext2D, data: WithText) => data ? ctx.textAlign = data.align || 'left' : {};
 export const textBase = (ctx: CanvasRenderingContext2D, data: WithText) => data ? ctx.textBaseline = data.base || 'top' : {};
 export const textFont = (ctx: CanvasRenderingContext2D, data: WithText) => data && data.font ? ctx.font = data.font : {};
+export const transform = (ctx: CanvasRenderingContext2D, data: WithTransform) => {
+  if (data) {
+    ctx.translate(data.anchorX || 0, data.anchorY || 0);
+    ctx.translate(data.moveX || 0, data.moveY || 0);
+    ctx.rotate((data.degrees || 0) * Math.PI / 180);
+    ctx.scale(data.scaleX === undefined ? 1 : data.scaleX, data.scaleY === undefined ? 1 : data.scaleY);
+    ctx.translate(-(data.anchorX || 0), -(data.anchorY || 0));
+  }
+}
+export const transformPop = (ctx: CanvasRenderingContext2D) => ctx.restore();
+export const transformPush = (ctx: CanvasRenderingContext2D) => ctx.save();
 
 const each = <T>(ctx: CanvasRenderingContext2D, data: T, ...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) => (funcs || []).forEach(_ => _(ctx, data));
 const each_ = <T>(...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) => (ctx: CanvasRenderingContext2D, data: T) => each(ctx, data, ...funcs);

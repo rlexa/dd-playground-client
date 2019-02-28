@@ -1,6 +1,6 @@
 import { isObservable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { renderBackground, renderImage, renderText, WithColor, WithImage, WithImageUrl, WithText } from './context2d';
+import { renderBackground, renderImage, renderText, transform, transformPop, transformPush, WithColor, WithImage, WithImageUrl, WithText, WithTransform } from './context2d';
 import { EngineNodeShell } from './engine-node-shell';
 import { ImageHolder, ValueOrStream } from './types';
 
@@ -19,3 +19,9 @@ export const enImageUrl = (images: ImageHolder<CanvasImageSource>, data: ValueOr
   name);
 
 export const enText = (data: ValueOrStream<WithText>, name?: string) => new EngineNodeShell(data, name, { render_self: renderText });
+
+export const enTransform = (data: ValueOrStream<WithTransform>, name?: string) => new EngineNodeShell(data, name, {
+  render_pre: transformPush,
+  render_self: transform,
+  render_post: transformPop,
+});

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { DoneSubject, RxCleanup, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { debounceTime, filter, map, takeUntil } from 'rxjs/operators';
-import { enEmpty, enFillCanvasColor, Engine, enImageUrl, enText } from './engine';
+import { enEmpty, enFillCanvasColor, Engine, enImageUrl, enText, enTransform } from './engine';
 
 @Component({
   selector: 'app-render-canvas',
@@ -36,7 +36,8 @@ export class RenderCanvasComponent implements OnDestroy, OnInit {
     this.engine.addNode(enFillCanvasColor(this.colorCanvasBg$, 'bg'));
 
     const nodeUi = this.engine.addNode(enEmpty('ui'));
-    nodeUi.addNode(enImageUrl(this.engine.images, { url: 'assets/sprites/abuse-exp1.png', offsetY: 30, dw: 56, dh: 48 }, 'image'));
+    const nodeUiTrafo = nodeUi.addNode(enTransform({ moveX: 10, moveY: 30, scaleX: 2, scaleY: 2, degrees: 45, anchorX: 56 / 2, anchorY: 48 / 2 }));
+    nodeUiTrafo.addNode(enImageUrl(this.engine.images, { url: 'assets/sprites/abuse-exp1.png', dw: 56, dh: 48 }, 'image'));
     nodeUi.addNode(enText({ color: '#ff0000', text: 'Hello world!', font: '30px Consolas' }, 'header'));
   }
 }
