@@ -1,0 +1,58 @@
+{
+  "location": "assets/sprites/",
+  "atlases": {
+    "abuse-exp1": {
+      "asset": "abuse-exp1.png",
+      "width": 280,
+      "height": 192
+    },
+    "abuse-rob2": {
+      "asset": "abuse-rob2.png",
+      "width": 330,
+      "height": 260
+    },
+    "metalslug-train": {
+      "asset": "metalslug-train.png",
+      "width": 1824,
+      "height": 772
+    }
+  },
+  "sprites": {
+    "abuse-exp1-explode1": {
+      "atlas": "abuse-exp1",
+      "frames": 9,
+      "fps": 12,
+      "x": 0,
+      "y": 0,
+      "width": 56,
+      "height": 48
+    },
+    "abuse-exp1-explode2": {
+      "atlas": "abuse-exp1",
+      "frames": 8,
+      "fps": 12,
+      "x": 224,
+      "y": 48,
+      "width": 56,
+      "height": 48
+    },
+    "abuse-rob2-walking": {
+      "atlas": "abuse-rob2",
+      "frames": 10,
+      "fps": 12,
+      "x": 55,
+      "y": 156,
+      "width": 55,
+      "height": 52
+    },
+    "metalslug-train": {
+      "atlas": "metalslug-train",
+      "frames": 16,
+      "fps": 12,
+      "x": 0,
+      "y": 0,
+      "width": 456,
+      "height": 193
+    }
+  }
+}
