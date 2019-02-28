@@ -2,6 +2,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export type ValueOrStream<T> = T | Observable<T>;
 
+export interface ImageHolder<T> {
+  get$(url: string): Observable<T>;
+  ngOnDestroy();
+}
+
 export interface EngineGlobal {
   addNode: (kid: EngineNode<any>, parent: EngineNode<any>) => EngineNode<any>;
   delNode: (kid: EngineNode<any>, destroy: boolean) => void;

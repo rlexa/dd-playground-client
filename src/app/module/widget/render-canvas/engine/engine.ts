@@ -1,3 +1,4 @@
+import { ImageHolderCanvas } from 'app/module/widget/render-canvas/engine/context2d';
 import { EngineNodeShell } from 'app/module/widget/render-canvas/engine/engine-node-shell';
 import { DoneSubject, RxCleanup, rxNext_ } from 'dd-rxjs';
 import { BehaviorSubject, of, Subject } from 'rxjs';
@@ -63,6 +64,7 @@ export class Engine implements EngineGlobal {
     }),
     takeUntil(this.done$));
 
+  readonly images = new ImageHolderCanvas();
   readonly root: EngineNode<any> = null;
   readonly changed$ = this.changes$.pipe(filter(_ => _ > 0));
 
@@ -72,6 +74,7 @@ export class Engine implements EngineGlobal {
   // tslint:disable:use-life-cycle-interface
   ngOnDestroy() {
     if (this.root) { this.root.ngOnDestroy(); }
+    this.images.ngOnDestroy();
   }
 
   markChanges = () => this.changes$.next(this.changes$.value + 1);
