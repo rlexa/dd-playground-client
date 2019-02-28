@@ -17,7 +17,10 @@ export class RenderCanvasComponent implements OnDestroy, OnInit {
   @RxCleanup() readonly colorCanvasBg$ = new BehaviorSubject('#ff4afb');
   readonly engine = new Engine();
 
-  readonly nodeStat$ = this.engine.changed$.pipe(debounceTime(0), map(() => this.engine.nodeToStat(this.engine.root)));
+  readonly stats$ = combineLatest(
+    this.engine.changed$.pipe(debounceTime(0), map(() => this.engine.nodeToStat(this.engine.root))),
+    this.engine.images.images$)
+    .pipe(map(([nodes, images]) => ({ nodes, images })));
 
   setColorCanvasBg = rxNext_(this.colorCanvasBg$);
 

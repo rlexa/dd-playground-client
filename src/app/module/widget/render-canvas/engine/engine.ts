@@ -11,7 +11,7 @@ export interface NodeStat<T> {
   state?: T,
 }
 
-export const nodeToNodeStat = <T>(node: EngineNode<T>, index = 0) => !node ? null : <NodeStat<T>>{
+export const nodeToNodeStat = <T>(node: EngineNode<T>, index = 0): NodeStat<T> => !node ? null : <NodeStat<T>>{
   name: index + (node.name$.value ? ' ' + node.name$.value : ''),
   state: node.state$.value,
   kids: node.kids.map((_, ii) => nodeToNodeStat(_, ii)),

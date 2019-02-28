@@ -2,7 +2,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export type ValueOrStream<T> = T | Observable<T>;
 
+export interface ImageMeta {
+  [key: string]: { width: number, height: number }
+}
+
 export interface ImageHolder<T> {
+  images$: Observable<ImageMeta>;
   get$(url: string): Observable<T>;
   ngOnDestroy();
 }

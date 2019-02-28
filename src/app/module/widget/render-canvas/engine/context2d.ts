@@ -1,7 +1,7 @@
 import { RxCleanup } from 'dd-rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ImageHolder } from './types';
+import { ImageHolder, ImageMeta } from './types';
 
 export interface WithColor {
   color?: string,
@@ -50,6 +50,14 @@ export interface WithText extends WithColor, WithOffset {
 
 export class ImageHolderCanvas implements ImageHolder<CanvasImageSource> {
   @RxCleanup() private readonly urlToImage$ = new BehaviorSubject(<{ [key: string]: CanvasImageSource }>{});
+
+  readonly images$ = this.urlToImage$.pipe(map(urlToImage => Object
+    .entries(urlToImage)
+    .filter(([key, val]) => !!val)
+    .reduce(
+      (acc, [key, val]) => <ImageMeta>({ ...acc, [key]: { width: val.width, height: val.height } }),
+      <ImageMeta>{})));
+
   // tslint:disable:use-life-cycle-interface
   ngOnDestroy() { }
 
