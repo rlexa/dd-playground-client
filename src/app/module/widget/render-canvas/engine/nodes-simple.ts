@@ -5,12 +5,17 @@ import { EngineNodeShell } from './engine-node-shell';
 import { ImageHolder, ValueOrStream } from './types';
 
 export const enEmpty = (name?: string) => new EngineNodeShell(null, name);
+
 export const enFillCanvas = (data: ValueOrStream<WithColor>, name?: string) => new EngineNodeShell(data, name, { render_self: renderBackground });
+export const enFillCanvasColor = (data: ValueOrStream<string>, name?: string) => enFillCanvas(
+  (isObservable(data) ? data : of(data)).pipe(map(color => <WithColor>{ color })),
+  name);
+
 export const enImage = (data: ValueOrStream<WithImage>, name?: string) => new EngineNodeShell(data, name, { render_self: renderImage });
-export const enImageUrl = (images: ImageHolder<CanvasImageSource>, data: ValueOrStream<WithImageUrl>, name?: string) =>
-  enImage(
-    (isObservable(data) ? data : of(data)).pipe(
-      switchMap(_ => images.get$(_.url).pipe(
-        map(image => <WithImage>{ ..._, image })))),
-    name);
+export const enImageUrl = (images: ImageHolder<CanvasImageSource>, data: ValueOrStream<WithImageUrl>, name?: string) => enImage(
+  (isObservable(data) ? data : of(data)).pipe(
+    switchMap(_ => images.get$(_.url).pipe(
+      map(image => <WithImage>{ ..._, image })))),
+  name);
+
 export const enText = (data: ValueOrStream<WithText>, name?: string) => new EngineNodeShell(data, name, { render_self: renderText });
