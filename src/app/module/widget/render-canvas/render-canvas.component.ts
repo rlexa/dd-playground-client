@@ -36,7 +36,7 @@ export class RenderCanvasComponent implements OnDestroy, OnInit {
     this.engine.addNode(enFillCanvasColor(this.colorCanvasBg$, 'bg'));
 
     const nodeUi = this.engine.addNode(enEmpty('ui'));
-    nodeUi.addNode(enImageUrl(this.engine.images, { url: 'assets/sprites/abuse-exp1.png', offsetY: 30 }, 'image'));
+    nodeUi.addNode(enImageUrl(this.engine.images, { url: 'assets/sprites/abuse-exp1.png', offsetY: 30, dw: 56, dh: 48 }, 'image'));
     nodeUi.addNode(enText({ color: '#ff0000', text: 'Hello world!', font: '30px Consolas' }, 'header'));
   }
 }
