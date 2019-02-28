@@ -8,6 +8,10 @@ export interface WithColor {
 }
 
 export interface WithImage extends WithOffset, WithSize {
+  dx?: number,
+  dy?: number,
+  dw?: number,
+  dh?: number,
   image?: CanvasImageSource,
 }
 
@@ -54,10 +58,10 @@ export class ImageHolderCanvas implements ImageHolder<CanvasImageSource> {
 export const blitImage = (ctx: CanvasRenderingContext2D, data: WithImage) => !data || !data.image ? {} :
   ctx.drawImage(
     data.image,
-    0, 0, <number>data.image.width, <number>data.image.height,
+    data.dx || 0, data.dy || 0, data.dw >= 0 ? data.dw || 0 : <number>data.image.width, data.dh >= 0 ? data.dh || 0 : <number>data.image.height,
     data.offsetX || 0, data.offsetY || 0,
-    data.width >= 0 ? data.width || 0 : <number>data.image.width,
-    data.height >= 0 ? data.height || 0 : <number>data.image.height);
+    data.width >= 0 ? data.width || 0 : data.dw >= 0 ? data.dw || 0 : <number>data.image.width,
+    data.height >= 0 ? data.height || 0 : data.dh >= 0 ? data.dh || 0 : <number>data.image.height);
 export const fillCanvas = (ctx: CanvasRenderingContext2D) => fillRect(ctx, { offsetX: 0, offsetY: 0, width: ctx.canvas.width, height: ctx.canvas.height });
 export const fillStyle = (ctx: CanvasRenderingContext2D, data: WithColor) => data && data.color ? ctx.fillStyle = data.color : {};
 export const fillRect = (ctx: CanvasRenderingContext2D, data: WithRect) => data ? ctx.fillRect(data.offsetX || 0, data.offsetY || 0, data.width || 0, data.height || 0) : {};
