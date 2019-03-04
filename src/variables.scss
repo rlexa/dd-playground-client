@@ -1,14 +1,31 @@
 @import 'md-custom-theme.scss';
 
+:root {
+  --font-family-root: Roboto, "Helvetica Neue", sans-serif;
+
+  --size-cell: 23rem;
+  --size-font-h1: 2.4rem;
+  --size-font-root: 62.5%;
+  --size-font-gigantic: 10rem;
+  --size-font-default: 1.4rem;
+  --size-font-smaller: 1.3rem;
+  --size-font-small: 1.2rem;
+  --size-gap: 1rem;
+  --size-gap-bottom-table-column-input: -1rem;
+  --size-gap-wide: 2rem;
+  --size-pad: 2rem;
+  --size-radius: .5rem;
+  --size-squared: 2.3rem;
+  --size-viewport-min: 80rem;
+
+  --transition-duration-fast: 100ms;
+  --transition-duration: 300ms;
+}
+
 $clr-primary: mat-color($primary);
 $clr-secondary: mat-color($accent);
 $clr-warn: mat-color($warn);
 
-$border-radius: .5rem;
-$border-radius-wide: 2.5rem;
-
-$clr-card-bg: white;
-$clr-default-bg: fade-out(black, 0.9);
 $clr-item-bg: #e0e0e0;
 $clr-item-bg-connected: lightgreen;
 $clr-item-bg-light: #f0f0f0;
@@ -27,28 +44,9 @@ $clr-mat-light-icon: $clr-mat-light;
 $clr-mat-light-row-hover: #f1f1f1;
 $clr-mat-light-secondary: fade-out(white, .3);
 $clr-mat-table-dialog-color: #f9f9f9;
-$clr-primeng-ui-widget-content: white;
 $clr-scrollbar-thumb: fade-out(black, 0.5);
 $clr-scrollbar-track: fade-out(black, 0.9);
 $clr-transparent: fade-out(black, 1);
-
-$font-family-root: Roboto,
-"Helvetica Neue",
-sans-serif;
-$font-size-root: 62.5%;
-$font-size-gigantic: 10rem;
-$font-size-default: 1.4rem;
-$font-size-smaller: 1.3rem;
-$font-size-small: 1.2rem;
-$font-size-lists: $font-size-smaller;
-$font-size-h1: 2.4rem;
-$font-size-tooltip: $font-size-small;
-$font-size-table-input: $font-size-small;
-
-$margin-between-items-h: 1rem;
-$margin-between-items-h-wide: 2 * $margin-between-items-h;
-$margin-bottom-table-column: 0.5rem;
-$margin-bottom-table-column-input: -1rem;
 
 $mat-clr-accent: $clr-secondary;
 $mat-clr-chip-bg: $clr-item-bg;
@@ -57,30 +55,5 @@ $mat-clr-chip-fg: $clr-item-fg;
 $mat-clr-primary: $clr-primary;
 $mat-clr-warn: $clr-warn;
 
-$size-calendar-container: 22rem;
-$size-card-flowh: 40rem;
-$size-diagram: 40rem;
-$size-dialogcontent-width: 50rem;
-$size-htmltable-cell: 23rem;
 $size-icon-height: 2.4rem;
-$size-min-cards-wrap: 1030px;
 $size-mini-fab-height: 4rem;
-$size-mini-fab-wrapper-paddingv: .8rem;
-$size-padding: 2rem;
-$size-selectbox: 16rem;
-$size-svg-icon-height: 2.4rem;
-$size-square: 2.3rem;
-$size-table-checkbox: 4rem;
-$size-table-date: 9rem;
-$size-table-height: 28rem;
-$size-table-height-inline: 20rem;
-$size-table-icon: 5rem;
-$size-table-number: 8rem;
-$size-table-state: 13rem;
-$size-table-state-big: 16rem;
-$size-table-text: 20rem;
-$size-table-timestamp: 20rem;
-$size-viewport-min: 80rem;
-
-$transition-duration-fast: 100ms;
-$transition-duration: 300ms;

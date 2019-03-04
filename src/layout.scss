@@ -100,19 +100,19 @@
 }
 
 .padding-left {
-  padding-left: $margin-between-items-h;
+  padding-left: var(--size-gap);
 }
 
 .padding-right {
-  padding-right: $margin-between-items-h;
+  padding-right: var(--size-gap);
 }
 
 .padding-top {
-  padding-top: $margin-between-items-h;
+  padding-top: var(--size-gap);
 }
 
 .padding-bottom {
-  padding-bottom: $margin-between-items-h;
+  padding-bottom: var(--size-gap);
 }
 
 .padding {
@@ -123,19 +123,19 @@
 }
 
 .padding-left-wide {
-  padding-left: $margin-between-items-h-wide;
+  padding-left: var(--size-gap-wide);
 }
 
 .padding-right-wide {
-  padding-right: $margin-between-items-h-wide;
+  padding-right: var(--size-gap-wide);
 }
 
 .padding-top-wide {
-  padding-top: $margin-between-items-h-wide;
+  padding-top: var(--size-gap-wide);
 }
 
 .padding-bottom-wide {
-  padding-bottom: $margin-between-items-h-wide;
+  padding-bottom: var(--size-gap-wide);
 }
 
 .padding-wide {
@@ -146,11 +146,7 @@
 }
 
 .container {
-  padding: $size-padding;
-}
-
-.container-main {
-  padding: $size-padding;
+  padding: var(--size-pad);
 }
 
 .container-border-radius {
@@ -158,13 +154,13 @@
 }
 
 .contenth {
-  padding-left: 0.5 * $margin-between-items-h;
-  padding-right: 0.5 * $margin-between-items-h;
+  padding-left: calc(var(--size-gap) * 0.5);
+  padding-right: calc(var(--size-gap) * 0.5);
 }
 
 .contentv {
-  padding-top: 0.5 * $margin-between-items-h;
-  padding-bottom: 0.5 * $margin-between-items-h;
+  padding-top: calc(var(--size-gap) * 0.5);
+  padding-bottom: calc(var(--size-gap) * 0.5);
 }
 
 .contenthv {
@@ -181,13 +177,13 @@
 }
 
 .childh {
-  margin-left: 0.5 * $margin-between-items-h;
-  margin-right: 0.5 * $margin-between-items-h;
+  margin-left: calc(var(--size-gap) * 0.5);
+  margin-right: calc(var(--size-gap) * 0.5);
 }
 
 .childv {
-  margin-top: 0.5 * $margin-between-items-h;
-  margin-bottom: 0.5 * $margin-between-items-h;
+  margin-top: calc(var(--size-gap) * 0.5);
+  margin-bottom: calc(var(--size-gap) * 0.5);
 }
 
 .childhv {
@@ -219,67 +215,60 @@
 }
 
 .margin-left {
-  margin-left: $margin-between-items-h;
+  margin-left: var(--size-gap);
 }
 
 .margin-right {
-  margin-right: $margin-between-items-h;
+  margin-right: var(--size-gap);
 }
 
 .margin-top {
-  margin-top: $margin-between-items-h;
+  margin-top: var(--size-gap);
 }
 
 .margin-bottom {
-  margin-bottom: $margin-between-items-h;
+  margin-bottom: var(--size-gap);
 }
 
 .margin-left-narrow {
-  margin-left: 0.5 * $margin-between-items-h;
+  margin-left: calc(var(--size-gap) * 0.5);
 }
 
 .margin-right-narrow {
-  margin-right: 0.5 * $margin-between-items-h;
+  margin-right: calc(var(--size-gap) * 0.5);
 }
 
 .margin-top-narrow {
-  margin-top: 0.5 * $margin-between-items-h;
+  margin-top: calc(var(--size-gap) * 0.5);
 }
 
 .margin-bottom-narrow {
-  margin-bottom: 0.5 * $margin-between-items-h;
+  margin-bottom: calc(var(--size-gap) * 0.5);
 }
 
 .margin-left-wide {
-  margin-left: $margin-between-items-h-wide;
+  margin-left: var(--size-gap-wide);
 }
 
 .margin-right-wide {
-  margin-right: $margin-between-items-h-wide;
+  margin-right: var(--size-gap-wide);
 }
 
 .margin-top-wide {
-  margin-top: $margin-between-items-h-wide;
+  margin-top: var(--size-gap-wide);
 }
 
 .margin-bottom-wide {
-  margin-bottom: $margin-between-items-h-wide;
-}
-
-.floatl {
-  float: left;
-}
-
-.floatr {
-  float: right;
+  margin-bottom: var(--size-gap-wide);
 }
 
 .size-data-label {
-  min-width: $size-htmltable-cell;
-  max-width: $size-htmltable-cell;
+  min-width: var(--size-cell);
+  max-width: var(--size-cell);
 }
 
-.square {
-  height: $size-square;
-  width: $size-square;
+.squared {
+  @extend .border;
+  height: var(--size-squared);
+  width: var(--size-squared);
 }

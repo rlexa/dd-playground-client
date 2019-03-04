@@ -166,8 +166,8 @@
 
   &.dense {
     height: auto;
-    font-size: $font-size-lists;
-    line-height: $font-size-h1;
+    font-size: var(--size-font-smaller);
+    line-height: var(--size-font-h1);
   }
 
   &.overspan {
@@ -193,8 +193,8 @@
   &.dense {
     height: auto;
     text-align: center;
-    font-size: $font-size-lists;
-    line-height: $font-size-h1;
+    font-size: var(--size-font-smaller);
+    line-height: var(--size-font-h1);
   }
 }
 
@@ -265,11 +265,11 @@
 }
 
 .mat-tooltip {
-  font-size: $font-size-smaller;
+  font-size: var(--size-font-smaller);
 }
 
 .mat-input-save-subspace {
-  margin-bottom: $margin-bottom-table-column-input;
+  margin-bottom: var(--size-gap-bottom-table-column-input);
 }
 
 .mat-input-prefix {
@@ -288,7 +288,7 @@
   .mat-input-wrapper,
   .mat-select-trigger {
     font-weight: normal;
-    font-size: $font-size-table-input;
+    font-size: var(--size-font-small);
   }
 }
 
@@ -397,9 +397,5 @@ $clr-dark-fg-faded: fade-out($clr-dark-fg, .75);
 
   .ui-widget-header {
     color: $clr-dark-fg;
-  }
-
-  .mat-chip:not(.mat-basic-chip) {
-    color: fade-out(white, 0.13);
   }
 }

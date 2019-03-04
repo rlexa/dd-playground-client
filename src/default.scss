@@ -16,18 +16,18 @@
 }
 
 body {
-  font-size: $font-size-default;
-  font-family: $font-family-root;
+  font-size: var(--size-font-default);
+  font-family: var(--font-family-root);
   margin: 0px;
   padding: 0px;
 }
 
 h1 {
-  font-size: $font-size-h1;
+  font-size: var(--size-font-h1);
 }
 
 html {
-  font-size: $font-size-root;
+  font-size: var(--size-font-root);
 }
 
 pre {

@@ -14,7 +14,6 @@ const isBrowserIE = userAgent.indexOf('MSIE') >= 0 || userAgent.match(/Trident.*
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnDestroy {
