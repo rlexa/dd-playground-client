@@ -1,4 +1,5 @@
 import {async, TestBed} from '@angular/core/testing';
+import {detectChanges, overrideForChangeDetection} from 'src/app/test';
 import {EmptyComponent} from './empty.component';
 
 describe('EmptyComponent', () => {
@@ -7,12 +8,14 @@ describe('EmptyComponent', () => {
       imports: [],
       declarations: [EmptyComponent],
       providers: [],
-    }).compileComponents();
+    })
+      .overrideComponent(EmptyComponent, overrideForChangeDetection)
+      .compileComponents();
   }));
 
   test('is created', () => {
     const fixture = TestBed.createComponent(EmptyComponent);
-    fixture.detectChanges();
+    detectChanges(fixture);
     expect(fixture).toMatchSnapshot();
   });
 });

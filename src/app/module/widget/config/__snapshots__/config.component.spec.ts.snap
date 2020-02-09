@@ -2,22 +2,15 @@
 
 exports[`ConfigComponent is created 1`] = `
 <app-config>
-  <mat-card
-    class="mat-card _mat-animation-noopable"
-  >
-    <mat-card-title
-      class="mat-card-title"
-    >
+  <mat-card>
+    <mat-card-title>
       Configuration
     </mat-card-title>
-    <mat-card-content
-      class="mat-card-content"
-    >
+    <mat-card-content>
       <mat-list
-        class="mat-list-auto-height mat-list mat-list-base"
+        class="mat-list-auto-height"
       >
         <h3
-          class="mat-subheader"
           mat-subheader=""
         >
           Nothing to configure yet.

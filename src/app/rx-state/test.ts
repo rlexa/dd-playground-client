@@ -1,3 +1,4 @@
 import {AppRxStore, createAppRxStore} from './store';
+import {Provider} from '@angular/core';
 
-export const provideRxState = [{provide: AppRxStore, useFactory: createAppRxStore}];
+export const provideRxState: Provider = {provide: AppRxStore, useFactory: createAppRxStore};

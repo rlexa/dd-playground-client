@@ -23,7 +23,6 @@
   <mat-card-content>
     <div ddFlexbox="vyt">
       <div ddFlexbox="hysw">
-
         <div class="contenthv childhv hovered-elevated">
           <h2>DB Stats: Overall</h2>
           <app-simple-view [data]="dbState$ | async" [isDense]="true" [isWidthConstrained]="false"></app-simple-view>
@@ -33,7 +32,6 @@
           <h2>DB Stats: Node Types</h2>
           <app-simple-view [data]="dbNodeTypeCount$ | async" [isDense]="true" [isWidthConstrained]="false"></app-simple-view>
         </div>
-
       </div>
 
       <div ddFlexbox="hycw" class="contenthv childhv hovered-elevated">
@@ -54,16 +52,23 @@
         <button *ngFor="let ii of CMPS" mat-mini-fab (click)="tryQuery(ii)">{{ ii }}</button>
 
         <mat-form-field class="margin-left childhv" hintLabel="Value">
-          <input #valInput matInput [value]="curVal$ | async" (change)="setCurVal($event.target.value)" [matAutocomplete]="valAutoComplete"
-            (focus)="setCurVal(valInput.value)" (keyup)="setCurVal(valInput.value)" (keyup.enter)="tryQuery()">
+          <input
+            #valInput
+            matInput
+            [value]="curVal$ | async"
+            (change)="setCurVal($event.target.value)"
+            [matAutocomplete]="valAutoComplete"
+            (focus)="setCurVal(valInput.value)"
+            (keyup)="setCurVal(valInput.value)"
+            (keyup.enter)="tryQuery()"
+          />
           <mat-autocomplete #valAutoComplete="matAutocomplete" (optionSelected)="setCurVal($event.option.value)">
             <mat-option *ngFor="let ii of curTypeKeyTagValuesFiltered$ | async" [value]="ii">{{ ii }}</mat-option>
           </mat-autocomplete>
         </mat-form-field>
       </div>
 
-      <div *ngIf="curNode$ | async as node" [ngStyle]="{'display': 'grid', 'grid-template-areas': GRID, 'grid-template-columns': GRID_SIZE }">
-
+      <div *ngIf="curNode$ | async as node" [ngStyle]="{display: 'grid', 'grid-template-areas': GRID, 'grid-template-columns': GRID_SIZE}">
         <div [ngStyle]="{'grid-area': GRID_FROM}">
           <div ddFlexbox="vye">
             <div *ngFor="let link of node.inc" ddFlexbox="hys" class="childh">
@@ -97,9 +102,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
   </mat-card-content>
 </mat-card>

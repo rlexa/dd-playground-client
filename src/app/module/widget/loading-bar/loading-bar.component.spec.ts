@@ -1,20 +1,23 @@
 import {async, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {imports} from './imports';
+import {MatProgressBar} from '@angular/material/progress-bar';
+import {MockComponents} from 'ng-mocks';
+import {detectChanges, overrideForChangeDetection} from 'src/app/test';
 import {LoadingBarComponent} from './loading-bar.component';
 
 describe('LoadingBarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, ...imports],
-      declarations: [LoadingBarComponent],
+      imports: [],
+      declarations: [LoadingBarComponent, MockComponents(MatProgressBar)],
       providers: [],
-    }).compileComponents();
+    })
+      .overrideComponent(LoadingBarComponent, overrideForChangeDetection)
+      .compileComponents();
   }));
 
   test('is created', () => {
     const fixture = TestBed.createComponent(LoadingBarComponent);
-    fixture.detectChanges();
+    detectChanges(fixture);
     expect(fixture).toMatchSnapshot();
   });
 });

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostBinding, Input} from '@angular/core';
 
 @Component({
   selector: 'app-loading-bar',
@@ -10,6 +10,9 @@ export class LoadingBarComponent {
   @HostBinding('style.marginTop') styleMarginTop = '1rem';
   @HostBinding('style.minHeight') readonly styleMinHeight = '.5rem';
 
-  @Input() set withMargin(val: boolean) { this.styleMarginTop = !!val ? '1rem' : null; }
+  @Input() set withMargin(val: boolean) {
+    this.styleMarginTop = !!val ? '1rem' : null;
+  }
+
   @Input() show = false;
 }

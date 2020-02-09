@@ -1,8 +1,9 @@
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {imports} from './imports';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {LoadingBarComponent} from './loading-bar.component';
 
-@NgModule({imports, exports: [LoadingBarComponent], declarations: [LoadingBarComponent]})
+@NgModule({imports: [CommonModule, MatProgressBarModule], exports: [LoadingBarComponent], declarations: [LoadingBarComponent]})
 class LoadingBarModule {}
 
 export {LoadingBarModule, LoadingBarComponent};

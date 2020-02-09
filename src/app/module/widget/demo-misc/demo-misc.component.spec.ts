@@ -1,21 +1,32 @@
 import {async, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButton} from '@angular/material/button';
+import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MockComponents, MockDirectives} from 'ng-mocks';
+import {detectChanges, overrideForChangeDetection} from 'src/app/test';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {SimpleViewComponent} from '../simple-view';
 import {DemoMiscComponent} from './demo-misc.component';
-import {imports} from './imports';
 
 describe('DemoMiscComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, RouterTestingModule, ...imports],
-      declarations: [DemoMiscComponent],
+      imports: [RouterTestingModule],
+      declarations: [
+        DemoMiscComponent,
+        MockComponents(MatButton, MatCard, MatCardTitle, MatCardContent),
+        MockComponents(SimpleViewComponent),
+        MockDirectives(FlexboxDirective),
+      ],
       providers: [],
-    }).compileComponents();
+    })
+      .overrideComponent(DemoMiscComponent, overrideForChangeDetection)
+      .compileComponents();
   }));
 
   test('is created', () => {
     const fixture = TestBed.createComponent(DemoMiscComponent);
-    fixture.detectChanges();
+    detectChanges(fixture);
     expect(fixture).toMatchSnapshot();
   });
 });

@@ -1,5 +1,4 @@
 <div ddFlexbox="hyscsw">
-
   <mat-card class="childhv">
     <mat-card-title>Actions: API</mat-card-title>
     <mat-card-content>
@@ -7,7 +6,6 @@
         <h1 class="color-warn">CORS/PROXY KILLS API.</h1>
 
         <mat-list class="mat-list-auto-height">
-
           <h3 mat-subheader>Ping</h3>
           <mat-list-item>
             <div ddFlexbox="hyc">
@@ -20,7 +18,12 @@
           <mat-list-item>
             <div ddFlexbox="hyc">
               <mat-form-field class="childh value-numeric">
-                <input matInput [ngModel]="bitcoinAddress$ | async" (ngModelChange)="bitcoinAddress$.next($event)" placeholder="Bitcoin Address">
+                <input
+                  matInput
+                  [ngModel]="bitcoinAddress$ | async"
+                  (ngModelChange)="bitcoinAddress$.next($event)"
+                  placeholder="Bitcoin Address"
+                />
               </mat-form-field>
               <div ddFlexbox="vys">
                 <button mat-button (click)="apiBlockchainBitcoinAddress()">Blockchain API</button>
@@ -41,7 +44,6 @@
               </div>
             </div>
           </mat-list-item>
-
         </mat-list>
       </div>
     </mat-card-content>
@@ -53,5 +55,4 @@
       <app-simple-view [data]="anyData$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
     </mat-card-content>
   </mat-card>
-
 </div>

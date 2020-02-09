@@ -1,8 +1,10 @@
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
+import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {ConfigComponent} from './config.component';
-import {imports} from './imports';
 
 const ROUTING: Routes = [
   {path: ROUTE_ROOT, component: ConfigComponent},
@@ -10,8 +12,10 @@ const ROUTING: Routes = [
 ];
 
 @NgModule({
-  imports: [...imports, RouterModule.forChild(ROUTING)],
+  imports: [CommonModule, MatCardModule, MatListModule, RouterModule.forChild(ROUTING)],
   exports: [ConfigComponent],
   declarations: [ConfigComponent],
 })
-export class ConfigModule {}
+class ConfigModule {}
+
+export {ConfigModule, ConfigComponent};

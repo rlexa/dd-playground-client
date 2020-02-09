@@ -4,22 +4,13 @@ exports[`OverviewComponent is created 1`] = `
 <app-overview>
   <div
     ddflexbox="hyscsw"
-    style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
   >
-    <mat-card
-      class="mat-card _mat-animation-noopable"
-    >
-      <mat-card-title
-        class="mat-card-title"
-      >
+    <mat-card>
+      <mat-card-title>
         Empty?
       </mat-card-title>
-      <mat-card-content
-        class="mat-card-content"
-      >
-        <mat-list
-          class="mat-list mat-list-base"
-        >
+      <mat-card-content>
+        <mat-list>
           <h4
             mat-header=""
           >

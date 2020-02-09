@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
+import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {routeToSettings} from 'src/app/routing';
 import {RxStateService} from 'src/app/rx-state';
-import {DoneSubject, RxCleanup} from 'dd-rxjs';
 
 @Component({
   selector: 'app-version',
@@ -11,8 +11,12 @@ import {DoneSubject, RxCleanup} from 'dd-rxjs';
 })
 export class VersionComponent implements OnDestroy {
   constructor(private rxState: RxStateService, private router: Router) {}
+
   @RxCleanup() private readonly done$ = new DoneSubject();
+
   readonly version$ = this.rxState.watch(state => state.globalValues.flags.version, this.done$);
+
   ngOnDestroy() {}
+
   onGotoSettings = () => routeToSettings(this.router);
 }

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
+import {RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, of, Subject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {CryptoApiService} from '../../service/crypto-api';
@@ -12,7 +12,6 @@ import {CryptoApiService} from '../../service/crypto-api';
 export class CryptoComponent implements OnDestroy, OnInit {
   constructor(private readonly api: CryptoApiService) {}
 
-  @RxCleanup() private readonly done$ = new DoneSubject();
   @RxCleanup() readonly bitcoinAddress$ = new BehaviorSubject('1BoatSLRHtKNngkdXEeobR76b53LETtpyT');
   @RxCleanup() readonly anyData$ = new Subject();
 

@@ -1,22 +1,31 @@
 import {async, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MockComponents, MockDirectives} from 'ng-mocks';
 import {provideRxState} from 'src/app/rx-state/test';
+import {detectChanges, overrideForChangeDetection} from 'src/app/test';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {SimpleViewComponent} from '../simple-view';
 import {DemoStateComponent} from './demo-state.component';
-import {imports} from './imports';
 
 describe('DemoStateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, RouterTestingModule, ...imports],
-      declarations: [DemoStateComponent],
-      providers: [...provideRxState],
-    }).compileComponents();
+      imports: [RouterTestingModule],
+      declarations: [
+        DemoStateComponent,
+        MockComponents(MatCard, MatCardTitle, MatCardContent, SimpleViewComponent),
+        MockDirectives(FlexboxDirective),
+      ],
+      providers: [provideRxState],
+    })
+      .overrideComponent(DemoStateComponent, overrideForChangeDetection)
+      .compileComponents();
   }));
 
   test('is created', () => {
     const fixture = TestBed.createComponent(DemoStateComponent);
-    fixture.detectChanges();
+    detectChanges(fixture);
     expect(fixture).toMatchSnapshot();
   });
 });

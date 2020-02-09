@@ -1,4 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {DoneSubject, RxCleanup} from 'dd-rxjs';
+import {map} from 'rxjs/operators';
 import {
   ROUTE_BLOCKCHAIN,
   ROUTE_BUILDCONFIG,
@@ -19,8 +21,6 @@ import {
   ROUTE_WALKER,
 } from 'src/app/routing';
 import {RxStateService} from 'src/app/rx-state';
-import {DoneSubject, RxCleanup} from 'dd-rxjs';
-import {map} from 'rxjs/operators';
 
 interface RouteDef {
   icon: string;

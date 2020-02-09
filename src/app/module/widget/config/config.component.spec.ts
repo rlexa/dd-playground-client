@@ -1,21 +1,25 @@
 import {async, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
+import {MatList} from '@angular/material/list';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MockComponents} from 'ng-mocks';
+import {detectChanges, overrideForChangeDetection} from 'src/app/test';
 import {ConfigComponent} from './config.component';
-import {imports} from './imports';
 
 describe('ConfigComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, RouterTestingModule, ...imports],
-      declarations: [ConfigComponent],
+      imports: [RouterTestingModule],
+      declarations: [ConfigComponent, MockComponents(MatCard, MatCardTitle, MatCardContent, MatList)],
       providers: [],
-    }).compileComponents();
+    })
+      .overrideComponent(ConfigComponent, overrideForChangeDetection)
+      .compileComponents();
   }));
 
   test('is created', () => {
     const fixture = TestBed.createComponent(ConfigComponent);
-    fixture.detectChanges();
+    detectChanges(fixture);
     expect(fixture).toMatchSnapshot();
   });
 });

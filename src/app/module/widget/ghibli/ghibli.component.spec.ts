@@ -4,7 +4,7 @@ import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {MatList, MatListItem} from '@angular/material/list';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockComponents, MockDirectives} from 'ng-mocks';
-import {mockAll, overrideForChangeDetection} from 'src/app/test';
+import {detectChanges, mockAll, overrideForChangeDetection} from 'src/app/test';
 import {FlexboxDirective} from '../../directive/flexbox';
 import {GhibliApiService} from '../../service/ghibli-api';
 import {LoadingBarComponent} from '../loading-bar';
@@ -30,7 +30,7 @@ describe('GhibliComponent', () => {
 
   test('is created', () => {
     const fixture = TestBed.createComponent(GhibliComponent);
-    fixture.detectChanges();
+    detectChanges(fixture);
     expect(fixture).toMatchSnapshot();
   });
 });

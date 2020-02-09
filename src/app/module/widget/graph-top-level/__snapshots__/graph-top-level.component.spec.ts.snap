@@ -3,14 +3,8 @@
 exports[`GraphTopLevelComponent is created 1`] = `
 <app-graph-top-level
   graphsky={[Function GraphskyService]}
-  http={[Function HttpClient]}
+  http={[Function Object]}
 >
-  <app-routed-content>
-    <div
-      class="position-absolute match-parent scroll-y-always scroll-performance container"
-    >
-      <router-outlet />
-    </div>
-  </app-routed-content>
+  <app-routed-content />
 </app-graph-top-level>
 `;

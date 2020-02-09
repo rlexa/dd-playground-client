@@ -1,8 +1,10 @@
+import {CommonModule} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WALKER, ROUTE_WILDCARD} from 'src/app/routing';
+import {RoutedContentModule} from '../routed-content';
 import {GraphTopLevelComponent} from './graph-top-level.component';
-import {imports} from './imports';
 
 const ROUTING: Routes = [
   {
@@ -21,8 +23,10 @@ const ROUTING: Routes = [
 ];
 
 @NgModule({
-  imports: [...imports, RouterModule.forChild(ROUTING)],
+  imports: [CommonModule, HttpClientModule, RoutedContentModule, RouterModule.forChild(ROUTING)],
   exports: [GraphTopLevelComponent],
   declarations: [GraphTopLevelComponent],
 })
-export class GraphTopLevelModule {}
+class GraphTopLevelModule {}
+
+export {GraphTopLevelModule, GraphTopLevelComponent};

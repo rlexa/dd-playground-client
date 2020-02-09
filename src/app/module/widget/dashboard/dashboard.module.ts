@@ -1,6 +1,10 @@
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {RouterModule, Routes} from '@angular/router';
-import {RoutedContentComponent} from 'src/app/module/widget/routed-content';
+import {RoutedContentComponent, RoutedContentModule} from 'src/app/module/widget/routed-content';
 import {
   ROUTE_BLOCKCHAIN,
   ROUTE_BUILDCONFIG,
@@ -20,8 +24,10 @@ import {
   ROUTE_SETTINGS,
   ROUTE_WILDCARD,
 } from 'src/app/routing';
+import {FlexboxModule} from '../../directive/flexbox';
+import {IconPipeModule} from '../../pipe/icon';
+import {VersionModule} from '../version';
 import {DashboardComponent} from './dashboard.component';
-import {imports} from './imports';
 
 const ROUTING: Routes = [
   {
@@ -99,8 +105,20 @@ const ROUTING: Routes = [
 ];
 
 @NgModule({
-  imports: [...imports, RouterModule.forChild(ROUTING)],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    FlexboxModule,
+    IconPipeModule,
+    RoutedContentModule,
+    VersionModule,
+    RouterModule.forChild(ROUTING),
+  ],
   exports: [DashboardComponent],
   declarations: [DashboardComponent],
 })
-export class DashboardModule {}
+class DashboardModule {}
+
+export {DashboardModule, DashboardComponent};

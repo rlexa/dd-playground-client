@@ -8,7 +8,6 @@ exports[`CryptoComponent is created 1`] = `
   apiBlockchainBitcoinAddress={[Function Function]}
   apiWebBitcoinStats={[Function Function]}
   bitcoinAddress$={[Function BehaviorSubject]}
-  done$={[Function DoneSubject]}
   wsBlockCypherAddressConfirmedTx={[Function Function]}
   wsBlockCypherPing={[Function Function]}
   wsBlockchainAddressLatestTransaction={[Function Function]}
@@ -16,22 +15,16 @@ exports[`CryptoComponent is created 1`] = `
 >
   <div
     ddflexbox="hyscsw"
-    style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
   >
     <mat-card
-      class="childhv mat-card _mat-animation-noopable"
+      class="childhv"
     >
-      <mat-card-title
-        class="mat-card-title"
-      >
+      <mat-card-title>
         Actions: API
       </mat-card-title>
-      <mat-card-content
-        class="mat-card-content"
-      >
+      <mat-card-content>
         <div
           ddflexbox="vys"
-          style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
         >
           <h1
             class="color-warn"
@@ -39,288 +32,94 @@ exports[`CryptoComponent is created 1`] = `
             CORS/PROXY KILLS API.
           </h1>
           <mat-list
-            class="mat-list-auto-height mat-list mat-list-base"
+            class="mat-list-auto-height"
           >
             <h3
-              class="mat-subheader"
               mat-subheader=""
             >
               Ping
             </h3>
-            <mat-list-item
-              class="mat-list-item"
-            >
+            <mat-list-item>
               <div
-                class="mat-list-item-content"
+                ddflexbox="hyc"
               >
-                <div
-                  class="mat-list-item-ripple mat-ripple"
-                  mat-ripple=""
-                />
-                <div
-                  class="mat-list-text"
-                />
-                <div
-                  ddflexbox="hyc"
-                  style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
+                <button
+                  mat-button=""
                 >
-                  <button
-                    class="mat-button mat-button-base _mat-animation-noopable"
-                    mat-button=""
-                  >
-                    <span
-                      class="mat-button-wrapper"
-                    >
-                      Blockchain WS
-                    </span>
-                    <div
-                      class="mat-button-ripple mat-ripple"
-                      matripple=""
-                    />
-                    <div
-                      class="mat-button-focus-overlay"
-                    />
-                  </button>
-                  <button
-                    class="mat-button mat-button-base _mat-animation-noopable"
-                    mat-button=""
-                  >
-                    <span
-                      class="mat-button-wrapper"
-                    >
-                      BlockCypher WS
-                    </span>
-                    <div
-                      class="mat-button-ripple mat-ripple"
-                      matripple=""
-                    />
-                    <div
-                      class="mat-button-focus-overlay"
-                    />
-                  </button>
-                </div>
+                  Blockchain WS
+                </button>
+                <button
+                  mat-button=""
+                >
+                  BlockCypher WS
+                </button>
               </div>
             </mat-list-item>
             <h3
-              class="mat-subheader"
               mat-subheader=""
             >
               Address
             </h3>
-            <mat-list-item
-              class="mat-list-item"
-            >
+            <mat-list-item>
               <div
-                class="mat-list-item-content"
+                ddflexbox="hyc"
               >
-                <div
-                  class="mat-list-item-ripple mat-ripple"
-                  mat-ripple=""
-                />
-                <div
-                  class="mat-list-text"
-                />
-                <div
-                  ddflexbox="hyc"
-                  style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
+                <mat-form-field
+                  class="childh value-numeric"
                 >
-                  <mat-form-field
-                    class="childh value-numeric mat-form-field ng-tns-c3-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-has-label mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid _mat-animation-noopable"
+                  <input
+                    class="ng-untouched ng-pristine ng-valid"
+                    matinput=""
+                    placeholder="Bitcoin Address"
+                  />
+                </mat-form-field>
+                <div
+                  ddflexbox="vys"
+                >
+                  <button
+                    mat-button=""
                   >
-                    <div
-                      class="mat-form-field-wrapper"
-                    >
-                      <div
-                        class="mat-form-field-flex"
-                      >
-                        
-                        
-                        <div
-                          class="mat-form-field-infix"
-                        >
-                          <input
-                            aria-invalid="false"
-                            aria-required="false"
-                            class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
-                            id="mat-input-0"
-                            matinput=""
-                            placeholder="Bitcoin Address"
-                          />
-                          <span
-                            class="mat-form-field-label-wrapper"
-                          >
-                            
-                            <label
-                              aria-owns="mat-input-0"
-                              class="mat-form-field-label ng-tns-c3-0 mat-empty mat-form-field-empty ng-star-inserted"
-                              for="mat-input-0"
-                              id="mat-form-field-label-1"
-                            >
-                              
-                              
-                              <span
-                                class="ng-tns-c3-0 ng-star-inserted"
-                              >
-                                Bitcoin Address
-                              </span>
-                              
-                              
-                            </label>
-                          </span>
-                        </div>
-                        
-                      </div>
-                      
-                      <div
-                        class="mat-form-field-underline ng-tns-c3-0 ng-star-inserted"
-                      >
-                        <span
-                          class="mat-form-field-ripple"
-                        />
-                      </div>
-                      <div
-                        class="mat-form-field-subscript-wrapper"
-                      >
-                        
-                        
-                        <div
-                          class="mat-form-field-hint-wrapper ng-tns-c3-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
-                          style="opacity:1;transform:translateY(0%);0:opacity;1:transform;"
-                        >
-                          
-                          <div
-                            class="mat-form-field-hint-spacer"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </mat-form-field>
-                  <div
-                    ddflexbox="vys"
-                    style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                    Blockchain API
+                  </button>
+                  <button
+                    mat-button=""
                   >
-                    <button
-                      class="mat-button mat-button-base _mat-animation-noopable"
-                      mat-button=""
-                    >
-                      <span
-                        class="mat-button-wrapper"
-                      >
-                        Blockchain API
-                      </span>
-                      <div
-                        class="mat-button-ripple mat-ripple"
-                        matripple=""
-                      />
-                      <div
-                        class="mat-button-focus-overlay"
-                      />
-                    </button>
-                    <button
-                      class="mat-button mat-button-base _mat-animation-noopable"
-                      mat-button=""
-                    >
-                      <span
-                        class="mat-button-wrapper"
-                      >
-                        Blockchain WS
-                      </span>
-                      <div
-                        class="mat-button-ripple mat-ripple"
-                        matripple=""
-                      />
-                      <div
-                        class="mat-button-focus-overlay"
-                      />
-                    </button>
-                  </div>
-                  <div
-                    ddflexbox="vys"
-                    style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                    Blockchain WS
+                  </button>
+                </div>
+                <div
+                  ddflexbox="vys"
+                >
+                  <button
+                    mat-button=""
                   >
-                    <button
-                      class="mat-button mat-button-base _mat-animation-noopable"
-                      mat-button=""
-                    >
-                      <span
-                        class="mat-button-wrapper"
-                      >
-                        BlockCypher API
-                      </span>
-                      <div
-                        class="mat-button-ripple mat-ripple"
-                        matripple=""
-                      />
-                      <div
-                        class="mat-button-focus-overlay"
-                      />
-                    </button>
-                    <button
-                      class="mat-button mat-button-base _mat-animation-noopable"
-                      mat-button=""
-                    >
-                      <span
-                        class="mat-button-wrapper"
-                      >
-                        BlockCypher WS
-                      </span>
-                      <div
-                        class="mat-button-ripple mat-ripple"
-                        matripple=""
-                      />
-                      <div
-                        class="mat-button-focus-overlay"
-                      />
-                    </button>
-                  </div>
+                    BlockCypher API
+                  </button>
+                  <button
+                    mat-button=""
+                  >
+                    BlockCypher WS
+                  </button>
                 </div>
               </div>
             </mat-list-item>
             <h3
-              class="mat-subheader"
               mat-subheader=""
             >
               Stats
             </h3>
-            <mat-list-item
-              class="mat-list-item"
-            >
+            <mat-list-item>
               <div
-                class="mat-list-item-content"
+                ddflexbox="hyc"
               >
                 <div
-                  class="mat-list-item-ripple mat-ripple"
-                  mat-ripple=""
-                />
-                <div
-                  class="mat-list-text"
-                />
-                <div
-                  ddflexbox="hyc"
-                  style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
+                  ddflexbox="vys"
                 >
-                  <div
-                    ddflexbox="vys"
-                    style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
+                  <button
+                    mat-button=""
                   >
-                    <button
-                      class="mat-button mat-button-base _mat-animation-noopable"
-                      mat-button=""
-                    >
-                      <span
-                        class="mat-button-wrapper"
-                      >
-                        WebBitcoin API
-                      </span>
-                      <div
-                        class="mat-button-ripple mat-ripple"
-                        matripple=""
-                      />
-                      <div
-                        class="mat-button-focus-overlay"
-                      />
-                    </button>
-                  </div>
+                    WebBitcoin API
+                  </button>
                 </div>
               </div>
             </mat-list-item>
@@ -329,21 +128,13 @@ exports[`CryptoComponent is created 1`] = `
       </mat-card-content>
     </mat-card>
     <mat-card
-      class="childhv mat-card _mat-animation-noopable"
+      class="childhv"
     >
-      <mat-card-title
-        class="mat-card-title"
-      >
+      <mat-card-title>
         Actions: Output
       </mat-card-title>
-      <mat-card-content
-        class="mat-card-content"
-      >
-        <app-simple-view
-          class="ng-tns-c4-1"
-        >
-          
-        </app-simple-view>
+      <mat-card-content>
+        <app-simple-view />
       </mat-card-content>
     </mat-card>
   </div>
