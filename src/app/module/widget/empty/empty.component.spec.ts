@@ -1,10 +1,12 @@
-import { async, TestBed } from '@angular/core/testing';
-import { EmptyComponent } from './empty.component';
+import {async, TestBed} from '@angular/core/testing';
+import {EmptyComponent} from './empty.component';
 
 describe('EmptyComponent', () => {
   beforeEach(async(() => {
-    TestBed.configureCompiler(<any>{ preserveWhitespaces: false }).configureTestingModule({
-      imports: [], declarations: [EmptyComponent], providers: [],
+    TestBed.configureTestingModule({
+      imports: [],
+      declarations: [EmptyComponent],
+      providers: [],
     }).compileComponents();
   }));
 

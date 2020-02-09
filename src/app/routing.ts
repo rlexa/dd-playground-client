@@ -1,9 +1,7 @@
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 /* ROUTE PARTS */
 
-export const ROUTE_AI = 'ai';
-export const ROUTE_APPROXPOLYNOM = 'approxpolynom';
 export const ROUTE_BLOCKCHAIN = 'blockchain';
 export const ROUTE_BUILDCONFIG = 'buildconfig';
 export const ROUTE_CONFIGURATION = 'configuration';
@@ -29,4 +27,3 @@ export const ROUTE_WILDCARD = '**';
 /* ROUTE NAVIGATION */
 
 export const routeToSettings = (router: Router) => router.navigate([ROUTE_DASHBOARD, ROUTE_SETTINGS, ROUTE_BUILDCONFIG]);
-export const routeToAiApproxPolynom = (router: Router) => router.navigate([ROUTE_DASHBOARD, ROUTE_AI, ROUTE_APPROXPOLYNOM]);

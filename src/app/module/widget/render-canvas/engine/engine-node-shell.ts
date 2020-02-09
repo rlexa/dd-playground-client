@@ -1,21 +1,21 @@
-import { DoneSubject, RxCleanup, rxNext_ } from 'dd-rxjs';
-import { BehaviorSubject, isObservable, Observable } from 'rxjs';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { EngineGlobal, EngineNode, FrameParam, ValueOrStream } from './types';
+import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
+import {BehaviorSubject, isObservable, Observable} from 'rxjs';
+import {distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {EngineGlobal, EngineNode, FrameParam, ValueOrStream} from './types';
 
 export type HandleRender<T> = (ctx: CanvasRenderingContext2D, state: T, kids: EngineNode<any>[]) => void;
 export type HandleFrame<T> = (param: FrameParam, state: T, kids: EngineNode<any>[]) => void;
 
 export interface EngineNodeShellCfg<T> {
-  changed$?: (state$: Observable<T>) => Observable<any>,
-  frame_self?: HandleFrame<T>,
-  frame_kids?: HandleFrame<T>,
-  render_pre?: HandleRender<T>,
-  render_self?: HandleRender<T>,
-  render_kids_pre?: HandleRender<T>,
-  render_kids?: HandleRender<T>,
-  render_kids_post?: HandleRender<T>,
-  render_post?: HandleRender<T>,
+  changed$?: (state$: Observable<T>) => Observable<any>;
+  frame_self?: HandleFrame<T>;
+  frame_kids?: HandleFrame<T>;
+  render_pre?: HandleRender<T>;
+  render_self?: HandleRender<T>;
+  render_kids_pre?: HandleRender<T>;
+  render_kids?: HandleRender<T>;
+  render_kids_post?: HandleRender<T>;
+  render_post?: HandleRender<T>;
 }
 
 export class EngineNodeShell<T> implements EngineNode<T> {
@@ -23,9 +23,9 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     this.setName(name);
     this.name$.pipe(distinctUntilChanged()).subscribe(this.markChanges);
 
-    this._cfg = {
-      render_kids: (ctx, _state, kids) => kids.forEach(_ => _.render(ctx)),
-      frame_kids: (param, _state, kids) => kids.forEach(_ => _.frame(param)),
+    this.config = {
+      render_kids: (ctx, st, kids) => kids.forEach(_ => _.render(ctx)),
+      frame_kids: (param, st, kids) => kids.forEach(_ => _.frame(param)),
       changed$: state$ => state$.pipe(distinctUntilChanged()),
       ...cfg,
     };
@@ -37,13 +37,13 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     }
   }
 
-  private engine = <EngineGlobal>null;
-  private _cfg = <EngineNodeShellCfg<T>>null;
+  private engine: EngineGlobal = null;
+  private config: EngineNodeShellCfg<T> = null;
   @RxCleanup() protected readonly done$ = new DoneSubject();
-  @RxCleanup() readonly name$ = new BehaviorSubject(<string>null);
-  @RxCleanup() readonly state$ = new BehaviorSubject(<T>null);
-  parent = <EngineNode<any>>null;
-  kids = <EngineNode<any>[]>[];
+  @RxCleanup() readonly name$ = new BehaviorSubject<string>(null);
+  @RxCleanup() readonly state$ = new BehaviorSubject<T>(null);
+  parent: EngineNode<any> = null;
+  kids: EngineNode<any>[] = [];
 
   setName = rxNext_(this.name$);
   setState = rxNext_(this.state$);
@@ -52,29 +52,37 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     if (!this.engine) {
       this.engine = val;
       if (this.engine) {
-        if (typeof this._cfg.changed$ === 'function') {
-          this._cfg.changed$(this.state$).subscribe(this.markChanges);
+        if (typeof this.config.changed$ === 'function') {
+          this.config.changed$(this.state$).subscribe(this.markChanges);
         }
       }
     }
   }
 
-  // tslint:disable:use-life-cycle-interface
+  // tslint:disable:use-lifecycle-interface
   ngOnDestroy() {
     this.kids.forEach(_ => _.ngOnDestroy());
   }
 
-  addNode = (kid: EngineNode<any>) => this.engine ? this.engine.addNode(kid, this) : kid;
-  delNode = (kid: EngineNode<any>, destroy = false) => this.engine ? this.engine.delNode(kid, destroy) : {};
+  addNode = (kid: EngineNode<any>) => (this.engine ? this.engine.addNode(kid, this) : kid);
+  delNode = (kid: EngineNode<any>, destroy = false) => (this.engine ? this.engine.delNode(kid, destroy) : {});
 
-  frame = (param: FrameParam) => [this._cfg.frame_self, this._cfg.frame_kids]
-    .filter(_ => typeof _ === 'function')
-    .forEach(_ => _(param, this.state$.value, this.kids));
+  frame = (param: FrameParam) =>
+    [this.config.frame_self, this.config.frame_kids]
+      .filter(_ => typeof _ === 'function')
+      .forEach(_ => _(param, this.state$.value, this.kids));
 
   render = (ctx: CanvasRenderingContext2D) =>
-    [this._cfg.render_pre, this._cfg.render_self, this._cfg.render_kids_pre, this._cfg.render_kids, this._cfg.render_kids_post, this._cfg.render_post]
+    [
+      this.config.render_pre,
+      this.config.render_self,
+      this.config.render_kids_pre,
+      this.config.render_kids,
+      this.config.render_kids_post,
+      this.config.render_post,
+    ]
       .filter(_ => typeof _ === 'function')
       .forEach(_ => _(ctx, this.state$.value, this.kids));
 
-  private markChanges = () => this.engine ? this.engine.markChanges() : {};
+  private markChanges = () => (this.engine ? this.engine.markChanges() : {});
 }

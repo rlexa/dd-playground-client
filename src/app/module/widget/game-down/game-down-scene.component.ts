@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { GAME_DOWN_FIELD_H, GAME_DOWN_FIELD_W } from 'app/module/widget/game-down/data';
-import { RxStateService, RxStateSetGameDownService } from 'app/rx-state';
-import { RENDERER_SIMPLE } from 'app/rx-state/state/state-game-down';
-import { DoneSubject, RxCleanup } from 'dd-rxjs';
-import { combineLatest } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {GAMEDOWN_FIELD_H, GAMEDOWN_FIELD_W} from 'app/module/widget/game-down/data';
+import {RxStateService, RxStateSetGameDownService} from 'app/rx-state';
+import {RENDERER_SIMPLE} from 'app/rx-state/state/state-game-down';
+import {DoneSubject, RxCleanup} from 'dd-rxjs';
+import {combineLatest} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-down-scene',
@@ -12,17 +12,14 @@ import { map, shareReplay } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameDownSceneComponent implements OnDestroy {
-  constructor(
-    private readonly rxState: RxStateService,
-    private readonly rxStateMutate: RxStateSetGameDownService,
-  ) { }
+  constructor(private readonly rxState: RxStateService, private readonly rxStateMutate: RxStateSetGameDownService) {}
 
   @RxCleanup() private readonly done$ = new DoneSubject();
   private readonly themeName$ = this.rxState.watch(state => state.game.down.scene.theme, this.done$);
 
-  readonly HEIGHT = Array.from(Array(GAME_DOWN_FIELD_H), (_, index) => index);
+  readonly HEIGHT = Array.from(Array(GAMEDOWN_FIELD_H), (_, index) => index);
   readonly RENDERER_SIMPLE = RENDERER_SIMPLE;
-  readonly WIDTH = Array.from(Array(GAME_DOWN_FIELD_W), (_, index) => index);
+  readonly WIDTH = Array.from(Array(GAMEDOWN_FIELD_W), (_, index) => index);
 
   readonly factor$ = this.rxState.watch(state => state.game.down.scene.factor, this.done$);
   readonly fields$ = this.rxState.watch(state => state.game.down.scene.fields, this.done$);
@@ -31,11 +28,13 @@ export class GameDownSceneComponent implements OnDestroy {
   readonly selected$ = this.rxState.watch(state => state.game.down.scene.selectedIndex, this.done$).pipe(shareReplay());
   readonly viewDebug$ = this.rxState.watch(state => state.game.down.viewDebug, this.done$).pipe(shareReplay());
 
-  readonly theme$ = combineLatest(this.themeName$, this.rxState.watch(state => state.game.down.themes, this.done$))
-    .pipe(map(([name, themes]) => themes.find(_ => _.name === name)));
+  readonly theme$ = combineLatest([this.themeName$, this.rxState.watch(state => state.game.down.themes, this.done$)]).pipe(
+    map(([name, themes]) => themes.find(_ => _.name === name)),
+  );
 
-  ngOnDestroy() { }
+  ngOnDestroy() {}
 
-  onClick = (index: number) => this.rxStateMutate.setSceneSelectedIndex(this.rxState.state.game.down.scene.selectedIndex === index ? null : index);
+  onClick = (index: number) =>
+    this.rxStateMutate.setSceneSelectedIndex(this.rxState.state.game.down.scene.selectedIndex === index ? null : index);
   onHover = (index: number, hovered: boolean) => this.rxStateMutate.setSceneHoveredIndex(hovered ? index : null);
 }

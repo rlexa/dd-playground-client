@@ -1,35 +1,43 @@
 <div ddFlexbox="vyt">
   <mat-card class="childv">
-    <mat-card-title>Polynomial {{ '(' + transitionalPolynomPoint.join(', ') + ')' }}</mat-card-title>
-    <mat-card-content>
-      <div ddFlexbox="vys">
-        <app-diagram-polynom ddFlexitem="at" [points]="samplePolynomPoints$ | async" [polynomials]="[[1], [1, 1], [1, 1, 1], [1, 1, 1, 1]]"
-          (hoveredPoint)="transitionalPolynomPoint = $event"></app-diagram-polynom>
-        <div ddFlexbox="hyc">
-          <button mat-raised-button color="accent" (click)="reSamplePolynomPoints()">POINTS</button>
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="childv">
     <mat-card-title>Graphsky</mat-card-title>
     <mat-card-content>
       <div ddFlexbox="hysw">
-
         <div ddFlexbox="vys">
           <div ddFlexbox="hyc">
             <button mat-button color="accent" (click)="graphskyAddTestData()">+ TEST</button>
             <button mat-button color="warn" (click)="graphskyDrop()">DROP</button>
           </div>
-          <app-simple-view class="hovered-elevated" subheader="Stats" [data]="graphskyLog$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+          <app-simple-view
+            class="hovered-elevated"
+            subheader="Stats"
+            [data]="graphskyLog$ | async"
+            [isWidthConstrained]="false"
+            [isDense]="true"
+          ></app-simple-view>
         </div>
 
-        <app-simple-view class="hovered-elevated" subheader="All" [data]="graphskyAll$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
-        <app-simple-view class="hovered-elevated" subheader="Likes" [data]="graphskyLiked$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
-        <app-simple-view class="hovered-elevated" subheader="Diversity" [data]="graphskyDiversity$ | async" [isWidthConstrained]="false"
-          [isDense]="true"></app-simple-view>
-
+        <app-simple-view
+          class="hovered-elevated"
+          subheader="All"
+          [data]="graphskyAll$ | async"
+          [isWidthConstrained]="false"
+          [isDense]="true"
+        ></app-simple-view>
+        <app-simple-view
+          class="hovered-elevated"
+          subheader="Likes"
+          [data]="graphskyLiked$ | async"
+          [isWidthConstrained]="false"
+          [isDense]="true"
+        ></app-simple-view>
+        <app-simple-view
+          class="hovered-elevated"
+          subheader="Diversity"
+          [data]="graphskyDiversity$ | async"
+          [isWidthConstrained]="false"
+          [isDense]="true"
+        ></app-simple-view>
       </div>
     </mat-card-content>
   </mat-card>

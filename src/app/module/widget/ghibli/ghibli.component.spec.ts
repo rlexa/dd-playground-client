@@ -1,13 +1,15 @@
-import { async, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-import { GhibliComponent } from './ghibli.component';
-import { imports } from './imports';
+import {async, TestBed} from '@angular/core/testing';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterTestingModule} from '@angular/router/testing';
+import {GhibliComponent} from './ghibli.component';
+import {imports} from './imports';
 
 describe('GhibliComponent', () => {
   beforeEach(async(() => {
-    TestBed.configureCompiler(<any>{ preserveWhitespaces: false }).configureTestingModule({
-      imports: [NoopAnimationsModule, RouterTestingModule, ...imports], declarations: [GhibliComponent], providers: [],
+    TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule, RouterTestingModule, ...imports],
+      declarations: [GhibliComponent],
+      providers: [],
     }).compileComponents();
   }));
 

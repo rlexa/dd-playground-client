@@ -1,6 +1,8 @@
-import { Directive, HostBinding, Input } from '@angular/core';
+import {Directive, HostBinding, Input} from '@angular/core';
 
-interface Value { value: string; }
+interface Value {
+  value: string;
+}
 
 function consume(where: Value, what: string) {
   let ii = -1;
@@ -13,46 +15,43 @@ function consume(where: Value, what: string) {
   return ii >= 0;
 }
 
-const parse = (from: Value, map: { [key: string]: string }, defaultValue: string) => Object
-  .keys(map)
-  .reduce((acc, key) => !acc && consume(from, key) ? map[key] : acc, '')
-  || defaultValue;
+const parse = (from: Value, map: {[key: string]: string}, defaultValue: string) =>
+  Object.keys(map).reduce((acc, key) => (!acc && consume(from, key) ? map[key] : acc), '') || defaultValue;
 
-@Directive({ selector: '[ddFlexbox], [ddFlexitem]' })
+@Directive({selector: '[ddFlexbox], [ddFlexitem]'})
 export class FlexboxDirective {
-
   private readonly mapJustifyContent = {
-    'xs': 'flex-start',
-    'xc': 'center',
-    'xe': 'flex-end',
-    'xb': 'space-between',
-    'xa': 'space-around'
+    xs: 'flex-start',
+    xc: 'center',
+    xe: 'flex-end',
+    xb: 'space-between',
+    xa: 'space-around',
   };
 
   private readonly mapAlignItems = {
-    'ys': 'flex-start',
-    'yc': 'center',
-    'ye': 'flex-end',
-    'yb': 'baseline',
-    'yt': 'stretch'
+    ys: 'flex-start',
+    yc: 'center',
+    ye: 'flex-end',
+    yb: 'baseline',
+    yt: 'stretch',
   };
 
   private readonly mapAlignContent = {
-    'cs': 'flex-start',
-    'cc': 'center',
-    'ce': 'flex-end',
-    'cb': 'space-between',
-    'ca': 'space-around',
-    'ct': 'stretch'
+    cs: 'flex-start',
+    cc: 'center',
+    ce: 'flex-end',
+    cb: 'space-between',
+    ca: 'space-around',
+    ct: 'stretch',
   };
 
   private readonly mapAlignSelf = {
-    'as': 'flex-start',
-    'ac': 'center',
-    'ae': 'flex-end',
-    'ab': 'baseline',
-    'at': 'stretch',
-    'aa': 'auto'
+    as: 'flex-start',
+    ac: 'center',
+    ae: 'flex-end',
+    ab: 'baseline',
+    at: 'stretch',
+    aa: 'auto',
   };
 
   @HostBinding('style.display') styleDisplay: string;
@@ -66,7 +65,7 @@ export class FlexboxDirective {
   @HostBinding('style.flex') styleFlex: string;
 
   @Input() set ddFlexbox(value: string) {
-    const val = <Value>{ value: value ? value.toString().toLowerCase() : '' };
+    const val: Value = {value: value ? value.toString().toLowerCase() : ''};
 
     this.styleDisplay = 'flex';
     this.styleFlexWrap = consume(val, 'w') ? 'wrap' : 'no-wrap';
@@ -86,7 +85,7 @@ export class FlexboxDirective {
   }
 
   @Input() set ddFlexitem(value: string) {
-    const val = <Value>{ value: value ? value.toString().toLowerCase() : '' };
+    const val: Value = {value: value ? value.toString().toLowerCase() : ''};
 
     this.styleAlignSelf = parse(val, this.mapAlignSelf, 'auto');
 
@@ -103,5 +102,4 @@ export class FlexboxDirective {
       }
     }
   }
-
 }

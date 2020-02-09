@@ -1,12 +1,14 @@
-import { async, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { imports } from './imports';
-import { RoutedContentComponent } from './routed-content.component';
+import {async, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {imports} from './imports';
+import {RoutedContentComponent} from './routed-content.component';
 
 describe('RoutedContentComponent', () => {
   beforeEach(async(() => {
-    TestBed.configureCompiler(<any>{ preserveWhitespaces: false }).configureTestingModule({
-      imports: [RouterTestingModule, ...imports], declarations: [RoutedContentComponent], providers: [],
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule, ...imports],
+      declarations: [RoutedContentComponent],
+      providers: [],
     }).compileComponents();
   }));
 

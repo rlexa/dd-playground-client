@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { build_Situation_1, checkProblems, DEF_GameDownStateFields, GameDownField, modField } from 'app/module/widget/game-down/data';
-import { RxStateService, RxStateSetGameDownService } from 'app/rx-state';
-import { trackByIndex } from 'app/util';
-import { DoneSubject, RxCleanup } from 'dd-rxjs';
-import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, takeUntil } from 'rxjs/operators';
+import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {buildSituation1, checkProblems, DEF_FAMEDOWN_STATE_FIELDS, GameDownField, modField} from 'app/module/widget/game-down/data';
+import {RxStateService, RxStateSetGameDownService} from 'app/rx-state';
+import {trackByIndex} from 'app/util';
+import {DoneSubject, RxCleanup} from 'dd-rxjs';
+import {BehaviorSubject, combineLatest, of} from 'rxjs';
+import {distinctUntilChanged, filter, map, shareReplay, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-down-config',
@@ -12,10 +12,7 @@ import { distinctUntilChanged, filter, map, shareReplay, takeUntil } from 'rxjs/
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameDownConfigComponent implements OnDestroy {
-  constructor(
-    private readonly rxState: RxStateService,
-    private readonly rxStateMutate: RxStateSetGameDownService,
-  ) { }
+  constructor(private readonly rxState: RxStateService, private readonly rxStateMutate: RxStateSetGameDownService) {}
 
   @RxCleanup() private readonly done$ = new DoneSubject();
 
@@ -31,23 +28,31 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly themes$ = this.rxState.watch(state => state.game.down.themes, this.done$).pipe(map(_ => _.map(ii => ii.name)));
   readonly viewDebug$ = this.rxState.watch(state => state.game.down.viewDebug, this.done$);
 
-  readonly selectedField$ = combineLatest(this.selectedFieldIndex$, this.fields$)
-    .pipe(map(([index, fields]) => fields[index] || null), distinctUntilChanged(), shareReplay(), takeUntil(this.done$));
+  readonly selectedField$ = combineLatest([this.selectedFieldIndex$, this.fields$]).pipe(
+    map(([index, fields]) => fields[index] || null),
+    distinctUntilChanged(),
+    shareReplay(),
+    takeUntil(this.done$),
+  );
   readonly selectedFieldField$ = this.selectedField$.pipe(map(modField.get));
-  readonly selectedFieldActor$ = this.selectedField$.pipe(map(_ => !_ ? null : _.actor));
-  readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => !_ ? null : _.entities));
+  readonly selectedFieldActor$ = this.selectedField$.pipe(map(_ => (!_ ? null : _.actor)));
+  readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => (!_ ? null : _.entities)));
 
-  @RxCleanup() readonly sceneFieldsPresets$ = new BehaviorSubject<{ [key: string]: GameDownField[] }>(
-    {
-      'Default': [...DEF_GameDownStateFields],
-      'Situation 1': build_Situation_1(),
-    });
+  @RxCleanup() readonly sceneFieldsPresets$ = new BehaviorSubject<{[key: string]: GameDownField[]}>({
+    Default: [...DEF_FAMEDOWN_STATE_FIELDS],
+    'Situation 1': buildSituation1(),
+  });
   readonly sceneFieldsPresetsKeys$ = this.sceneFieldsPresets$.pipe(map(Object.keys));
 
   private readonly fieldsProblems$ = this.fields$.pipe(map(checkProblems), shareReplay());
-  readonly fieldsProblemsCount$ = this.fieldsProblems$.pipe(map(_ => _.filter(pp => pp.length).length), shareReplay());
-  readonly fieldProblems$ = combineLatest(this.selectedFieldIndex$, this.fieldsProblems$)
-    .pipe(map(([selectedFieldIndex, fieldsProblems]) => selectedFieldIndex < 0 ? [] : fieldsProblems[selectedFieldIndex]), takeUntil(this.done$));
+  readonly fieldsProblemsCount$ = this.fieldsProblems$.pipe(
+    map(_ => _.filter(pp => pp.length).length),
+    shareReplay(),
+  );
+  readonly fieldProblems$ = combineLatest([this.selectedFieldIndex$, this.fieldsProblems$]).pipe(
+    map(([selectedFieldIndex, fieldsProblems]) => (selectedFieldIndex < 0 ? [] : fieldsProblems[selectedFieldIndex])),
+    takeUntil(this.done$),
+  );
 
   onSetFactor = this.rxStateMutate.setSceneFactor;
   onSetRenderer = this.rxStateMutate.setSceneRenderer;
@@ -56,13 +61,22 @@ export class GameDownConfigComponent implements OnDestroy {
 
   trackByIndex = trackByIndex;
 
-  ngOnDestroy() { }
+  ngOnDestroy() {}
 
-  onMergeSelectedField_Field = (into: GameDownField, val: string) => this.onMergeSelectedField(into, modField.set(into, val));
+  onMergeSelectedFieldWithField = (into: GameDownField, val: string) => this.onMergeSelectedField(into, modField.set(into, val));
 
-  onSetFieldsPresetKey = (key: string) => key in this.sceneFieldsPresets$.value ? this.rxStateMutate.setSceneFields(this.sceneFieldsPresets$.value[key]) : {};
+  onSetFieldsPresetKey = (key: string) =>
+    key in this.sceneFieldsPresets$.value ? this.rxStateMutate.setSceneFields(this.sceneFieldsPresets$.value[key]) : {};
 
-  private onMergeSelectedField = (into: GameDownField, merge: GameDownField) => of({ into, merge, index: this.selectedFieldIndex$.value })
-    .pipe(filter(_ => Object.keys(merge).length > 0 && Object.keys(merge).every(key => key in into) && Object.keys(merge).some(key => into[key] !== merge[key])))
-    .subscribe(_ => this.rxStateMutate.setSceneField(_.index, { ..._.into, ..._.merge }));
+  private onMergeSelectedField = (into: GameDownField, merge: GameDownField) =>
+    of({into, merge, index: this.selectedFieldIndex$.value})
+      .pipe(
+        filter(
+          _ =>
+            Object.keys(merge).length > 0 &&
+            Object.keys(merge).every(key => key in into) &&
+            Object.keys(merge).some(key => into[key] !== merge[key]),
+        ),
+      )
+      .subscribe(_ => this.rxStateMutate.setSceneField(_.index, {..._.into, ..._.merge}));
 }

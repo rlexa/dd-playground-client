@@ -1,6 +1,6 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
-export const ICON_MAP: { [key: string]: string } = {
+export const ICON_MAP: {[key: string]: string} = {
   ai: 'school',
   back: 'keyboard_backspace',
   build_config: 'device_hub',
@@ -39,7 +39,6 @@ export const ICON_MAP: { [key: string]: string } = {
   menuv: 'more_vert',
   overview: 'widgets',
   playground: 'videogame_asset',
-  polynom: 'format_textdirection_l_to_r',
   refresh: 'refresh',
   release_notes: 'linear_scale',
   request: 'send',
@@ -53,16 +52,14 @@ export const ICON_MAP: { [key: string]: string } = {
   vens: 'account_box',
   walker: 'pets',
   warning: 'warning',
-  web: 'web'
-}
+  web: 'web',
+};
 
-export const resolveIcon = (key: string) => key in ICON_MAP ? ICON_MAP[key] : key;
+export const resolveIcon = (key: string) => (key in ICON_MAP ? ICON_MAP[key] : key);
 
-@Pipe({ name: 'icon', pure: true })
+@Pipe({name: 'icon', pure: true})
 export class IconPipe implements PipeTransform {
-
   transform(value: any, args?: any): any {
     return resolveIcon(value);
   }
-
 }

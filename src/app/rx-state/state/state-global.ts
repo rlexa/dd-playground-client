@@ -1,28 +1,28 @@
-import { actor, initReduceAssemble$_, redMergeProperty_, redSetPropertyIfNotSame_ } from 'dd-rx-state';
-import { SUFFIX } from './state-global.suffix';
+import {actor, initReduceAssemble$_, redMergeProperty_, redSetPropertyIfNotSame_} from 'dd-rx-state';
+import {SUFFIX} from './state-global.suffix';
 
 export interface GlobalFlags {
-  buildId?: string,
-  buildRevision?: string,
-  buildSystem?: string,
-  buildVariant?: string,
-  isProduction?: boolean,
-  project?: string,
-  projectParent?: string,
-  title?: string,
-  version?: string,
+  buildId?: string;
+  buildRevision?: string;
+  buildSystem?: string;
+  buildVariant?: string;
+  isProduction?: boolean;
+  project?: string;
+  projectParent?: string;
+  title?: string;
+  version?: string;
 }
 
 export interface GlobalValues {
-  flags: GlobalFlags,
-  route: string,
+  flags: GlobalFlags;
+  route: string;
 }
 
-export const merge_flags = actor<GlobalFlags>('MERGE', SUFFIX, 'flags');
-export const set_route = actor<string>('SET', SUFFIX, 'route');
+export const mergeFlags = actor<GlobalFlags>('MERGE', SUFFIX, 'flags');
+export const setRoute = actor<string>('SET', SUFFIX, 'route');
 
-export const state_global$ = initReduceAssemble$_(
-  <GlobalValues>{
+export const stateGlobal$ = initReduceAssemble$_<GlobalValues>(
+  {
     flags: {
       buildId: null,
       buildRevision: null,
@@ -37,7 +37,7 @@ export const state_global$ = initReduceAssemble$_(
     route: '',
   },
   {
-    [merge_flags.type]: redMergeProperty_('flags'),
-    [set_route.type]: redSetPropertyIfNotSame_('route'),
+    [mergeFlags.type]: redMergeProperty_('flags'),
+    [setRoute.type]: redSetPropertyIfNotSame_('route'),
   },
 );

@@ -1,22 +1,32 @@
-import { Injectable } from '@angular/core';
-import { THEME_MISSING } from 'app/game';
-import { DEF_GameDownStateFields, GameDownField } from 'app/module/widget/game-down/data';
-import { set_scene_factor, set_scene_field, set_scene_fields, set_scene_hoveredIndex, set_scene_renderer, set_scene_selectedIndex, set_scene_theme, set_themes, set_viewDebug } from 'app/rx-state/state/state-game-down';
-import { forceBool, orNull, or_ } from 'dd-rx-state';
-import { RxStateService } from './rx-state.service';
+import {Injectable} from '@angular/core';
+import {THEME_MISSING} from 'app/game';
+import {DEF_FAMEDOWN_STATE_FIELDS, GameDownField} from 'app/module/widget/game-down/data';
+import {
+  setSceneFactor,
+  setSceneField,
+  setSceneFields,
+  setSceneHoveredIndex,
+  setSceneRenderer,
+  setSceneSelectedIndex,
+  setSceneTheme,
+  setThemes,
+  setViewDebug,
+} from 'app/rx-state/state/state-game-down';
+import {forceBool, orNull, or_} from 'dd-rx-state';
+import {RxStateService} from './rx-state.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class RxStateSetGameDownService {
-  constructor(private readonly rxState: RxStateService) { }
+  constructor(private readonly rxState: RxStateService) {}
 
-  setSceneFactor = this.rxState.act_(set_scene_factor);
-  setSceneFields = this.rxState.act_(set_scene_fields, or_(DEF_GameDownStateFields));
-  setSceneHoveredIndex = this.rxState.act_(set_scene_hoveredIndex, val => typeof val === 'number' ? val : <number>null);
-  setSceneRenderer = this.rxState.act_(set_scene_renderer, orNull);
-  setSceneSelectedIndex = this.rxState.act_(set_scene_selectedIndex, val => typeof val === 'number' ? val : <number>null);
-  setSceneTheme = this.rxState.act_(set_scene_theme, orNull);
-  setThemes = this.rxState.act_(set_themes, or_([THEME_MISSING]));
-  setViewDebug = this.rxState.act_(set_viewDebug, forceBool);
+  setSceneFactor = this.rxState.act_(setSceneFactor);
+  setSceneFields = this.rxState.act_(setSceneFields, or_(DEF_FAMEDOWN_STATE_FIELDS));
+  setSceneHoveredIndex = this.rxState.act_(setSceneHoveredIndex, val => (typeof val === 'number' ? val : null));
+  setSceneRenderer = this.rxState.act_(setSceneRenderer, orNull);
+  setSceneSelectedIndex = this.rxState.act_(setSceneSelectedIndex, val => (typeof val === 'number' ? val : null));
+  setSceneTheme = this.rxState.act_(setSceneTheme, orNull);
+  setThemes = this.rxState.act_(setThemes, or_([THEME_MISSING]));
+  setViewDebug = this.rxState.act_(setViewDebug, forceBool);
 
-  setSceneField = (index: number, value: GameDownField) => this.rxState.act(set_scene_field, { index, value });
+  setSceneField = (index: number, value: GameDownField) => this.rxState.act(setSceneField, {index, value});
 }
