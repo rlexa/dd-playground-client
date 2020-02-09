@@ -1,9 +1,9 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 export type ValueOrStream<T> = T | Observable<T>;
 
 export interface ImageMeta {
-  [key: string]: { width: number, height: number }
+  [key: string]: {width: number; height: number};
 }
 
 export interface ImageHolder<T> {
@@ -34,5 +34,5 @@ export interface EngineNode<T> {
 }
 
 export interface FrameParam {
-  msDelta: number,
+  msDelta: number;
 }

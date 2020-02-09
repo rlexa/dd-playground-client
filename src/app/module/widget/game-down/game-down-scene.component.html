@@ -1,28 +1,34 @@
 <ng-template #templateIndexedField let-index let-fields="fields">
-  <app-game-down-field [theme]="theme$ | async" (mouseenter)="onHover(index, true)" (mouseleave)="onHover(index, false)"
-    (click)="onClick(index)">
-
+  <app-game-down-field
+    [theme]="theme$ | async"
+    (mouseenter)="onHover(index, true)"
+    (mouseleave)="onHover(index, false)"
+    (click)="onClick(index)"
+  >
     <ng-container [ngSwitch]="renderer$ | async">
-
-      <app-render-simple-field *ngSwitchCase="RENDERER_SIMPLE" [theme]="theme$ | async" [data]="fields[index]"
-        [hovered]="(hovered$ | async) === index" [selected]="(selected$ | async) === index">
+      <app-render-simple-field
+        *ngSwitchCase="RENDERER_SIMPLE"
+        [theme]="theme$ | async"
+        [data]="fields[index]"
+        [hovered]="(hovered$ | async) === index"
+        [selected]="(selected$ | async) === index"
+      >
       </app-render-simple-field>
-
     </ng-container>
 
-    <div *ngIf="viewDebug$ | async" ddFlexbox="vxeye" class="position-absolute match-parent border-radius value-numeric"
-      [style.fontSize]="'1.5em'" [style.border]="'.2em solid transparent'">
+    <div
+      *ngIf="viewDebug$ | async"
+      ddFlexbox="vxeye"
+      class="position-absolute match-parent border-radius value-numeric"
+      [style.fontSize]="'1.5em'"
+      [style.border]="'.2em solid transparent'"
+    >
       <label>{{ (renderer$ | async) || '!renderer!' }}</label>
       <label>{{ (theme$ | async)?.name || '!theme!' }}</label>
       <label>
-        {{
-        (((selected$ | async) === index) ? 'S' : '_')
-        +
-        (((hovered$ | async) === index) ? 'H' : '_')
-        }}
+        {{ ((selected$ | async) === index ? 'S' : '_') + ((hovered$ | async) === index ? 'H' : '_') }}
       </label>
     </div>
-
   </app-game-down-field>
 </ng-template>
 

@@ -1,7 +1,9 @@
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {imports} from './imports';
+import {FlexboxModule} from '../../directive/flexbox';
+import {SimpleViewModule} from '../simple-view';
 import {RenderCanvasComponent} from './render-canvas.component';
 
 const ROUTING: Routes = [
@@ -9,5 +11,11 @@ const ROUTING: Routes = [
   {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
 ];
 
-@NgModule({imports: [...imports, RouterModule.forChild(ROUTING)], exports: [RenderCanvasComponent], declarations: [RenderCanvasComponent]})
-export class RenderCanvasModule {}
+@NgModule({
+  imports: [CommonModule, FlexboxModule, SimpleViewModule, RouterModule.forChild(ROUTING)],
+  exports: [RenderCanvasComponent],
+  declarations: [RenderCanvasComponent],
+})
+class RenderCanvasModule {}
+
+export {RenderCanvasModule, RenderCanvasComponent};
