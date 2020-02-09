@@ -4,43 +4,71 @@ import { MatNativeDateModule, NativeDateModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { AppRxStore, createAppRxStore, RxStateSetGlobalService } from 'app/rx-state';
-import { FlexboxModule } from 'dd-flexbox';
+import {
+  AppRxStore,
+  createAppRxStore,
+  RxStateSetGlobalService,
+} from 'app/rx-state';
+import { FlexboxModule } from 'app/module/directive/flexbox';
 import 'hammerjs';
 import { AppComponent } from './app.component';
 import { ROUTE_DASHBOARD, ROUTE_ROOT, ROUTE_WILDCARD } from './routing';
 
-async function loadHttp(path: string, http: HttpClient, handler: (data: any) => void, parseAs: 'json' | 'text' = 'json') {
+async function loadHttp(
+  path: string,
+  http: HttpClient,
+  handler: (data: any) => void,
+  parseAs: 'json' | 'text' = 'json',
+) {
   try {
-    handler(parseAs === 'text' ?
-      (await http.get(path, { responseType: 'text', headers: { 'content-type': 'text/plain;charset=utf-8' } }).toPromise()) :
-      (await http.get(path, { responseType: 'json' }).toPromise()));
+    handler(
+      parseAs === 'text'
+        ? await http
+            .get(path, {
+              responseType: 'text',
+              headers: { 'content-type': 'text/plain;charset=utf-8' },
+            })
+            .toPromise()
+        : await http.get(path, { responseType: 'json' }).toPromise(),
+    );
   } catch (ex) {
     console.error('While loading "' + path + '"', ex);
   }
 }
 
-export function beforeInit(http: HttpClient, rxMutateGlobal: RxStateSetGlobalService) {
-  return () => Promise.all([
-    loadHttp('/assets/flags.json', http, data =>
-      rxMutateGlobal.mergeFlags({
-        ...data,
-        ...{ isProduction: data && data.buildVariant && data.buildVariant.toLowerCase() === 'prod' }
-      }))
-  ]);
+export function beforeInit(
+  http: HttpClient,
+  rxMutateGlobal: RxStateSetGlobalService,
+) {
+  return () =>
+    Promise.all([
+      loadHttp('/assets/flags.json', http, data =>
+        rxMutateGlobal.mergeFlags({
+          ...data,
+          ...{
+            isProduction:
+              data &&
+              data.buildVariant &&
+              data.buildVariant.toLowerCase() === 'prod',
+          },
+        }),
+      ),
+    ]);
 }
 
 const appRoutes: Routes = [
-  { path: ROUTE_DASHBOARD, loadChildren: 'app/module/widget/dashboard/dashboard.module#DashboardModule' },
+  {
+    path: ROUTE_DASHBOARD,
+    loadChildren:
+      () => import('app/module/widget/dashboard/dashboard.module').then(m => m.DashboardModule),
+  },
   { path: ROUTE_ROOT, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full' },
-  { path: ROUTE_WILDCARD, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full' }
+  { path: ROUTE_WILDCARD, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full' },
 ];
 
 @NgModule({
   /* DECLARATIONS: components, directives, and pipes belonging to that module (declare only once in app) */
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   /* ENTRYCOMPONENTS: components that can't be resolved only by their selector e.g. when router targeted */
   entryComponents: [],
   /* IMPORTS: Import modules with exported declarable classes referenced in this module's component templates */
@@ -55,7 +83,7 @@ const appRoutes: Routes = [
     NativeDateModule,
     FlexboxModule,
     // routing
-    RouterModule.forRoot(appRoutes, { enableTracing: false })
+    RouterModule.forRoot(appRoutes, { enableTracing: false }),
   ],
   /* EXPORTS: Export declared classes that components in other modules are able to reference in their templates */
   exports: [],
@@ -66,9 +94,9 @@ const appRoutes: Routes = [
       provide: APP_INITIALIZER,
       deps: [HttpClient, RxStateSetGlobalService],
       multi: true,
-      useFactory: beforeInit
-    }
+      useFactory: beforeInit,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

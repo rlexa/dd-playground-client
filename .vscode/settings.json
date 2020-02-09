@@ -9,24 +9,11 @@
     "**/CVS": true,
     "**/coverage": true,
     "**/dist": true,
-    "**/*.bak": true,
+    "**/*.bak": true
   },
   "editor.detectIndentation": false,
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "html.format.wrapLineLength": 140,
-  "html.suggest.angular1": false,
-  "beautify.options": {
-    "indent_size": 2,
-    "preserve_newlines": true,
-    "max_preserve_newlines": 1
-  },
-  "[typescript]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    }
-  },
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "html.format.wrapLineLength": 140
 }
