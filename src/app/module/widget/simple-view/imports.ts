@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatListModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
 import { IconPipeModule } from 'app/module/pipe/icon';
 import { RipupperPipeModule } from 'app/module/pipe/ripupper';
 import { StartuppercasePipeModule } from 'app/module/pipe/startuppercase';

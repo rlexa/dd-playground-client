@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {
-  MatButtonModule,
-  MatToolbarModule,
-  MatTooltipModule,
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { IconPipeModule } from 'app/module/pipe/icon';
 import { RoutedContentModule } from 'app/module/widget/routed-content';

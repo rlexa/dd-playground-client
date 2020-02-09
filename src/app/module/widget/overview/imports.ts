@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatListModule,
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { FlexboxModule } from 'app/module/directive/flexbox';
 

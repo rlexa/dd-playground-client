@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { MatCardModule, MatListModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 
 export const imports = [CommonModule, RouterModule, MatCardModule, MatListModule];
