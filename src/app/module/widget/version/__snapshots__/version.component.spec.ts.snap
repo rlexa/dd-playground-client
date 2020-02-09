@@ -9,7 +9,7 @@ exports[`VersionComponent is created 1`] = `
   version$={[Function BehaviorSubject]}
 >
   <button
-    class="auto-line-height mat-button _mat-animation-noopable"
+    class="auto-line-height mat-button mat-button-base _mat-animation-noopable"
     mat-button=""
   >
     <span
@@ -24,9 +24,6 @@ exports[`VersionComponent is created 1`] = `
     <div
       class="mat-button-ripple mat-ripple"
       matripple=""
-      ng-reflect-centered="false"
-      ng-reflect-disabled="false"
-      ng-reflect-trigger="[object HTMLButtonElement]"
     />
     <div
       class="mat-button-focus-overlay"

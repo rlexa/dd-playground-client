@@ -16,11 +16,10 @@ exports[`CryptoComponent is created 1`] = `
 >
   <div
     ddflexbox="hyscsw"
-    ng-reflect-dd-flexbox="hyscsw"
     style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
   >
     <mat-card
-      class="childhv mat-card"
+      class="childhv mat-card _mat-animation-noopable"
     >
       <mat-card-title
         class="mat-card-title"
@@ -32,7 +31,6 @@ exports[`CryptoComponent is created 1`] = `
       >
         <div
           ddflexbox="vys"
-          ng-reflect-dd-flexbox="vys"
           style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
         >
           <h1
@@ -58,19 +56,16 @@ exports[`CryptoComponent is created 1`] = `
                 <div
                   class="mat-list-item-ripple mat-ripple"
                   mat-ripple=""
-                  ng-reflect-disabled="true"
-                  ng-reflect-trigger="[object HTMLUnknownElement]"
                 />
                 <div
                   class="mat-list-text"
                 />
                 <div
                   ddflexbox="hyc"
-                  ng-reflect-dd-flexbox="hyc"
                   style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
                 >
                   <button
-                    class="mat-button _mat-animation-noopable"
+                    class="mat-button mat-button-base _mat-animation-noopable"
                     mat-button=""
                   >
                     <span
@@ -81,16 +76,13 @@ exports[`CryptoComponent is created 1`] = `
                     <div
                       class="mat-button-ripple mat-ripple"
                       matripple=""
-                      ng-reflect-centered="false"
-                      ng-reflect-disabled="false"
-                      ng-reflect-trigger="[object HTMLButtonElement]"
                     />
                     <div
                       class="mat-button-focus-overlay"
                     />
                   </button>
                   <button
-                    class="mat-button _mat-animation-noopable"
+                    class="mat-button mat-button-base _mat-animation-noopable"
                     mat-button=""
                   >
                     <span
@@ -101,9 +93,6 @@ exports[`CryptoComponent is created 1`] = `
                     <div
                       class="mat-button-ripple mat-ripple"
                       matripple=""
-                      ng-reflect-centered="false"
-                      ng-reflect-disabled="false"
-                      ng-reflect-trigger="[object HTMLButtonElement]"
                     />
                     <div
                       class="mat-button-focus-overlay"
@@ -127,15 +116,12 @@ exports[`CryptoComponent is created 1`] = `
                 <div
                   class="mat-list-item-ripple mat-ripple"
                   mat-ripple=""
-                  ng-reflect-disabled="true"
-                  ng-reflect-trigger="[object HTMLUnknownElement]"
                 />
                 <div
                   class="mat-list-text"
                 />
                 <div
                   ddflexbox="hyc"
-                  ng-reflect-dd-flexbox="hyc"
                   style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
                 >
                   <mat-form-field
@@ -158,8 +144,6 @@ exports[`CryptoComponent is created 1`] = `
                             class="mat-input-element mat-form-field-autofill-control cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid"
                             id="mat-input-0"
                             matinput=""
-                            ng-reflect-model="1BoatSLRHtKNngkdXEeobR76b53LET"
-                            ng-reflect-placeholder="Bitcoin Address"
                             placeholder="Bitcoin Address"
                           />
                           <span
@@ -171,12 +155,14 @@ exports[`CryptoComponent is created 1`] = `
                               class="mat-form-field-label ng-tns-c3-0 mat-empty mat-form-field-empty ng-star-inserted"
                               for="mat-input-0"
                               id="mat-form-field-label-1"
-                              ng-reflect-disabled="true"
-                              ng-reflect-ng-switch="false"
                             >
                               
                               
-                              Bitcoin Address
+                              <span
+                                class="ng-tns-c3-0 ng-star-inserted"
+                              >
+                                Bitcoin Address
+                              </span>
                               
                               
                             </label>
@@ -194,7 +180,6 @@ exports[`CryptoComponent is created 1`] = `
                       </div>
                       <div
                         class="mat-form-field-subscript-wrapper"
-                        ng-reflect-ng-switch="hint"
                       >
                         
                         
@@ -212,11 +197,10 @@ exports[`CryptoComponent is created 1`] = `
                   </mat-form-field>
                   <div
                     ddflexbox="vys"
-                    ng-reflect-dd-flexbox="vys"
                     style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
                   >
                     <button
-                      class="mat-button _mat-animation-noopable"
+                      class="mat-button mat-button-base _mat-animation-noopable"
                       mat-button=""
                     >
                       <span
@@ -227,16 +211,13 @@ exports[`CryptoComponent is created 1`] = `
                       <div
                         class="mat-button-ripple mat-ripple"
                         matripple=""
-                        ng-reflect-centered="false"
-                        ng-reflect-disabled="false"
-                        ng-reflect-trigger="[object HTMLButtonElement]"
                       />
                       <div
                         class="mat-button-focus-overlay"
                       />
                     </button>
                     <button
-                      class="mat-button _mat-animation-noopable"
+                      class="mat-button mat-button-base _mat-animation-noopable"
                       mat-button=""
                     >
                       <span
@@ -247,9 +228,6 @@ exports[`CryptoComponent is created 1`] = `
                       <div
                         class="mat-button-ripple mat-ripple"
                         matripple=""
-                        ng-reflect-centered="false"
-                        ng-reflect-disabled="false"
-                        ng-reflect-trigger="[object HTMLButtonElement]"
                       />
                       <div
                         class="mat-button-focus-overlay"
@@ -258,11 +236,10 @@ exports[`CryptoComponent is created 1`] = `
                   </div>
                   <div
                     ddflexbox="vys"
-                    ng-reflect-dd-flexbox="vys"
                     style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
                   >
                     <button
-                      class="mat-button _mat-animation-noopable"
+                      class="mat-button mat-button-base _mat-animation-noopable"
                       mat-button=""
                     >
                       <span
@@ -273,16 +250,13 @@ exports[`CryptoComponent is created 1`] = `
                       <div
                         class="mat-button-ripple mat-ripple"
                         matripple=""
-                        ng-reflect-centered="false"
-                        ng-reflect-disabled="false"
-                        ng-reflect-trigger="[object HTMLButtonElement]"
                       />
                       <div
                         class="mat-button-focus-overlay"
                       />
                     </button>
                     <button
-                      class="mat-button _mat-animation-noopable"
+                      class="mat-button mat-button-base _mat-animation-noopable"
                       mat-button=""
                     >
                       <span
@@ -293,9 +267,6 @@ exports[`CryptoComponent is created 1`] = `
                       <div
                         class="mat-button-ripple mat-ripple"
                         matripple=""
-                        ng-reflect-centered="false"
-                        ng-reflect-disabled="false"
-                        ng-reflect-trigger="[object HTMLButtonElement]"
                       />
                       <div
                         class="mat-button-focus-overlay"
@@ -320,24 +291,20 @@ exports[`CryptoComponent is created 1`] = `
                 <div
                   class="mat-list-item-ripple mat-ripple"
                   mat-ripple=""
-                  ng-reflect-disabled="true"
-                  ng-reflect-trigger="[object HTMLUnknownElement]"
                 />
                 <div
                   class="mat-list-text"
                 />
                 <div
                   ddflexbox="hyc"
-                  ng-reflect-dd-flexbox="hyc"
                   style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
                 >
                   <div
                     ddflexbox="vys"
-                    ng-reflect-dd-flexbox="vys"
                     style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
                   >
                     <button
-                      class="mat-button _mat-animation-noopable"
+                      class="mat-button mat-button-base _mat-animation-noopable"
                       mat-button=""
                     >
                       <span
@@ -348,9 +315,6 @@ exports[`CryptoComponent is created 1`] = `
                       <div
                         class="mat-button-ripple mat-ripple"
                         matripple=""
-                        ng-reflect-centered="false"
-                        ng-reflect-disabled="false"
-                        ng-reflect-trigger="[object HTMLButtonElement]"
                       />
                       <div
                         class="mat-button-focus-overlay"
@@ -365,7 +329,7 @@ exports[`CryptoComponent is created 1`] = `
       </mat-card-content>
     </mat-card>
     <mat-card
-      class="childhv mat-card"
+      class="childhv mat-card _mat-animation-noopable"
     >
       <mat-card-title
         class="mat-card-title"
@@ -377,8 +341,6 @@ exports[`CryptoComponent is created 1`] = `
       >
         <app-simple-view
           class="ng-tns-c4-1"
-          ng-reflect-is-dense="true"
-          ng-reflect-is-width-constrained="false"
         >
           
         </app-simple-view>

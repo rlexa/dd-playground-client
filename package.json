@@ -13,9 +13,8 @@
     "build": "ng build --prod",
     "build:stats": "ng build --prod --stats-json",
     "test": "jest --ci --logHeapUsage",
-    "test:watch": "jest --watchAll",
-    "test:wu": "jest --watchAll -u",
-    "test:watch:single": "jest --watchAll --runInBand",
+    "test:dev": "jest --updateSnapshot --bail --runInBand",
+    "test:watch": "npm run test:dev -- --watchAll",
     "test:coverage": "jest --coverage",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -38,7 +37,8 @@
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
-      ".stories.ts"
+      ".stories.ts",
+      "test.ts"
     ],
     "testURL": "http://localhost/"
   },

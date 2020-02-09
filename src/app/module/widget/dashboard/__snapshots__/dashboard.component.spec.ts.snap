@@ -19,19 +19,16 @@ exports[`DashboardComponent is created 1`] = `
 >
   <div
     class="mat-app-background position-absolute match-parent"
-    ng-reflect-ng-style="[object Object]"
-    style="display: grid;"
+    style="display: grid; grid-template-areas: \\"head head\\" \\"side cont\\" \\"foot foot\\"; grid-template-columns: max-content auto; grid-template-rows: max-content auto max-content;"
   >
     <div
-      ng-reflect-ng-style="[object Object]"
-      style="background: blue;"
+      style="grid-area: head; background: blue;"
     >
       
       
       <mat-toolbar
         class="mat-toolbar mat-primary mat-toolbar-single-row"
         color="primary"
-        ng-reflect-color="primary"
       >
         <span
           class="mat-toolbar-filler"
@@ -42,17 +39,12 @@ exports[`DashboardComponent is created 1`] = `
           
           
           <a
-            aria-describedby="cdk-describedby-message-0"
             aria-disabled="false"
-            cdk-describedby-host=""
-            class="mat-button _mat-animation-noopable"
+            class="mat-button mat-button-base _mat-animation-noopable"
             href="/dashboard/overview"
             mat-button=""
-            ng-reflect-message="Overview"
-            ng-reflect-router-link="/dashboard/overview"
-            ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
+            style="user-select: none; webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -67,9 +59,6 @@ exports[`DashboardComponent is created 1`] = `
             <div
               class="mat-button-ripple mat-ripple"
               matripple=""
-              ng-reflect-centered="false"
-              ng-reflect-disabled="false"
-              ng-reflect-trigger="http://localhost/dashboard/ove"
             />
             <div
               class="mat-button-focus-overlay"
@@ -78,17 +67,12 @@ exports[`DashboardComponent is created 1`] = `
           
           
           <a
-            aria-describedby="cdk-describedby-message-1"
             aria-disabled="false"
-            cdk-describedby-host=""
-            class="mat-button _mat-animation-noopable"
+            class="mat-button mat-button-base _mat-animation-noopable"
             href="/dashboard/graph"
             mat-button=""
-            ng-reflect-message="Graph"
-            ng-reflect-router-link="/dashboard/graph"
-            ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
+            style="user-select: none; webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -103,9 +87,6 @@ exports[`DashboardComponent is created 1`] = `
             <div
               class="mat-button-ripple mat-ripple"
               matripple=""
-              ng-reflect-centered="false"
-              ng-reflect-disabled="false"
-              ng-reflect-trigger="http://localhost/dashboard/gra"
             />
             <div
               class="mat-button-focus-overlay"
@@ -114,53 +95,12 @@ exports[`DashboardComponent is created 1`] = `
           
           
           <a
-            aria-describedby="cdk-describedby-message-2"
             aria-disabled="false"
-            cdk-describedby-host=""
-            class="mat-button _mat-animation-noopable"
-            href="/dashboard/ai"
-            mat-button=""
-            ng-reflect-message="AI"
-            ng-reflect-router-link="/dashboard/ai"
-            ng-reflect-router-link-active="active"
-            routerlinkactive="active"
-            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
-            tabindex="0"
-          >
-            <span
-              class="mat-button-wrapper"
-            >
-              <i
-                class="material-icons transition-transform active-scale"
-              >
-                school
-              </i>
-            </span>
-            <div
-              class="mat-button-ripple mat-ripple"
-              matripple=""
-              ng-reflect-centered="false"
-              ng-reflect-disabled="false"
-              ng-reflect-trigger="http://localhost/dashboard/ai"
-            />
-            <div
-              class="mat-button-focus-overlay"
-            />
-          </a>
-          
-          
-          <a
-            aria-describedby="cdk-describedby-message-3"
-            aria-disabled="false"
-            cdk-describedby-host=""
-            class="mat-button _mat-animation-noopable"
+            class="mat-button mat-button-base _mat-animation-noopable"
             href="/dashboard/crypto"
             mat-button=""
-            ng-reflect-message="Cryptocurrency"
-            ng-reflect-router-link="/dashboard/crypto"
-            ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
+            style="user-select: none; webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -175,9 +115,6 @@ exports[`DashboardComponent is created 1`] = `
             <div
               class="mat-button-ripple mat-ripple"
               matripple=""
-              ng-reflect-centered="false"
-              ng-reflect-disabled="false"
-              ng-reflect-trigger="http://localhost/dashboard/cry"
             />
             <div
               class="mat-button-focus-overlay"
@@ -186,17 +123,12 @@ exports[`DashboardComponent is created 1`] = `
           
           
           <a
-            aria-describedby="cdk-describedby-message-4"
             aria-disabled="false"
-            cdk-describedby-host=""
-            class="mat-button _mat-animation-noopable"
+            class="mat-button mat-button-base _mat-animation-noopable"
             href="/dashboard/game"
             mat-button=""
-            ng-reflect-message="Game"
-            ng-reflect-router-link="/dashboard/game"
-            ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
+            style="user-select: none; webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -211,9 +143,6 @@ exports[`DashboardComponent is created 1`] = `
             <div
               class="mat-button-ripple mat-ripple"
               matripple=""
-              ng-reflect-centered="false"
-              ng-reflect-disabled="false"
-              ng-reflect-trigger="http://localhost/dashboard/gam"
             />
             <div
               class="mat-button-focus-overlay"
@@ -222,17 +151,12 @@ exports[`DashboardComponent is created 1`] = `
           
           
           <a
-            aria-describedby="cdk-describedby-message-5"
             aria-disabled="false"
-            cdk-describedby-host=""
-            class="mat-button _mat-animation-noopable"
+            class="mat-button mat-button-base _mat-animation-noopable"
             href="/dashboard/playground"
             mat-button=""
-            ng-reflect-message="Demo"
-            ng-reflect-router-link="/dashboard/playground"
-            ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
+            style="user-select: none; webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -247,9 +171,6 @@ exports[`DashboardComponent is created 1`] = `
             <div
               class="mat-button-ripple mat-ripple"
               matripple=""
-              ng-reflect-centered="false"
-              ng-reflect-disabled="false"
-              ng-reflect-trigger="http://localhost/dashboard/pla"
             />
             <div
               class="mat-button-focus-overlay"
@@ -258,17 +179,12 @@ exports[`DashboardComponent is created 1`] = `
           
           
           <a
-            aria-describedby="cdk-describedby-message-6"
             aria-disabled="false"
-            cdk-describedby-host=""
-            class="mat-button _mat-animation-noopable"
+            class="mat-button mat-button-base _mat-animation-noopable"
             href="/dashboard/settings"
             mat-button=""
-            ng-reflect-message="Settings"
-            ng-reflect-router-link="/dashboard/settings"
-            ng-reflect-router-link-active="active"
             routerlinkactive="active"
-            style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
+            style="user-select: none; webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: auto;"
             tabindex="0"
           >
             <span
@@ -283,9 +199,6 @@ exports[`DashboardComponent is created 1`] = `
             <div
               class="mat-button-ripple mat-ripple"
               matripple=""
-              ng-reflect-centered="false"
-              ng-reflect-disabled="false"
-              ng-reflect-trigger="http://localhost/dashboard/set"
             />
             <div
               class="mat-button-focus-overlay"
@@ -300,14 +213,13 @@ exports[`DashboardComponent is created 1`] = `
     </div>
     <div
       class="position-relative"
-      ng-reflect-ng-style="[object Object]"
+      style="grid-area: side;"
     >
       
       
       <mat-toolbar
         class="toolbar-column mat-toolbar mat-primary mat-toolbar-single-row"
         color="primary"
-        ng-reflect-color="primary"
       >
         
         <span
@@ -317,25 +229,24 @@ exports[`DashboardComponent is created 1`] = `
     </div>
     <main
       class="position-relative"
-      ng-reflect-ng-style="[object Object]"
+      style="grid-area: cont;"
     >
       <router-outlet />
     </main>
     <footer
-      ng-reflect-ng-style="[object Object]"
+      style="grid-area: foot;"
     >
       
       <div
         class="border-top contenthv"
         ddflexbox="hycr"
-        ng-reflect-dd-flexbox="hycr"
         style="display: flex; flex-direction: row-reverse; justify-content: flex-start; align-items: center; align-content: stretch; flex-wrap: no-wrap;"
       >
         <app-version
           class="margin-bottom-narrow"
         >
           <button
-            class="auto-line-height mat-button _mat-animation-noopable"
+            class="auto-line-height mat-button mat-button-base _mat-animation-noopable"
             mat-button=""
           >
             <span
@@ -350,9 +261,6 @@ exports[`DashboardComponent is created 1`] = `
             <div
               class="mat-button-ripple mat-ripple"
               matripple=""
-              ng-reflect-centered="false"
-              ng-reflect-disabled="false"
-              ng-reflect-trigger="[object HTMLButtonElement]"
             />
             <div
               class="mat-button-focus-overlay"

@@ -3,7 +3,7 @@
 exports[`ConfigComponent is created 1`] = `
 <app-config>
   <mat-card
-    class="mat-card"
+    class="mat-card _mat-animation-noopable"
   >
     <mat-card-title
       class="mat-card-title"

@@ -16,11 +16,10 @@ exports[`GhibliComponent is created 1`] = `
 >
   <div
     ddflexbox="hyscsw"
-    ng-reflect-dd-flexbox="hyscsw"
     style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
   >
     <mat-card
-      class="childhv mat-card"
+      class="childhv mat-card _mat-animation-noopable"
     >
       <mat-card-title
         class="mat-card-title"
@@ -32,7 +31,6 @@ exports[`GhibliComponent is created 1`] = `
       >
         <div
           ddflexbox="vys"
-          ng-reflect-dd-flexbox="vys"
           style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
         >
           <mat-list
@@ -54,14 +52,12 @@ exports[`GhibliComponent is created 1`] = `
                 <div
                   class="mat-list-item-ripple mat-ripple"
                   mat-ripple=""
-                  ng-reflect-disabled="true"
-                  ng-reflect-trigger="[object HTMLUnknownElement]"
                 />
                 <div
                   class="mat-list-text"
                 />
                 <button
-                  class="mat-raised-button _mat-animation-noopable"
+                  class="mat-raised-button mat-button-base _mat-animation-noopable"
                   mat-raised-button=""
                 >
                   <span
@@ -72,9 +68,6 @@ exports[`GhibliComponent is created 1`] = `
                   <div
                     class="mat-button-ripple mat-ripple"
                     matripple=""
-                    ng-reflect-centered="false"
-                    ng-reflect-disabled="false"
-                    ng-reflect-trigger="[object HTMLButtonElement]"
                   />
                   <div
                     class="mat-button-focus-overlay"
@@ -91,14 +84,12 @@ exports[`GhibliComponent is created 1`] = `
                 <div
                   class="mat-list-item-ripple mat-ripple"
                   mat-ripple=""
-                  ng-reflect-disabled="true"
-                  ng-reflect-trigger="[object HTMLUnknownElement]"
                 />
                 <div
                   class="mat-list-text"
                 />
                 <button
-                  class="mat-raised-button _mat-animation-noopable"
+                  class="mat-raised-button mat-button-base _mat-animation-noopable"
                   mat-raised-button=""
                 >
                   <span
@@ -109,9 +100,6 @@ exports[`GhibliComponent is created 1`] = `
                   <div
                     class="mat-button-ripple mat-ripple"
                     matripple=""
-                    ng-reflect-centered="false"
-                    ng-reflect-disabled="false"
-                    ng-reflect-trigger="[object HTMLButtonElement]"
                   />
                   <div
                     class="mat-button-focus-overlay"
@@ -128,14 +116,12 @@ exports[`GhibliComponent is created 1`] = `
                 <div
                   class="mat-list-item-ripple mat-ripple"
                   mat-ripple=""
-                  ng-reflect-disabled="true"
-                  ng-reflect-trigger="[object HTMLUnknownElement]"
                 />
                 <div
                   class="mat-list-text"
                 />
                 <button
-                  class="mat-raised-button _mat-animation-noopable"
+                  class="mat-raised-button mat-button-base _mat-animation-noopable"
                   mat-raised-button=""
                 >
                   <span
@@ -146,9 +132,6 @@ exports[`GhibliComponent is created 1`] = `
                   <div
                     class="mat-button-ripple mat-ripple"
                     matripple=""
-                    ng-reflect-centered="false"
-                    ng-reflect-disabled="false"
-                    ng-reflect-trigger="[object HTMLButtonElement]"
                   />
                   <div
                     class="mat-button-focus-overlay"
@@ -165,14 +148,12 @@ exports[`GhibliComponent is created 1`] = `
                 <div
                   class="mat-list-item-ripple mat-ripple"
                   mat-ripple=""
-                  ng-reflect-disabled="true"
-                  ng-reflect-trigger="[object HTMLUnknownElement]"
                 />
                 <div
                   class="mat-list-text"
                 />
                 <button
-                  class="mat-raised-button _mat-animation-noopable"
+                  class="mat-raised-button mat-button-base _mat-animation-noopable"
                   mat-raised-button=""
                 >
                   <span
@@ -183,9 +164,6 @@ exports[`GhibliComponent is created 1`] = `
                   <div
                     class="mat-button-ripple mat-ripple"
                     matripple=""
-                    ng-reflect-centered="false"
-                    ng-reflect-disabled="false"
-                    ng-reflect-trigger="[object HTMLButtonElement]"
                   />
                   <div
                     class="mat-button-focus-overlay"
@@ -202,14 +180,12 @@ exports[`GhibliComponent is created 1`] = `
                 <div
                   class="mat-list-item-ripple mat-ripple"
                   mat-ripple=""
-                  ng-reflect-disabled="true"
-                  ng-reflect-trigger="[object HTMLUnknownElement]"
                 />
                 <div
                   class="mat-list-text"
                 />
                 <button
-                  class="mat-raised-button _mat-animation-noopable"
+                  class="mat-raised-button mat-button-base _mat-animation-noopable"
                   mat-raised-button=""
                 >
                   <span
@@ -220,9 +196,6 @@ exports[`GhibliComponent is created 1`] = `
                   <div
                     class="mat-button-ripple mat-ripple"
                     matripple=""
-                    ng-reflect-centered="false"
-                    ng-reflect-disabled="false"
-                    ng-reflect-trigger="[object HTMLButtonElement]"
                   />
                   <div
                     class="mat-button-focus-overlay"
