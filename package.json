@@ -1,6 +1,6 @@
 {
   "name": "dd-playground-client",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "license": "LicenseRef-LICENSE",
   "scripts": {
     "_view_webpack_stats": "webpack-bundle-analyzer dist/stats.json",
