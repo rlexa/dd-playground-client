@@ -8,7 +8,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {RouterModule} from '@angular/router';
 import {IconPipeModule} from 'src/app/module/pipe/icon';
-import {GraphskyApiModule} from 'src/app/module/service/graphsky-api';
 import {SimpleViewModule} from 'src/app/module/widget/simple-view';
 import {FlexboxModule} from 'src/app/module/directive/flexbox';
 
@@ -23,7 +22,6 @@ export const imports = [
   MatInputModule,
   MatSelectModule,
   FlexboxModule,
-  GraphskyApiModule,
   IconPipeModule,
   SimpleViewModule,
 ];

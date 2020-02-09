@@ -1,3 +1,2 @@
-export { IGraphskyData, IGraphskyLinkRequest, IGraphskyNode } from './graphsky';
-export * from './graphsky-api.module';
+export {IGraphskyData, IGraphskyLinkRequest, IGraphskyNode} from './graphsky';
 export * from './graphsky.service';

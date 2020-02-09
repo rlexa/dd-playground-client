@@ -6,7 +6,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {RouterModule} from '@angular/router';
-import {CryptoApiModule} from 'src/app/module/service/crypto-api';
 import {SimpleViewModule} from 'src/app/module/widget/simple-view';
 import {FlexboxModule} from 'src/app/module/directive/flexbox';
 
@@ -20,6 +19,5 @@ export const imports = [
   MatInputModule,
   MatListModule,
   FlexboxModule,
-  CryptoApiModule,
   SimpleViewModule,
 ];

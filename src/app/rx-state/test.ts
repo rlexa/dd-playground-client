@@ -1,3 +1,3 @@
-import { AppRxStore, createAppRxStore } from './store';
+import {AppRxStore, createAppRxStore} from './store';
 
-export const provideRxState = [{ provide: AppRxStore, useFactory: createAppRxStore }];
+export const provideRxState = [{provide: AppRxStore, useFactory: createAppRxStore}];

@@ -1,4 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {filter, finalize, map, switchMap, tap} from 'rxjs/operators';
 import {
   GhibliApiService,
   GHIBLI_TYPES,
@@ -8,10 +11,6 @@ import {
   GHIBLI_TYPE_SPECIES,
   GHIBLI_TYPE_VEHICLES,
 } from 'src/app/module/service/ghibli-api';
-import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
-import {filter, finalize, map, switchMap, tap} from 'rxjs/operators';
-import {isArray} from 'util';
 
 @Component({
   selector: 'app-ghibli',

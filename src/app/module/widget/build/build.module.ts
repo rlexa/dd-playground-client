@@ -14,4 +14,6 @@ const ROUTING: Routes = [
   exports: [BuildComponent],
   declarations: [BuildComponent],
 })
-export class BuildModule {}
+class BuildModule {}
+
+export {BuildModule, BuildComponent};

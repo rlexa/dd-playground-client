@@ -14,4 +14,6 @@ const ROUTING: Routes = [
   exports: [CryptoComponent],
   declarations: [CryptoComponent],
 })
-export class CryptoModule {}
+class CryptoModule {}
+
+export {CryptoModule, CryptoComponent};

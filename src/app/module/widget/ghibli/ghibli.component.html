@@ -1,14 +1,13 @@
 <div ddFlexbox="hyscsw">
-
   <mat-card class="childhv">
     <mat-card-title>Queries</mat-card-title>
     <mat-card-content>
       <div ddFlexbox="vys">
         <mat-list class="mat-list-auto-height">
-
           <h3 mat-subheader>API</h3>
-          <mat-list-item *ngFor="let type of TYPES_LISTS"><button mat-raised-button (click)="toAnyData(TYPE_TO_GET_LIST[type])">{{ type }}</button></mat-list-item>
-
+          <mat-list-item *ngFor="let type of TYPES_LISTS">
+            <button mat-raised-button (click)="toAnyData(TYPE_TO_GET_LIST[type])">{{ type }}</button>
+          </mat-list-item>
         </mat-list>
       </div>
     </mat-card-content>
@@ -18,7 +17,12 @@
     <mat-card-title>List</mat-card-title>
     <mat-card-content>
       <app-loading-bar [show]="(busyCount$ | async) > 0"></app-loading-bar>
-      <app-simple-table [style.maxWidth]="'100rem'" [data]="tableAllData" [isClickable]="clickableValue" (clicked)="onClickedValue($event.key, $event.value)"></app-simple-table>
+      <app-simple-table
+        [style.maxWidth]="'100rem'"
+        [data]="tableAllData"
+        [isClickable]="clickableValue"
+        (clicked)="onClickedValue($event.key, $event.value)"
+      ></app-simple-table>
     </mat-card-content>
   </mat-card>
 
@@ -26,8 +30,13 @@
     <mat-card-title>Details</mat-card-title>
     <mat-card-content class="scroll-y-auto" [style.maxHeight]="'60rem'">
       <app-loading-bar [show]="(busyCount$ | async) > 0"></app-loading-bar>
-      <app-simple-view [data]="anyData" [isWidthConstrained]="false" [isDense]="true" [isClickable]="clickableValue" (clicked)="onClickedValue($event.key, $event.value)"></app-simple-view>
+      <app-simple-view
+        [data]="anyData"
+        [isWidthConstrained]="false"
+        [isDense]="true"
+        [isClickable]="clickableValue"
+        (clicked)="onClickedValue($event.key, $event.value)"
+      ></app-simple-view>
     </mat-card-content>
   </mat-card>
-
 </div>

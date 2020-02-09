@@ -1,4 +1,4 @@
-import { StartuppercasePipe } from './startuppercase.pipe';
+import {StartuppercasePipe} from './startuppercase.pipe';
 
 describe('StartuppercasePipe', () => {
   test('create an instance', () => {

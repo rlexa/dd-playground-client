@@ -1,4 +1,4 @@
-import { D3numberPipe } from './d3number.pipe';
+import {D3numberPipe} from './d3number.pipe';
 
 describe('D3numberPipe', () => {
   test('create an instance', () => {

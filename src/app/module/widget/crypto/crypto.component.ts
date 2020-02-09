@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {CryptoApiService} from 'src/app/module/service/crypto-api';
 import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, of, Subject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
+import {CryptoApiService} from '../../service/crypto-api';
 
 @Component({
   selector: 'app-crypto',

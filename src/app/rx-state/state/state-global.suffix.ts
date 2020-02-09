@@ -1,2 +1,2 @@
-import { SUFFIX as PARENT } from './state.suffix';
+import {SUFFIX as PARENT} from './state.suffix';
 export const SUFFIX = PARENT + '_' + 'GLOBAL';

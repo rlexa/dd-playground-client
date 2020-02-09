@@ -1,6 +1,8 @@
-import { NgModule } from '@angular/core';
-import { imports } from './imports';
-import { LoadingBarComponent } from './loading-bar.component';
+import {NgModule} from '@angular/core';
+import {imports} from './imports';
+import {LoadingBarComponent} from './loading-bar.component';
 
-@NgModule({ imports, exports: [LoadingBarComponent], declarations: [LoadingBarComponent] })
-export class LoadingBarModule { }
+@NgModule({imports, exports: [LoadingBarComponent], declarations: [LoadingBarComponent]})
+class LoadingBarModule {}
+
+export {LoadingBarModule, LoadingBarComponent};

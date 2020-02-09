@@ -1,4 +1,4 @@
-import { IconPipe } from './icon.pipe';
+import {IconPipe} from './icon.pipe';
 
 describe('IconPipe', () => {
   it('create an instance', () => {

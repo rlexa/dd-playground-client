@@ -3,7 +3,7 @@
 exports[`CryptoComponent is created 1`] = `
 <app-crypto
   anyData$={[Function Subject]}
-  api={[Function CryptoApiService]}
+  api={[Function Object]}
   apiBlockCypherBitcoinAddress={[Function Function]}
   apiBlockchainBitcoinAddress={[Function Function]}
   apiWebBitcoinStats={[Function Function]}

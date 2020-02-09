@@ -6,7 +6,7 @@ exports[`GhibliComponent is created 1`] = `
   TYPE_TO_GET_DETAILS={[Function Object]}
   TYPE_TO_GET_LIST={[Function Object]}
   anyData$={[Function Subject]}
-  api={[Function GhibliApiService]}
+  api={[Function Object]}
   busyCount$={[Function BehaviorSubject]}
   clickableValue={[Function Function]}
   done$={[Function DoneSubject]}
@@ -16,192 +16,60 @@ exports[`GhibliComponent is created 1`] = `
 >
   <div
     ddflexbox="hyscsw"
-    style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start; align-content: flex-start; flex-wrap: wrap;"
   >
     <mat-card
-      class="childhv mat-card _mat-animation-noopable"
+      class="childhv"
     >
-      <mat-card-title
-        class="mat-card-title"
-      >
+      <mat-card-title>
         Queries
       </mat-card-title>
-      <mat-card-content
-        class="mat-card-content"
-      >
+      <mat-card-content>
         <div
           ddflexbox="vys"
-          style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: stretch; flex-wrap: no-wrap;"
         >
           <mat-list
-            class="mat-list-auto-height mat-list mat-list-base"
+            class="mat-list-auto-height"
           >
             <h3
-              class="mat-subheader"
               mat-subheader=""
             >
               API
             </h3>
             
-            <mat-list-item
-              class="mat-list-item"
-            >
-              <div
-                class="mat-list-item-content"
+            <mat-list-item>
+              <button
+                mat-raised-button=""
               >
-                <div
-                  class="mat-list-item-ripple mat-ripple"
-                  mat-ripple=""
-                />
-                <div
-                  class="mat-list-text"
-                />
-                <button
-                  class="mat-raised-button mat-button-base _mat-animation-noopable"
-                  mat-raised-button=""
-                >
-                  <span
-                    class="mat-button-wrapper"
-                  >
-                    /films/
-                  </span>
-                  <div
-                    class="mat-button-ripple mat-ripple"
-                    matripple=""
-                  />
-                  <div
-                    class="mat-button-focus-overlay"
-                  />
-                </button>
-              </div>
+                /films/
+              </button>
             </mat-list-item>
-            <mat-list-item
-              class="mat-list-item"
-            >
-              <div
-                class="mat-list-item-content"
+            <mat-list-item>
+              <button
+                mat-raised-button=""
               >
-                <div
-                  class="mat-list-item-ripple mat-ripple"
-                  mat-ripple=""
-                />
-                <div
-                  class="mat-list-text"
-                />
-                <button
-                  class="mat-raised-button mat-button-base _mat-animation-noopable"
-                  mat-raised-button=""
-                >
-                  <span
-                    class="mat-button-wrapper"
-                  >
-                    /locations/
-                  </span>
-                  <div
-                    class="mat-button-ripple mat-ripple"
-                    matripple=""
-                  />
-                  <div
-                    class="mat-button-focus-overlay"
-                  />
-                </button>
-              </div>
+                /locations/
+              </button>
             </mat-list-item>
-            <mat-list-item
-              class="mat-list-item"
-            >
-              <div
-                class="mat-list-item-content"
+            <mat-list-item>
+              <button
+                mat-raised-button=""
               >
-                <div
-                  class="mat-list-item-ripple mat-ripple"
-                  mat-ripple=""
-                />
-                <div
-                  class="mat-list-text"
-                />
-                <button
-                  class="mat-raised-button mat-button-base _mat-animation-noopable"
-                  mat-raised-button=""
-                >
-                  <span
-                    class="mat-button-wrapper"
-                  >
-                    /people/
-                  </span>
-                  <div
-                    class="mat-button-ripple mat-ripple"
-                    matripple=""
-                  />
-                  <div
-                    class="mat-button-focus-overlay"
-                  />
-                </button>
-              </div>
+                /people/
+              </button>
             </mat-list-item>
-            <mat-list-item
-              class="mat-list-item"
-            >
-              <div
-                class="mat-list-item-content"
+            <mat-list-item>
+              <button
+                mat-raised-button=""
               >
-                <div
-                  class="mat-list-item-ripple mat-ripple"
-                  mat-ripple=""
-                />
-                <div
-                  class="mat-list-text"
-                />
-                <button
-                  class="mat-raised-button mat-button-base _mat-animation-noopable"
-                  mat-raised-button=""
-                >
-                  <span
-                    class="mat-button-wrapper"
-                  >
-                    /species/
-                  </span>
-                  <div
-                    class="mat-button-ripple mat-ripple"
-                    matripple=""
-                  />
-                  <div
-                    class="mat-button-focus-overlay"
-                  />
-                </button>
-              </div>
+                /species/
+              </button>
             </mat-list-item>
-            <mat-list-item
-              class="mat-list-item"
-            >
-              <div
-                class="mat-list-item-content"
+            <mat-list-item>
+              <button
+                mat-raised-button=""
               >
-                <div
-                  class="mat-list-item-ripple mat-ripple"
-                  mat-ripple=""
-                />
-                <div
-                  class="mat-list-text"
-                />
-                <button
-                  class="mat-raised-button mat-button-base _mat-animation-noopable"
-                  mat-raised-button=""
-                >
-                  <span
-                    class="mat-button-wrapper"
-                  >
-                    /vehicles/
-                  </span>
-                  <div
-                    class="mat-button-ripple mat-ripple"
-                    matripple=""
-                  />
-                  <div
-                    class="mat-button-focus-overlay"
-                  />
-                </button>
-              </div>
+                /vehicles/
+              </button>
             </mat-list-item>
           </mat-list>
         </div>

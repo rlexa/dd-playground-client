@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 export const isUpperCase = (value: string, index: number) => !!/[A-ZÀ-ÖØ-ÞΆΈ-ΏΑ-ΫϢϤϦϨϪϬϮϴϷϹϺϽ-Ͽ]/.exec(value[index]);
 const hasBreaks = (value: string, from: number, to: number) => {
@@ -8,13 +8,12 @@ const hasBreaks = (value: string, from: number, to: number) => {
     }
   }
   return false;
-}
+};
 
-@Pipe({ name: 'ripupper', pure: true })
+@Pipe({name: 'ripupper', pure: true})
 export class RipupperPipe implements PipeTransform {
-
   transform(value: string): string {
-    if (typeof (value) === 'string' && value.length >= 3) {
+    if (typeof value === 'string' && value.length >= 3) {
       const iis: number[] = [0];
       for (let ii = 2; ii < value.length - 1; ++ii) {
         if (isUpperCase(value, ii) && !isUpperCase(value, ii - 1)) {
@@ -31,5 +30,4 @@ export class RipupperPipe implements PipeTransform {
     }
     return value;
   }
-
 }

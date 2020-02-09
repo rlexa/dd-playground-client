@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
-import {GraphskyService} from 'src/app/module/service/graphsky-api';
 import {map} from 'rxjs/operators';
+import {GraphskyService} from '../../service/graphsky-api';
 
 @Component({
   selector: 'app-demo-misc',
