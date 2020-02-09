@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
-import { Title } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
-import { RxStateService, RxStateSetGlobalService } from 'app/rx-state';
-import { RxCleanup } from 'dd-rxjs';
-import { BehaviorSubject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {DateAdapter, NativeDateAdapter} from '@angular/material/core';
+import {Title} from '@angular/platform-browser';
+import {NavigationEnd, Router} from '@angular/router';
+import {RxCleanup} from 'dd-rxjs';
+import {BehaviorSubject} from 'rxjs';
+import {filter} from 'rxjs/operators';
+import {RxStateService, RxStateSetGlobalService} from './rx-state';
 
 const userAgent = !window ? '' : window.navigator.userAgent;
 const isBrowserChrome = userAgent.indexOf('Chrome') >= 0;
@@ -27,7 +27,9 @@ export class AppComponent implements OnDestroy {
     this.start = () => {
       title.setTitle(rxState.state.globalValues.flags.title);
       dateAdapter.setLocale('de-DE');
-      router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(ev => rxStateMutate.setRoute(router.routerState.snapshot.url));
+      router.events
+        .pipe(filter(ev => ev instanceof NavigationEnd))
+        .subscribe(ev => rxStateMutate.setRoute(router.routerState.snapshot.url));
     };
     if (this.isBrowserChrome) {
       this.start();
@@ -40,11 +42,10 @@ export class AppComponent implements OnDestroy {
   readonly isBrowserIE = isBrowserIE;
   @RxCleanup() readonly isForcingStart$ = new BehaviorSubject(false);
 
-  ngOnDestroy() { }
+  ngOnDestroy() {}
 
   onForceStart() {
     this.isForcingStart$.next(true);
     this.start();
   }
-
 }

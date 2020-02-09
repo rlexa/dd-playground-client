@@ -7,7 +7,7 @@ import {
   GHIBLI_TYPE_PEOPLE,
   GHIBLI_TYPE_SPECIES,
   GHIBLI_TYPE_VEHICLES,
-} from 'app/module/service/ghibli-api';
+} from 'src/app/module/service/ghibli-api';
 import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {filter, finalize, map, switchMap, tap} from 'rxjs/operators';

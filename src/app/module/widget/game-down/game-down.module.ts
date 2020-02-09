@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'app/routing';
+import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {GameDownAiInitiativeComponent} from './game-down-ai-initiative.component';
 import {GameDownConfigComponent} from './game-down-config.component';
 import {GameDownFieldComponent} from './game-down-field.component';

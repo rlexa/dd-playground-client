@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
-import {fTthemeColor, Theme} from 'app/game';
-import {GameDownColorMap} from 'app/module/widget/game-down/data';
+import {fTthemeColor, Theme} from 'src/app/game';
+import {GameDownColorMap} from 'src/app/module/widget/game-down/data';
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';

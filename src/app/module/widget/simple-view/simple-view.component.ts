@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
-import {TRIGGER_WOBBLE_X} from 'app/animations';
-import {FORMAT_DATE_TIMESTAMP} from 'app/presets';
-import {isNumeric, isWeb, WithDataProperty} from 'app/util';
+import {TRIGGER_WOBBLE_X} from 'src/app/animations';
+import {FORMAT_DATE_TIMESTAMP} from 'src/app/presets';
+import {isNumeric, isWeb, WithDataProperty} from 'src/app/util';
 import {map} from 'rxjs/operators';
 
 type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string' | 'void' | 'array';

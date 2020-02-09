@@ -17,8 +17,8 @@ import {
   ROUTE_RENDER_CANVAS,
   ROUTE_SETTINGS,
   ROUTE_WALKER,
-} from 'app/routing';
-import {RxStateService} from 'app/rx-state';
+} from 'src/app/routing';
+import {RxStateService} from 'src/app/rx-state';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {map} from 'rxjs/operators';
 

@@ -7,8 +7,6 @@
     "**/.svn": true,
     "**/.vscode": true,
     "**/CVS": true,
-    "**/coverage": true,
-    "**/dist": true,
     "**/*.bak": true
   },
   "editor.detectIndentation": false,
@@ -16,8 +14,6 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "html.format.wrapLineLength": 140,
-  "editor.rulers": [
-    140
-  ],
+  "editor.rulers": [140],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }

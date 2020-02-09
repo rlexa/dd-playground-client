@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
-import {GraphskyService} from 'app/module/service/graphsky-api';
+import {GraphskyService} from 'src/app/module/service/graphsky-api';
 import {map} from 'rxjs/operators';
 
 @Component({

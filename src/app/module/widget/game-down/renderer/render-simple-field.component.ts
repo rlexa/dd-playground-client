@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
-import {Theme} from 'app/game';
-import {GameDownColorMap, GameDownField} from 'app/module/widget/game-down/data';
-import {trackByIndex} from 'app/util';
+import {Theme} from 'src/app/game';
+import {GameDownColorMap, GameDownField} from 'src/app/module/widget/game-down/data';
+import {trackByIndex} from 'src/app/util';
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';

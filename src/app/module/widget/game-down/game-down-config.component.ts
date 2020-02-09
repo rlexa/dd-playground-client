@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
-import {buildSituation1, checkProblems, DEF_FAMEDOWN_STATE_FIELDS, GameDownField, modField} from 'app/module/widget/game-down/data';
-import {RxStateService, RxStateSetGameDownService} from 'app/rx-state';
-import {trackByIndex} from 'app/util';
+import {buildSituation1, checkProblems, DEF_FAMEDOWN_STATE_FIELDS, GameDownField, modField} from 'src/app/module/widget/game-down/data';
+import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
+import {trackByIndex} from 'src/app/util';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, of} from 'rxjs';
 import {distinctUntilChanged, filter, map, shareReplay, takeUntil} from 'rxjs/operators';

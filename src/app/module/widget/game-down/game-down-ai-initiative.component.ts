@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { resolveInitiative as resolveInitiativeIndices } from 'app/module/widget/game-down/data';
-import { RxStateService, RxStateSetGameDownService } from 'app/rx-state';
-import { RxStateSetUiService } from 'app/rx-state/rx-state-set-ui.service';
-import { trackByIndex } from 'app/util';
-import { DoneSubject, RxCleanup } from 'dd-rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {resolveInitiative as resolveInitiativeIndices} from 'src/app/module/widget/game-down/data';
+import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
+import {RxStateSetUiService} from 'src/app/rx-state/rx-state-set-ui.service';
+import {trackByIndex} from 'src/app/util';
+import {DoneSubject, RxCleanup} from 'dd-rxjs';
+import {map, shareReplay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-down-ai-initiative',
@@ -16,7 +16,7 @@ export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
     private readonly rxState: RxStateService,
     private readonly rxStateMutate: RxStateSetGameDownService,
     private readonly rxStateMutateUi: RxStateSetUiService,
-  ) { }
+  ) {}
 
   private wasShowingFooter = false;
   @RxCleanup() private readonly done$ = new DoneSubject();
@@ -29,12 +29,12 @@ export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
   trackByIndex = trackByIndex;
 
   ngOnDestroy() {
-    this.rxStateMutateUi.mergeDashboardState({ isVisibleFooter: this.wasShowingFooter });
+    this.rxStateMutateUi.mergeDashboardState({isVisibleFooter: this.wasShowingFooter});
   }
 
   ngOnInit() {
     this.wasShowingFooter = this.rxState.state.ui.dashboard.isVisibleFooter;
-    this.rxStateMutateUi.mergeDashboardState({ isVisibleFooter: false });
+    this.rxStateMutateUi.mergeDashboardState({isVisibleFooter: false});
   }
 
   onClickIndex = (index: number) => this.rxStateMutate.setSceneSelectedIndex(index);

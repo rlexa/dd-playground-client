@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {GraphskyService, IGraphskyData, IGraphskyLinkRequest} from 'app/module/service/graphsky-api';
-import {TAG_TYPE} from 'app/module/widget/graph-walker';
+import {GraphskyService, IGraphskyData, IGraphskyLinkRequest} from 'src/app/module/service/graphsky-api';
+import {TAG_TYPE} from 'src/app/module/widget/graph-walker';
 import {map, tap} from 'rxjs/operators';
 
 interface TypedNode extends IGraphskyData {

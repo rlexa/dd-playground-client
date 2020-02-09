@@ -1,12 +1,3 @@
-import {Theme, THEME_MISSING} from 'app/game';
-import {
-  DEF_FIELD_VALUES,
-  DEF_FAMEDOWN_STATE_FIELDS,
-  DEF_SCENE_FACTOR,
-  GameDownColorMap,
-  GameDownField,
-  GameDownScene,
-} from 'app/module/widget/game-down/data';
 import {
   actor,
   initReduceAssemble$_,
@@ -16,6 +7,15 @@ import {
   setPropertyIfNotEqual,
   setPropertyIfNotSame,
 } from 'dd-rx-state';
+import {Theme, THEME_MISSING} from 'src/app/game';
+import {
+  DEF_FAMEDOWN_STATE_FIELDS,
+  DEF_FIELD_VALUES,
+  DEF_SCENE_FACTOR,
+  GameDownColorMap,
+  GameDownField,
+  GameDownScene,
+} from 'src/app/module/widget/game-down/data';
 import {SUFFIX} from './state-game-down.suffix';
 
 export interface GameDownState {

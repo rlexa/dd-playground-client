@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
-import {RxStateService, RxStateSetGameDownService} from 'app/rx-state';
+import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {themes, themeDownDefault} from './theming';
 

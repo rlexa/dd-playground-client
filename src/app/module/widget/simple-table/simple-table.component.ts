@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {FORMAT_DATE_TIMESTAMP} from 'app/presets';
-import {trackByIndex} from 'app/util';
+import {FORMAT_DATE_TIMESTAMP} from 'src/app/presets';
+import {trackByIndex} from 'src/app/util';
 import {DoneSubject, RxCleanup, rxNext_, rxNull, rxTrue} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, merge} from 'rxjs';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';

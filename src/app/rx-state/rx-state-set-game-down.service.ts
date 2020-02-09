@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {THEME_MISSING} from 'app/game';
-import {DEF_FAMEDOWN_STATE_FIELDS, GameDownField} from 'app/module/widget/game-down/data';
+import {THEME_MISSING} from 'src/app/game';
+import {DEF_FAMEDOWN_STATE_FIELDS, GameDownField} from 'src/app/module/widget/game-down/data';
 import {
   setSceneFactor,
   setSceneField,
@@ -11,7 +11,7 @@ import {
   setSceneTheme,
   setThemes,
   setViewDebug,
-} from 'app/rx-state/state/state-game-down';
+} from 'src/app/rx-state/state/state-game-down';
 import {forceBool, orNull, or_} from 'dd-rx-state';
 import {RxStateService} from './rx-state.service';
 

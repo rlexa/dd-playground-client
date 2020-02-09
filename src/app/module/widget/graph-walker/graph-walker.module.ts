@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'app/routing';
+import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {GraphWalkerComponent} from './graph-walker.component';
 import {imports} from './imports';
 

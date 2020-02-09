@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {mergeDashboard} from 'app/rx-state/state/state-ui';
+import {mergeDashboard} from 'src/app/rx-state/state/state-ui';
 import {orObject} from 'dd-rx-state';
 import {RxStateService} from './rx-state.service';
 

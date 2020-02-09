@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'app/routing';
+import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {DemoMiscComponent} from './demo-misc.component';
 import {imports} from './imports';
 

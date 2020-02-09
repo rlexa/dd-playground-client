@@ -4,11 +4,11 @@ import {MatNativeDateModule, NativeDateModule} from '@angular/material/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule, Routes} from '@angular/router';
-import {AppRxStore, createAppRxStore, RxStateSetGlobalService} from 'app/rx-state';
-import {FlexboxModule} from 'app/module/directive/flexbox';
 import 'hammerjs';
 import {AppComponent} from './app.component';
+import {FlexboxModule} from './module/directive/flexbox';
 import {ROUTE_DASHBOARD, ROUTE_ROOT, ROUTE_WILDCARD} from './routing';
+import {AppRxStore, createAppRxStore, RxStateSetGlobalService} from './rx-state';
 
 async function loadHttp(path: string, http: HttpClient, handler: (data: any) => void, parseAs: 'json' | 'text' = 'json') {
   try {
@@ -44,7 +44,7 @@ export function beforeInit(http: HttpClient, rxMutateGlobal: RxStateSetGlobalSer
 const appRoutes: Routes = [
   {
     path: ROUTE_DASHBOARD,
-    loadChildren: () => import('app/module/widget/dashboard/dashboard.module').then(m => m.DashboardModule),
+    loadChildren: () => import('src/app/module/widget/dashboard/dashboard.module').then(m => m.DashboardModule),
   },
   {path: ROUTE_ROOT, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full'},
   {path: ROUTE_WILDCARD, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full'},

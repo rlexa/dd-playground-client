@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {GraphskyService, IGraphskyNode} from 'app/module/service/graphsky-api';
+import {GraphskyService, IGraphskyNode} from 'src/app/module/service/graphsky-api';
 import {RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, of} from 'rxjs';
 import {debounceTime, filter, map, withLatestFrom} from 'rxjs/operators';

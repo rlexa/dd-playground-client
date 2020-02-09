@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {cleanParams, getJsonHeaders} from 'app/util';
+import {cleanParams, getJsonHeaders} from 'src/app/util';
 import {map} from 'rxjs/operators';
 
 const API = 'https://ghibliapi.herokuapp.com';

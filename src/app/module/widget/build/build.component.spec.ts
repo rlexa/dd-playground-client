@@ -1,7 +1,7 @@
 import {async, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
-import {provideRxState} from 'app/rx-state/test';
+import {provideRxState} from 'src/app/rx-state/test';
 import {BuildComponent} from './build.component';
 import {imports} from './imports';
 

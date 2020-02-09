@@ -1,5 +1,5 @@
-import {Color, reduceThemes, Theme, THEME_MISSING} from 'app/game';
-import {GameDownColorMap} from 'app/module/widget/game-down/data';
+import {Color, reduceThemes, Theme, THEME_MISSING} from 'src/app/game';
+import {GameDownColorMap} from 'src/app/module/widget/game-down/data';
 
 // DEFAULT
 

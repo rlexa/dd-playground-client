@@ -1,6 +1,6 @@
 import 'hammerjs'; // for material snapshots
 import 'jest-preset-angular';
 import './jest-global-mocks';
+import {Mock} from 'ts-mockery';
 
-// Zone outputs giant stacks, let's limit for the tests
-Error.stackTraceLimit = 2;
+Mock.configure('jest');

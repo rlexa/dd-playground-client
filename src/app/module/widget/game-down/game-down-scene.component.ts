@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
-import {GAMEDOWN_FIELD_H, GAMEDOWN_FIELD_W} from 'app/module/widget/game-down/data';
-import {RxStateService, RxStateSetGameDownService} from 'app/rx-state';
-import {RENDERER_SIMPLE} from 'app/rx-state/state/state-game-down';
+import {GAMEDOWN_FIELD_H, GAMEDOWN_FIELD_W} from 'src/app/module/widget/game-down/data';
+import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
+import {RENDERER_SIMPLE} from 'src/app/rx-state/state/state-game-down';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {combineLatest} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';

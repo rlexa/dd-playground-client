@@ -40,7 +40,7 @@
 }
 
 .background-highlighted {
-  background-color: fade-out($mat-clr-chip-bg-connected, .35);
+  background-color: fade-out($mat-clr-chip-bg-connected, 0.35);
 }
 
 .auto-line-height {
@@ -177,7 +177,7 @@
 }
 
 .icon-background {
-  background-color: fade-out($clr-primary, .75);
+  background-color: fade-out($clr-primary, 0.75);
   border-radius: 2.4rem;
 }
 

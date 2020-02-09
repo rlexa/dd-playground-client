@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {mergeFlags, setRoute} from 'app/rx-state/state/state-global';
+import {mergeFlags, setRoute} from 'src/app/rx-state/state/state-global';
 import {or_} from 'dd-rx-state';
 import {RxStateService} from './rx-state.service';
 

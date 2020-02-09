@@ -1,5 +1,5 @@
-import {StringToString} from 'app/game';
-import {copyJson} from 'app/util';
+import {StringToString} from 'src/app/game';
+import {copyJson} from 'src/app/util';
 
 export interface GameDownColorMap extends StringToString {
   actorNpc: string;
