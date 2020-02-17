@@ -1,0 +1,18 @@
+<div class="scope">
+  <div class="childhv contenthv background-highlighted border">
+    <h5>Settings</h5>
+
+    <button class="childhv" (click)="triggerInit()">Init</button>
+    <button class="childhv" (click)="triggerFrame()">Frame</button>
+    <button *ngFor="let vec of ['L', 'U', 'R', 'D']" class="childhv" (click)="triggerDirection(vec)">{{ vec }}</button>
+
+    <app-simple-view [isDense]="true" [isExpandable]="true" subheader="Preset" [data]="preset$ | async"></app-simple-view>
+    <app-simple-view
+      [isDense]="true"
+      [isExpandable]="true"
+      [isWidthConstrained]="false"
+      subheader="Game"
+      [data]="(game$ | async) || {}"
+    ></app-simple-view>
+  </div>
+</div>

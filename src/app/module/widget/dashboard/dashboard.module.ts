@@ -16,6 +16,7 @@ import {
   ROUTE_DEMO_STATE,
   ROUTE_GAME,
   ROUTE_GAME_DOWN,
+  ROUTE_GAME_SNAKE,
   ROUTE_GRAPH,
   ROUTE_OVERVIEW,
   ROUTE_PLAYGROUND,
@@ -48,6 +49,10 @@ const ROUTING: Routes = [
         component: RoutedContentComponent,
         children: [
           {
+            path: ROUTE_GAME_SNAKE,
+            loadChildren: () => import('src/app/module/game-snake/game-snake.module').then(m => m.GameSnakeModule),
+          },
+          {
             path: ROUTE_GAME_DOWN,
             loadChildren: () => import('src/app/module/widget/game-down/game-down.module').then(m => m.GameDownModule),
           },
@@ -55,8 +60,8 @@ const ROUTING: Routes = [
             path: ROUTE_RENDER_CANVAS,
             loadChildren: () => import('src/app/module/widget/render-canvas/render-canvas.module').then(m => m.RenderCanvasModule),
           },
-          {path: ROUTE_ROOT, redirectTo: ROUTE_GAME_DOWN, pathMatch: 'full'},
-          {path: ROUTE_WILDCARD, redirectTo: ROUTE_GAME_DOWN, pathMatch: 'full'},
+          {path: ROUTE_ROOT, redirectTo: ROUTE_GAME_SNAKE, pathMatch: 'full'},
+          {path: ROUTE_WILDCARD, redirectTo: ROUTE_GAME_SNAKE, pathMatch: 'full'},
         ],
       },
       {

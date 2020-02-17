@@ -13,6 +13,7 @@ import {
   ROUTE_DEMO_STATE,
   ROUTE_GAME,
   ROUTE_GAME_DOWN,
+  ROUTE_GAME_SNAKE,
   ROUTE_GRAPH,
   ROUTE_OVERVIEW,
   ROUTE_PLAYGROUND,
@@ -77,8 +78,9 @@ export class DashboardComponent implements OnDestroy {
       route: ROUTE_GAME,
       label: 'Game',
       subs: [
-        {icon: 'items1', route: ROUTE_GAME_DOWN, label: 'Down', subs: []},
-        {icon: 'items2', route: ROUTE_RENDER_CANVAS, label: 'Render', subs: []},
+        {icon: 'items1', route: ROUTE_GAME_SNAKE, label: 'Snake', subs: []},
+        {icon: 'items2', route: ROUTE_GAME_DOWN, label: 'Down', subs: []},
+        {icon: 'items3', route: ROUTE_RENDER_CANVAS, label: 'Render', subs: []},
       ],
     },
     {
