@@ -12,7 +12,7 @@ import {Game, initGame, onInputDirection, Preset, redProcessFrame, Vector} from 
 })
 export class GameSnakeComponent implements OnDestroy, OnInit {
   @RxCleanup() public game$ = new BehaviorSubject<Game>(null);
-  @RxCleanup() public preset$ = new BehaviorSubject<Preset>({height: 10, width: 15});
+  @RxCleanup() public preset$ = new BehaviorSubject<Preset>({height: 15, width: 15});
 
   @RxCleanup() public triggerInit$ = new Subject();
   @RxCleanup() public triggerFrame$ = new Subject();

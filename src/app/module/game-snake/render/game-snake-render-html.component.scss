@@ -1,0 +1,26 @@
+.scope {
+  height: 100%;
+  width: 100%;
+
+  display: grid;
+
+  .field {
+    margin: 0.1em;
+
+    &.field-empty {
+      background-color: grey;
+    }
+
+    &.field-food {
+      background-color: green;
+    }
+
+    &.field-snake {
+      background-color: blue;
+    }
+
+    &.field-head {
+      background-color: red;
+    }
+  }
+}

@@ -41,7 +41,7 @@ type Processor<T> = (val: T) => T;
 const process = <T>(...processors: Processor<T>[]): Processor<T> => (val: T) => processors.reduce((acc, processor) => processor(acc), val);
 
 const initPreset = (from?: Partial<Preset>): Preset => ({
-  height: 10,
+  height: 15,
   width: 15,
   ...(from || {}),
 });

@@ -15,4 +15,11 @@
       [data]="(game$ | async) || {}"
     ></app-simple-view>
   </div>
+
+  <div class="childhv contenthv background-highlighted border">
+    <h5>Render: HTML</h5>
+    <div style="width: 20rem; height: 20rem">
+      <app-game-snake-render-html [game]="game$ | async"></app-game-snake-render-html>
+    </div>
+  </div>
 </div>
