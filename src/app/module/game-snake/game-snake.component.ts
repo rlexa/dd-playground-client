@@ -11,16 +11,21 @@ import {Game, initGame, onInputDirection, Preset, redProcessFrame, Vector} from 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameSnakeComponent implements OnDestroy, OnInit {
+  private timeLast = 0;
+
   @RxCleanup() public game$ = new BehaviorSubject<Game>(null);
   @RxCleanup() public preset$ = new BehaviorSubject<Preset>({height: 15, width: 15});
 
   @RxCleanup() public triggerInit$ = new Subject();
   @RxCleanup() public triggerFrame$ = new Subject();
   @RxCleanup() public triggerDirection$ = new Subject<string>();
+  @RxCleanup() public toggleLoop$ = new BehaviorSubject(false);
 
   triggerInit = rxFire_(this.triggerInit$);
   triggerFrame = rxFire_(this.triggerFrame$);
   triggerDirection = rxNext_(this.triggerDirection$);
+
+  toggleLoop = () => this.toggleLoop$.next(!this.toggleLoop$.value);
 
   ngOnDestroy() {}
 
@@ -51,5 +56,22 @@ export class GameSnakeComponent implements OnDestroy, OnInit {
         map(([vec, game]) => onInputDirection(game, vec)),
       )
       .subscribe(rxNext_(this.game$));
+
+    this.toggleLoop$.pipe(filter(Boolean)).subscribe(() => this.onFrame());
   }
+
+  private onFrame = (time?: number) => {
+    if (time === undefined) {
+      this.timeLast = 0;
+    } else if (this.timeLast <= 0) {
+      this.timeLast = time;
+    } else if (time - this.timeLast > 1000 / 8) {
+      this.timeLast = time;
+      this.triggerFrame();
+    }
+
+    if (!this.toggleLoop$.closed && this.toggleLoop$.value) {
+      requestAnimationFrame(this.onFrame);
+    }
+  };
 }

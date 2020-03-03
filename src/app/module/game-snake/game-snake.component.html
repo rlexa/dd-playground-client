@@ -1,9 +1,16 @@
-<div class="scope">
+<div
+  class="scope"
+  (keydown.arrowup)="triggerDirection('U')"
+  (keydown.arrowdown)="triggerDirection('D')"
+  (keydown.arrowleft)="triggerDirection('L')"
+  (keydown.arrowright)="triggerDirection('R')"
+>
   <div class="childhv contenthv background-highlighted border">
     <h5>Settings</h5>
 
     <button class="childhv" (click)="triggerInit()">Init</button>
     <button class="childhv" (click)="triggerFrame()">Frame</button>
+    <button class="childhv" (click)="toggleLoop()">{{ (toggleLoop$ | async) ? 'Loop OFF' : 'Loop ON' }}</button>
     <button *ngFor="let vec of ['L', 'U', 'R', 'D']" class="childhv" (click)="triggerDirection(vec)">{{ vec }}</button>
 
     <app-simple-view [isDense]="true" [isExpandable]="true" subheader="Preset" [data]="preset$ | async"></app-simple-view>
