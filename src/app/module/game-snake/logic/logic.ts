@@ -151,13 +151,13 @@ const redSnakeTailCut: Processor<Game> = state => ({
   },
 });
 
-const redProcessLoop = process(
+const processLoop = process(
   processIf(whenInputDirection)(
     processIf(whenGameIsPlay, whenSnake, not(whenInputDirectionBackwards))(redInputDirectionToSnake),
     processIf(whenGameIsStart)(redSnakeInit),
     processIf(not(whenGameIsPlay))(redGameStartOrPlay),
+    redInputDirectionClear,
   ),
-  redInputDirectionClear,
   processIf(whenGameIsPlay, whenSnake)(
     redSnakeHeadMove,
     processIf(not(whenFood, whenFoodInSnake))(redSnakeTailCut),
@@ -169,5 +169,5 @@ const redProcessLoop = process(
 );
 
 export const initGame = (from?: Partial<Preset>): Game => ({inputDirection: null, scene: initScene(initPreset(from)), state: 'start'});
-export const redProcessFrame = redProcessLoop;
+export const processFrame = processLoop;
 export const onInputDirection = (state: Game, inputDirection: Vector): Game => ({...state, inputDirection});

@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/co
 import {RxCleanup, rxFire_, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {filter, map, withLatestFrom} from 'rxjs/operators';
-import {Game, initGame, onInputDirection, Preset, redProcessFrame, Vector} from './logic';
+import {Game, initGame, onInputDirection, Preset, processFrame, Vector} from './logic';
 
 @Component({
   selector: 'app-game-snake',
@@ -35,7 +35,7 @@ export class GameSnakeComponent implements OnDestroy, OnInit {
         withLatestFrom(this.game$),
         map(([_, game]) => game),
         filter(game => !!game),
-        map(redProcessFrame),
+        map(processFrame),
       )
       .subscribe(rxNext_(this.game$));
 
