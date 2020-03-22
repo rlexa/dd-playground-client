@@ -15,5 +15,10 @@ describe(`helper`, () => {
   test(`processIf multiple first false`, () => expect(processIf(whenOdd, whenGt3)(redInc1)(4)).toBe(4));
   test(`processIf multiple second false`, () => expect(processIf(whenOdd, whenGt3)(redInc1)(1)).toBe(1));
 
-  test(`not single`, () => expect(not(whenOdd)(2)).toBe(true));
+  test(`not single true`, () => expect(not(whenOdd)(2)).toBe(true));
+  test(`not single false`, () => expect(not(whenOdd)(1)).toBe(false));
+  test(`not multiple first true`, () => expect(not(whenOdd, whenGt3)(4)).toBe(true));
+  test(`not multiple second true`, () => expect(not(whenOdd, whenGt3)(1)).toBe(true));
+  test(`not multiple all true`, () => expect(not(whenOdd, whenGt3)(2)).toBe(true));
+  test(`not multiple all false`, () => expect(not(whenOdd, whenGt3)(5)).toBe(false));
 });
