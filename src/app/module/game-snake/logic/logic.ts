@@ -1,7 +1,20 @@
+type Processor<T> = (val: T) => T;
+const process = <T>(...processors: Processor<T>[]): Processor<T> => (val: T) => processors.reduce((acc, processor) => processor(acc), val);
+
+type PreFilter<T> = (val: T) => boolean;
+const processIf = <T>(...ifAnds: PreFilter<T>[]) => (...processors: Processor<T>[]): Processor<T> => (val: T) =>
+  ifAnds.reduce((acc, ifThen) => (acc ? ifThen(val) : acc), true) ? process(...processors)(val) : val;
+const not = <T>(ifAnd: PreFilter<T>): PreFilter<T> => (val: T) => !ifAnd(val);
+
 export interface Vector {
   x: number;
   y: number;
 }
+
+const equalVectors = (aa: Vector, bb: Vector) => aa.x === bb.x && aa.y === bb.y;
+const sumVectors = (aa: Vector, bb: Vector): Vector => ({x: aa.x + bb.x, y: aa.y + bb.y});
+const isNullVector = (vec: Vector) => vec.x === 0 && vec.y === 0;
+const includesVector = (vecs: Vector[], vec: Vector) => vecs.some(ii => equalVectors(ii, vec));
 
 export interface SnakeState {
   positions: Vector[];
@@ -30,15 +43,13 @@ export interface Preset {
 
 export type funcRender = (game: Game) => void;
 
+export type GameState = 'won' | 'lost' | 'start' | 'play';
+
 export interface Game {
   inputDirection?: Vector;
   scene: Scene;
-  state: 'won' | 'lost' | 'start' | 'play';
+  state: GameState;
 }
-
-type Processor<T> = (val: T) => T;
-
-const process = <T>(...processors: Processor<T>[]): Processor<T> => (val: T) => processors.reduce((acc, processor) => processor(acc), val);
 
 const initPreset = (from?: Partial<Preset>): Preset => ({
   height: 15,
@@ -57,15 +68,15 @@ const initMap = (from: Preset): Map => ({
 
 const initScene = (from: Preset): Scene => ({map: initMap(from)});
 
-const equalVectors = (aa: Vector, bb: Vector) => aa.x === bb.x && aa.y === bb.y;
-const sumVectors = (aa: Vector, bb: Vector): Vector => ({x: aa.x + bb.x, y: aa.y + bb.y});
-const isNullVector = (vec: Vector) => vec.x === 0 && vec.y === 0;
-const includesVector = (vecs: Vector[], vec: Vector) => vecs.some(ii => equalVectors(ii, vec));
+const whenHasFood: PreFilter<Game> = st => !!st.scene.map.food;
+const whenHasInputDirection: PreFilter<Game> = st => !!st.inputDirection;
+const whenHasSnake: PreFilter<Game> = st => !!st.scene.map.snake;
+const whenWinning: PreFilter<Game> = st => st.scene.map.snake.positions.length >= st.scene.map.height * st.scene.map.width;
 
-const isEatingFood = (snake: SnakeState, food: Food) => includesVector(snake.positions, food.position);
+const whenInState = (gameState: GameState): PreFilter<Game> => st => st.state === gameState;
 
-const hasWon = (state: Game) =>
-  state.scene.map.snake && state.scene.map.snake.positions.length >= state.scene.map.height * state.scene.map.width;
+const whenFoodInSnake: PreFilter<Game> = st =>
+  whenHasFood(st) && whenHasSnake(st) && includesVector(st.scene.map.snake.positions, st.scene.map.food.position);
 
 const getRandomFoodPosition = (state: Game): Vector => {
   const snake = state.scene.map.snake;
@@ -97,86 +108,75 @@ const getNewSnakeHeadPosition = (state: Game): Vector => {
 };
 
 const redProcessInputDirectionToSnake: Processor<Game> = state =>
-  !state.inputDirection ||
-  state.state !== 'play' ||
-  !state.scene.map.snake ||
   isNullVector(sumVectors(state.inputDirection, state.scene.map.snake.direction))
     ? state
     : {...state, scene: {...state.scene, map: {...state.scene.map, snake: {...state.scene.map.snake, direction: state.inputDirection}}}};
 
-const redProcessInputDirectionToInit: Processor<Game> = state =>
-  !state.inputDirection || state.state !== 'start'
-    ? state
-    : {...state, scene: {...state.scene, map: {...state.scene.map, snake: initSnake()}}};
+const redSnakeInit: Processor<Game> = state => ({
+  ...state,
+  scene: {...state.scene, map: {...state.scene.map, snake: initSnake()}},
+});
 
-const redProcessInputDirectionToWaitingState: Processor<Game> = state =>
-  !state.inputDirection || state.state === 'play' ? state : {...state, state: state.state !== 'start' ? 'start' : 'play'};
+const redProcessInputDirectionToWaitingState: Processor<Game> = state => ({...state, state: state.state !== 'start' ? 'start' : 'play'});
 
-const redProcessClearInputDirection: Processor<Game> = state => ({...state, inputDirection: null});
+const redInputDirectionClear: Processor<Game> = state => ({...state, inputDirection: null});
 
 const redProcessInputDirection = process(
-  redProcessInputDirectionToSnake,
-  redProcessInputDirectionToInit,
-  redProcessInputDirectionToWaitingState,
-  redProcessClearInputDirection,
+  processIf(whenHasInputDirection)(
+    processIf(whenInState('play'), whenHasSnake)(redProcessInputDirectionToSnake),
+    processIf(whenInState('start'))(redSnakeInit),
+    processIf(not(whenInState('play')))(redProcessInputDirectionToWaitingState),
+  ),
+  redInputDirectionClear,
 );
 
-const redProcessFoodEat: Processor<Game> = state =>
-  state.state !== 'play' || !state.scene.map.food || !state.scene.map.snake || !isEatingFood(state.scene.map.snake, state.scene.map.food)
-    ? state
-    : {...state, scene: {...state.scene, map: {...state.scene.map, food: null}}};
+const redFoodClear: Processor<Game> = state => ({...state, scene: {...state.scene, map: {...state.scene.map, food: null}}});
 
-const redProcessFoodRandom: Processor<Game> = state =>
-  state.state !== 'play' || state.scene.map.food || !state.scene.map.snake || hasWon(state)
-    ? state
-    : {...state, scene: {...state.scene, map: {...state.scene.map, food: {position: getRandomFoodPosition(state)}}}};
+const redFoodRandomize: Processor<Game> = state => ({
+  ...state,
+  scene: {...state.scene, map: {...state.scene.map, food: {position: getRandomFoodPosition(state)}}},
+});
 
-const redProcessFood = process(redProcessFoodEat, redProcessFoodRandom);
+const redProcessFood = processIf(whenInState('play'), whenHasSnake)(
+  processIf(whenFoodInSnake)(redFoodClear),
+  processIf(not(whenHasFood), not(whenWinning))(redFoodRandomize),
+);
 
-const redProcessSnakeMove: Processor<Game> = state =>
-  state.state !== 'play' || !state.scene.map.snake
-    ? state
-    : {
-        ...state,
-        scene: {
-          ...state.scene,
-          map: {
-            ...state.scene.map,
-            snake: {...state.scene.map.snake, positions: [getNewSnakeHeadPosition(state), ...state.scene.map.snake.positions]},
-          },
-        },
-      };
+const redSnakeMoveHead: Processor<Game> = state => ({
+  ...state,
+  scene: {
+    ...state.scene,
+    map: {
+      ...state.scene.map,
+      snake: {...state.scene.map.snake, positions: [getNewSnakeHeadPosition(state), ...state.scene.map.snake.positions]},
+    },
+  },
+});
 
-const redProcessSnakeSize: Processor<Game> = state =>
-  state.state !== 'play' || !state.scene.map.snake || (state.scene.map.food && isEatingFood(state.scene.map.snake, state.scene.map.food))
-    ? state
-    : {
-        ...state,
-        scene: {
-          ...state.scene,
-          map: {
-            ...state.scene.map,
-            snake: {
-              ...state.scene.map.snake,
-              positions: state.scene.map.snake.positions.slice(0, state.scene.map.snake.positions.length - 1),
-            },
-          },
-        },
-      };
+const redSnakeCutTail: Processor<Game> = state => ({
+  ...state,
+  scene: {
+    ...state.scene,
+    map: {
+      ...state.scene.map,
+      snake: {
+        ...state.scene.map.snake,
+        positions: state.scene.map.snake.positions.slice(0, state.scene.map.snake.positions.length - 1),
+      },
+    },
+  },
+});
 
-const redProcessSnake = process(redProcessSnakeMove, redProcessSnakeSize);
+const redProcessSnake = processIf(whenInState('play'), whenHasSnake)(redSnakeMoveHead, processIf(not(whenFoodInSnake))(redSnakeCutTail));
 
 const redProcessCheckLost: Processor<Game> = state =>
-  state.state !== 'play' ||
-  !state.scene.map.snake ||
   !state.scene.map.snake.positions.some((ii, index) => index > 0 && equalVectors(ii, state.scene.map.snake.positions[0]))
     ? state
     : {...state, state: 'lost'};
 
-const redProcessCheckWon: Processor<Game> = state =>
-  state.state !== 'play' || !state.scene.map.snake || !hasWon(state) ? state : {...state, state: 'won'};
+const redStateWon: Processor<Game> = state => ({...state, state: 'won'});
 
-const redProcessCheckGame = process(redProcessCheckLost, redProcessCheckWon);
+const redProcessCheckGame = processIf(whenInState('play'), whenHasSnake)(redProcessCheckLost, processIf(whenWinning)(redStateWon));
 
 export const redProcessFrame: Processor<Game> = state =>
   process(redProcessInputDirection, redProcessSnake, redProcessFood, redProcessCheckGame)(state);
