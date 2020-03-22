@@ -1,10 +1,11 @@
-type Processor<T> = (val: T) => T;
-const process = <T>(...processors: Processor<T>[]): Processor<T> => (val: T) => processors.reduce((acc, processor) => processor(acc), val);
+export type Processor<T> = (val: T) => T;
+export const process = <T>(...processors: Processor<T>[]): Processor<T> => (val: T) =>
+  processors.reduce((acc, processor) => processor(acc), val);
 
-type PreFilter<T> = (val: T) => boolean;
-const processIf = <T>(...ifAnds: PreFilter<T>[]) => (...processors: Processor<T>[]): Processor<T> => (val: T) =>
+export type PreFilter<T> = (val: T) => boolean;
+export const processIf = <T>(...ifAnds: PreFilter<T>[]) => (...processors: Processor<T>[]): Processor<T> => (val: T) =>
   ifAnds.reduce((acc, ifThen) => (acc ? ifThen(val) : acc), true) ? process(...processors)(val) : val;
-const not = <T>(ifAnd: PreFilter<T>): PreFilter<T> => (val: T) => !ifAnd(val);
+export const not = <T>(ifAnd: PreFilter<T>): PreFilter<T> => (val: T) => !ifAnd(val);
 
 export interface Vector {
   x: number;
@@ -51,11 +52,7 @@ export interface Game {
   state: GameState;
 }
 
-const initPreset = (from?: Partial<Preset>): Preset => ({
-  height: 15,
-  width: 15,
-  ...(from || {}),
-});
+const initPreset = (from?: Partial<Preset>): Preset => ({height: 15, width: 15, ...(from || {})});
 
 const initSnake = (): SnakeState => ({direction: {x: 1, y: 0}, positions: [{x: 0, y: 0}]});
 
