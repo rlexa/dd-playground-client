@@ -1,5 +1,3 @@
-import {inject} from '@angular/core/testing';
-import {finalize} from 'rxjs/operators';
 import {Graphsky} from './graphsky';
 
 const TAG_NAME = 'name';
@@ -15,47 +13,45 @@ const LINKS = [
 ];
 
 describe('Graphsky', () => {
-  test('create-destroy', inject([], () => {
+  test('create-destroy', () => {
     const db = new Graphsky();
-    const func = 'func';
-    const spy = {[func]: () => {}};
-    spyOn(spy, func);
-    db.change$.pipe(finalize(spy[func])).subscribe();
-    expect(spy[func]).not.toHaveBeenCalled();
+    const complete = jest.fn();
+    db.change$.subscribe({complete});
+    expect(complete).not.toHaveBeenCalled();
     db.ngOnDestroy();
-    expect(spy[func]).toHaveBeenCalled();
-  }));
+    expect(complete).toHaveBeenCalled();
+  });
 
-  test('add valid', inject([], () => {
+  test('add valid', () => {
     const db = new Graphsky();
     expect(db.nodeCount$.value).toBe(0);
     db.add(NODES);
     db.link(LINKS);
     expect(db.nodeCount$.value).toBe(NODES.length);
     db.ngOnDestroy();
-  }));
+  });
 
-  test('query all count', inject([], () => {
+  test('query all count', () => {
     const db = new Graphsky();
     db.add(NODES);
     db.link(LINKS);
     expect(db.query((nodes, links) => [nodes.length, links.length])).toEqual([NODES.length, LINKS.length]);
     db.ngOnDestroy();
-  }));
+  });
 
-  test('query node value', inject([], () => {
+  test('query node value', () => {
     const db = new Graphsky();
     db.add(NODES);
     db.link(LINKS);
     expect(db.query(nodes => nodes.filter(ii => ii.data[TAG_NAME] === TAG_NAME_VALS[0])).length).toEqual(1);
     db.ngOnDestroy();
-  }));
+  });
 
-  test('query link value', inject([], () => {
+  test('query link value', () => {
     const db = new Graphsky();
     db.add(NODES);
     db.link(LINKS);
     expect(db.query((nodes, links) => links.filter(ii => ii.data[TAG_FEEL] === TAG_FEEL_VALS[0])).length).toEqual(2);
     db.ngOnDestroy();
-  }));
+  });
 });

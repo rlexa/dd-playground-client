@@ -60,14 +60,6 @@ interface IGraphsky {
 }
 
 export class Graphsky implements IGraphsky, OnDestroy {
-  @RxCleanup() private readonly nodes$ = new BehaviorSubject<IGraphskyNode[]>([]);
-  @RxCleanup() private readonly links$ = new BehaviorSubject<IGraphskyLink[]>([]);
-
-  readonly change$ = merge(this.links$, this.nodes$).pipe(map(() => {}));
-  @RxCleanup() readonly log$ = new BehaviorSubject<IGraphskyState>({links: 0, nodes: 0});
-  @RxCleanup() readonly nodeCount$ = new BehaviorSubject(0);
-  @RxCleanup() readonly linkCount$ = new BehaviorSubject(0);
-
   constructor() {
     this.change$.subscribe(() => {
       this.nodeCount$.next(this.nodes$.value.length);
@@ -77,6 +69,14 @@ export class Graphsky implements IGraphsky, OnDestroy {
     this.nodeCount$.subscribe(nodes => this.log$.next({...this.log$.value, nodes}));
     this.linkCount$.subscribe(links => this.log$.next({...this.log$.value, links}));
   }
+
+  @RxCleanup() private readonly nodes$ = new BehaviorSubject<IGraphskyNode[]>([]);
+  @RxCleanup() private readonly links$ = new BehaviorSubject<IGraphskyLink[]>([]);
+
+  readonly change$ = merge(this.links$, this.nodes$).pipe(map(() => {}));
+  @RxCleanup() readonly log$ = new BehaviorSubject<IGraphskyState>({links: 0, nodes: 0});
+  @RxCleanup() readonly nodeCount$ = new BehaviorSubject(0);
+  @RxCleanup() readonly linkCount$ = new BehaviorSubject(0);
 
   ngOnDestroy() {}
 

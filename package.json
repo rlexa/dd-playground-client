@@ -55,11 +55,11 @@
     "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
     "d3": "^5.8.0",
-    "dd-rx-state": "^1.0.1",
-    "dd-rxjs": "^1.3.1",
+    "dd-rx-state": "^1.0.5",
+    "dd-rxjs": "^1.3.5",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
-    "rxjs": "^6.4.0",
+    "rxjs": "^6.5.5",
     "ts-mockery": "^1.2.0",
     "zone.js": "~0.9.1"
   },
@@ -91,7 +91,7 @@
     "protractor": "^5.4.3",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
-    "typescript": "~3.5.3",
+    "typescript": "^3.5.3",
     "webpack-bundle-analyzer": "^3.0.2"
   }
 }
