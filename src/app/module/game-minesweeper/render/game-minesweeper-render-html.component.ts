@@ -5,7 +5,7 @@ import {distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
 import {Game} from '../logic';
 
-type FIELD = 'empty';
+type FIELD = 'empty' | 'mine';
 
 @Component({
   selector: 'app-game-minesweeper-render-html',
@@ -20,6 +20,8 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     this.game$.next(val || null);
   }
 
+  @Input() showMines = false;
+
   @Output() clickedIndex = new EventEmitter<{index: number; alt: boolean}>();
 
   private readonly state$ = this.game$.pipe(filter(game => !!game));
@@ -32,6 +34,10 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     map(st => st.scene.map.width),
     distinctUntilChanged(),
   );
+  private readonly mines$ = this.state$.pipe(
+    map(st => st.scene.mines),
+    distinctUntilChanged(),
+  );
 
   private readonly cells$: Observable<FIELD[]> = combineLatest([this.high$, this.wide$]).pipe(
     map(([high, wide]) => high * wide),
@@ -39,11 +45,19 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     map(size => Array.from(new Array(size), (): FIELD => 'empty')),
   );
 
+  public readonly lost$ = this.state$.pipe(
+    map(st => st.state === 'lost'),
+    distinctUntilChanged(),
+  );
+
   public readonly gridColRepeat$ = this.wide$.pipe(map(ii => `repeat(${ii}, 1fr)`));
 
-  public readonly fields$ = combineLatest([this.cells$, this.wide$]).pipe(
-    map(([cells, wide]) => {
+  public readonly fields$ = combineLatest([this.cells$, this.wide$, this.mines$]).pipe(
+    map(([cells, wide, mines]) => {
       cells.forEach((ii, index) => (cells[index] = 'empty'));
+      if (mines) {
+        mines.forEach(vec => (cells[vec.x + vec.y * wide] = 'mine'));
+      }
       return cells;
     }),
   );

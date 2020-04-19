@@ -22,6 +22,7 @@ export interface Map {
 
 export interface Scene {
   map: Map;
+  mines?: Vector[];
 }
 
 export interface Preset {
@@ -48,9 +49,21 @@ const initMap = (from: Preset): Map => ({
   width: from.width,
 });
 
-const initScene = (from: Preset): Scene => ({map: initMap(from)});
+const initScene = (from: Preset): Scene => ({map: initMap(from), mines: null});
+
+const randomizeMines = (count: number, width: number, height: number): Vector[] => {
+  const mines = Array.from(new Array(count), (_, index) => null);
+  const positions = Array.from(new Array(width * height), (_, index) => ({x: index % width, y: Math.floor(index / width)} as Vector));
+  mines.forEach((_, index) => {
+    const rndIndex = Math.floor(Math.random() * width * height);
+    mines[index] = positions[rndIndex];
+    positions.splice(rndIndex, 1);
+  });
+  return mines;
+};
 
 const whenInput: PreFilter<Game> = st => !!st.input;
+const whenMines: PreFilter<Game> = st => !!st.scene.mines;
 
 const whenGameIs = (gameState: GameState): PreFilter<Game> => st => st.state === gameState;
 const whenGameIsPlay = whenGameIs('play');
@@ -58,16 +71,18 @@ const whenGameIsStart = whenGameIs('start');
 
 const inGame = processIn<Game>();
 const forInput = inGame(st => st.input);
+const forMines = inGame(st => st.scene.mines);
 const forState = inGame(st => st.state);
 
 const redGameLost = forState(() => 'lost');
 const redGameStartOrPlay = forState(st => (st !== 'start' ? 'start' : 'play'));
 const redGameWon = forState(() => 'won');
 const redInputClear = forInput(() => null);
+const redRandomizeMines = forMines((st, top) => randomizeMines(top.scene.map.mines, top.scene.map.width, top.scene.map.height));
 
 const processLoop = process(
   processIf(whenInput)(processIf(not(whenGameIsPlay))(redGameStartOrPlay), redInputClear),
-  processIf(whenGameIsPlay)(),
+  processIf(whenGameIsPlay)(processIf(not(whenMines))(redRandomizeMines)),
 );
 
 export const initGame = (from?: Partial<Preset>): Game => ({input: null, scene: initScene(initPreset(from)), state: 'start'});

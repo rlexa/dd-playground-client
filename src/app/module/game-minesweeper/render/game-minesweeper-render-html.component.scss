@@ -4,6 +4,8 @@
 
   display: grid;
   background: darkslategrey;
+  font-size: 75%;
+  text-align: center;
 
   .field {
     border-radius: 1em;
@@ -11,5 +13,9 @@
     &:hover {
       outline: 1px solid aquamarine;
     }
+  }
+
+  &-show-mines .field-mine {
+    background-color: darkolivegreen;
   }
 }
