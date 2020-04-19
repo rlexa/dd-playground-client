@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/co
 import {RxCleanup, rxFire_, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {filter, map, withLatestFrom} from 'rxjs/operators';
-import {Game, initGame, Preset, processFrame} from './logic';
+import {Game, initGame, onInput, Preset, processFrame} from './logic';
 
 @Component({
   selector: 'app-game-minesweeper',
@@ -18,14 +18,17 @@ export class GameMinesweeperComponent implements OnDestroy, OnInit {
 
   @RxCleanup() public triggerInit$ = new Subject();
   @RxCleanup() public triggerFrame$ = new Subject();
+  @RxCleanup() public triggerInputIndex$ = new Subject<{index: number; alt: boolean}>();
   @RxCleanup() public toggleLoop$ = new BehaviorSubject(false);
 
   triggerInit = rxFire_(this.triggerInit$);
   triggerFrame = rxFire_(this.triggerFrame$);
 
+  ngOnDestroy() {}
+
   toggleLoop = () => this.toggleLoop$.next(!this.toggleLoop$.value);
 
-  ngOnDestroy() {}
+  inputIndex = (index: number, alt: boolean) => this.triggerInputIndex$.next({index, alt});
 
   ngOnInit() {
     this.triggerFrame$
@@ -42,6 +45,16 @@ export class GameMinesweeperComponent implements OnDestroy, OnInit {
         withLatestFrom(this.preset$),
         map(([_, preset]) => preset),
         map(initGame),
+      )
+      .subscribe(rxNext_(this.game$));
+
+    this.triggerInputIndex$
+      .pipe(
+        withLatestFrom(this.game$),
+        filter(([_, game]) => !!game),
+        map(([event, game]) =>
+          onInput(game, {x: event.index % game.scene.map.width, y: Math.floor(event.index / game.scene.map.width), alt: event.alt}),
+        ),
       )
       .subscribe(rxNext_(this.game$));
 

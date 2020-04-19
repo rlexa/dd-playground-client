@@ -1,3 +1,7 @@
 <div *ngIf="game$ | async" class="scope" [ngStyle]="{'grid-template-columns': gridColRepeat$ | async}">
-  <div *ngFor="let field of fields$ | async; trackBy: trackByIndex" class="field field-{{ field }}"></div>
+  <div
+    *ngFor="let field of fields$ | async; trackBy: trackByIndex; let index = index"
+    class="field field-{{ field }}"
+    (click)="onClickIndex(index, $event)"
+  ></div>
 </div>

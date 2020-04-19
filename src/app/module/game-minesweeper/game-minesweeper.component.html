@@ -20,7 +20,10 @@
   <div class="childhv contenthv background-highlighted border">
     <h5>Render: HTML</h5>
     <div style="width: 20rem; height: 20rem; padding: .5em;">
-      <app-game-minesweeper-render-html [game]="game$ | async"></app-game-minesweeper-render-html>
+      <app-game-minesweeper-render-html
+        [game]="game$ | async"
+        (clickedIndex)="inputIndex($event.index, $event.alt)"
+      ></app-game-minesweeper-render-html>
     </div>
   </div>
 </div>

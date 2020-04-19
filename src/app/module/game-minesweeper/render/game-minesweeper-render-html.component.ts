@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {distinctUntilChanged, filter, map} from 'rxjs/operators';
@@ -19,6 +19,8 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
   @Input() set game(val: Game) {
     this.game$.next(val || null);
   }
+
+  @Output() clickedIndex = new EventEmitter<{index: number; alt: boolean}>();
 
   private readonly state$ = this.game$.pipe(filter(game => !!game));
 
@@ -49,4 +51,8 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
   trackByIndex = trackByIndex;
 
   ngOnDestroy() {}
+
+  onClickIndex = (index: number, ev: MouseEvent) => {
+    this.clickedIndex.emit({index, alt: ev.shiftKey || ev.altKey || ev.metaKey});
+  };
 }
