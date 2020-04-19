@@ -1,4 +1,4 @@
-export type Processor<T> = (val: T) => T;
+export type Processor<T, TOP = T> = (val: T, top?: TOP) => T;
 /** Chain processing (B works on result of A) */
 export const process = <T>(...processors: Processor<T>[]): Processor<T> => (val: T) =>
   processors.reduce((acc, processor) => processor(acc), val);
@@ -12,6 +12,33 @@ export const processIf = <T>(...ifAnds: PreFilter<T>[]) => (...processors: Proce
 
 /** OR logic. */
 export const not = <T>(...ifAnds: PreFilter<T>[]): PreFilter<T> => (val: T) => !checkIfAnds(val, ...ifAnds);
+
+/** Will do: `{...state, a: {...state.a, b: nestedNew}}` for `state={a:{b:any}}` and `keyPath=['a','b']` */
+export const recursiveCopyReduceKeyPath = <T>(state: T, nestedNew: any, keyPath: string[]): T => {
+  if (!keyPath.length) {
+    return nestedNew;
+  }
+  return {...state, [keyPath[0]]: recursiveCopyReduceKeyPath(state[keyPath[0]], nestedNew, keyPath.slice(1))};
+};
+
+/**
+ * @param selector must be simple path select arrow-function e.g. `obj => obj.a.b.c`
+ * @param reducer `top` is top state in case it's needed for calculations
+ */
+export const processIn = <T>() => <V>(selector: (st: T) => V) => (reducer: Processor<V, T>): Processor<T> => (state: T) => {
+  const nested = selector(state);
+  const nestedNew = reducer(nested, state);
+  if (nested !== nestedNew) {
+    const keys = selector
+      .toString()
+      .split('=>')[1]
+      .trim()
+      .split('.')
+      .slice(1);
+    return recursiveCopyReduceKeyPath(state, nestedNew, keys);
+  }
+  return state;
+};
 
 export interface Vector {
   x: number;
@@ -113,43 +140,24 @@ const getNewSnakeHeadPosition = (state: Game): Vector => {
   return newPos;
 };
 
-const redFoodClear: Processor<Game> = state => ({...state, scene: {...state.scene, map: {...state.scene.map, food: null}}});
-const redFoodRandomize: Processor<Game> = state => ({
-  ...state,
-  scene: {...state.scene, map: {...state.scene.map, food: {position: getRandomFoodPosition(state)}}},
-});
-const redGameLost: Processor<Game> = state => ({...state, state: 'lost'});
-const redGameStartOrPlay: Processor<Game> = state => ({...state, state: state.state !== 'start' ? 'start' : 'play'});
-const redGameWon: Processor<Game> = state => ({...state, state: 'won'});
-const redInputDirectionClear: Processor<Game> = state => ({...state, inputDirection: null});
-const redInputDirectionToSnake: Processor<Game> = state => ({
-  ...state,
-  scene: {...state.scene, map: {...state.scene.map, snake: {...state.scene.map.snake, direction: state.inputDirection}}},
-});
-const redSnakeHeadMove: Processor<Game> = state => ({
-  ...state,
-  scene: {
-    ...state.scene,
-    map: {
-      ...state.scene.map,
-      snake: {...state.scene.map.snake, positions: [getNewSnakeHeadPosition(state), ...state.scene.map.snake.positions]},
-    },
-  },
-});
-const redSnakeInit: Processor<Game> = state => ({...state, scene: {...state.scene, map: {...state.scene.map, snake: initSnake()}}});
-const redSnakeTailCut: Processor<Game> = state => ({
-  ...state,
-  scene: {
-    ...state.scene,
-    map: {
-      ...state.scene.map,
-      snake: {
-        ...state.scene.map.snake,
-        positions: state.scene.map.snake.positions.slice(0, state.scene.map.snake.positions.length - 1),
-      },
-    },
-  },
-});
+const scopeGame = processIn<Game>();
+const forFood = scopeGame(st => st.scene.map.food);
+const forInputDirection = scopeGame(st => st.inputDirection);
+const forSnake = scopeGame(st => st.scene.map.snake);
+const forSnakeInputDirection = scopeGame(st => st.scene.map.snake.direction);
+const forSnakePositions = scopeGame(st => st.scene.map.snake.positions);
+const forState = scopeGame(st => st.state);
+
+const redFoodClear = forFood(() => null);
+const redFoodRandomize = forFood((st, top) => ({position: getRandomFoodPosition(top)}));
+const redGameLost = forState(() => 'lost');
+const redGameStartOrPlay = forState(st => (st !== 'start' ? 'start' : 'play'));
+const redGameWon = forState(() => 'won');
+const redInputDirectionClear = forInputDirection(() => null);
+const redInputDirectionToSnake = forSnakeInputDirection((st, top) => top.inputDirection);
+const redSnakeInit = forSnake(() => initSnake());
+const redSnakeHeadMove = forSnakePositions((st, top) => [getNewSnakeHeadPosition(top), ...st]);
+const redSnakeTailCut = forSnakePositions(st => st.slice(0, st.length - 1));
 
 const processLoop = process(
   processIf(whenInputDirection)(

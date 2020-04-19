@@ -35,7 +35,7 @@ export class GameSnakeComponent implements OnDestroy, OnInit {
         withLatestFrom(this.game$),
         map(([_, game]) => game),
         filter(game => !!game),
-        map(processFrame),
+        map(game => processFrame(game)),
       )
       .subscribe(rxNext_(this.game$));
 
