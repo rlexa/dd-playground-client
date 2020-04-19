@@ -1,0 +1,11 @@
+.scope {
+  height: 100%;
+  width: 100%;
+
+  display: grid;
+  background: darkslategrey;
+
+  .field {
+    border-radius: 1em;
+  }
+}

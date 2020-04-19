@@ -20,6 +20,7 @@ import {
   ROUTE_RENDER_CANVAS,
   ROUTE_SETTINGS,
   ROUTE_WALKER,
+  ROUTE_GAME_MINESWEEPER,
 } from 'src/app/routing';
 import {RxStateService} from 'src/app/rx-state';
 
@@ -78,9 +79,10 @@ export class DashboardComponent implements OnDestroy {
       route: ROUTE_GAME,
       label: 'Game',
       subs: [
-        {icon: 'items1', route: ROUTE_GAME_SNAKE, label: 'Snake', subs: []},
-        {icon: 'items2', route: ROUTE_GAME_DOWN, label: 'Down', subs: []},
-        {icon: 'items3', route: ROUTE_RENDER_CANVAS, label: 'Render', subs: []},
+        {icon: 'items1', route: ROUTE_GAME_MINESWEEPER, label: 'Minesweeper', subs: []},
+        {icon: 'items2', route: ROUTE_GAME_SNAKE, label: 'Snake', subs: []},
+        {icon: 'items3', route: ROUTE_GAME_DOWN, label: 'Down', subs: []},
+        {icon: 'items4', route: ROUTE_RENDER_CANVAS, label: 'Render', subs: []},
       ],
     },
     {

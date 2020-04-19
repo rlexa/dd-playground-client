@@ -24,6 +24,7 @@ import {
   ROUTE_ROOT,
   ROUTE_SETTINGS,
   ROUTE_WILDCARD,
+  ROUTE_GAME_MINESWEEPER,
 } from 'src/app/routing';
 import {FlexboxModule} from '../../directive/flexbox';
 import {IconPipeModule} from '../../pipe/icon';
@@ -49,19 +50,23 @@ const ROUTING: Routes = [
         component: RoutedContentComponent,
         children: [
           {
-            path: ROUTE_GAME_SNAKE,
-            loadChildren: () => import('src/app/module/game-snake/game-snake.module').then(m => m.GameSnakeModule),
-          },
-          {
             path: ROUTE_GAME_DOWN,
             loadChildren: () => import('src/app/module/widget/game-down/game-down.module').then(m => m.GameDownModule),
+          },
+          {
+            path: ROUTE_GAME_MINESWEEPER,
+            loadChildren: () => import('src/app/module/game-minesweeper/game-minesweeper.module').then(m => m.GameMinesweeperModule),
+          },
+          {
+            path: ROUTE_GAME_SNAKE,
+            loadChildren: () => import('src/app/module/game-snake/game-snake.module').then(m => m.GameSnakeModule),
           },
           {
             path: ROUTE_RENDER_CANVAS,
             loadChildren: () => import('src/app/module/widget/render-canvas/render-canvas.module').then(m => m.RenderCanvasModule),
           },
-          {path: ROUTE_ROOT, redirectTo: ROUTE_GAME_SNAKE, pathMatch: 'full'},
-          {path: ROUTE_WILDCARD, redirectTo: ROUTE_GAME_SNAKE, pathMatch: 'full'},
+          {path: ROUTE_ROOT, redirectTo: ROUTE_GAME_MINESWEEPER, pathMatch: 'full'},
+          {path: ROUTE_WILDCARD, redirectTo: ROUTE_GAME_MINESWEEPER, pathMatch: 'full'},
         ],
       },
       {

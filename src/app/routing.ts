@@ -13,6 +13,7 @@ export const ROUTE_DEMO_MISC = 'demomisc';
 export const ROUTE_DEMO_STATE = 'demostate';
 export const ROUTE_GAME = 'game';
 export const ROUTE_GAME_DOWN = 'game_down';
+export const ROUTE_GAME_MINESWEEPER = 'game_minesweeper';
 export const ROUTE_GAME_SNAKE = 'game_snake';
 export const ROUTE_GRAPH = 'graph';
 export const ROUTE_OVERVIEW = 'overview';
