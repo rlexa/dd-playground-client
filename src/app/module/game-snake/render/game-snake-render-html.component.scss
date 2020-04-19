@@ -3,24 +3,21 @@
   width: 100%;
 
   display: grid;
+  background: darkslategrey;
 
   .field {
-    margin: 1px;
+    border-radius: 1em;
 
-    &.field-empty {
-      background-color: grey;
+    &-food {
+      background-color: gold;
     }
 
-    &.field-food {
-      background-color: green;
+    &-snake {
+      background-color: lightgrey;
     }
 
-    &.field-snake {
-      background-color: blue;
-    }
-
-    &.field-head {
-      background-color: red;
+    &-head {
+      background-color: lime;
     }
   }
 }

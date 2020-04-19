@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
 import {RxCleanup} from 'dd-rxjs';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
+import {distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
 import {Game} from '../logic';
 
@@ -20,24 +20,44 @@ export class GameSnakeRenderHtmlComponent implements OnDestroy {
     this.game$.next(val || null);
   }
 
-  public readonly gridColRepeat$ = this.game$.pipe(
-    filter(ii => !!ii),
-    map(ii => `repeat(${ii.scene.map.width}, 1fr)`),
+  private readonly state$ = this.game$.pipe(filter(game => !!game));
+
+  private readonly high$ = this.state$.pipe(
+    map(st => st.scene.map.height),
+    distinctUntilChanged(),
+  );
+  private readonly wide$ = this.state$.pipe(
+    map(st => st.scene.map.width),
+    distinctUntilChanged(),
+  );
+  private readonly food$ = this.state$.pipe(
+    map(st => st.scene.map.food),
+    distinctUntilChanged(),
+  );
+  private readonly snake$ = this.state$.pipe(
+    map(st => st.scene.map.snake),
+    distinctUntilChanged(),
   );
 
-  public readonly fields$: Observable<FIELD[]> = this.game$.pipe(
-    filter(ii => !!ii),
-    map(game => {
-      const fields = Array.from(new Array(game.scene.map.width * game.scene.map.height), (): FIELD => 'empty');
-      const food = game.scene.map.food;
+  private readonly cells$: Observable<FIELD[]> = combineLatest([this.high$, this.wide$]).pipe(
+    map(([high, wide]) => high * wide),
+    distinctUntilChanged(),
+    map(size => Array.from(new Array(size), (): FIELD => 'empty')),
+  );
+
+  public readonly gridColRepeat$ = this.wide$.pipe(map(ii => `repeat(${ii}, 1fr)`));
+
+  public readonly fields$ = combineLatest([this.cells$, this.wide$, this.food$, this.snake$]).pipe(
+    map(([cells, wide, food, snake]) => {
+      cells.forEach((ii, index) => (cells[index] = 'empty'));
       if (food) {
-        fields[food.position.y * game.scene.map.width + food.position.x] = 'food';
+        cells[food.position.y * wide + food.position.x] = 'food';
       }
-      const snake = game.scene.map.snake;
       if (snake) {
-        snake.positions.forEach((pos, index) => (fields[pos.y * game.scene.map.width + pos.x] = index ? 'snake' : 'head'));
+        snake.positions.forEach(pos => (cells[pos.y * wide + pos.x] = 'snake'));
+        cells[snake.positions[0].y * wide + snake.positions[0].x] = 'head';
       }
-      return fields;
+      return cells;
     }),
   );
 
