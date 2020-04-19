@@ -98,19 +98,6 @@ const initMap = (from: Preset): Map => ({
 
 const initScene = (from: Preset): Scene => ({map: initMap(from)});
 
-const whenFood: PreFilter<Game> = st => !!st.scene.map.food;
-const whenFoodInSnake: PreFilter<Game> = st => includesVector(st.scene.map.snake.positions, st.scene.map.food.position);
-const whenInputDirection: PreFilter<Game> = st => !!st.inputDirection;
-const whenInputDirectionBackwards: PreFilter<Game> = st => isZeroVector(sumVectors(st.inputDirection, st.scene.map.snake.direction));
-const whenSnake: PreFilter<Game> = st => !!st.scene.map.snake;
-const whenSnakeBigAsScreen: PreFilter<Game> = st => st.scene.map.snake.positions.length >= st.scene.map.height * st.scene.map.width;
-const whenSnakeHeadInBody: PreFilter<Game> = st =>
-  st.scene.map.snake.positions.some((ii, index) => index > 0 && equalVectors(ii, st.scene.map.snake.positions[0]));
-
-const whenGameIs = (gameState: GameState): PreFilter<Game> => st => st.state === gameState;
-const whenGameIsPlay = whenGameIs('play');
-const whenGameIsStart = whenGameIs('start');
-
 const getRandomFoodPosition = (state: Game): Vector => {
   const snake = state.scene.map.snake;
   let ii = Math.floor(Math.random() * (state.scene.map.width * state.scene.map.height - (snake ? snake.positions.length : 0)));
@@ -140,13 +127,26 @@ const getNewSnakeHeadPosition = (state: Game): Vector => {
   return newPos;
 };
 
-const scopeGame = processIn<Game>();
-const forFood = scopeGame(st => st.scene.map.food);
-const forInputDirection = scopeGame(st => st.inputDirection);
-const forSnake = scopeGame(st => st.scene.map.snake);
-const forSnakeInputDirection = scopeGame(st => st.scene.map.snake.direction);
-const forSnakePositions = scopeGame(st => st.scene.map.snake.positions);
-const forState = scopeGame(st => st.state);
+const whenFood: PreFilter<Game> = st => !!st.scene.map.food;
+const whenFoodInSnake: PreFilter<Game> = st => includesVector(st.scene.map.snake.positions, st.scene.map.food.position);
+const whenInputDirection: PreFilter<Game> = st => !!st.inputDirection;
+const whenInputDirectionBackwards: PreFilter<Game> = st => isZeroVector(sumVectors(st.inputDirection, st.scene.map.snake.direction));
+const whenSnake: PreFilter<Game> = st => !!st.scene.map.snake;
+const whenSnakeBigAsScreen: PreFilter<Game> = st => st.scene.map.snake.positions.length >= st.scene.map.height * st.scene.map.width;
+const whenSnakeHeadInBody: PreFilter<Game> = st =>
+  st.scene.map.snake.positions.some((ii, index) => index > 0 && equalVectors(ii, st.scene.map.snake.positions[0]));
+
+const whenGameIs = (gameState: GameState): PreFilter<Game> => st => st.state === gameState;
+const whenGameIsPlay = whenGameIs('play');
+const whenGameIsStart = whenGameIs('start');
+
+const inGame = processIn<Game>();
+const forFood = inGame(st => st.scene.map.food);
+const forInputDirection = inGame(st => st.inputDirection);
+const forSnake = inGame(st => st.scene.map.snake);
+const forSnakeInputDirection = inGame(st => st.scene.map.snake.direction);
+const forSnakePositions = inGame(st => st.scene.map.snake.positions);
+const forState = inGame(st => st.state);
 
 const redFoodClear = forFood(() => null);
 const redFoodRandomize = forFood((st, top) => ({position: getRandomFoodPosition(top)}));
