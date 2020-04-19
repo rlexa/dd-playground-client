@@ -1,4 +1,4 @@
-import {not, PreFilter, process, processIf, processIn, Processor, recursiveCopyReduceKeyPath} from './logic';
+import {not, PreFilter, process, processIf, processIn, Processor, recursiveCopyReduceKeyPath} from './functionals';
 
 describe(`helper`, () => {
   const redInc1: Processor<number> = st => st + 1;
