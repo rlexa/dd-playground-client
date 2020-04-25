@@ -1,11 +1,11 @@
 .scope {
-  height: 100%;
-  width: 100%;
+  td > div {
+    width: 3rem;
+    height: 3rem;
+    font-size: 0.7em;
+  }
 
-  display: grid;
   background: darkslategrey;
-  font-size: 75%;
-  text-align: center;
 
   .field {
     border-radius: 1em;

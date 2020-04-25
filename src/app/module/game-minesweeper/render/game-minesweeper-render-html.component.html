@@ -1,12 +1,16 @@
-<div
+<table
   *ngIf="game$ | async"
   class="scope"
   [class.scope-show-mines]="showMines || (lost$ | async)"
-  [ngStyle]="{'grid-template-columns': gridColRepeat$ | async}"
+  [style.border]="'none'"
+  [attr.cellspacing]="'0'"
+  [attr.cellpadding]="'0'"
 >
-  <div
-    *ngFor="let field of fields$ | async; trackBy: trackByIndex; let index = index"
-    class="field field-{{ field }}"
-    (click)="onClickIndex(index, $event)"
-  ></div>
-</div>
+  <ng-container *ngIf="trtds$ | async as trtds">
+    <tr *ngFor="let tr of trtds; trackBy: trackByIndex; let row = index">
+      <td *ngFor="let td of tr; trackBy: trackByIndex; let col = index">
+        <div class="field field-{{ td }}" (click)="onClickRowCol(row, col, $event)"></div>
+      </td>
+    </tr>
+  </ng-container>
+</table>

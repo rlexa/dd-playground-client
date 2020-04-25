@@ -56,7 +56,7 @@ const randomizeMines = (count: number, width: number, height: number): Vector[] 
   const mines = Array.from(new Array(count), (_, index) => null);
   const positions = Array.from(new Array(width * height), (_, index) => ({x: index % width, y: Math.floor(index / width)} as Vector));
   mines.forEach((_, index) => {
-    const rndIndex = Math.floor(Math.random() * width * height);
+    const rndIndex = Math.floor(Math.random() * positions.length);
     mines[index] = positions[rndIndex];
     positions.splice(rndIndex, 1);
   });

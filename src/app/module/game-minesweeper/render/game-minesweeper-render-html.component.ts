@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {RxCleanup} from 'dd-rxjs';
-import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {distinctUntilChanged, filter, map} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
+import {distinctUntilChanged, filter, map, withLatestFrom} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
 import {Game} from '../logic';
 
@@ -50,9 +50,7 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     distinctUntilChanged(),
   );
 
-  public readonly gridColRepeat$ = this.wide$.pipe(map(ii => `repeat(${ii}, 1fr)`));
-
-  public readonly fields$ = combineLatest([this.cells$, this.wide$, this.mines$]).pipe(
+  private readonly fields$ = combineLatest([this.cells$, this.wide$, this.mines$]).pipe(
     map(([cells, wide, mines]) => {
       cells.forEach((ii, index) => (cells[index] = 'empty'));
       if (mines) {
@@ -62,9 +60,26 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     }),
   );
 
+  public readonly trtds$ = combineLatest([this.fields$, this.wide$]).pipe(
+    map(([fields, wide]) => {
+      return fields.reduce<FIELD[][]>((acc, ii, index) => {
+        acc[Math.floor(index / wide)] = [...(acc[Math.floor(index / wide)] || []), ii];
+        return acc;
+      }, []);
+    }),
+  );
+
   trackByIndex = trackByIndex;
 
   ngOnDestroy() {}
+
+  onClickRowCol = (row: number, col: number, ev: MouseEvent) =>
+    of(row)
+      .pipe(
+        withLatestFrom(this.wide$),
+        map(([currow, wide]) => currow * wide + col),
+      )
+      .subscribe(index => this.onClickIndex(index, ev));
 
   onClickIndex = (index: number, ev: MouseEvent) => {
     this.clickedIndex.emit({index, alt: ev.shiftKey || ev.altKey || ev.metaKey});
