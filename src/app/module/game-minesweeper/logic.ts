@@ -9,6 +9,7 @@ const equalVectors = (aa: Vector, bb: Vector) => aa.x === bb.x && aa.y === bb.y;
 const sumVectors = (aa: Vector, bb: Vector): Vector => ({x: aa.x + bb.x, y: aa.y + bb.y});
 const isZeroVector = (vec: Vector) => vec.x === 0 && vec.y === 0;
 const includesVector = (vecs: Vector[], vec: Vector) => vecs.some(ii => equalVectors(ii, vec));
+const indexOfVector = (vecs: Vector[], vec: Vector) => vecs.findIndex(ii => equalVectors(ii, vec));
 
 export interface ClickVector extends Vector {
   alt?: boolean;
@@ -21,6 +22,7 @@ export interface Map {
 }
 
 export interface Scene {
+  flags: Vector[];
   input?: ClickVector;
   map: Map;
   mines?: Vector[];
@@ -50,7 +52,7 @@ const initMap = (from: Preset): Map => ({
   width: from.width,
 });
 
-const initScene = (from: Preset): Scene => ({input: null, map: initMap(from), mines: null});
+const initScene = (from: Preset): Scene => ({flags: [], input: null, map: initMap(from), mines: null});
 
 const randomizeMines = (count: number, width: number, height: number): Vector[] => {
   const mines = Array.from(new Array(count), (_, index) => null);
@@ -67,6 +69,7 @@ const whenInput: PreFilter<Game> = st => !!st.input;
 const whenMines: PreFilter<Game> = st => !!st.scene.mines;
 const whenSceneInput: PreFilter<Game> = st => !!st.scene.input;
 const whenSceneInputAlt: PreFilter<Game> = st => !!st.scene.input.alt;
+const whenSceneInputOnFlag: PreFilter<Game> = st => includesVector(st.scene.flags, st.scene.input);
 const whenSceneInputOnMine: PreFilter<Game> = st => includesVector(st.scene.mines, st.scene.input);
 
 const whenGameIs = (gameState: GameState): PreFilter<Game> => st => st.state === gameState;
@@ -74,11 +77,18 @@ const whenGameIsPlay = whenGameIs('play');
 const whenGameIsStart = whenGameIs('start');
 
 const inGame = processIn<Game>();
+const forFlags = inGame(st => st.scene.flags);
 const forInput = inGame(st => st.input);
 const forMines = inGame(st => st.scene.mines);
 const forSceneInput = inGame(st => st.scene.input);
 const forState = inGame(st => st.state);
 
+const redFlagToggle = forFlags((st, top) =>
+  includesVector(st, top.scene.input)
+    ? [...st.slice(0, indexOfVector(st, top.scene.input)), ...st.slice(indexOfVector(st, top.scene.input) + 1)]
+    : [...st, top.scene.input],
+);
+const redFlagsClear = forFlags((st, top) => []);
 const redGameLost = forState(() => 'lost');
 const redGamePlay = forState(() => 'play');
 const redGameStart = forState(() => 'start');
@@ -93,13 +103,14 @@ const processLoop = process(
   processIf(whenInput)(
     processIf(whenGameIsPlay, whenMines)(redInputToScene),
     processIf(whenGameIsStart)(redGamePlay),
-    processIf(not(whenGameIsPlay), not(whenGameIsStart))(redMinesClear, redGameStart),
+    processIf(not(whenGameIsPlay), not(whenGameIsStart))(redMinesClear, redFlagsClear, redGameStart),
     redInputClear,
   ),
   processIf(whenGameIsPlay)(
     processIf(not(whenMines))(redMinesRandomize),
     processIf(whenMines, whenSceneInput)(
-      processIf(not(whenSceneInputAlt))(processIf(whenSceneInputOnMine)(redGameLost)),
+      processIf(whenSceneInputAlt)(redFlagToggle),
+      processIf(not(whenSceneInputAlt), not(whenSceneInputOnFlag))(processIf(whenSceneInputOnMine)(redGameLost)),
       redSceneInputClear,
     ),
   ),

@@ -5,7 +5,7 @@ import {distinctUntilChanged, filter, map, withLatestFrom} from 'rxjs/operators'
 import {trackByIndex} from 'src/app/util';
 import {Game} from '../logic';
 
-type FIELD = 'empty' | 'mine';
+type FIELD = 'empty' | 'mine' | 'flag';
 
 @Component({
   selector: 'app-game-minesweeper-render-html',
@@ -34,6 +34,10 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     map(st => st.scene.map.width),
     distinctUntilChanged(),
   );
+  private readonly flags$ = this.state$.pipe(
+    map(st => st.scene.flags),
+    distinctUntilChanged(),
+  );
   private readonly mines$ = this.state$.pipe(
     map(st => st.scene.mines),
     distinctUntilChanged(),
@@ -50,12 +54,13 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     distinctUntilChanged(),
   );
 
-  private readonly fields$ = combineLatest([this.cells$, this.wide$, this.mines$]).pipe(
-    map(([cells, wide, mines]) => {
+  private readonly fields$ = combineLatest([this.cells$, this.wide$, this.mines$, this.flags$]).pipe(
+    map(([cells, wide, mines, flags]) => {
       cells.forEach((ii, index) => (cells[index] = 'empty'));
       if (mines) {
         mines.forEach(vec => (cells[vec.x + vec.y * wide] = 'mine'));
       }
+      flags.forEach(vec => (cells[vec.x + vec.y * wide] = 'flag'));
       return cells;
     }),
   );
