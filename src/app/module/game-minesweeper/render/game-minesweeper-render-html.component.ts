@@ -107,7 +107,6 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
 
   ngOnDestroy() {}
 
-  onClickIndex = (index: number, ev: MouseEvent) => {
-    this.clickedIndex.emit({index, alt: ev.shiftKey || ev.altKey || ev.metaKey});
-  };
+  onClickIndex = (index: number, ev: MouseEvent) => this.clickedIndex.emit({index, alt: ev.shiftKey || ev.altKey || ev.metaKey});
+  onAuxClickIndex = (index: number) => this.clickedIndex.emit({index, alt: true});
 }

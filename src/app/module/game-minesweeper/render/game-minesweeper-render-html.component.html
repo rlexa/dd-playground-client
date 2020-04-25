@@ -11,7 +11,11 @@
       <ng-container *ngIf="trtds$ | async as trtds">
         <tr *ngFor="let tr of trtds; trackBy: trackByIndex; let row = index">
           <td *ngFor="let td of tr; trackBy: trackByIndex; let col = index">
-            <div class="field field-{{ td }}" (click)="onClickIndex(row * wide + col, $event)">
+            <div
+              class="field field-{{ td }}"
+              (click)="onClickIndex(row * wide + col, $event)"
+              (auxclick)="onAuxClickIndex(row * wide + col)"
+            >
               <span *ngIf="td === 'clear' && indexMineCount[row * wide + col]">{{ indexMineCount[row * wide + col] }}</span>
             </div>
           </td>
