@@ -66,6 +66,7 @@ const randomizeMines = (count: number, width: number, height: number): Vector[] 
 const whenInput: PreFilter<Game> = st => !!st.input;
 const whenMines: PreFilter<Game> = st => !!st.scene.mines;
 const whenSceneInput: PreFilter<Game> = st => !!st.scene.input;
+const whenSceneInputAlt: PreFilter<Game> = st => !!st.scene.input.alt;
 const whenSceneInputOnMine: PreFilter<Game> = st => includesVector(st.scene.mines, st.scene.input);
 
 const whenGameIs = (gameState: GameState): PreFilter<Game> => st => st.state === gameState;
@@ -97,7 +98,10 @@ const processLoop = process(
   ),
   processIf(whenGameIsPlay)(
     processIf(not(whenMines))(redMinesRandomize),
-    processIf(whenMines, whenSceneInput)(processIf(whenSceneInputOnMine)(redGameLost), redSceneInputClear),
+    processIf(whenMines, whenSceneInput)(
+      processIf(not(whenSceneInputAlt))(processIf(whenSceneInputOnMine)(redGameLost)),
+      redSceneInputClear,
+    ),
   ),
 );
 
