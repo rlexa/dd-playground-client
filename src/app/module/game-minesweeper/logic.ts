@@ -22,6 +22,7 @@ export interface Map {
 }
 
 export interface Scene {
+  clear: Vector[];
   flags: Vector[];
   input?: ClickVector;
   map: Map;
@@ -52,7 +53,7 @@ const initMap = (from: Preset): Map => ({
   width: from.width,
 });
 
-const initScene = (from: Preset): Scene => ({flags: [], input: null, map: initMap(from), mines: null});
+const initScene = (from: Preset): Scene => ({clear: [], flags: [], input: null, map: initMap(from), mines: null});
 
 const randomizeMines = (count: number, width: number, height: number): Vector[] => {
   const mines = Array.from(new Array(count), (_, index) => null);
@@ -65,10 +66,19 @@ const randomizeMines = (count: number, width: number, height: number): Vector[] 
   return mines;
 };
 
+const clearField = (field: Vector, clear: Vector[], flags: Vector[], mines: Vector[]) => {
+  if (includesVector(clear, field) || includesVector(flags, field) || includesVector(mines, field)) {
+    return clear;
+  }
+  return [...clear, field];
+};
+
+const whenClearAll: PreFilter<Game> = st => st.scene.clear.length === st.scene.map.height * st.scene.map.width - st.scene.map.mines;
 const whenInput: PreFilter<Game> = st => !!st.input;
 const whenMines: PreFilter<Game> = st => !!st.scene.mines;
 const whenSceneInput: PreFilter<Game> = st => !!st.scene.input;
 const whenSceneInputAlt: PreFilter<Game> = st => !!st.scene.input.alt;
+const whenSceneInputOnClear: PreFilter<Game> = st => includesVector(st.scene.clear, st.scene.input);
 const whenSceneInputOnFlag: PreFilter<Game> = st => includesVector(st.scene.flags, st.scene.input);
 const whenSceneInputOnMine: PreFilter<Game> = st => includesVector(st.scene.mines, st.scene.input);
 
@@ -77,6 +87,7 @@ const whenGameIsPlay = whenGameIs('play');
 const whenGameIsStart = whenGameIs('start');
 
 const inGame = processIn<Game>();
+const forClear = inGame(st => st.scene.clear);
 const forFlags = inGame(st => st.scene.flags);
 const forInput = inGame(st => st.input);
 const forMines = inGame(st => st.scene.mines);
@@ -88,6 +99,8 @@ const redFlagToggle = forFlags((st, top) =>
     ? [...st.slice(0, indexOfVector(st, top.scene.input)), ...st.slice(indexOfVector(st, top.scene.input) + 1)]
     : [...st, top.scene.input],
 );
+const redClear = forClear((st, top) => clearField(top.scene.input, st, top.scene.flags, top.scene.mines));
+const redClearClear = forClear((st, top) => []);
 const redFlagsClear = forFlags((st, top) => []);
 const redGameLost = forState(() => 'lost');
 const redGamePlay = forState(() => 'play');
@@ -103,14 +116,17 @@ const processLoop = process(
   processIf(whenInput)(
     processIf(whenGameIsPlay, whenMines)(redInputToScene),
     processIf(whenGameIsStart)(redGamePlay),
-    processIf(not(whenGameIsPlay), not(whenGameIsStart))(redMinesClear, redFlagsClear, redGameStart),
+    processIf(not(whenGameIsPlay), not(whenGameIsStart))(redMinesClear, redFlagsClear, redClearClear, redGameStart),
     redInputClear,
   ),
   processIf(whenGameIsPlay)(
     processIf(not(whenMines))(redMinesRandomize),
     processIf(whenMines, whenSceneInput)(
-      processIf(whenSceneInputAlt)(redFlagToggle),
-      processIf(not(whenSceneInputAlt), not(whenSceneInputOnFlag))(processIf(whenSceneInputOnMine)(redGameLost)),
+      processIf(whenSceneInputAlt, not(whenSceneInputOnClear))(redFlagToggle),
+      processIf(not(whenSceneInputAlt), not(whenSceneInputOnFlag))(
+        processIf(not(whenSceneInputOnMine), not(whenSceneInputOnClear))(redClear, processIf(whenClearAll)(redGameWon)),
+        processIf(whenSceneInputOnMine)(redGameLost),
+      ),
       redSceneInputClear,
     ),
   ),

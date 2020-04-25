@@ -5,7 +5,7 @@ import {distinctUntilChanged, filter, map, withLatestFrom} from 'rxjs/operators'
 import {trackByIndex} from 'src/app/util';
 import {Game} from '../logic';
 
-type FIELD = 'empty' | 'mine' | 'flag';
+type FIELD = 'clear' | 'empty' | 'flag' | 'mine';
 
 @Component({
   selector: 'app-game-minesweeper-render-html',
@@ -34,6 +34,10 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     map(st => st.scene.map.width),
     distinctUntilChanged(),
   );
+  private readonly clear$ = this.state$.pipe(
+    map(st => st.scene.clear),
+    distinctUntilChanged(),
+  );
   private readonly flags$ = this.state$.pipe(
     map(st => st.scene.flags),
     distinctUntilChanged(),
@@ -54,13 +58,14 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     distinctUntilChanged(),
   );
 
-  private readonly fields$ = combineLatest([this.cells$, this.wide$, this.mines$, this.flags$]).pipe(
-    map(([cells, wide, mines, flags]) => {
+  private readonly fields$ = combineLatest([this.cells$, this.wide$, this.mines$, this.flags$, this.clear$]).pipe(
+    map(([cells, wide, mines, flags, clear]) => {
       cells.forEach((ii, index) => (cells[index] = 'empty'));
       if (mines) {
         mines.forEach(vec => (cells[vec.x + vec.y * wide] = 'mine'));
       }
       flags.forEach(vec => (cells[vec.x + vec.y * wide] = 'flag'));
+      clear.forEach(vec => (cells[vec.x + vec.y * wide] = 'clear'));
       return cells;
     }),
   );
