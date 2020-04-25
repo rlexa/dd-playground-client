@@ -6,11 +6,17 @@
   [attr.cellspacing]="'0'"
   [attr.cellpadding]="'0'"
 >
-  <ng-container *ngIf="trtds$ | async as trtds">
-    <tr *ngFor="let tr of trtds; trackBy: trackByIndex; let row = index">
-      <td *ngFor="let td of tr; trackBy: trackByIndex; let col = index">
-        <div class="field field-{{ td }}" (click)="onClickRowCol(row, col, $event)"></div>
-      </td>
-    </tr>
+  <ng-container *ngIf="wide$ | async as wide">
+    <ng-container *ngIf="indexMineCount$ | async as indexMineCount">
+      <ng-container *ngIf="trtds$ | async as trtds">
+        <tr *ngFor="let tr of trtds; trackBy: trackByIndex; let row = index">
+          <td *ngFor="let td of tr; trackBy: trackByIndex; let col = index">
+            <div class="field field-{{ td }}" (click)="onClickIndex(row * wide + col, $event)">
+              <span *ngIf="td === 'clear' && indexMineCount[row * wide + col]">{{ indexMineCount[row * wide + col] }}</span>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
   </ng-container>
 </table>

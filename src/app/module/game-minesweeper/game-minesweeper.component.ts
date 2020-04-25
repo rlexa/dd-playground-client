@@ -13,7 +13,7 @@ import {Game, initGame, onInput, Preset, processFrame} from './logic';
 export class GameMinesweeperComponent implements OnDestroy, OnInit {
   private timeLast = 0;
 
-  public showMines = true;
+  public showMines = false;
 
   @RxCleanup() public game$ = new BehaviorSubject<Game>(null);
   @RxCleanup() public preset$ = new BehaviorSubject<Preset>({height: 15, mines: 15, width: 15});

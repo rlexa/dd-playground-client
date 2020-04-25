@@ -66,12 +66,38 @@ const randomizeMines = (count: number, width: number, height: number): Vector[] 
   return mines;
 };
 
-const clearField = (field: Vector, clear: Vector[], flags: Vector[], mines: Vector[]) => {
+const clearField = (field: Vector, clear: Vector[], flags: Vector[], mines: Vector[], width: number, height: number) => {
   if (includesVector(clear, field) || includesVector(flags, field) || includesVector(mines, field)) {
     return clear;
   }
-  // @todo auto-clear empty neighbours
-  return [...clear, field];
+  clear = [...clear, field];
+
+  const neighbours: Vector[] = [
+    {x: field.x - 1, y: field.y - 1},
+    {x: field.x, y: field.y - 1},
+    {x: field.x + 1, y: field.y - 1},
+    {x: field.x - 1, y: field.y},
+    {x: field.x + 1, y: field.y},
+    {x: field.x - 1, y: field.y + 1},
+    {x: field.x, y: field.y + 1},
+    {x: field.x + 1, y: field.y + 1},
+  ].filter(vec => vec.x >= 0 && vec.x <= width - 1 && vec.y >= 0 && vec.y <= height - 1);
+
+  if (neighbours.every(vec => !includesVector(flags, vec) && !includesVector(mines, vec))) {
+    if (field.x > 0) {
+      clear = clearField({x: field.x - 1, y: field.y}, clear, flags, mines, width, height);
+    }
+    if (field.x < width - 1) {
+      clear = clearField({x: field.x + 1, y: field.y}, clear, flags, mines, width, height);
+    }
+    if (field.y > 0) {
+      clear = clearField({y: field.y - 1, x: field.x}, clear, flags, mines, width, height);
+    }
+    if (field.y < height - 1) {
+      clear = clearField({y: field.y + 1, x: field.x}, clear, flags, mines, width, height);
+    }
+  }
+  return clear;
 };
 
 const whenClearAll: PreFilter<Game> = st => st.scene.clear.length === st.scene.map.height * st.scene.map.width - st.scene.map.mines;
@@ -100,7 +126,9 @@ const redFlagToggle = forFlags((st, top) =>
     ? [...st.slice(0, indexOfVector(st, top.scene.input)), ...st.slice(indexOfVector(st, top.scene.input) + 1)]
     : [...st, top.scene.input],
 );
-const redClear = forClear((st, top) => clearField(top.scene.input, st, top.scene.flags, top.scene.mines));
+const redClear = forClear((st, top) =>
+  clearField(top.scene.input, st, top.scene.flags, top.scene.mines, top.scene.map.width, top.scene.map.height),
+);
 const redClearClear = forClear((st, top) => []);
 const redFlagsClear = forFlags((st, top) => []);
 const redGameLost = forState(() => 'lost');

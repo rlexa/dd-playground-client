@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
-import {distinctUntilChanged, filter, map, withLatestFrom} from 'rxjs/operators';
+import {distinctUntilChanged, filter, map, withLatestFrom, tap} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
-import {Game} from '../logic';
+import {Game, Vector} from '../logic';
 
 type FIELD = 'clear' | 'empty' | 'flag' | 'mine';
 
@@ -30,10 +30,6 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     map(st => st.scene.map.height),
     distinctUntilChanged(),
   );
-  private readonly wide$ = this.state$.pipe(
-    map(st => st.scene.map.width),
-    distinctUntilChanged(),
-  );
   private readonly clear$ = this.state$.pipe(
     map(st => st.scene.clear),
     distinctUntilChanged(),
@@ -44,6 +40,11 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
   );
   private readonly mines$ = this.state$.pipe(
     map(st => st.scene.mines),
+    distinctUntilChanged(),
+  );
+
+  public readonly wide$ = this.state$.pipe(
+    map(st => st.scene.map.width),
     distinctUntilChanged(),
   );
 
@@ -71,25 +72,40 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
   );
 
   public readonly trtds$ = combineLatest([this.fields$, this.wide$]).pipe(
-    map(([fields, wide]) => {
-      return fields.reduce<FIELD[][]>((acc, ii, index) => {
+    map(([fields, wide]) =>
+      fields.reduce<FIELD[][]>((acc, ii, index) => {
         acc[Math.floor(index / wide)] = [...(acc[Math.floor(index / wide)] || []), ii];
         return acc;
-      }, []);
-    }),
+      }, []),
+    ),
+  );
+
+  public readonly indexMineCount$ = combineLatest([this.cells$, this.mines$, this.wide$]).pipe(
+    map(([cells, mines, wide]) =>
+      cells.map((cell, index) => {
+        if (!mines || !mines.length) {
+          return 0;
+        }
+        const xx = index % wide;
+        const yy = Math.floor(index / wide);
+        const neighbours: Vector[] = [
+          {x: xx - 1, y: yy - 1},
+          {x: xx, y: yy - 1},
+          {x: xx + 1, y: yy - 1},
+          {x: xx - 1, y: yy},
+          {x: xx + 1, y: yy},
+          {x: xx - 1, y: yy + 1},
+          {x: xx, y: yy + 1},
+          {x: xx + 1, y: yy + 1},
+        ];
+        return neighbours.reduce((acc, vec) => (mines.some(ii => ii.y === vec.y && ii.x === vec.x) ? acc + 1 : acc), 0);
+      }),
+    ),
   );
 
   trackByIndex = trackByIndex;
 
   ngOnDestroy() {}
-
-  onClickRowCol = (row: number, col: number, ev: MouseEvent) =>
-    of(row)
-      .pipe(
-        withLatestFrom(this.wide$),
-        map(([currow, wide]) => currow * wide + col),
-      )
-      .subscribe(index => this.onClickIndex(index, ev));
 
   onClickIndex = (index: number, ev: MouseEvent) => {
     this.clickedIndex.emit({index, alt: ev.shiftKey || ev.altKey || ev.metaKey});
