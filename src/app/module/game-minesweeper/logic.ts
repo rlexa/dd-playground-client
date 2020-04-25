@@ -70,6 +70,7 @@ const clearField = (field: Vector, clear: Vector[], flags: Vector[], mines: Vect
   if (includesVector(clear, field) || includesVector(flags, field) || includesVector(mines, field)) {
     return clear;
   }
+  // @todo auto-clear empty neighbours
   return [...clear, field];
 };
 
