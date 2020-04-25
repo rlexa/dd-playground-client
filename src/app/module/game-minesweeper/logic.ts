@@ -21,6 +21,7 @@ export interface Map {
 }
 
 export interface Scene {
+  input?: ClickVector;
   map: Map;
   mines?: Vector[];
 }
@@ -49,7 +50,7 @@ const initMap = (from: Preset): Map => ({
   width: from.width,
 });
 
-const initScene = (from: Preset): Scene => ({map: initMap(from), mines: null});
+const initScene = (from: Preset): Scene => ({input: null, map: initMap(from), mines: null});
 
 const randomizeMines = (count: number, width: number, height: number): Vector[] => {
   const mines = Array.from(new Array(count), (_, index) => null);
@@ -64,6 +65,8 @@ const randomizeMines = (count: number, width: number, height: number): Vector[] 
 
 const whenInput: PreFilter<Game> = st => !!st.input;
 const whenMines: PreFilter<Game> = st => !!st.scene.mines;
+const whenSceneInput: PreFilter<Game> = st => !!st.scene.input;
+const whenSceneInputOnMine: PreFilter<Game> = st => includesVector(st.scene.mines, st.scene.input);
 
 const whenGameIs = (gameState: GameState): PreFilter<Game> => st => st.state === gameState;
 const whenGameIsPlay = whenGameIs('play');
@@ -72,17 +75,30 @@ const whenGameIsStart = whenGameIs('start');
 const inGame = processIn<Game>();
 const forInput = inGame(st => st.input);
 const forMines = inGame(st => st.scene.mines);
+const forSceneInput = inGame(st => st.scene.input);
 const forState = inGame(st => st.state);
 
 const redGameLost = forState(() => 'lost');
-const redGameStartOrPlay = forState(st => (st !== 'start' ? 'start' : 'play'));
+const redGamePlay = forState(() => 'play');
+const redGameStart = forState(() => 'start');
 const redGameWon = forState(() => 'won');
 const redInputClear = forInput(() => null);
-const redRandomizeMines = forMines((st, top) => randomizeMines(top.scene.map.mines, top.scene.map.width, top.scene.map.height));
+const redInputToScene = forSceneInput((st, top) => top.input);
+const redMinesClear = forMines((st, top) => null);
+const redMinesRandomize = forMines((st, top) => randomizeMines(top.scene.map.mines, top.scene.map.width, top.scene.map.height));
+const redSceneInputClear = forSceneInput(() => null);
 
 const processLoop = process(
-  processIf(whenInput)(processIf(not(whenGameIsPlay))(redGameStartOrPlay), redInputClear),
-  processIf(whenGameIsPlay)(processIf(not(whenMines))(redRandomizeMines)),
+  processIf(whenInput)(
+    processIf(whenGameIsPlay, whenMines)(redInputToScene),
+    processIf(whenGameIsStart)(redGamePlay),
+    processIf(not(whenGameIsPlay), not(whenGameIsStart))(redMinesClear, redGameStart),
+    redInputClear,
+  ),
+  processIf(whenGameIsPlay)(
+    processIf(not(whenMines))(redMinesRandomize),
+    processIf(whenMines, whenSceneInput)(processIf(whenSceneInputOnMine)(redGameLost), redSceneInputClear),
+  ),
 );
 
 export const initGame = (from?: Partial<Preset>): Game => ({input: null, scene: initScene(initPreset(from)), state: 'start'});
