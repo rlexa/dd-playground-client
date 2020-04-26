@@ -72,16 +72,7 @@ const clearField = (field: Vector, clear: Vector[], flags: Vector[], mines: Vect
   }
   clear = [...clear, field];
 
-  const neighbours: Vector[] = [
-    {x: field.x - 1, y: field.y - 1},
-    {x: field.x, y: field.y - 1},
-    {x: field.x + 1, y: field.y - 1},
-    {x: field.x - 1, y: field.y},
-    {x: field.x + 1, y: field.y},
-    {x: field.x - 1, y: field.y + 1},
-    {x: field.x, y: field.y + 1},
-    {x: field.x + 1, y: field.y + 1},
-  ].filter(vec => vec.x >= 0 && vec.x <= width - 1 && vec.y >= 0 && vec.y <= height - 1);
+  const neighbours = getNeighbourVectors(field, width, height);
 
   if (neighbours.every(vec => !includesVector(flags, vec) && !includesVector(mines, vec))) {
     if (field.x > 0) {
@@ -164,3 +155,16 @@ const processLoop = process(
 export const initGame = (from?: Partial<Preset>): Game => ({input: null, scene: initScene(initPreset(from)), state: 'start'});
 export const processFrame = processLoop;
 export const onInput = (state: Game, input: ClickVector): Game => ({...state, input});
+
+export function getNeighbourVectors(vec: Vector, width: number, height: number): Vector[] {
+  return [
+    {x: vec.x - 1, y: vec.y - 1},
+    {x: vec.x, y: vec.y - 1},
+    {x: vec.x + 1, y: vec.y - 1},
+    {x: vec.x - 1, y: vec.y},
+    {x: vec.x + 1, y: vec.y},
+    {x: vec.x - 1, y: vec.y + 1},
+    {x: vec.x, y: vec.y + 1},
+    {x: vec.x + 1, y: vec.y + 1},
+  ].filter(ii => ii.x >= 0 && ii.x <= width - 1 && ii.y >= 0 && ii.y <= height - 1);
+}

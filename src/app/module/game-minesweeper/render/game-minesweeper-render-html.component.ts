@@ -3,7 +3,7 @@ import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {distinctUntilChanged, filter, map, withLatestFrom, tap} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
-import {Game, Vector} from '../logic';
+import {Game, Vector, getNeighbourVectors} from '../logic';
 
 type FIELD = 'clear' | 'empty' | 'flag' | 'mine';
 
@@ -80,25 +80,16 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     ),
   );
 
-  public readonly indexMineCount$ = combineLatest([this.cells$, this.mines$, this.wide$]).pipe(
-    map(([cells, mines, wide]) =>
+  public readonly indexMineCount$ = combineLatest([this.cells$, this.mines$, this.wide$, this.high$]).pipe(
+    map(([cells, mines, wide, high]) =>
       cells.map((cell, index) => {
         if (!mines || !mines.length) {
           return 0;
         }
-        const xx = index % wide;
-        const yy = Math.floor(index / wide);
-        const neighbours: Vector[] = [
-          {x: xx - 1, y: yy - 1},
-          {x: xx, y: yy - 1},
-          {x: xx + 1, y: yy - 1},
-          {x: xx - 1, y: yy},
-          {x: xx + 1, y: yy},
-          {x: xx - 1, y: yy + 1},
-          {x: xx, y: yy + 1},
-          {x: xx + 1, y: yy + 1},
-        ];
-        return neighbours.reduce((acc, vec) => (mines.some(ii => ii.y === vec.y && ii.x === vec.x) ? acc + 1 : acc), 0);
+        return getNeighbourVectors({x: index % wide, y: Math.floor(index / wide)}, wide, high).reduce<number>(
+          (acc, vec) => (mines.some(ii => ii.y === vec.y && ii.x === vec.x) ? acc + 1 : acc),
+          0,
+        );
       }),
     ),
   );
