@@ -11,6 +11,28 @@ const isZeroVector = (vec: Vector) => vec.x === 0 && vec.y === 0;
 const includesVector = (vecs: Vector[], vec: Vector) => vecs.some(ii => equalVectors(ii, vec));
 const indexOfVector = (vecs: Vector[], vec: Vector) => vecs.findIndex(ii => equalVectors(ii, vec));
 
+export function getNeighbourVectorsStraight(vec: Vector, width: number, height: number): Vector[] {
+  return [
+    {x: vec.x, y: vec.y - 1},
+    {x: vec.x - 1, y: vec.y},
+    {x: vec.x + 1, y: vec.y},
+    {x: vec.x, y: vec.y + 1},
+  ].filter(ii => ii.x >= 0 && ii.x <= width - 1 && ii.y >= 0 && ii.y <= height - 1);
+}
+
+export function getNeighbourVectorsAround(vec: Vector, width: number, height: number): Vector[] {
+  return [
+    {x: vec.x - 1, y: vec.y - 1},
+    {x: vec.x, y: vec.y - 1},
+    {x: vec.x + 1, y: vec.y - 1},
+    {x: vec.x - 1, y: vec.y},
+    {x: vec.x + 1, y: vec.y},
+    {x: vec.x - 1, y: vec.y + 1},
+    {x: vec.x, y: vec.y + 1},
+    {x: vec.x + 1, y: vec.y + 1},
+  ].filter(ii => ii.x >= 0 && ii.x <= width - 1 && ii.y >= 0 && ii.y <= height - 1);
+}
+
 export interface ClickVector extends Vector {
   alt?: boolean;
 }
@@ -72,7 +94,7 @@ const clearField = (field: Vector, clear: Vector[], flags: Vector[], mines: Vect
   }
   clear = [...clear, field];
 
-  const neighbours = getNeighbourVectors(field, width, height);
+  const neighbours = getNeighbourVectorsStraight(field, width, height);
 
   if (neighbours.every(vec => !includesVector(flags, vec) && !includesVector(mines, vec))) {
     if (field.x > 0) {
@@ -155,16 +177,3 @@ const processLoop = process(
 export const initGame = (from?: Partial<Preset>): Game => ({input: null, scene: initScene(initPreset(from)), state: 'start'});
 export const processFrame = processLoop;
 export const onInput = (state: Game, input: ClickVector): Game => ({...state, input});
-
-export function getNeighbourVectors(vec: Vector, width: number, height: number): Vector[] {
-  return [
-    {x: vec.x - 1, y: vec.y - 1},
-    {x: vec.x, y: vec.y - 1},
-    {x: vec.x + 1, y: vec.y - 1},
-    {x: vec.x - 1, y: vec.y},
-    {x: vec.x + 1, y: vec.y},
-    {x: vec.x - 1, y: vec.y + 1},
-    {x: vec.x, y: vec.y + 1},
-    {x: vec.x + 1, y: vec.y + 1},
-  ].filter(ii => ii.x >= 0 && ii.x <= width - 1 && ii.y >= 0 && ii.y <= height - 1);
-}

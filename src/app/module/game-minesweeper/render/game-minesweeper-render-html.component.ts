@@ -3,7 +3,7 @@ import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {distinctUntilChanged, filter, map, withLatestFrom, tap} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
-import {Game, Vector, getNeighbourVectors} from '../logic';
+import {Game, Vector, getNeighbourVectorsAround} from '../logic';
 
 type FIELD = 'clear' | 'empty' | 'flag' | 'mine';
 
@@ -86,7 +86,7 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
         if (!mines || !mines.length) {
           return 0;
         }
-        return getNeighbourVectors({x: index % wide, y: Math.floor(index / wide)}, wide, high).reduce<number>(
+        return getNeighbourVectorsAround({x: index % wide, y: Math.floor(index / wide)}, wide, high).reduce<number>(
           (acc, vec) => (mines.some(ii => ii.y === vec.y && ii.x === vec.x) ? acc + 1 : acc),
           0,
         );
