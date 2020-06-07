@@ -25,11 +25,11 @@ export class AppComponent implements OnDestroy {
     rxStateMutate: RxStateSetGlobalService,
   ) {
     this.start = () => {
-      title.setTitle(rxState.state.globalValues.flags.title);
+      title.setTitle(rxState.getState().globalValues.flags.title);
       dateAdapter.setLocale('de-DE');
       router.events
-        .pipe(filter(ev => ev instanceof NavigationEnd))
-        .subscribe(ev => rxStateMutate.setRoute(router.routerState.snapshot.url));
+        .pipe(filter((ev) => ev instanceof NavigationEnd))
+        .subscribe((ev) => rxStateMutate.setRoute(router.routerState.snapshot.url));
     };
     if (this.isBrowserChrome) {
       this.start();

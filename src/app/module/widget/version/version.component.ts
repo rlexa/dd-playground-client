@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {DoneSubject, RxCleanup} from 'dd-rxjs';
+import {watch} from 'dd-rx-state';
 import {routeToSettings} from 'src/app/routing';
 import {RxStateService} from 'src/app/rx-state';
 
@@ -9,14 +9,10 @@ import {RxStateService} from 'src/app/rx-state';
   templateUrl: 'version.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VersionComponent implements OnDestroy {
+export class VersionComponent {
   constructor(private rxState: RxStateService, private router: Router) {}
 
-  @RxCleanup() private readonly done$ = new DoneSubject();
-
-  readonly version$ = this.rxState.watch(state => state.globalValues.flags.version, this.done$);
-
-  ngOnDestroy() {}
+  readonly version$ = this.rxState.state$.pipe(watch((state) => state.globalValues.flags.version));
 
   onGotoSettings = () => routeToSettings(this.router);
 }

@@ -2,9 +2,8 @@
 
 exports[`DemoStateComponent is created 1`] = `
 <app-demo-state
-  done$={[Function DoneSubject]}
   rxState={[Function RxStateService]}
-  state$={[Function BehaviorSubject]}
+  state$={[Function AnonymousSubject]}
 >
   <div
     ddflexbox="vyt"

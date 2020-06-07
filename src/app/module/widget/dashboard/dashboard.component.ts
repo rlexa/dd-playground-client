@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
-import {DoneSubject, RxCleanup} from 'dd-rxjs';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {watch} from 'dd-rx-state';
 import {map} from 'rxjs/operators';
 import {
   ROUTE_BLOCKCHAIN,
@@ -13,6 +13,7 @@ import {
   ROUTE_DEMO_STATE,
   ROUTE_GAME,
   ROUTE_GAME_DOWN,
+  ROUTE_GAME_MINESWEEPER,
   ROUTE_GAME_SNAKE,
   ROUTE_GRAPH,
   ROUTE_OVERVIEW,
@@ -20,7 +21,6 @@ import {
   ROUTE_RENDER_CANVAS,
   ROUTE_SETTINGS,
   ROUTE_WALKER,
-  ROUTE_GAME_MINESWEEPER,
 } from 'src/app/routing';
 import {RxStateService} from 'src/app/rx-state';
 
@@ -36,10 +36,8 @@ interface RouteDef {
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent implements OnDestroy {
+export class DashboardComponent {
   constructor(private rxState: RxStateService) {}
-
-  @RxCleanup() private readonly done$ = new DoneSubject();
 
   readonly GRID_CONTENT = 'cont';
   readonly GRID_FOOTER = 'foot';
@@ -50,7 +48,7 @@ export class DashboardComponent implements OnDestroy {
     [this.GRID_SIDE, this.GRID_CONTENT],
     [this.GRID_FOOTER, this.GRID_FOOTER],
   ]
-    .map(line => '"' + line.join(' ') + '"')
+    .map((line) => '"' + line.join(' ') + '"')
     .join(' ');
 
   readonly ROUTE_ROOT = ROUTE_DASHBOARD;
@@ -106,26 +104,23 @@ export class DashboardComponent implements OnDestroy {
     },
   ];
 
-  readonly isVisibleFooter$ = this.rxState.watch(state => state.ui.dashboard.isVisibleFooter, this.done$);
-  readonly isVisibleHeader$ = this.rxState.watch(state => state.ui.dashboard.isVisibleHeader, this.done$);
-  readonly isVisibleSide$ = this.rxState.watch(state => state.ui.dashboard.isVisibleSide, this.done$);
+  readonly isVisibleFooter$ = this.rxState.state$.pipe(watch((state) => state.ui.dashboard.isVisibleFooter));
+  readonly isVisibleHeader$ = this.rxState.state$.pipe(watch((state) => state.ui.dashboard.isVisibleHeader));
+  readonly isVisibleSide$ = this.rxState.state$.pipe(watch((state) => state.ui.dashboard.isVisibleSide));
 
-  readonly subRoute$ = this.rxState
-    .watch(state => state.globalValues.route, this.done$)
-    .pipe(
-      map(url => {
-        const paths = url.split('/');
-        const indexMe = paths.indexOf(ROUTE_DASHBOARD);
-        return indexMe >= 0 && paths.length > indexMe + 1 ? paths[indexMe + 1] : null;
-      }),
-    );
-
-  readonly subRoutes$ = this.subRoute$.pipe(
-    map(subRoute => {
-      const route = this.ROUTES.find(ii => ii.route === subRoute);
-      return route ? route.subs : [];
+  readonly subRoute$ = this.rxState.state$.pipe(
+    watch((state) => state.globalValues.route),
+    map((url) => {
+      const paths = url.split('/');
+      const indexMe = paths.indexOf(ROUTE_DASHBOARD);
+      return indexMe >= 0 && paths.length > indexMe + 1 ? paths[indexMe + 1] : null;
     }),
   );
 
-  ngOnDestroy() {}
+  readonly subRoutes$ = this.subRoute$.pipe(
+    map((subRoute) => {
+      const route = this.ROUTES.find((ii) => ii.route === subRoute);
+      return route ? route.subs : [];
+    }),
+  );
 }

@@ -55,7 +55,7 @@
     "@angular/platform-browser-dynamic": "^9.1.9",
     "@angular/router": "^9.1.9",
     "d3": "^5.8.0",
-    "dd-rx-state": "^1.0.5",
+    "dd-rx-state": "^1.1.0",
     "dd-rxjs": "^1.3.5",
     "font-awesome": "^4.7.0",
     "rxjs": "^6.5.5",

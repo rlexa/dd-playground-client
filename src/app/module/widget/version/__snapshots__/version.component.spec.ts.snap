@@ -2,11 +2,10 @@
 
 exports[`VersionComponent is created 1`] = `
 <app-version
-  done$={[Function DoneSubject]}
   onGotoSettings={[Function Function]}
   router={[Function Object]}
   rxState={[Function RxStateService]}
-  version$={[Function BehaviorSubject]}
+  version$={[Function AnonymousSubject]}
 >
   <button
     class="auto-line-height"

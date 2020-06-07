@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {watch} from 'dd-rx-state';
+import {map, shareReplay} from 'rxjs/operators';
 import {resolveInitiative as resolveInitiativeIndices} from 'src/app/module/widget/game-down/data';
 import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
 import {RxStateSetUiService} from 'src/app/rx-state/rx-state-set-ui.service';
 import {trackByIndex} from 'src/app/util';
-import {DoneSubject, RxCleanup} from 'dd-rxjs';
-import {map, shareReplay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-down-ai-initiative',
@@ -19,10 +19,12 @@ export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
   ) {}
 
   private wasShowingFooter = false;
-  @RxCleanup() private readonly done$ = new DoneSubject();
 
-  readonly fields$ = this.rxState.watch(state => state.game.down.scene.fields, this.done$);
-  readonly hovered$ = this.rxState.watch(state => state.game.down.scene.hoveredIndex, this.done$).pipe(shareReplay());
+  readonly fields$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.fields));
+  readonly hovered$ = this.rxState.state$.pipe(
+    watch((state) => state.game.down.scene.hoveredIndex),
+    shareReplay(),
+  );
 
   readonly resolvedInitiativeIndices$ = this.fields$.pipe(map(resolveInitiativeIndices));
 
@@ -33,7 +35,7 @@ export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.wasShowingFooter = this.rxState.state.ui.dashboard.isVisibleFooter;
+    this.wasShowingFooter = this.rxState.getState().ui.dashboard.isVisibleFooter;
     this.rxStateMutateUi.mergeDashboardState({isVisibleFooter: false});
   }
 

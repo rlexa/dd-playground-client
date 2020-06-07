@@ -2,8 +2,7 @@
 
 exports[`BuildComponent is created 1`] = `
 <app-build
-  data$={[Function BehaviorSubject]}
-  done$={[Function DoneSubject]}
+  data$={[Function AnonymousSubject]}
   rxState={[Function RxStateService]}
 >
   <mat-card>

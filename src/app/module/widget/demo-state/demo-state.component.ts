@@ -1,18 +1,14 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {watch} from 'dd-rx-state';
 import {RxStateService} from 'src/app/rx-state';
-import {DoneSubject, RxCleanup} from 'dd-rxjs';
 
 @Component({
   selector: 'app-demo-state',
   templateUrl: './demo-state.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DemoStateComponent implements OnDestroy {
+export class DemoStateComponent {
   constructor(private rxState: RxStateService) {}
 
-  @RxCleanup() private readonly done$ = new DoneSubject();
-
-  readonly state$ = this.rxState.watch(state => state, this.done$);
-
-  ngOnDestroy() {}
+  readonly state$ = this.rxState.state$.pipe(watch((state) => state));
 }

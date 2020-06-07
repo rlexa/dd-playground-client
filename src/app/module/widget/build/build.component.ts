@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
-import {DoneSubject, RxCleanup} from 'dd-rxjs';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {watch} from 'dd-rx-state';
 import {RxStateService} from 'src/app/rx-state';
 
 @Component({
@@ -7,12 +7,8 @@ import {RxStateService} from 'src/app/rx-state';
   templateUrl: './build.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BuildComponent implements OnDestroy {
+export class BuildComponent {
   constructor(private rxState: RxStateService) {}
 
-  @RxCleanup() private readonly done$ = new DoneSubject();
-
-  readonly data$ = this.rxState.watch(state => state.globalValues.flags, this.done$);
-
-  ngOnDestroy() {}
+  readonly data$ = this.rxState.state$.pipe(watch((st) => st.globalValues.flags));
 }

@@ -1,10 +1,11 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {watch} from 'dd-rx-state';
+import {DoneSubject, RxCleanup} from 'dd-rxjs';
+import {BehaviorSubject, combineLatest, of} from 'rxjs';
+import {distinctUntilChanged, filter, map, shareReplay, takeUntil, withLatestFrom} from 'rxjs/operators';
 import {buildSituation1, checkProblems, DEF_FAMEDOWN_STATE_FIELDS, GameDownField, modField} from 'src/app/module/widget/game-down/data';
 import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
 import {trackByIndex} from 'src/app/util';
-import {DoneSubject, RxCleanup} from 'dd-rxjs';
-import {BehaviorSubject, combineLatest, of} from 'rxjs';
-import {distinctUntilChanged, filter, map, shareReplay, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-down-config',
@@ -16,17 +17,20 @@ export class GameDownConfigComponent implements OnDestroy {
 
   @RxCleanup() private readonly done$ = new DoneSubject();
 
-  readonly factor$ = this.rxState.watch(state => state.game.down.scene.factor, this.done$);
-  readonly factorMax$ = this.rxState.watch(state => state.game.down.scene.factorMax, this.done$);
-  readonly factorMin$ = this.rxState.watch(state => state.game.down.scene.factorMin, this.done$);
-  readonly fields$ = this.rxState.watch(state => state.game.down.scene.fields, this.done$);
-  readonly fieldValues$ = this.rxState.watch(state => state.game.down.fieldValues, this.done$);
-  readonly renderer$ = this.rxState.watch(state => state.game.down.scene.renderer, this.done$);
-  readonly renderers$ = this.rxState.watch(state => state.game.down.rendererValues, this.done$);
-  readonly selectedFieldIndex$ = this.rxState.watch(state => state.game.down.scene.selectedIndex, this.done$);
-  readonly theme$ = this.rxState.watch(state => state.game.down.scene.theme, this.done$);
-  readonly themes$ = this.rxState.watch(state => state.game.down.themes, this.done$).pipe(map(_ => _.map(ii => ii.name)));
-  readonly viewDebug$ = this.rxState.watch(state => state.game.down.viewDebug, this.done$);
+  readonly factor$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.factor));
+  readonly factorMax$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.factorMax));
+  readonly factorMin$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.factorMin));
+  readonly fields$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.fields));
+  readonly fieldValues$ = this.rxState.state$.pipe(watch((state) => state.game.down.fieldValues));
+  readonly renderer$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.renderer));
+  readonly renderers$ = this.rxState.state$.pipe(watch((state) => state.game.down.rendererValues));
+  readonly selectedFieldIndex$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.selectedIndex));
+  readonly theme$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.theme));
+  readonly themes$ = this.rxState.state$.pipe(
+    watch((state) => state.game.down.themes),
+    map((_) => _.map((ii) => ii.name)),
+  );
+  readonly viewDebug$ = this.rxState.state$.pipe(watch((state) => state.game.down.viewDebug));
 
   readonly selectedField$ = combineLatest([this.selectedFieldIndex$, this.fields$]).pipe(
     map(([index, fields]) => fields[index] || null),
@@ -35,8 +39,8 @@ export class GameDownConfigComponent implements OnDestroy {
     takeUntil(this.done$),
   );
   readonly selectedFieldField$ = this.selectedField$.pipe(map(modField.get));
-  readonly selectedFieldActor$ = this.selectedField$.pipe(map(_ => (!_ ? null : _.actor)));
-  readonly selectedFieldEntities$ = this.selectedField$.pipe(map(_ => (!_ ? null : _.entities)));
+  readonly selectedFieldActor$ = this.selectedField$.pipe(map((_) => (!_ ? null : _.actor)));
+  readonly selectedFieldEntities$ = this.selectedField$.pipe(map((_) => (!_ ? null : _.entities)));
 
   @RxCleanup() readonly sceneFieldsPresets$ = new BehaviorSubject<{[key: string]: GameDownField[]}>({
     Default: [...DEF_FAMEDOWN_STATE_FIELDS],
@@ -46,7 +50,7 @@ export class GameDownConfigComponent implements OnDestroy {
 
   private readonly fieldsProblems$ = this.fields$.pipe(map(checkProblems), shareReplay());
   readonly fieldsProblemsCount$ = this.fieldsProblems$.pipe(
-    map(_ => _.filter(pp => pp.length).length),
+    map((_) => _.filter((pp) => pp.length).length),
     shareReplay(),
   );
   readonly fieldProblems$ = combineLatest([this.selectedFieldIndex$, this.fieldsProblems$]).pipe(
@@ -69,14 +73,15 @@ export class GameDownConfigComponent implements OnDestroy {
     key in this.sceneFieldsPresets$.value ? this.rxStateMutate.setSceneFields(this.sceneFieldsPresets$.value[key]) : {};
 
   private onMergeSelectedField = (into: GameDownField, merge: GameDownField) =>
-    of({into, merge, index: this.selectedFieldIndex$.value})
+    of({into, merge})
       .pipe(
+        withLatestFrom(this.selectedFieldIndex$),
         filter(
-          _ =>
+          ([_, index]) =>
             Object.keys(merge).length > 0 &&
-            Object.keys(merge).every(key => key in into) &&
-            Object.keys(merge).some(key => into[key] !== merge[key]),
+            Object.keys(merge).every((key) => key in into) &&
+            Object.keys(merge).some((key) => into[key] !== merge[key]),
         ),
       )
-      .subscribe(_ => this.rxStateMutate.setSceneField(_.index, {..._.into, ..._.merge}));
+      .subscribe(([_, index]) => this.rxStateMutate.setSceneField(index, {..._.into, ..._.merge}));
 }
