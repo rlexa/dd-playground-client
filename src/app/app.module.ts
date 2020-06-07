@@ -4,7 +4,6 @@ import {MatNativeDateModule, NativeDateModule} from '@angular/material/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule, Routes} from '@angular/router';
-import 'hammerjs';
 import {AppComponent} from './app.component';
 import {FlexboxModule} from './module/directive/flexbox';
 import {ROUTE_DASHBOARD, ROUTE_ROOT, ROUTE_WILDCARD} from './routing';
