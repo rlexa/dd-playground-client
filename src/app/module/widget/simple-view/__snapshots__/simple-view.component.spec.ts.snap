@@ -39,7 +39,7 @@ exports[`SimpleViewComponent with data renders 1`] = `
   types$={[Function AnonymousSubject]}
 >
   <div
-    class="position-relative ng-tns-c1-0 ng-star-inserted"
+    class="position-relative"
   >
     <div
       class="scroll-x-auto"
@@ -49,7 +49,7 @@ exports[`SimpleViewComponent with data renders 1`] = `
       
       
       <mat-list
-        class="mat-list-auto-height ng-tns-c1-0 ng-star-inserted"
+        class="mat-list-auto-height"
       >
         
         
@@ -58,36 +58,27 @@ exports[`SimpleViewComponent with data renders 1`] = `
         
         
         
-        <table
-          class="ng-tns-c1-0 ng-star-inserted"
-        >
+        <table>
           
-          <tr
-            class="ng-tns-c1-0 ng-star-inserted"
-          >
+          <tr>
             <td
-              class="ng-tns-c1-0"
               style="vertical-align: top;"
             >
-              <mat-list-item
-                class="ng-tns-c1-0"
-              >
+              <mat-list-item>
                 <span
-                  class="no-break-text ng-tns-c1-0"
+                  class="no-break-text"
                 >
                    undefined 
                 </span>
               </mat-list-item>
             </td>
-            <td
-              class="ng-tns-c1-0"
-            >
+            <td>
               <mat-list-item
-                class="ng-tns-c1-0 ng-trigger ng-trigger-TRIGGER_WobbleX"
+                class="ng-trigger ng-trigger-TRIGGER_WobbleX"
                 style=""
               >
                 <span
-                  class="break-text ng-tns-c1-0 size-data-label"
+                  class="break-text size-data-label"
                 >
                   
                   
@@ -98,7 +89,6 @@ exports[`SimpleViewComponent with data renders 1`] = `
                   
                   
                   <span
-                    class="ng-tns-c1-0 ng-star-inserted"
                     style=""
                   >
                      value 
