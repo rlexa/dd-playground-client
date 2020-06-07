@@ -1,6 +1,6 @@
 {
   "name": "dd-playground-client",
-  "version": "8.0.1",
+  "version": "9.0.0",
   "license": "LicenseRef-LICENSE",
   "scripts": {
     "_view_webpack_stats": "webpack-bundle-analyzer dist/stats.json",
@@ -89,7 +89,7 @@
     "protractor": "^7.0.0",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.2",
-    "typescript": "^3.8.3",
+    "typescript": "~3.8.3",
     "webpack-bundle-analyzer": "^3.0.2"
   }
 }

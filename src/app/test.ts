@@ -1,5 +1,5 @@
 import {Provider, Type} from '@angular/core';
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture} from '@angular/core/testing';
 import {Observable} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {Mock} from 'ts-mockery';
@@ -30,11 +30,6 @@ export function detectChanges<T>(fixture: ComponentFixture<T>) {
 export function takePromise<T>(observable: Observable<T>, count = 1): Promise<T> {
   return observable.pipe(take(count)).toPromise();
 }
-
-/**
- * Gets value by type from TestBed.
- */
-export const getByType = <T>(type: Type<T>) => TestBed.get(type) as T;
 
 /**
  * Mocks via factory.

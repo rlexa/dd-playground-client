@@ -4,7 +4,7 @@ import {By} from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {MockComponents} from 'ng-mocks';
 import {provideRxState} from 'src/app/rx-state/test';
-import {detectChanges, getByType, mockAll, overrideForChangeDetection} from 'src/app/test';
+import {detectChanges, mockAll, overrideForChangeDetection} from 'src/app/test';
 import {VersionComponent} from './version.component';
 
 describe('VersionComponent', () => {
@@ -29,6 +29,6 @@ describe('VersionComponent', () => {
 
   test('navigates on version click', () => {
     fixture.debugElement.query(By.css('button')).triggerEventHandler('click', {});
-    expect(getByType(Router).navigate).toHaveBeenCalledTimes(1);
+    expect(TestBed.inject(Router).navigate).toHaveBeenCalledTimes(1);
   });
 });

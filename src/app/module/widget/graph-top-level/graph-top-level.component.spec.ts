@@ -3,7 +3,7 @@ import {async, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockComponents} from 'ng-mocks';
 import {of} from 'rxjs';
-import {detectChanges, getByType, mockAll, overrideForChangeDetection} from 'src/app/test';
+import {detectChanges, mockAll, overrideForChangeDetection} from 'src/app/test';
 import {Mock} from 'ts-mockery';
 import {GraphskyService} from '../../service/graphsky-api';
 import {RoutedContentComponent} from '../routed-content';
@@ -21,7 +21,7 @@ describe('GraphTopLevelComponent', () => {
   }));
 
   beforeEach(() => {
-    Mock.extend(getByType(HttpClient)).with({get: () => of(null)});
+    Mock.extend(TestBed.inject(HttpClient)).with({get: () => of(null)});
   });
 
   test('is created', () => {
