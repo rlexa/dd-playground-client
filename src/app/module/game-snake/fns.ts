@@ -46,7 +46,8 @@ export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) 
 
 // OBJECTS
 
-export const fnKey = <T extends object>(key: keyof T) => (val: T) => val?.[key];
+export const fnKey = <T extends object, K extends keyof T>(key: K) => (val: T) => val?.[key];
+export const fnTKey = <T extends object>() => <K extends keyof T>(key: K) => fnKey<T, K>(key);
 
 // MATH
 

@@ -1,4 +1,4 @@
-import {fnAnd, fnCompose, fnFlip, fnIdentity, fnKey, fnMap, fnPipe, fnSame, fnSome, fnSum, fnTrace, fnLift2} from './fns';
+import {fnAnd, fnCompose, fnFlip, fnIdentity, fnKey, fnLift2, fnMap, fnPipe, fnSame, fnSome, fnSum, fnTKey, fnTrace} from './fns';
 
 describe(`fns`, () => {
   const plusOne = (arg: number) => +arg + 1;
@@ -27,8 +27,9 @@ describe(`fns`, () => {
     test(`returns same`, () => expect(fnIdentity(123)).toBe(123));
   });
 
-  describe(`fnKey`, () => {
-    test(`reads value key first`, () => expect(fnKey('key')({key: 'value'})).toBe('value'));
+  describe(`fnKey, fnTKey`, () => {
+    test(`reads value by key`, () => expect(fnKey<{key: string}, 'key'>('key')({key: 'value'})).toBe('value'));
+    test(`reads value by key (pre-typed)`, () => expect(fnTKey<{key: string}>()('key')({key: 'value'})).toBe('value'));
   });
 
   describe(`fnLift2`, () => {

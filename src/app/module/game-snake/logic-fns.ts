@@ -1,5 +1,5 @@
 import {not, PreFilter, process, processIf, processIn} from 'src/app/game';
-import {fnAnd, fnCompose, fnKey, fnLift2, fnSame, fnSome, fnSum} from './fns';
+import {fnAnd, fnCompose, fnLift2, fnSame, fnSome, fnSum, fnTKey} from './fns';
 
 const isZero = fnSame(0);
 
@@ -8,8 +8,9 @@ export interface Vector {
   y: number;
 }
 
-const vecX = fnKey<Vector>('x');
-const vecY = fnKey<Vector>('y');
+const vectorKey = fnTKey<Vector>();
+const vecX = vectorKey('x');
+const vecY = vectorKey('y');
 
 const isVecXZero = fnCompose(isZero, vecX);
 const isVecYZero = fnCompose(isZero, vecY);
