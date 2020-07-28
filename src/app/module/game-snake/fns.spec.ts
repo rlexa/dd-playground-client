@@ -1,9 +1,16 @@
-import {fnCompose, fnFromKey, fnIdentity, fnKeyFrom, fnPipe, fnSame, fnSome, fnSum} from './fns';
+import {fnAnd, fnCompose, fnFlip, fnIdentity, fnKey, fnMap, fnPipe, fnSame, fnSome, fnSum, fnTrace} from './fns';
 
 describe(`fns`, () => {
   const plusOne = (arg: number) => +arg + 1;
   const multTwo = (arg: number) => +arg * 2;
   const isSame = <T>(aa: T) => (bb: T) => aa === bb;
+
+  describe(`fnAnd`, () => {
+    test(`is true for t&&t`, () => expect(fnAnd(1)(2)).toBe(true));
+    test(`is false for t&&f`, () => expect(fnAnd(1)(0)).toBe(false));
+    test(`is false for f&&t`, () => expect(fnAnd(0)(1)).toBe(false));
+    test(`is false for f&&f`, () => expect(fnAnd(0)(0)).toBe(false));
+  });
 
   describe(`fnCompose`, () => {
     test(`applies identity if no fns`, () => expect(fnCompose<number>()(123)).toBe(123));
@@ -11,13 +18,21 @@ describe(`fns`, () => {
     test(`applies right to left`, () => expect(fnCompose(multTwo, plusOne)(123)).toBe(multTwo(plusOne(123))));
   });
 
+  describe(`fnFlip`, () => {
+    test(`flips and applies params`, () => expect(fnFlip((aa: number) => (bb: number) => (aa + 1) * bb)(2)(1)).toBe(4));
+  });
+
   describe(`fnIdentity`, () => {
     test(`returns same`, () => expect(fnIdentity(123)).toBe(123));
   });
 
-  describe(`fnKeyFrom, fnFromKey`, () => {
-    test(`reads value key first`, () => expect(fnKeyFrom('key')({key: 'value'})).toBe('value'));
-    test(`reads value key last`, () => expect(fnFromKey({key: 'value'})('key')).toBe('value'));
+  describe(`fnKey`, () => {
+    test(`reads value key first`, () => expect(fnKey('key')({key: 'value'})).toBe('value'));
+  });
+
+  describe(`fnMap`, () => {
+    test(`maps`, () => expect(fnMap(plusOne)([1, 2, 3])).toEqual([2, 3, 4]));
+    test(`maps null to undefined`, () => expect(fnMap(plusOne)(null)).toEqual(undefined));
   });
 
   describe(`fnPipe`, () => {
@@ -39,5 +54,13 @@ describe(`fns`, () => {
 
   describe(`fnSum`, () => {
     test(`sums`, () => expect(fnSum(1)(2)).toBe(3));
+  });
+
+  describe(`fnTrace`, () => {
+    test(`logs and returns same`, () => {
+      spyOn(console, 'log');
+      expect(fnTrace('tag')(1)).toBe(1);
+      expect(console.log).toHaveBeenCalledWith('tag: 1');
+    });
   });
 });

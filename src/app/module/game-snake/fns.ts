@@ -2,7 +2,14 @@
 
 export const fnIdentity = <T>(arg: T) => arg;
 
+export const fnTrace = (label: string) => <T>(value: T): T => {
+  console.log(`${label || '?'}: ${JSON.stringify(value)}`);
+  return value;
+};
+
 // COMPOSITION
+
+export const fnFlip = <T1, T2, R>(fn: (arg1: T1) => (arg2: T2) => R) => (arg2: T2) => (arg1: T1) => fn(arg1)(arg2);
 
 export function fnPipe<R>(): (arg: R) => R;
 export function fnPipe<R, T>(fn: (arg: T) => R): (arg: T) => R;
@@ -24,14 +31,19 @@ export function fnCompose(...funcs: ((arg: any) => any)[]) {
 
 export const fnSame = <T>(arg1: T) => (arg2: T) => arg1 === arg2;
 
+// LOGIC
+
+export const fnAnd = (arg1: any) => (arg2: any) => Boolean(arg1) && Boolean(arg2);
+
 // LISTS
+
+export const fnMap = <T, R>(fn: (arg: T) => R) => (args: T[]): R[] => args?.map((ii) => fn(ii));
 
 export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) => (val: T) => vals?.some(equals(val));
 
 // OBJECTS
 
-export const fnKeyFrom = <T extends object>(key: keyof T) => (val: T) => val?.[key];
-export const fnFromKey = <T extends object>(val: T) => (key: keyof T) => fnKeyFrom(key)(val);
+export const fnKey = <T extends object>(key: keyof T) => (val: T) => val?.[key];
 
 // MATH
 
