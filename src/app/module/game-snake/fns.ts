@@ -11,6 +11,9 @@ export const fnTrace = (label: string) => <T>(value: T): T => {
 
 export const fnFlip = <T1, T2, R>(fn: (arg1: T1) => (arg2: T2) => R) => (arg2: T2) => (arg1: T1) => fn(arg1)(arg2);
 
+export const fnLift2 = <T, R1, R2, R>(fn: (arg1: R1) => (arg2: R2) => R) => (fn1: (arg: T) => R1) => (fn2: (arg: T) => R2) => (arg: T) =>
+  fn(fn1(arg))(fn2(arg));
+
 export function fnPipe<R>(): (arg: R) => R;
 export function fnPipe<R, T>(fn: (arg: T) => R): (arg: T) => R;
 export function fnPipe<R, T, T1>(fn1: (arg: T) => T1, fn2: (arg: T1) => R): (arg: T) => R;

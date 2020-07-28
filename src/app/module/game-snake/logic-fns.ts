@@ -1,5 +1,5 @@
 import {not, PreFilter, process, processIf, processIn} from 'src/app/game';
-import {fnAnd, fnKey, fnSame, fnSome, fnSum, fnCompose} from './fns';
+import {fnAnd, fnCompose, fnKey, fnLift2, fnSame, fnSome, fnSum} from './fns';
 
 const isZero = fnSame(0);
 
@@ -11,11 +11,14 @@ export interface Vector {
 const vecX = fnKey<Vector>('x');
 const vecY = fnKey<Vector>('y');
 
+const isVecXZero = fnCompose(isZero, vecX);
+const isVecYZero = fnCompose(isZero, vecY);
+
 // @todo fns research
 
 export const equalVectors = (aa: Vector) => (bb: Vector) => fnAnd(fnSame(vecX(aa))(vecX(bb)))(fnSame(vecY(aa))(vecY(bb)));
 export const sumVectors = (aa: Vector) => (bb: Vector): Vector => ({x: fnSum(vecX(aa))(vecX(bb)), y: fnSum(vecY(aa))(vecY(bb))});
-export const isZeroVector = (vec: Vector) => fnAnd(fnCompose(isZero, vecX)(vec))(fnCompose(isZero, vecY)(vec));
+export const isZeroVector = fnLift2<Vector, boolean, boolean, boolean>(fnAnd)(isVecXZero)(isVecYZero);
 export const includesVector = fnSome(equalVectors);
 
 export interface SnakeState {

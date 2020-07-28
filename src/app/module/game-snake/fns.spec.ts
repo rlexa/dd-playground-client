@@ -1,9 +1,10 @@
-import {fnAnd, fnCompose, fnFlip, fnIdentity, fnKey, fnMap, fnPipe, fnSame, fnSome, fnSum, fnTrace} from './fns';
+import {fnAnd, fnCompose, fnFlip, fnIdentity, fnKey, fnMap, fnPipe, fnSame, fnSome, fnSum, fnTrace, fnLift2} from './fns';
 
 describe(`fns`, () => {
   const plusOne = (arg: number) => +arg + 1;
   const multTwo = (arg: number) => +arg * 2;
   const isSame = <T>(aa: T) => (bb: T) => aa === bb;
+  const concatToString = <T1, T2>(aa: T1) => (bb: T2) => `${aa}.${bb}`;
 
   describe(`fnAnd`, () => {
     test(`is true for t&&t`, () => expect(fnAnd(1)(2)).toBe(true));
@@ -28,6 +29,10 @@ describe(`fns`, () => {
 
   describe(`fnKey`, () => {
     test(`reads value key first`, () => expect(fnKey('key')({key: 'value'})).toBe('value'));
+  });
+
+  describe(`fnLift2`, () => {
+    test(`lifts`, () => expect(fnLift2<number, number, number, string>(concatToString)(plusOne)(multTwo)(2)).toBe('3.4'));
   });
 
   describe(`fnMap`, () => {
