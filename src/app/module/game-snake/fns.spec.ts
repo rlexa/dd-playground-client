@@ -1,6 +1,7 @@
 import {
   fnAnd,
   fnCompose,
+  fnFirst,
   fnFlip,
   fnGt,
   fnGte,
@@ -45,6 +46,12 @@ describe(`fns`, () => {
     test(`applies identity if no fns`, () => expect(fnCompose<number>()(123)).toBe(123));
     test(`applies single`, () => expect(fnCompose(multTwo)(123)).toBe(multTwo(123)));
     test(`applies right to left`, () => expect(fnCompose(multTwo, plusOne)(123)).toBe(multTwo(plusOne(123))));
+  });
+
+  describe(`fnFirst`, () => {
+    test(`returns first for [.]`, () => expect(fnFirst([1, 2, 3])).toBe(1));
+    test(`returns undefined for []`, () => expect(fnFirst([])).toBe(undefined));
+    test(`returns undefined for undefined`, () => expect(fnFirst(undefined)).toBe(undefined));
   });
 
   describe(`fnFlip`, () => {

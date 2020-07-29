@@ -2,6 +2,7 @@ import {not, PreFilter, process, processIf, processIn} from 'src/app/game';
 import {
   fnAnd,
   fnCompose,
+  fnFirst,
   fnGte,
   fnIs,
   fnKey,
@@ -105,6 +106,7 @@ const gameFoodPosition = fnPipe(gameFood, fnKey('position'));
 const gameSnake = fnPipe(gameMap, fnKey('snake'));
 const gameSnakeDirection = fnPipe(gameSnake, fnKey('direction'));
 const gameSnakePositions = fnPipe(gameSnake, fnKey('positions'));
+const gameSnakeHead = fnPipe(gameSnakePositions, fnFirst);
 const gameSnakeSize = fnPipe(gameSnakePositions, fnKey('length'));
 const gameState = fnPipe(gameKey('state'));
 
@@ -146,7 +148,7 @@ const whenInputDirectionBackwards = fnCompose(isZeroVector, fnLift2(sumVectors)(
 const whenSnake = fnCompose(fnIs, gameSnake);
 const whenSnakeBigAsScreen = fnLift2(fnGte)(gameSnakeSize)(gameMapSize);
 const whenSnakeHeadInBody: PreFilter<Game> = (st) =>
-  st.scene.map.snake.positions.some((ii, index) => index > 0 && equalVectors(ii)(st.scene.map.snake.positions[0]));
+  gameSnakePositions(st).some((vec, index) => index > 0 && equalVectors(vec)(gameSnakeHead(st)));
 
 const whenGameIs = fnLift2to2(fnSame)(fnTIdentity<GameState>())(gameState);
 const whenGameIsPlay = whenGameIs('play');

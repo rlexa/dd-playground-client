@@ -68,6 +68,8 @@ export const fnOr = (arg1: any) => (arg2: any) => Boolean(arg1) || Boolean(arg2)
 
 // LISTS
 
+export const fnFirst = <T>(vals: T[]) => vals?.[0];
+
 export const fnMap = <T, R>(fn: (arg: T) => R) => (args: T[]): R[] => args?.map((ii) => fn(ii));
 
 export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) => (val: T) => vals?.some(equals(val));
