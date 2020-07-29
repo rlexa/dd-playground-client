@@ -1,5 +1,21 @@
 import {not, PreFilter, process, processIf, processIn} from 'src/app/game';
-import {fnAnd, fnCompose, fnLift2, fnSame, fnSome, fnSum, fnTKey} from './fns';
+import {
+  fnAnd,
+  fnCompose,
+  fnGte,
+  fnIs,
+  fnKey,
+  fnLift2,
+  fnLift2to2,
+  fnLift2x2,
+  fnMult,
+  fnPipe,
+  fnSame,
+  fnSome,
+  fnSum,
+  fnTIdentity,
+  fnTKey,
+} from './fns';
 
 const isZero = fnSame(0);
 
@@ -8,18 +24,26 @@ export interface Vector {
   y: number;
 }
 
+const makeVector = (x: number) => (y: number) => ({x, y} as Vector);
+
 const vectorKey = fnTKey<Vector>();
 const vecX = vectorKey('x');
 const vecY = vectorKey('y');
 
-const isVecXZero = fnCompose(isZero, vecX);
-const isVecYZero = fnCompose(isZero, vecY);
+const isVecZeroX = fnCompose(isZero, vecX);
+const isVecZeroY = fnCompose(isZero, vecY);
+
+const isVecSameX = fnLift2to2(fnSame)(vecX)(vecX);
+const isVecSameY = fnLift2to2(fnSame)(vecY)(vecY);
+
+const sumVecX = fnLift2to2(fnSum)(vecX)(vecX);
+const sumVecY = fnLift2to2(fnSum)(vecY)(vecY);
 
 // @todo fns research
 
-export const equalVectors = (aa: Vector) => (bb: Vector) => fnAnd(fnSame(vecX(aa))(vecX(bb)))(fnSame(vecY(aa))(vecY(bb)));
-export const sumVectors = (aa: Vector) => (bb: Vector): Vector => ({x: fnSum(vecX(aa))(vecX(bb)), y: fnSum(vecY(aa))(vecY(bb))});
-export const isZeroVector = fnLift2<Vector, boolean, boolean, boolean>(fnAnd)(isVecXZero)(isVecYZero);
+export const equalVectors = fnLift2x2(fnAnd)(isVecSameX)(isVecSameY);
+export const sumVectors = fnLift2x2(makeVector)(sumVecX)(sumVecY);
+export const isZeroVector = fnLift2(fnAnd)(isVecZeroX)(isVecZeroY);
 export const includesVector = fnSome(equalVectors);
 
 export interface SnakeState {
@@ -70,8 +94,24 @@ const initMap = (from: Preset): Map => ({
 
 const initScene = (from: Preset): Scene => ({map: initMap(from)});
 
+const gameKey = fnTKey<Game>();
+
+const gameMap = fnPipe(gameKey('scene'), fnKey('map'));
+const gameHeight = fnPipe(gameMap, fnKey('height'));
+const gameWidth = fnPipe(gameMap, fnKey('width'));
+const gameInputDirection = fnPipe(gameKey('inputDirection'));
+const gameFood = fnPipe(gameMap, fnKey('food'));
+const gameFoodPosition = fnPipe(gameFood, fnKey('position'));
+const gameSnake = fnPipe(gameMap, fnKey('snake'));
+const gameSnakeDirection = fnPipe(gameSnake, fnKey('direction'));
+const gameSnakePositions = fnPipe(gameSnake, fnKey('positions'));
+const gameSnakeSize = fnPipe(gameSnakePositions, fnKey('length'));
+const gameState = fnPipe(gameKey('state'));
+
+const gameMapSize = fnLift2(fnMult)(gameHeight)(gameWidth);
+
 const getRandomFoodPosition = (state: Game): Vector => {
-  const snake = state.scene.map.snake;
+  const snake = gameSnake(state);
   let ii = Math.floor(Math.random() * (state.scene.map.width * state.scene.map.height - (snake ? snake.positions.length : 0)));
   let ret: Vector = {x: ii % state.scene.map.width, y: ii % state.scene.map.height};
   while (snake && includesVector(snake.positions)(ret)) {
@@ -82,9 +122,9 @@ const getRandomFoodPosition = (state: Game): Vector => {
 };
 
 const getNewSnakeHeadPosition = (state: Game): Vector => {
-  const snake = state.scene.map.snake;
+  const snake = gameSnake(state);
   const newPos = sumVectors(snake.positions[0])(snake.direction);
-  const map = state.scene.map;
+  const map = gameMap(state);
   if (newPos.x < 0) {
     newPos.x += map.width;
   } else if (newPos.x >= map.width) {
@@ -99,16 +139,16 @@ const getNewSnakeHeadPosition = (state: Game): Vector => {
   return newPos;
 };
 
-const whenFood: PreFilter<Game> = (st) => !!st.scene.map.food;
-const whenFoodInSnake: PreFilter<Game> = (st) => includesVector(st.scene.map.snake.positions)(st.scene.map.food.position);
-const whenInputDirection: PreFilter<Game> = (st) => !!st.inputDirection;
-const whenInputDirectionBackwards: PreFilter<Game> = (st) => isZeroVector(sumVectors(st.inputDirection)(st.scene.map.snake.direction));
-const whenSnake: PreFilter<Game> = (st) => !!st.scene.map.snake;
-const whenSnakeBigAsScreen: PreFilter<Game> = (st) => st.scene.map.snake.positions.length >= st.scene.map.height * st.scene.map.width;
+const whenFood = fnCompose(fnIs, gameFood);
+const whenFoodInSnake = fnLift2(includesVector)(gameSnakePositions)(gameFoodPosition);
+const whenInputDirection = fnCompose(fnIs, gameInputDirection);
+const whenInputDirectionBackwards = fnCompose(isZeroVector, fnLift2(sumVectors)(gameInputDirection)(gameSnakeDirection));
+const whenSnake = fnCompose(fnIs, gameSnake);
+const whenSnakeBigAsScreen = fnLift2(fnGte)(gameSnakeSize)(gameMapSize);
 const whenSnakeHeadInBody: PreFilter<Game> = (st) =>
   st.scene.map.snake.positions.some((ii, index) => index > 0 && equalVectors(ii)(st.scene.map.snake.positions[0]));
 
-const whenGameIs = (gameState: GameState): PreFilter<Game> => (st) => fnSame(st.state)(gameState);
+const whenGameIs = fnLift2to2(fnSame)(fnTIdentity<GameState>())(gameState);
 const whenGameIsPlay = whenGameIs('play');
 const whenGameIsStart = whenGameIs('start');
 
