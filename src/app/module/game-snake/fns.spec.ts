@@ -4,11 +4,15 @@ import {
   fnDefault,
   fnFirst,
   fnFlip,
+  fnFloor,
   fnGt,
   fnGte,
+  fnHead,
   fnIdentity,
+  fnInvert,
   fnIs,
   fnKey,
+  fnLast,
   fnLift1,
   fnLift2,
   fnLift2to2,
@@ -17,13 +21,17 @@ import {
   fnLte,
   fnMap,
   fnMerge,
+  fnMod,
   fnMult,
   fnNot,
   fnOr,
   fnPipe,
+  fnRandom,
+  fnRandomInt,
   fnSame,
   fnSome,
   fnSum,
+  fnTail,
   fnTIdentity,
   fnTKey,
   fnTrace,
@@ -67,6 +75,11 @@ describe(`fns`, () => {
     test(`flips and applies params`, () => expect(fnFlip((aa: number) => (bb: number) => (aa + 1) * bb)(2)(1)).toBe(4));
   });
 
+  describe(`fnFloor`, () => {
+    test(`floors`, () => expect(fnFloor(1.5)).toBe(1));
+    test(`floors undefined to NaN`, () => expect(fnFloor(undefined)).toBe(NaN));
+  });
+
   describe(`fnGt`, () => {
     test(`is false for 0 1`, () => expect(fnGt(0)(1)).toBe(false));
     test(`is false for 1 1`, () => expect(fnGt(1)(1)).toBe(false));
@@ -79,9 +92,20 @@ describe(`fns`, () => {
     test(`is true for 1 0`, () => expect(fnGte(1)(0)).toBe(true));
   });
 
+  describe(`fnHead`, () => {
+    test(`returns head for [.]`, () => expect(fnHead([1, 2, 3])).toEqual([1, 2]));
+    test(`returns undefined for []`, () => expect(fnHead([])).toEqual([]));
+    test(`returns undefined for undefined`, () => expect(fnHead(undefined)).toBe(undefined));
+  });
+
   describe(`fnIdentity`, () => {
     test(`returns same`, () => expect(fnIdentity(123)).toBe(123));
     test(`returns same (pre-typed)`, () => expect(fnTIdentity<number>()(123)).toBe(123));
+  });
+
+  describe(`fnInvert`, () => {
+    test(`inverts + to -`, () => expect(fnInvert(1)).toBe(-1));
+    test(`inverts - to +`, () => expect(fnInvert(-1)).toBe(1));
   });
 
   describe(`fnIs`, () => {
@@ -92,6 +116,12 @@ describe(`fns`, () => {
   describe(`fnKey, fnTKey`, () => {
     test(`reads value by key`, () => expect(fnKey<{key: string}, 'key'>('key')({key: 'value'})).toBe('value'));
     test(`reads value by key (pre-typed)`, () => expect(fnTKey<{key: string}>()('key')({key: 'value'})).toBe('value'));
+  });
+
+  describe(`fnLast`, () => {
+    test(`returns last for [.]`, () => expect(fnLast([1, 2, 3])).toBe(3));
+    test(`returns undefined for []`, () => expect(fnLast([])).toBe(undefined));
+    test(`returns undefined for undefined`, () => expect(fnLast(undefined)).toBe(undefined));
   });
 
   describe(`fnLiftx`, () => {
@@ -122,6 +152,10 @@ describe(`fns`, () => {
     test(`merges`, () => expect(fnMerge({a: 1, b: 2})({b: 3, c: 4} as any)).toEqual({a: 1, b: 3, c: 4}));
   });
 
+  describe(`fnMod`, () => {
+    test(`modulo`, () => expect(fnMod(3)(2)).toEqual(1));
+  });
+
   describe(`fnMult`, () => {
     test(`multiplies`, () => expect(fnMult(2)(3)).toEqual(6));
   });
@@ -135,6 +169,18 @@ describe(`fns`, () => {
     test(`applies identity if no fns`, () => expect(fnPipe<number>()(123)).toBe(123));
     test(`applies single`, () => expect(fnPipe(multTwo)(123)).toBe(multTwo(123)));
     test(`applies left to right`, () => expect(fnPipe(multTwo, plusOne)(123)).toBe(plusOne(multTwo(123))));
+  });
+
+  describe(`fnRandom, fnRandomInt`, () => {
+    test(`fnRandom returns random`, () => {
+      spyOn(Math, 'random').and.returnValue(0.5);
+      expect(fnRandom()).toBe(0.5);
+    });
+
+    test(`fnRandomInt returns random int`, () => {
+      spyOn(Math, 'random').and.returnValue(0.5);
+      expect(fnRandomInt(10)).toBe(5);
+    });
   });
 
   describe(`fnSame`, () => {
@@ -157,6 +203,12 @@ describe(`fns`, () => {
     test(`is true for t||f`, () => expect(fnOr(1)(0)).toBe(true));
     test(`is true for f||t`, () => expect(fnOr(0)(1)).toBe(true));
     test(`is false for f||f`, () => expect(fnOr(0)(0)).toBe(false));
+  });
+
+  describe(`fnTail`, () => {
+    test(`returns tail for [.]`, () => expect(fnTail([1, 2, 3])).toEqual([2, 3]));
+    test(`returns undefined for []`, () => expect(fnTail([])).toEqual([]));
+    test(`returns undefined for undefined`, () => expect(fnTail(undefined)).toBe(undefined));
   });
 
   describe(`fnTrace`, () => {

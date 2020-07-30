@@ -71,6 +71,9 @@ export const fnOr = (arg1: any) => (arg2: any) => Boolean(arg1) || Boolean(arg2)
 // LISTS
 
 export const fnFirst = <T>(vals: T[]) => vals?.[0];
+export const fnHead = <T>(vals: T[]) => vals?.slice(0, -1);
+export const fnLast = <T>(vals: T[]) => vals?.pop();
+export const fnTail = <T>(vals: T[]) => vals?.slice(1);
 
 export const fnMap = <T, R>(fn: (arg: T) => R) => (args: T[]): R[] => args?.map((ii) => fn(ii));
 
@@ -85,5 +88,13 @@ export const fnMerge = <T extends object>(arg1: T) => (arg2?: T) => Object.assig
 
 // MATH
 
-export const fnMult = (arg1: number) => (arg2: number) => arg1 * arg2;
+export const fnRandom = () => Math.random();
+export const fnRandomInt = (arg: number) => Math.floor(fnRandom() * arg);
+
 export const fnSum = (arg1: number) => (arg2: number) => arg1 + arg2;
+export const fnMod = (arg1: number) => (arg2: number) => arg1 % arg2;
+export const fnMult = (arg1: number) => (arg2: number) => arg1 * arg2;
+
+export const fnInvert = (arg: number) => -arg;
+
+export const fnFloor = (arg: number) => Math.floor(arg);
