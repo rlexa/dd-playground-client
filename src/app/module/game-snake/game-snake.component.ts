@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/co
 import {RxCleanup, rxFire_, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {filter, map, withLatestFrom} from 'rxjs/operators';
-import {Game, initGame, onInputDirection, Preset, processFrame, Vector} from './logic';
+import {Game, initGame, onInputDirection, Preset, processFrame, Vector} from './logic-fns';
 
 @Component({
   selector: 'app-game-snake',
@@ -34,8 +34,8 @@ export class GameSnakeComponent implements OnDestroy, OnInit {
       .pipe(
         withLatestFrom(this.game$),
         map(([_, game]) => game),
-        filter(game => !!game),
-        map(game => processFrame(game)),
+        filter((game) => !!game),
+        map((game) => processFrame(game)),
       )
       .subscribe(rxNext_(this.game$));
 
@@ -49,8 +49,8 @@ export class GameSnakeComponent implements OnDestroy, OnInit {
 
     this.triggerDirection$
       .pipe(
-        filter(dir => ['L', 'U', 'R', 'D'].includes(dir)),
-        map(dir => ({x: dir === 'L' ? -1 : dir === 'R' ? 1 : 0, y: dir === 'U' ? -1 : dir === 'D' ? 1 : 0} as Vector)),
+        filter((dir) => ['L', 'U', 'R', 'D'].includes(dir)),
+        map((dir) => ({x: dir === 'L' ? -1 : dir === 'R' ? 1 : 0, y: dir === 'U' ? -1 : dir === 'D' ? 1 : 0} as Vector)),
         withLatestFrom(this.game$),
         filter(([vec, game]) => !!game),
         map(([vec, game]) => onInputDirection(game, vec)),

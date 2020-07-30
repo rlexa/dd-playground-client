@@ -2,6 +2,7 @@ import {not, PreFilter, process, processIf, processIn} from 'src/app/game';
 import {
   fnAnd,
   fnCompose,
+  fnDefault,
   fnFirst,
   fnGte,
   fnIs,
@@ -9,6 +10,7 @@ import {
   fnLift2,
   fnLift2to2,
   fnLift2x2,
+  fnMerge,
   fnMult,
   fnPipe,
   fnSame,
@@ -26,13 +28,15 @@ export interface Vector {
 }
 
 const makeVector = (x: number) => (y: number) => ({x, y} as Vector);
+const vecZero = makeVector(0)(0);
+const vecDown = makeVector(0)(1);
+const vecLeft = makeVector(-1)(0);
+const vecRight = makeVector(1)(0);
+const vecUp = makeVector(0)(-1);
 
 const vectorKey = fnTKey<Vector>();
 const vecX = vectorKey('x');
 const vecY = vectorKey('y');
-
-const isVecZeroX = fnCompose(isZero, vecX);
-const isVecZeroY = fnCompose(isZero, vecY);
 
 const isVecSameX = fnLift2to2(fnSame)(vecX)(vecX);
 const isVecSameY = fnLift2to2(fnSame)(vecY)(vecY);
@@ -44,7 +48,7 @@ const sumVecY = fnLift2to2(fnSum)(vecY)(vecY);
 
 export const equalVectors = fnLift2x2(fnAnd)(isVecSameX)(isVecSameY);
 export const sumVectors = fnLift2x2(makeVector)(sumVecX)(sumVecY);
-export const isZeroVector = fnLift2(fnAnd)(isVecZeroX)(isVecZeroY);
+export const isZeroVector = equalVectors(vecZero);
 export const includesVector = fnSome(equalVectors);
 
 export interface SnakeState {
@@ -52,9 +56,14 @@ export interface SnakeState {
   direction: Vector;
 }
 
+const snakeKey = fnTKey<SnakeState>();
+const initSnake = fnMerge<SnakeState>({direction: vecRight, positions: [vecZero]});
+
 export interface Food {
   position: Vector;
 }
+
+const foodKey = fnTKey<Food>();
 
 export interface Map {
   food?: Food;
@@ -63,14 +72,30 @@ export interface Map {
   width: number;
 }
 
+const mapKey = fnTKey<Map>();
+
+const initMap = (from: Preset): Map => ({
+  food: null,
+  width: from.width,
+  height: from.height,
+  snake: initSnake(),
+});
+
 export interface Scene {
   map: Map;
 }
 
+const sceneKey = fnTKey<Scene>();
+
+const initScene = (from: Preset): Scene => ({map: initMap(from)});
+
 export interface Preset {
-  height: number;
-  width: number;
+  height?: number;
+  width?: number;
 }
+
+const presetKey = fnTKey<Preset>();
+const initPreset = fnMerge<Preset>({height: 15, width: 15});
 
 export type funcRender = (game: Game) => void;
 
@@ -81,19 +106,6 @@ export interface Game {
   scene: Scene;
   state: GameState;
 }
-
-const initPreset = (from?: Partial<Preset>): Preset => ({height: 15, width: 15, ...(from || {})});
-
-const initSnake = (): SnakeState => ({direction: {x: 1, y: 0}, positions: [{x: 0, y: 0}]});
-
-const initMap = (from: Preset): Map => ({
-  food: null,
-  width: from.width,
-  height: from.height,
-  snake: initSnake(),
-});
-
-const initScene = (from: Preset): Scene => ({map: initMap(from)});
 
 const gameKey = fnTKey<Game>();
 
@@ -107,18 +119,20 @@ const gameSnake = fnPipe(gameMap, fnKey('snake'));
 const gameSnakeDirection = fnPipe(gameSnake, fnKey('direction'));
 const gameSnakePositions = fnPipe(gameSnake, fnKey('positions'));
 const gameSnakeHead = fnPipe(gameSnakePositions, fnFirst);
-const gameSnakeSize = fnPipe(gameSnakePositions, fnKey('length'));
+const gameSnakeSize = fnPipe(gameSnakePositions, fnKey('length'), fnDefault(0));
 const gameState = fnPipe(gameKey('state'));
 
 const gameMapSize = fnLift2(fnMult)(gameHeight)(gameWidth);
 
-const getRandomFoodPosition = (state: Game): Vector => {
-  const snake = gameSnake(state);
-  let ii = Math.floor(Math.random() * (state.scene.map.width * state.scene.map.height - (snake ? snake.positions.length : 0)));
-  let ret: Vector = {x: ii % state.scene.map.width, y: ii % state.scene.map.height};
+const getRandomFoodPosition = (st: Game): Vector => {
+  const snake = gameSnake(st);
+  const height = gameHeight(st);
+  const width = gameWidth(st);
+  let ii = Math.floor(Math.random() * (gameMapSize(st) - gameSnakeSize(st)));
+  let ret: Vector = {x: ii % width, y: ii % height};
   while (snake && includesVector(snake.positions)(ret)) {
     ii += 1;
-    ret = {x: ii % state.scene.map.width, y: ii % state.scene.map.height};
+    ret = {x: ii % width, y: ii % height};
   }
   return ret;
 };
@@ -190,6 +204,6 @@ const processLoop = process(
   ),
 );
 
-export const initGame = (from?: Partial<Preset>): Game => ({inputDirection: null, scene: initScene(initPreset(from)), state: 'start'});
+export const initGame = (from?: Preset): Game => ({inputDirection: null, scene: initScene(initPreset(from)), state: 'start'});
 export const processFrame = processLoop;
 export const onInputDirection = (state: Game, inputDirection: Vector): Game => ({...state, inputDirection});

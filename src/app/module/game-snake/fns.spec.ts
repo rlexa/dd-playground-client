@@ -1,6 +1,7 @@
 import {
   fnAnd,
   fnCompose,
+  fnDefault,
   fnFirst,
   fnFlip,
   fnGt,
@@ -15,6 +16,7 @@ import {
   fnLt,
   fnLte,
   fnMap,
+  fnMerge,
   fnMult,
   fnNot,
   fnOr,
@@ -46,6 +48,13 @@ describe(`fns`, () => {
     test(`applies identity if no fns`, () => expect(fnCompose<number>()(123)).toBe(123));
     test(`applies single`, () => expect(fnCompose(multTwo)(123)).toBe(multTwo(123)));
     test(`applies right to left`, () => expect(fnCompose(multTwo, plusOne)(123)).toBe(multTwo(plusOne(123))));
+  });
+
+  describe(`fnDefault`, () => {
+    test(`defaults for null`, () => expect(fnDefault(1)(null)).toBe(1));
+    test(`defaults for undefined`, () => expect(fnDefault(1)(undefined)).toBe(1));
+    test(`defaults not for 0`, () => expect(fnDefault(1)(0)).toBe(0));
+    test(`defaults not for ''`, () => expect(fnDefault('1')('')).toBe(''));
   });
 
   describe(`fnFirst`, () => {
@@ -107,6 +116,10 @@ describe(`fns`, () => {
   describe(`fnMap`, () => {
     test(`maps`, () => expect(fnMap(plusOne)([1, 2, 3])).toEqual([2, 3, 4]));
     test(`maps null to undefined`, () => expect(fnMap(plusOne)(null)).toEqual(undefined));
+  });
+
+  describe(`fnMerge`, () => {
+    test(`merges`, () => expect(fnMerge({a: 1, b: 2})({b: 3, c: 4} as any)).toEqual({a: 1, b: 3, c: 4}));
   });
 
   describe(`fnMult`, () => {

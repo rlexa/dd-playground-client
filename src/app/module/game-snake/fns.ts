@@ -3,6 +3,8 @@
 export const fnIdentity = <T>(arg: T) => arg;
 export const fnTIdentity = <T>() => (arg: T) => fnIdentity(arg);
 
+export const fnDefault = <T>(def: T) => (arg: T) => arg ?? def;
+
 export const fnTrace = (label: string) => <T>(value: T): T => {
   console.log(`${label || '?'}: ${JSON.stringify(value)}`);
   return value;
@@ -78,6 +80,8 @@ export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) 
 
 export const fnKey = <T extends object, K extends keyof T>(key: K) => (val: T) => val?.[key];
 export const fnTKey = <T extends object>() => <K extends keyof T>(key: K) => fnKey<T, K>(key);
+
+export const fnMerge = <T extends object>(arg1: T) => (arg2?: T) => Object.assign(arg1 || {}, arg2 || {}) as T;
 
 // MATH
 
