@@ -22,9 +22,11 @@ import {
   fnTIdentity,
   fnTKey,
   fnMod,
+  fnFlip,
 } from './fns';
 
 const isZero = fnSame(0);
+const increment = fnSum(1);
 
 export interface Vector {
   x: number;
@@ -131,15 +133,18 @@ const gameMapSize = fnLift2(fnMult)(gameHeight)(gameWidth);
 const gameMapFreeSpace = fnLift2(fnSum)(gameMapSize)(fnCompose(fnInvert, gameSnakeSize));
 const gameMapRandomFreeIndex = fnCompose(fnRandomInt, gameMapFreeSpace);
 
+const widthHeightIndexToVector = fnLift2to2(fnLift2(makeVector))(fnFlip(fnMod))(fnFlip(fnMod));
+
 const getRandomFoodPosition = (st: Game): Vector => {
   const snake = gameSnake(st);
   const height = gameHeight(st);
   const width = gameWidth(st);
+  const indexToVector = widthHeightIndexToVector(width)(height);
   let ii = gameMapRandomFreeIndex(st);
-  let ret = makeVector(fnMod(ii)(width))(fnMod(ii)(height));
-  while (snake && includesVector(snake.positions)(ret)) {
-    ii += 1;
-    ret = makeVector(fnMod(ii)(width))(fnMod(ii)(height));
+  let ret = indexToVector(ii);
+  while (includesVector(snake.positions)(ret)) {
+    ii = increment(ii);
+    ret = indexToVector(ii);
   }
   return ret;
 };
