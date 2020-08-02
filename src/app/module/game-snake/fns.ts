@@ -98,3 +98,20 @@ export const fnMult = (arg1: number) => (arg2: number) => arg1 * arg2;
 export const fnInvert = (arg: number) => -arg;
 
 export const fnFloor = (arg: number) => Math.floor(arg);
+
+// LOOP
+
+export interface FnRecur {
+  fnRecur: (...values: any[]) => FnRecur;
+  values: any[];
+}
+export const fnRecur = (...values: any[]) => ({fnRecur, values} as FnRecur);
+
+export const fnLoop = <T>(fn: (...values: any[]) => T | FnRecur) => {
+  let result = fn();
+  while ((result as FnRecur)?.fnRecur === fnRecur) result = fn(...(result as FnRecur).values);
+  return result as T;
+};
+
+export const fnRepeat = (times: number) => <T, R>(fn: (arg: T) => R) => (init: R) =>
+  fnLoop((counter = times, result = init) => (counter <= 0 ? result : fnRecur(counter - 1, fn(result))));

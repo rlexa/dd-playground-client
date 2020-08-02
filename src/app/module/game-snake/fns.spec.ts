@@ -28,6 +28,7 @@ import {
   fnPipe,
   fnRandom,
   fnRandomInt,
+  fnRepeat,
   fnSame,
   fnSome,
   fnSum,
@@ -181,6 +182,10 @@ describe(`fns`, () => {
       spyOn(Math, 'random').and.returnValue(0.5);
       expect(fnRandomInt(10)).toBe(5);
     });
+  });
+
+  describe(`fnRepeat`, () => {
+    test(`repeats`, () => expect(fnRepeat(10)(plusOne)(0)).toBe(10));
   });
 
   describe(`fnSame`, () => {
