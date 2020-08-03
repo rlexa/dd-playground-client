@@ -127,6 +127,7 @@ const gameSnakePositions = fnPipe(gameSnake, fnKey('positions'));
 const gameSnakeFirst = fnPipe(gameSnakePositions, fnFirst);
 const gameSnakeTail = fnPipe(gameSnakePositions, fnTail);
 const gameSnakeSize = fnPipe(gameSnakePositions, fnKey('length'), fnDefault(0));
+const gameSnakeNextPosition = fnLift2(sumVectors)(gameSnakeFirst)(gameSnakeDirection);
 const gameState = fnPipe(gameKey('state'));
 
 const gameMapSize = fnLift2(fnMult)(gameHeight)(gameWidth);
@@ -136,23 +137,19 @@ const gameMapRandomFreeIndex = fnCompose(fnRandomInt, gameMapFreeSpace);
 const widthHeightIndexToVector = fnLift2to2(fnLift2(makeVector))(fnFlip(fnMod))(fnFlip(fnMod));
 
 const getRandomFoodPosition = (st: Game): Vector => {
-  const snake = gameSnake(st);
-  const height = gameHeight(st);
-  const width = gameWidth(st);
-  const indexToVector = widthHeightIndexToVector(width)(height);
+  const indexToVector: (index: number) => Vector = fnLift2(widthHeightIndexToVector)(gameWidth)(gameHeight)(st);
   let ii = gameMapRandomFreeIndex(st);
   let ret = indexToVector(ii);
-  while (includesVector(snake.positions)(ret)) {
+  while (includesVector(gameSnakePositions(st))(ret)) {
     ii = increment(ii);
     ret = indexToVector(ii);
   }
   return ret;
 };
 
-const getNewSnakeHeadPosition = (state: Game): Vector => {
-  const snake = gameSnake(state);
-  const newPos = sumVectors(snake.positions[0])(snake.direction);
-  const map = gameMap(state);
+const getNewSnakeHeadPosition = (st: Game): Vector => {
+  const newPos = gameSnakeNextPosition(st);
+  const map = gameMap(st);
   if (newPos.x < 0) {
     newPos.x += map.width;
   } else if (newPos.x >= map.width) {

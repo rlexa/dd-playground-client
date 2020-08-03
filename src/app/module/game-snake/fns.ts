@@ -113,5 +113,5 @@ export const fnLoop = <T>(fn: (...values: any[]) => T | FnRecur) => {
   return result as T;
 };
 
-export const fnRepeat = (times: number) => <T, R>(fn: (arg: T) => R) => (init: R) =>
+export const fnRepeat = (times: number) => <T, R>(fn: (arg: T) => R) => (init: R): R =>
   fnLoop((counter = times, result = init) => (counter <= 0 ? result : fnRecur(counter - 1, fn(result))));
