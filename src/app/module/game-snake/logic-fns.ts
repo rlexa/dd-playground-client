@@ -4,6 +4,7 @@ import {
   fnCompose,
   fnDefault,
   fnFirst,
+  fnFlip,
   fnGte,
   fnInvert,
   fnIs,
@@ -12,6 +13,7 @@ import {
   fnLift2to2,
   fnLift2x2,
   fnMerge,
+  fnMod,
   fnMult,
   fnPipe,
   fnRandomInt,
@@ -21,8 +23,7 @@ import {
   fnTail,
   fnTIdentity,
   fnTKey,
-  fnMod,
-  fnFlip,
+  fnWhileDo,
 } from './fns';
 
 const isZero = fnSame(0);
@@ -138,13 +139,8 @@ const widthHeightIndexToVector = fnLift2to2(fnLift2(makeVector))(fnFlip(fnMod))(
 
 const getRandomFoodPosition = (st: Game): Vector => {
   const indexToVector: (index: number) => Vector = fnLift2(widthHeightIndexToVector)(gameWidth)(gameHeight)(st);
-  let ii = gameMapRandomFreeIndex(st);
-  let ret = indexToVector(ii);
-  while (includesVector(gameSnakePositions(st))(ret)) {
-    ii = increment(ii);
-    ret = indexToVector(ii);
-  }
-  return ret;
+  const indexInSnake = fnCompose(includesVector(gameSnakePositions(st)), indexToVector);
+  return fnCompose(indexToVector, fnWhileDo(indexInSnake)(increment), gameMapRandomFreeIndex)(st);
 };
 
 const getNewSnakeHeadPosition = (st: Game): Vector => {

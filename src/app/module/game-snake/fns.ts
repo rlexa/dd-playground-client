@@ -48,6 +48,12 @@ export function fnCompose<R>(): (arg: R) => R;
 export function fnCompose<R, T>(fn: (arg: T) => R): (arg: T) => R;
 export function fnCompose<R, T, T1>(fn2: (arg: T1) => R, fn1: (arg: T) => T1): (arg: T) => R;
 export function fnCompose<R, T, T1, T2>(fn3: (arg: T2) => R, fn2: (arg: T1) => T2, fn1: (arg: T) => T1): (arg: T) => R;
+export function fnCompose<R, T, T1, T2, T3>(
+  fn4: (arg: T3) => R,
+  fn3: (arg: T2) => T3,
+  fn2: (arg: T1) => T2,
+  fn1: (arg: T) => T1,
+): (arg: T) => R;
 export function fnCompose(...funcs: ((arg: any) => any)[]) {
   return <T>(arg1: T) => funcs.reduceRight((acc, fn) => fn(acc), fnIdentity(arg1));
 }
@@ -112,6 +118,9 @@ export const fnLoop = <T>(fn: (...values: any[]) => T | FnRecur) => {
   while ((result as FnRecur)?.fnRecur === fnRecur) result = fn(...(result as FnRecur).values);
   return result as T;
 };
+
+export const fnWhileDo = <T>(fnContinue: (arg: T) => boolean) => (fn: (arg: T) => T) => (init: T): T =>
+  fnLoop((result = init) => (fnContinue(result) ? fnRecur(fn(result)) : result));
 
 export const fnRepeat = (times: number) => <T, R>(fn: (arg: T) => R) => (init: R): R =>
   fnLoop((counter = times, result = init) => (counter <= 0 ? result : fnRecur(counter - 1, fn(result))));

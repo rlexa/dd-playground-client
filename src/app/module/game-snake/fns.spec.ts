@@ -36,6 +36,7 @@ import {
   fnTIdentity,
   fnTKey,
   fnTrace,
+  fnWhileDo,
 } from './fns';
 
 describe(`fns`, () => {
@@ -64,6 +65,11 @@ describe(`fns`, () => {
     test(`defaults for undefined`, () => expect(fnDefault(1)(undefined)).toBe(1));
     test(`defaults not for 0`, () => expect(fnDefault(1)(0)).toBe(0));
     test(`defaults not for ''`, () => expect(fnDefault('1')('')).toBe(''));
+  });
+
+  describe(`fnWhileDo`, () => {
+    test(`loops until break`, () => expect(fnWhileDo((nr) => nr < 4)(plusOne)(0)).toBe(4));
+    test(`does not loop on immediate break`, () => expect(fnWhileDo(() => false)(plusOne)(0)).toBe(0));
   });
 
   describe(`fnFirst`, () => {
