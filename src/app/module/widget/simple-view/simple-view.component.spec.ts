@@ -19,7 +19,7 @@ describe('SimpleViewComponent', () => {
         MockComponents(MatButton, MatList, MatListItem),
         MockDirectives(FlexboxDirective),
         MockPipes(RipupperPipe, StartuppercasePipe),
-        MockPipe(IconPipe, val => `icon ${val}`),
+        MockPipe(IconPipe, (val) => `icon ${val}`),
       ],
       providers: [],
     })
@@ -27,7 +27,7 @@ describe('SimpleViewComponent', () => {
       .compileComponents();
   }));
 
-  let fixture: ComponentFixture<SimpleViewComponent>;
+  let fixture: ComponentFixture<SimpleViewComponent<any>>;
 
   beforeEach(() => (fixture = TestBed.createComponent(SimpleViewComponent)));
 
