@@ -1,12 +1,13 @@
 import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {watch} from 'dd-rx-state';
 import {DoneSubject} from 'dd-rxjs';
-import {BehaviorSubject, of} from 'rxjs';
-import {finalize, map, shareReplay, switchMap, tap, withLatestFrom} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
 import {resolveInitiative as resolveInitiativeIndices} from 'src/app/module/widget/game-down/data';
 import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
 import {trackByIndex} from 'src/app/util';
 import {cleanupRx} from 'src/app/util/cleanup-rx';
+import {setUntilThenBack$} from 'src/app/util/set-until-then-back-rx';
 import {DiDashboardVisibilityFooter} from '../dashboard/di-dashboard-options';
 
 @Component({
@@ -38,13 +39,7 @@ export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    of(false)
-      .pipe(
-        withLatestFrom(this.isVisibleFooter$),
-        tap(([current, last]) => this.isVisibleFooter$.next(current)),
-        switchMap(([current, last]) => this.done$.pipe(finalize(() => this.isVisibleFooter$.next(last)))),
-      )
-      .subscribe();
+    setUntilThenBack$(this.isVisibleFooter$, false, this.done$).subscribe();
   }
 
   onClickIndex = (index: number) => this.rxStateMutate.setSceneSelectedIndex(index);
