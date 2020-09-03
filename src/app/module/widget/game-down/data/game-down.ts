@@ -41,7 +41,6 @@ export interface GameDownScene {
   factorMax: number;
   factorMin: number;
   fields: GameDownField[];
-  hoveredIndex: number;
   renderer: string;
   selectedIndex: number;
   theme: string;
@@ -50,7 +49,7 @@ export interface GameDownScene {
 export class GameDownModify<T> {
   constructor(public readonly type: string, public readonly def: T = null) {}
 
-  private fFind = (from: GameDownModifier[]) => (!from ? null : from.find(_ => _.type === this.type));
+  private fFind = (from: GameDownModifier[]) => (!from ? null : from.find((_) => _.type === this.type));
 
   new = (val: T = this.def): GameDownModifier => ({type: this.type, data: val});
 

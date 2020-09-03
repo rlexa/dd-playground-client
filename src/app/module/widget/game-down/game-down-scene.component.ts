@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {watch} from 'dd-rx-state';
-import {combineLatest} from 'rxjs';
+import {BehaviorSubject, combineLatest} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {GAMEDOWN_FIELD_H, GAMEDOWN_FIELD_W} from 'src/app/module/widget/game-down/data';
 import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
 import {RENDERER_SIMPLE} from 'src/app/rx-state/state/state-game-down';
+import {DiSceneHoveredIndex} from './di-game-down-values';
 
 @Component({
   selector: 'app-game-down-scene',
@@ -12,7 +13,11 @@ import {RENDERER_SIMPLE} from 'src/app/rx-state/state/state-game-down';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameDownSceneComponent {
-  constructor(private readonly rxState: RxStateService, private readonly rxStateMutate: RxStateSetGameDownService) {}
+  constructor(
+    private readonly rxState: RxStateService,
+    private readonly rxStateMutate: RxStateSetGameDownService,
+    @Inject(DiSceneHoveredIndex) public readonly hovered$: BehaviorSubject<number>,
+  ) {}
 
   private readonly themeName$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.theme));
 
@@ -22,10 +27,6 @@ export class GameDownSceneComponent {
 
   readonly factor$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.factor));
   readonly fields$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.fields));
-  readonly hovered$ = this.rxState.state$.pipe(
-    watch((state) => state.game.down.scene.hoveredIndex),
-    shareReplay(),
-  );
   readonly renderer$ = this.rxState.state$.pipe(
     watch((state) => state.game.down.scene.renderer),
     shareReplay(),
@@ -46,5 +47,5 @@ export class GameDownSceneComponent {
   onClick = (index: number) =>
     this.rxStateMutate.setSceneSelectedIndex(this.rxState.getState().game.down.scene.selectedIndex === index ? null : index);
 
-  onHover = (index: number, hovered: boolean) => this.rxStateMutate.setSceneHoveredIndex(hovered ? index : null);
+  onHover = (index: number, hovered: boolean) => this.hovered$.next(hovered ? index ?? null : null);
 }

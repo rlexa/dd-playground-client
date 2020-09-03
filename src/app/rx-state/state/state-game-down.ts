@@ -34,7 +34,6 @@ export interface IndexValue<T> {
 export const setSceneFactor = actor<number>('SET' + SUFFIX + 'scene' + 'factor');
 export const setSceneField = actor<IndexValue<GameDownField>>('SET' + SUFFIX + 'scene' + 'field');
 export const setSceneFields = actor<GameDownField[]>('SET' + SUFFIX + 'scene' + 'fields');
-export const setSceneHoveredIndex = actor<number>('SET' + SUFFIX + 'scene' + 'hoveredIndex');
 export const setSceneRenderer = actor<string>('SET' + SUFFIX + 'scene' + 'renderer');
 export const setSceneSelectedIndex = actor<number>('SET' + SUFFIX + 'scene' + 'selectedIndex');
 export const setSceneTheme = actor<string>('SET' + SUFFIX + 'scene' + 'theme');
@@ -55,7 +54,6 @@ const stateScene$ = initReduceAssemble$_<GameDownScene>(
     factorMax: 2,
     factorMin: 0.5,
     fields: DEF_FAMEDOWN_STATE_FIELDS,
-    hoveredIndex: null,
     renderer: DEF_RENDERER,
     selectedIndex: null,
     theme: null,
@@ -76,7 +74,6 @@ const stateScene$ = initReduceAssemble$_<GameDownScene>(
             state.fields.map((_, ii) => (ii === val.index ? val.value : _)),
           ),
     [setSceneFields.type]: redSetPropertyIfNotEqual_('fields'),
-    [setSceneHoveredIndex.type]: redSetPropertyIfNotSame_('hoveredIndex'),
     [setSceneRenderer.type]: redSetPropertyIfNotSame_('renderer'),
     [setSceneSelectedIndex.type]: redSetPropertyIfNotSame_('selectedIndex'),
     [setSceneTheme.type]: redSetPropertyIfNotSame_('theme'),
