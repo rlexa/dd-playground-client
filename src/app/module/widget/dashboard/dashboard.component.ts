@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {watch} from 'dd-rx-state';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
   ROUTE_BLOCKCHAIN,
@@ -23,6 +24,7 @@ import {
   ROUTE_WALKER,
 } from 'src/app/routing';
 import {RxStateService} from 'src/app/rx-state';
+import {DiDashboardVisibilityFooter, DiDashboardVisibilityHeader, DiDashboardVisibilitySidebar} from './di-dashboard-options';
 
 interface RouteDef {
   icon: string;
@@ -37,7 +39,12 @@ interface RouteDef {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
-  constructor(private rxState: RxStateService) {}
+  constructor(
+    private readonly rxState: RxStateService,
+    @Inject(DiDashboardVisibilityHeader) public readonly isVisibleHeader$: Observable<boolean>,
+    @Inject(DiDashboardVisibilityFooter) public readonly isVisibleFooter$: Observable<boolean>,
+    @Inject(DiDashboardVisibilitySidebar) public readonly isVisibleSide$: Observable<boolean>,
+  ) {}
 
   readonly GRID_CONTENT = 'cont';
   readonly GRID_FOOTER = 'foot';
@@ -103,10 +110,6 @@ export class DashboardComponent {
       ],
     },
   ];
-
-  readonly isVisibleFooter$ = this.rxState.state$.pipe(watch((state) => state.ui.dashboard.isVisibleFooter));
-  readonly isVisibleHeader$ = this.rxState.state$.pipe(watch((state) => state.ui.dashboard.isVisibleHeader));
-  readonly isVisibleSide$ = this.rxState.state$.pipe(watch((state) => state.ui.dashboard.isVisibleSide));
 
   readonly subRoute$ = this.rxState.state$.pipe(
     watch((state) => state.globalValues.route),

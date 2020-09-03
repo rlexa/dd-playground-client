@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {watch} from 'dd-rx-state';
+import {BehaviorSubject} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {resolveInitiative as resolveInitiativeIndices} from 'src/app/module/widget/game-down/data';
 import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
-import {RxStateSetUiService} from 'src/app/rx-state/rx-state-set-ui.service';
 import {trackByIndex} from 'src/app/util';
+import {DiDashboardVisibilityFooter} from '../dashboard/di-dashboard-options';
 
 @Component({
   selector: 'app-game-down-ai-initiative',
@@ -15,7 +16,7 @@ export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
   constructor(
     private readonly rxState: RxStateService,
     private readonly rxStateMutate: RxStateSetGameDownService,
-    private readonly rxStateMutateUi: RxStateSetUiService,
+    @Inject(DiDashboardVisibilityFooter) public readonly isVisibleFooter$: BehaviorSubject<boolean>,
   ) {}
 
   private wasShowingFooter = false;
@@ -31,12 +32,12 @@ export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
   trackByIndex = trackByIndex;
 
   ngOnDestroy() {
-    this.rxStateMutateUi.mergeDashboardState({isVisibleFooter: this.wasShowingFooter});
+    this.isVisibleFooter$.next(this.wasShowingFooter);
   }
 
   ngOnInit() {
-    this.wasShowingFooter = this.rxState.getState().ui.dashboard.isVisibleFooter;
-    this.rxStateMutateUi.mergeDashboardState({isVisibleFooter: false});
+    this.wasShowingFooter = this.isVisibleFooter$.value;
+    this.isVisibleFooter$.next(false);
   }
 
   onClickIndex = (index: number) => this.rxStateMutate.setSceneSelectedIndex(index);
