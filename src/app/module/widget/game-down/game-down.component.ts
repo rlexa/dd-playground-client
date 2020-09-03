@@ -22,6 +22,6 @@ export class GameDownComponent {
   }
 
   readonly state$ = combineLatest([this.rxState.state$.pipe(watch((state) => state.game.down.scene)), this.hovered$]).pipe(
-    map(([state, hovered]) => ({...state, diHovered: hovered})),
+    map(([state, hovered]) => ({...state, hovered})),
   );
 }
