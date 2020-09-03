@@ -1,7 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {RxCleanup, rxFire_, rxNext_} from 'dd-rxjs';
+import {rxFire_, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {filter, map, withLatestFrom} from 'rxjs/operators';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {Game, initGame, onInput, Preset, processFrame} from './logic';
 
 @Component({
@@ -15,18 +16,20 @@ export class GameMinesweeperComponent implements OnDestroy, OnInit {
 
   public showMines = false;
 
-  @RxCleanup() public game$ = new BehaviorSubject<Game>(null);
-  @RxCleanup() public preset$ = new BehaviorSubject<Preset>({height: 15, mines: 15, width: 15});
+  public game$ = new BehaviorSubject<Game>(null);
+  public preset$ = new BehaviorSubject<Preset>({height: 15, mines: 15, width: 15});
 
-  @RxCleanup() public triggerInit$ = new Subject();
-  @RxCleanup() public triggerFrame$ = new Subject();
-  @RxCleanup() public triggerInputIndex$ = new Subject<{index: number; alt: boolean}>();
-  @RxCleanup() public toggleLoop$ = new BehaviorSubject(false);
+  public triggerInit$ = new Subject();
+  public triggerFrame$ = new Subject();
+  public triggerInputIndex$ = new Subject<{index: number; alt: boolean}>();
+  public toggleLoop$ = new BehaviorSubject(false);
 
   triggerInit = rxFire_(this.triggerInit$);
   triggerFrame = rxFire_(this.triggerFrame$);
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    cleanupRx(this.game$, this.preset$, this.toggleLoop$, this.triggerFrame$, this.triggerInit$, this.triggerInputIndex$);
+  }
 
   toggleLoop = () => this.toggleLoop$.next(!this.toggleLoop$.value);
 
@@ -37,8 +40,8 @@ export class GameMinesweeperComponent implements OnDestroy, OnInit {
       .pipe(
         withLatestFrom(this.game$),
         map(([_, game]) => game),
-        filter(game => !!game),
-        map(game => processFrame(game)),
+        filter((game) => !!game),
+        map((game) => processFrame(game)),
       )
       .subscribe(rxNext_(this.game$));
 

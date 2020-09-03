@@ -1,8 +1,10 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {TRIGGER_WOBBLE_X} from 'src/app/animations';
 import {FORMAT_DATE_TIMESTAMP} from 'src/app/presets';
-import {isNumeric, isWeb, WithDataProperty} from 'src/app/util';
-import {map} from 'rxjs/operators';
+import {isNumeric, isWeb} from 'src/app/util';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string' | 'void' | 'array';
 
@@ -12,13 +14,18 @@ type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string'
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [TRIGGER_WOBBLE_X],
 })
-export class SimpleViewComponent extends WithDataProperty<object> implements OnDestroy {
+export class SimpleViewComponent<T> implements OnDestroy {
   readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;
 
-  readonly keys$ = this.data$.pipe(map(_ => Object.keys(_ || {})));
-  readonly types$ = this.keys$.pipe(map(_ => _.map(key => this.data$.value[key]).map(this.guessType)));
+  readonly data$ = new BehaviorSubject<T>(null);
+  @Input() set data(val: T) {
+    this.data$.next(val);
+  }
+
+  readonly keys$ = this.data$.pipe(map((_) => Object.keys(_ || {})));
+  readonly types$ = this.keys$.pipe(map((_) => _.map((key) => this.data$.value[key]).map(this.guessType)));
   readonly clickables$ = this.data$.pipe(
-    map(_ =>
+    map((_) =>
       Object.entries(_ || {}).reduce<Record<string, boolean>>(
         (acc, [key, value]) => ({...acc, [key]: !this.isClickable ? false : this.isClickable(key, value)}),
         {},
@@ -36,7 +43,7 @@ export class SimpleViewComponent extends WithDataProperty<object> implements OnD
   @Output() clicked = new EventEmitter<{key: string; value: any}>();
 
   ngOnDestroy() {
-    super.ngOnDestroy();
+    cleanupRx(this.data$);
   }
 
   onClicked = (key: string, value: any) => this.clicked.emit({key, value});

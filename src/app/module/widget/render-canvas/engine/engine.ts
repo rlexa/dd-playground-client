@@ -1,8 +1,9 @@
-import {ImageHolderCanvas} from 'src/app/module/widget/render-canvas/engine/context2d';
-import {EngineNodeShell} from 'src/app/module/widget/render-canvas/engine/engine-node-shell';
-import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
+import {DoneSubject, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, of, Subject} from 'rxjs';
 import {catchError, filter, map, startWith, takeUntil, tap, withLatestFrom} from 'rxjs/operators';
+import {ImageHolderCanvas} from 'src/app/module/widget/render-canvas/engine/context2d';
+import {EngineNodeShell} from 'src/app/module/widget/render-canvas/engine/engine-node-shell';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {EngineGlobal, EngineNode} from './types';
 
 export interface NodeStat<T> {
@@ -30,15 +31,15 @@ export class Engine implements EngineGlobal {
           this.msLast = msNow;
           return {msDelta, changes: this.changes$.value, ctx, root: this.root};
         }),
-        tap(_ => {
+        tap((_) => {
           if (_.changes > 0 && _.ctx && _.root) {
             // console.log(`render ${_.changes} changes`);
             _.root.render(_.ctx);
             this.changes$.next(0);
           }
         }),
-        tap(_ => (_.root ? _.root.frame({msDelta: _.msDelta}) : {})),
-        catchError(err => {
+        tap((_) => (_.root ? _.root.frame({msDelta: _.msDelta}) : {})),
+        catchError((err) => {
           console.error(err);
           return of(null);
         }),
@@ -53,16 +54,16 @@ export class Engine implements EngineGlobal {
     this.root.setEngine(this);
   }
 
-  @RxCleanup() private readonly done$ = new DoneSubject();
-  @RxCleanup() private readonly canvasId$ = new Subject<string>();
-  @RxCleanup() private readonly frame$ = new Subject<number>();
-  @RxCleanup() private readonly changes$ = new BehaviorSubject(0);
+  private readonly done$ = new DoneSubject();
+  private readonly canvasId$ = new Subject<string>();
+  private readonly frame$ = new Subject<number>();
+  private readonly changes$ = new BehaviorSubject(0);
 
   private msLast = 0;
 
   private readonly ctx$ = this.canvasId$.pipe(
     startWith(null as string),
-    map(id => {
+    map((id) => {
       try {
         return (document.getElementById(id) as HTMLCanvasElement).getContext('2d', {alpha: false});
       } catch {}
@@ -73,17 +74,15 @@ export class Engine implements EngineGlobal {
 
   readonly images = new ImageHolderCanvas();
   readonly root: EngineNode<any> = null;
-  readonly changed$ = this.changes$.pipe(filter(_ => _ > 0));
+  readonly changed$ = this.changes$.pipe(filter((_) => _ > 0));
 
   nodeToStat = nodeToNodeStat;
   setCanvasId = rxNext_(this.canvasId$);
 
-  // tslint:disable:use-lifecycle-interface
-  ngOnDestroy() {
-    if (this.root) {
-      this.root.ngOnDestroy();
-    }
-    this.images.ngOnDestroy();
+  destroy() {
+    this.root?.destroy();
+    this.images.destroy();
+    cleanupRx(this.canvasId$, this.changes$, this.done$, this.frame$);
   }
 
   markChanges = () => this.changes$.next(this.changes$.value + 1);
@@ -103,10 +102,10 @@ export class Engine implements EngineGlobal {
   delNode = (kid: EngineNode<any>, destroy = false) => {
     if (kid && kid !== this.root) {
       if (kid.parent) {
-        kid.parent.kids = kid.parent.kids.filter(_ => _ !== kid);
+        kid.parent.kids = kid.parent.kids.filter((_) => _ !== kid);
       }
       if (destroy) {
-        kid.ngOnDestroy();
+        kid.destroy();
       }
     }
   };

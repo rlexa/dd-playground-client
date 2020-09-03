@@ -1,6 +1,7 @@
-import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
+import {DoneSubject, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, isObservable, Observable} from 'rxjs';
 import {distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {EngineGlobal, EngineNode, FrameParam, ValueOrStream} from './types';
 
 export type HandleRender<T> = (ctx: CanvasRenderingContext2D, state: T, kids: EngineNode<any>[]) => void;
@@ -24,9 +25,9 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     this.name$.pipe(distinctUntilChanged()).subscribe(this.markChanges);
 
     this.config = {
-      render_kids: (ctx, st, kids) => kids.forEach(_ => _.render(ctx)),
-      frame_kids: (param, st, kids) => kids.forEach(_ => _.frame(param)),
-      changed$: state$ => state$.pipe(distinctUntilChanged()),
+      render_kids: (ctx, st, kids) => kids.forEach((_) => _.render(ctx)),
+      frame_kids: (param, st, kids) => kids.forEach((_) => _.frame(param)),
+      changed$: (state$) => state$.pipe(distinctUntilChanged()),
       ...cfg,
     };
 
@@ -39,9 +40,9 @@ export class EngineNodeShell<T> implements EngineNode<T> {
 
   private engine: EngineGlobal = null;
   private config: EngineNodeShellCfg<T> = null;
-  @RxCleanup() protected readonly done$ = new DoneSubject();
-  @RxCleanup() readonly name$ = new BehaviorSubject<string>(null);
-  @RxCleanup() readonly state$ = new BehaviorSubject<T>(null);
+  protected readonly done$ = new DoneSubject();
+  readonly name$ = new BehaviorSubject<string>(null);
+  readonly state$ = new BehaviorSubject<T>(null);
   parent: EngineNode<any> = null;
   kids: EngineNode<any>[] = [];
 
@@ -59,9 +60,9 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     }
   }
 
-  // tslint:disable:use-lifecycle-interface
-  ngOnDestroy() {
-    this.kids.forEach(_ => _.ngOnDestroy());
+  destroy() {
+    this.kids.forEach((_) => _.destroy());
+    cleanupRx(this.done$, this.name$, this.state$);
   }
 
   addNode = (kid: EngineNode<any>) => (this.engine ? this.engine.addNode(kid, this) : kid);
@@ -69,8 +70,8 @@ export class EngineNodeShell<T> implements EngineNode<T> {
 
   frame = (param: FrameParam) =>
     [this.config.frame_self, this.config.frame_kids]
-      .filter(_ => typeof _ === 'function')
-      .forEach(_ => _(param, this.state$.value, this.kids));
+      .filter((_) => typeof _ === 'function')
+      .forEach((_) => _(param, this.state$.value, this.kids));
 
   render = (ctx: CanvasRenderingContext2D) =>
     [
@@ -81,8 +82,8 @@ export class EngineNodeShell<T> implements EngineNode<T> {
       this.config.render_kids_post,
       this.config.render_post,
     ]
-      .filter(_ => typeof _ === 'function')
-      .forEach(_ => _(ctx, this.state$.value, this.kids));
+      .filter((_) => typeof _ === 'function')
+      .forEach((_) => _(ctx, this.state$.value, this.kids));
 
   private markChanges = () => (this.engine ? this.engine.markChanges() : {});
 }

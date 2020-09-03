@@ -1,9 +1,10 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {FORMAT_DATE_TIMESTAMP} from 'src/app/presets';
-import {trackByIndex} from 'src/app/util';
-import {DoneSubject, RxCleanup, rxNext_, rxNull, rxTrue} from 'dd-rxjs';
+import {DoneSubject, rxNext_, rxNull, rxTrue} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, merge} from 'rxjs';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
+import {FORMAT_DATE_TIMESTAMP} from 'src/app/presets';
+import {trackByIndex} from 'src/app/util';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 @Component({
   selector: 'app-simple-table',
@@ -14,19 +15,19 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   @HostBinding('style.display') readonly styleDisplay = 'flex';
   @HostBinding('style.flexDirection') readonly styleFlexDirection = 'column';
 
-  @RxCleanup() private readonly done$ = new DoneSubject();
-  @RxCleanup() private readonly data$ = new BehaviorSubject([]);
+  private readonly done$ = new DoneSubject();
+  private readonly data$ = new BehaviorSubject([]);
 
   readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;
 
-  @RxCleanup() readonly filter$ = new BehaviorSubject<string>(null);
-  @RxCleanup() readonly sortAsc$ = new BehaviorSubject(true);
-  @RxCleanup() readonly sortBy$ = new BehaviorSubject<string>(null);
-  @RxCleanup() readonly page$ = new BehaviorSubject(0);
-  @RxCleanup() readonly pageSize$ = new BehaviorSubject(10);
+  readonly filter$ = new BehaviorSubject<string>(null);
+  readonly sortAsc$ = new BehaviorSubject(true);
+  readonly sortBy$ = new BehaviorSubject<string>(null);
+  readonly page$ = new BehaviorSubject(0);
+  readonly pageSize$ = new BehaviorSubject(10);
 
   readonly columns$ = this.data$.pipe(
-    map(_ =>
+    map((_) =>
       Object.entries((_ || [])[0] || {})
         .filter(([key, val]) => typeof val !== 'object')
         .map(([key, val]) => key),
@@ -36,19 +37,13 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
     debounceTime(0),
     map(([data, columns, filtering]) =>
       (data || []).filter(
-        item =>
-          !filtering ||
-          columns.some(col =>
-            (item[col] || '')
-              .toString()
-              .toLocaleLowerCase()
-              .includes(filtering.toLocaleLowerCase()),
-          ),
+        (item) =>
+          !filtering || columns.some((col) => (item[col] || '').toString().toLocaleLowerCase().includes(filtering.toLocaleLowerCase())),
       ),
     ),
     takeUntil(this.done$),
   );
-  readonly total$ = this.dataFiltered$.pipe(map(_ => (_ || []).length));
+  readonly total$ = this.dataFiltered$.pipe(map((_) => (_ || []).length));
 
   readonly dataBatch$ = combineLatest([this.page$, this.pageSize$, this.sortAsc$, this.sortBy$, this.dataFiltered$]).pipe(
     debounceTime(0),
@@ -66,8 +61,8 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   );
 
   readonly dataBatchClickables$ = this.dataBatch$.pipe(
-    map(_ =>
-      _.map(item =>
+    map((_) =>
+      _.map((item) =>
         Object.entries(item || {})
           .filter(([key, val]) => this.isClickable && this.isClickable(key, val))
           .map(([key]) => key),
@@ -90,13 +85,15 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   }
   @Input() isClickable: (key: string, val: any) => boolean = null;
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    cleanupRx(this.data$, this.done$, this.filter$, this.page$, this.pageSize$, this.sortAsc$, this.sortBy$);
+  }
 
   ngOnInit() {
     merge(this.dataFiltered$, this.pageSize$, this.filter$, this.sortAsc$, this.sortBy$)
       .pipe(
         map(() => 0),
-        filter(_ => _ !== this.page$.value),
+        filter((_) => _ !== this.page$.value),
         takeUntil(this.done$),
       )
       .subscribe(rxNext_(this.page$));

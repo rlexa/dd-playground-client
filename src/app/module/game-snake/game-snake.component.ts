@@ -1,7 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {RxCleanup, rxFire_, rxNext_} from 'dd-rxjs';
+import {rxFire_, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {filter, map, withLatestFrom} from 'rxjs/operators';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {Game, initGame, onInputDirection, Preset, processFrame, Vector} from './logic-fns';
 
 @Component({
@@ -13,13 +14,13 @@ import {Game, initGame, onInputDirection, Preset, processFrame, Vector} from './
 export class GameSnakeComponent implements OnDestroy, OnInit {
   private timeLast = 0;
 
-  @RxCleanup() public game$ = new BehaviorSubject<Game>(null);
-  @RxCleanup() public preset$ = new BehaviorSubject<Preset>({height: 15, width: 15});
+  public game$ = new BehaviorSubject<Game>(null);
+  public preset$ = new BehaviorSubject<Preset>({height: 15, width: 15});
 
-  @RxCleanup() public triggerInit$ = new Subject();
-  @RxCleanup() public triggerFrame$ = new Subject();
-  @RxCleanup() public triggerDirection$ = new Subject<string>();
-  @RxCleanup() public toggleLoop$ = new BehaviorSubject(false);
+  public triggerInit$ = new Subject();
+  public triggerFrame$ = new Subject();
+  public triggerDirection$ = new Subject<string>();
+  public toggleLoop$ = new BehaviorSubject(false);
 
   triggerInit = rxFire_(this.triggerInit$);
   triggerFrame = rxFire_(this.triggerFrame$);
@@ -27,7 +28,9 @@ export class GameSnakeComponent implements OnDestroy, OnInit {
 
   toggleLoop = () => this.toggleLoop$.next(!this.toggleLoop$.value);
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    cleanupRx(this.game$, this.preset$, this.toggleLoop$, this.triggerDirection$, this.triggerFrame$, this.triggerInit$);
+  }
 
   ngOnInit() {
     this.triggerFrame$

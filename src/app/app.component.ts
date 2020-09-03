@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {DateAdapter, NativeDateAdapter} from '@angular/material/core';
 import {Title} from '@angular/platform-browser';
 import {NavigationEnd, Router} from '@angular/router';
-import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {RxStateService, RxStateSetGlobalService} from './rx-state';
@@ -40,9 +39,11 @@ export class AppComponent implements OnDestroy {
 
   readonly isBrowserChrome = isBrowserChrome;
   readonly isBrowserIE = isBrowserIE;
-  @RxCleanup() readonly isForcingStart$ = new BehaviorSubject(false);
+  readonly isForcingStart$ = new BehaviorSubject(false);
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.isForcingStart$.complete();
+  }
 
   onForceStart() {
     this.isForcingStart$.next(true);

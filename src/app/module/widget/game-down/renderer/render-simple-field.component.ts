@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {Theme} from 'src/app/game';
 import {GameDownColorMap, GameDownField} from 'src/app/module/widget/game-down/data';
 import {trackByIndex} from 'src/app/util';
-import {RxCleanup} from 'dd-rxjs';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {actorToColor, entityToColor, fieldToColor} from './util';
 
 @Component({
@@ -13,10 +13,10 @@ import {actorToColor, entityToColor, fieldToColor} from './util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RenderSimpleFieldComponent implements OnDestroy {
-  @RxCleanup() readonly data$ = new BehaviorSubject<GameDownField>(null);
-  @RxCleanup() readonly hovered$ = new BehaviorSubject(false);
-  @RxCleanup() readonly selected$ = new BehaviorSubject(false);
-  @RxCleanup() readonly theme$ = new BehaviorSubject<Theme<GameDownColorMap>>(null);
+  readonly data$ = new BehaviorSubject<GameDownField>(null);
+  readonly hovered$ = new BehaviorSubject(false);
+  readonly selected$ = new BehaviorSubject(false);
+  readonly theme$ = new BehaviorSubject<Theme<GameDownColorMap>>(null);
 
   readonly colorActor$ = combineLatest([this.data$, this.theme$]).pipe(map(([data, theme]) => actorToColor(data.actor, theme)));
   readonly colorBorder$ = combineLatest([this.hovered$, this.selected$]).pipe(
@@ -24,7 +24,7 @@ export class RenderSimpleFieldComponent implements OnDestroy {
   );
   readonly colorField$ = combineLatest([this.data$, this.theme$]).pipe(map(([data, theme]) => fieldToColor(data, theme)));
   readonly colorsEntities$ = combineLatest([this.data$, this.theme$]).pipe(
-    map(([data, theme]) => (data.entities || []).map(_ => entityToColor(_, theme))),
+    map(([data, theme]) => (data.entities || []).map((_) => entityToColor(_, theme))),
   );
 
   trackBy = trackByIndex;
@@ -42,5 +42,7 @@ export class RenderSimpleFieldComponent implements OnDestroy {
     this.theme$.next(val);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    cleanupRx(this.data$, this.hovered$, this.selected$, this.theme$);
+  }
 }

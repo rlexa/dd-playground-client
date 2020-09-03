@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
-import {RxCleanup} from 'dd-rxjs';
-import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
-import {distinctUntilChanged, filter, map, withLatestFrom, tap} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
+import {distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
-import {Game, Vector, getNeighbourVectorsAround} from '../logic';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
+import {Game, getNeighbourVectorsAround} from '../logic';
 
 type FIELD = 'clear' | 'empty' | 'flag' | 'mine';
 
@@ -14,7 +14,7 @@ type FIELD = 'clear' | 'empty' | 'flag' | 'mine';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
-  @RxCleanup() public readonly game$ = new BehaviorSubject<Game>(null);
+  public readonly game$ = new BehaviorSubject<Game>(null);
 
   @Input() set game(val: Game) {
     this.game$.next(val || null);
@@ -24,38 +24,38 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
 
   @Output() clickedIndex = new EventEmitter<{index: number; alt: boolean}>();
 
-  private readonly state$ = this.game$.pipe(filter(game => !!game));
+  private readonly state$ = this.game$.pipe(filter((game) => !!game));
 
   private readonly high$ = this.state$.pipe(
-    map(st => st.scene.map.height),
+    map((st) => st.scene.map.height),
     distinctUntilChanged(),
   );
   private readonly clear$ = this.state$.pipe(
-    map(st => st.scene.clear),
+    map((st) => st.scene.clear),
     distinctUntilChanged(),
   );
   private readonly flags$ = this.state$.pipe(
-    map(st => st.scene.flags),
+    map((st) => st.scene.flags),
     distinctUntilChanged(),
   );
   private readonly mines$ = this.state$.pipe(
-    map(st => st.scene.mines),
+    map((st) => st.scene.mines),
     distinctUntilChanged(),
   );
 
   public readonly wide$ = this.state$.pipe(
-    map(st => st.scene.map.width),
+    map((st) => st.scene.map.width),
     distinctUntilChanged(),
   );
 
   private readonly cells$: Observable<FIELD[]> = combineLatest([this.high$, this.wide$]).pipe(
     map(([high, wide]) => high * wide),
     distinctUntilChanged(),
-    map(size => Array.from(new Array(size), (): FIELD => 'empty')),
+    map((size) => Array.from(new Array(size), (): FIELD => 'empty')),
   );
 
   public readonly lost$ = this.state$.pipe(
-    map(st => st.state === 'lost'),
+    map((st) => st.state === 'lost'),
     distinctUntilChanged(),
   );
 
@@ -63,10 +63,10 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
     map(([cells, wide, mines, flags, clear]) => {
       cells.forEach((ii, index) => (cells[index] = 'empty'));
       if (mines) {
-        mines.forEach(vec => (cells[vec.x + vec.y * wide] = 'mine'));
+        mines.forEach((vec) => (cells[vec.x + vec.y * wide] = 'mine'));
       }
-      flags.forEach(vec => (cells[vec.x + vec.y * wide] = 'flag'));
-      clear.forEach(vec => (cells[vec.x + vec.y * wide] = 'clear'));
+      flags.forEach((vec) => (cells[vec.x + vec.y * wide] = 'flag'));
+      clear.forEach((vec) => (cells[vec.x + vec.y * wide] = 'clear'));
       return cells;
     }),
   );
@@ -87,7 +87,7 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
           return 0;
         }
         return getNeighbourVectorsAround({x: index % wide, y: Math.floor(index / wide)}, wide, high).reduce<number>(
-          (acc, vec) => (mines.some(ii => ii.y === vec.y && ii.x === vec.x) ? acc + 1 : acc),
+          (acc, vec) => (mines.some((ii) => ii.y === vec.y && ii.x === vec.x) ? acc + 1 : acc),
           0,
         );
       }),
@@ -96,7 +96,9 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
 
   trackByIndex = trackByIndex;
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    cleanupRx(this.game$);
+  }
 
   onClickIndex = (index: number, ev: MouseEvent) => this.clickedIndex.emit({index, alt: ev.shiftKey || ev.altKey || ev.metaKey});
   onAuxClickIndex = (index: number) => this.clickedIndex.emit({index, alt: true});

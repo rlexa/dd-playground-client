@@ -1,11 +1,12 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {watch} from 'dd-rx-state';
-import {DoneSubject, RxCleanup} from 'dd-rxjs';
+import {DoneSubject} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, of} from 'rxjs';
 import {distinctUntilChanged, filter, map, shareReplay, takeUntil, withLatestFrom} from 'rxjs/operators';
 import {buildSituation1, checkProblems, DEF_FAMEDOWN_STATE_FIELDS, GameDownField, modField} from 'src/app/module/widget/game-down/data';
 import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
 import {trackByIndex} from 'src/app/util';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 @Component({
   selector: 'app-game-down-config',
@@ -15,7 +16,7 @@ import {trackByIndex} from 'src/app/util';
 export class GameDownConfigComponent implements OnDestroy {
   constructor(private readonly rxState: RxStateService, private readonly rxStateMutate: RxStateSetGameDownService) {}
 
-  @RxCleanup() private readonly done$ = new DoneSubject();
+  private readonly done$ = new DoneSubject();
 
   readonly factor$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.factor));
   readonly factorMax$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.factorMax));
@@ -42,7 +43,7 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly selectedFieldActor$ = this.selectedField$.pipe(map((_) => (!_ ? null : _.actor)));
   readonly selectedFieldEntities$ = this.selectedField$.pipe(map((_) => (!_ ? null : _.entities)));
 
-  @RxCleanup() readonly sceneFieldsPresets$ = new BehaviorSubject<{[key: string]: GameDownField[]}>({
+  readonly sceneFieldsPresets$ = new BehaviorSubject<{[key: string]: GameDownField[]}>({
     Default: [...DEF_FAMEDOWN_STATE_FIELDS],
     'Situation 1': buildSituation1(),
   });
@@ -65,7 +66,9 @@ export class GameDownConfigComponent implements OnDestroy {
 
   trackByIndex = trackByIndex;
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    cleanupRx(this.done$, this.sceneFieldsPresets$);
+  }
 
   onMergeSelectedFieldWithField = (into: GameDownField, val: string) => this.onMergeSelectedField(into, modField.set(into, val));
 

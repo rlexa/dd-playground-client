@@ -29,7 +29,7 @@ async function loadHttp(path: string, http: HttpClient, handler: (data: any) => 
 export function beforeInit(http: HttpClient, rxMutateGlobal: RxStateSetGlobalService) {
   return () =>
     Promise.all([
-      loadHttp('/assets/flags.json', http, data =>
+      loadHttp('/assets/flags.json', http, (data) =>
         rxMutateGlobal.mergeFlags({
           ...data,
           ...{
@@ -43,7 +43,7 @@ export function beforeInit(http: HttpClient, rxMutateGlobal: RxStateSetGlobalSer
 const appRoutes: Routes = [
   {
     path: ROUTE_DASHBOARD,
-    loadChildren: () => import('src/app/module/widget/dashboard/dashboard.module').then(m => m.DashboardModule),
+    loadChildren: () => import('src/app/module/widget/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {path: ROUTE_ROOT, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full'},
   {path: ROUTE_WILDCARD, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full'},

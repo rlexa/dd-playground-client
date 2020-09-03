@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {GraphskyService, IGraphskyNode} from 'src/app/module/service/graphsky-api';
-import {RxCleanup, rxNext_} from 'dd-rxjs';
+import {rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, of} from 'rxjs';
 import {debounceTime, filter, map, withLatestFrom} from 'rxjs/operators';
+import {GraphskyService, IGraphskyNode} from 'src/app/module/service/graphsky-api';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 export const TAG_TYPE = '_type';
 
@@ -48,15 +49,15 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
   readonly GRID_FROM = 'from';
   readonly GRID_CURRENT = 'current';
   readonly GRID_TO = 'to';
-  readonly GRID = [[this.GRID_FROM, this.GRID_CURRENT, this.GRID_TO]].map(line => '"' + line.join(' ') + '"').join(' ');
+  readonly GRID = [[this.GRID_FROM, this.GRID_CURRENT, this.GRID_TO]].map((line) => '"' + line.join(' ') + '"').join(' ');
   readonly GRID_SIZE = '1fr auto 1fr';
 
   readonly CMPS = [CMP_LT, CMP_LE, CMP_NE, CMP_EQ, CMP_GE, CMP_GT];
 
-  @RxCleanup() readonly curType$ = new BehaviorSubject<string>(null);
-  @RxCleanup() readonly curTag$ = new BehaviorSubject<string>(null);
-  @RxCleanup() readonly curVal$ = new BehaviorSubject<string>(null);
-  @RxCleanup() readonly curNode$ = new BehaviorSubject<IGraphskyNode>(null);
+  readonly curType$ = new BehaviorSubject<string>(null);
+  readonly curTag$ = new BehaviorSubject<string>(null);
+  readonly curVal$ = new BehaviorSubject<string>(null);
+  readonly curNode$ = new BehaviorSubject<IGraphskyNode>(null);
 
   readonly dbState$ = this.graphsky.log$;
   readonly dbNodeTypeCount$ = this.graphsky.change$.pipe(
@@ -71,20 +72,20 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
     ),
   );
 
-  readonly dbTypes$ = this.dbNodeTypeCount$.pipe(map(val => Object.keys(val).sort()));
+  readonly dbTypes$ = this.dbNodeTypeCount$.pipe(map((val) => Object.keys(val).sort()));
   readonly curTypeFirstNode$ = this.curType$.pipe(
-    filter(type => !!type && type.length > 0),
-    map(type => this.graphsky.query((nodes, _) => nodes.find(ii => ii.data[TAG_TYPE] === type))),
+    filter((type) => !!type && type.length > 0),
+    map((type) => this.graphsky.query((nodes, _) => nodes.find((ii) => ii.data[TAG_TYPE] === type))),
   );
-  readonly curTypeKeys$ = this.curTypeFirstNode$.pipe(map(node => (node ? Object.keys(node.data).filter(ii => ii !== TAG_TYPE) : [])));
+  readonly curTypeKeys$ = this.curTypeFirstNode$.pipe(map((node) => (node ? Object.keys(node.data).filter((ii) => ii !== TAG_TYPE) : [])));
   readonly curTypeKeyTagValues$ = combineLatest([this.curType$, this.curTypeKeys$, this.curTag$]).pipe(
     map(([type, keys, tag]) =>
       !type || !keys || !keys.includes(tag)
         ? []
         : this.graphsky.query((nodes, _) =>
             nodes
-              .filter(ii => ii.data[TAG_TYPE] === type && tag in ii.data && ii.data[tag] !== null && ii.data[tag] !== undefined)
-              .map(ii => ii.data[tag].toString())
+              .filter((ii) => ii.data[TAG_TYPE] === type && tag in ii.data && ii.data[tag] !== null && ii.data[tag] !== undefined)
+              .map((ii) => ii.data[tag].toString())
               .reduce<string[]>((acc, ii) => (acc.includes(ii) ? acc : [...acc, ii]), [])
               .sort(),
           ),
@@ -92,7 +93,7 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
   );
   readonly curTypeKeyTagValuesFiltered$ = combineLatest([this.curVal$, this.curTypeKeyTagValues$]).pipe(
     map(([val, vals]) =>
-      !val || !val.length ? vals || [] : (vals || []).filter(ii => ii.toLocaleLowerCase().includes(val.toLocaleLowerCase())).sort(),
+      !val || !val.length ? vals || [] : (vals || []).filter((ii) => ii.toLocaleLowerCase().includes(val.toLocaleLowerCase())).sort(),
     ),
   );
 
@@ -101,7 +102,9 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
   setCurTag = rxNext_(this.curTag$);
   setCurVal = rxNext_(this.curVal$);
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    cleanupRx(this.curNode$, this.curTag$, this.curType$, this.curVal$);
+  }
 
   ngOnInit() {
     this.dbTypes$
@@ -124,11 +127,11 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
   tryQuery = (cmp = CMP_EQ) =>
     of([this.curType$.value, this.curTag$.value, this.curVal$.value])
       .pipe(
-        filter(params => params.every(ii => !!ii && ii.length > 0)),
+        filter((params) => params.every((ii) => !!ii && ii.length > 0)),
         map(([type, tag, val]) =>
-          this.graphsky.query((nodes, _) => nodes.filter(ii => ii.data[TAG_TYPE] === type && compareEqual(cmp, ii.data[tag], val))),
+          this.graphsky.query((nodes, _) => nodes.filter((ii) => ii.data[TAG_TYPE] === type && compareEqual(cmp, ii.data[tag], val))),
         ),
-        map(nodes => (nodes.length ? nodes[0] : null)),
+        map((nodes) => (nodes.length ? nodes[0] : null)),
       )
       .subscribe(this.setCurNode);
 }

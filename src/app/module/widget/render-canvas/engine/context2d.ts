@@ -1,7 +1,7 @@
-import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ImageHolder, ImageMeta} from './types';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 export interface WithColor {
   color?: string;
@@ -49,28 +49,29 @@ export interface WithText extends WithColor, WithOffset {
 }
 
 export class ImageHolderCanvas implements ImageHolder<CanvasImageSource> {
-  @RxCleanup() private readonly urlToImage$ = new BehaviorSubject<Record<string, CanvasImageSource>>({});
+  private readonly urlToImage$ = new BehaviorSubject<Record<string, CanvasImageSource>>({});
 
   readonly images$ = this.urlToImage$.pipe(
-    map(urlToImage =>
+    map((urlToImage) =>
       Object.entries(urlToImage)
         .filter(([key, val]) => !!val)
         .reduce<ImageMeta>((acc, [key, val]) => ({...acc, [key]: {width: val.width, height: val.height}} as ImageMeta), {}),
     ),
   );
 
-  // tslint:disable:use-lifecycle-interface
-  ngOnDestroy() {}
+  destroy() {
+    cleanupRx(this.urlToImage$);
+  }
 
   get$(url: string) {
     if (url && !(url in this.urlToImage$.value)) {
       this.urlToImage$.next({...this.urlToImage$.value, [url]: null});
       const img = new Image();
       img.onload = () => this.urlToImage$.next({...this.urlToImage$.value, [url]: img});
-      img.onerror = err => console.error(`Couldn't add image ` + url, err);
+      img.onerror = (err) => console.error(`Couldn't add image ` + url, err);
       img.src = url;
     }
-    return this.urlToImage$.pipe(map(_ => _[url]));
+    return this.urlToImage$.pipe(map((_) => _[url]));
   }
 }
 
@@ -111,7 +112,7 @@ export const transformPop = (ctx: CanvasRenderingContext2D) => ctx.restore();
 export const transformPush = (ctx: CanvasRenderingContext2D) => ctx.save();
 
 const each = <T>(ctx: CanvasRenderingContext2D, data: T, ...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) =>
-  (funcs || []).forEach(_ => _(ctx, data));
+  (funcs || []).forEach((_) => _(ctx, data));
 const fEeach = <T>(...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) => (ctx: CanvasRenderingContext2D, data: T) =>
   each(ctx, data, ...funcs);
 

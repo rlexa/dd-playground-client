@@ -1,7 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
+import {DoneSubject, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {enEmpty, enFillCanvasColor, Engine, enImageUrl, enText, enTransform} from './engine';
 
 @Component({
@@ -10,11 +11,11 @@ import {enEmpty, enFillCanvasColor, Engine, enImageUrl, enText, enTransform} fro
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RenderCanvasComponent implements OnDestroy, OnInit {
-  @RxCleanup() private readonly done$ = new DoneSubject();
+  private readonly done$ = new DoneSubject();
 
-  @RxCleanup() readonly height$ = new BehaviorSubject(400);
-  @RxCleanup() readonly width$ = new BehaviorSubject(400);
-  @RxCleanup() readonly colorCanvasBg$ = new BehaviorSubject('#ff4afb');
+  readonly height$ = new BehaviorSubject(400);
+  readonly width$ = new BehaviorSubject(400);
+  readonly colorCanvasBg$ = new BehaviorSubject('#ff4afb');
   readonly engine = new Engine();
 
   readonly stats$ = combineLatest([
@@ -28,14 +29,15 @@ export class RenderCanvasComponent implements OnDestroy, OnInit {
   setColorCanvasBg = rxNext_(this.colorCanvasBg$);
 
   ngOnDestroy() {
-    this.engine.ngOnDestroy();
+    cleanupRx(this.colorCanvasBg$, this.done$, this.height$, this.width$);
+    this.engine.destroy();
   }
 
   ngOnInit() {
     combineLatest([this.height$, this.width$])
       .pipe(
         debounceTime(0),
-        filter(params => params.every(_ => !!_)),
+        filter((params) => params.every((_) => !!_)),
         takeUntil(this.done$),
       )
       .subscribe(() => this.engine.setCanvasId('render-canvas'));

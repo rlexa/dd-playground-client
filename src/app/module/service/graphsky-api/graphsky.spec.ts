@@ -18,7 +18,7 @@ describe('Graphsky', () => {
     const complete = jest.fn();
     db.change$.subscribe({complete});
     expect(complete).not.toHaveBeenCalled();
-    db.ngOnDestroy();
+    db.destroy();
     expect(complete).toHaveBeenCalled();
   });
 
@@ -28,7 +28,7 @@ describe('Graphsky', () => {
     db.add(NODES);
     db.link(LINKS);
     expect(db.nodeCount$.value).toBe(NODES.length);
-    db.ngOnDestroy();
+    db.destroy();
   });
 
   test('query all count', () => {
@@ -36,22 +36,22 @@ describe('Graphsky', () => {
     db.add(NODES);
     db.link(LINKS);
     expect(db.query((nodes, links) => [nodes.length, links.length])).toEqual([NODES.length, LINKS.length]);
-    db.ngOnDestroy();
+    db.destroy();
   });
 
   test('query node value', () => {
     const db = new Graphsky();
     db.add(NODES);
     db.link(LINKS);
-    expect(db.query(nodes => nodes.filter(ii => ii.data[TAG_NAME] === TAG_NAME_VALS[0])).length).toEqual(1);
-    db.ngOnDestroy();
+    expect(db.query((nodes) => nodes.filter((ii) => ii.data[TAG_NAME] === TAG_NAME_VALS[0])).length).toEqual(1);
+    db.destroy();
   });
 
   test('query link value', () => {
     const db = new Graphsky();
     db.add(NODES);
     db.link(LINKS);
-    expect(db.query((nodes, links) => links.filter(ii => ii.data[TAG_FEEL] === TAG_FEEL_VALS[0])).length).toEqual(2);
-    db.ngOnDestroy();
+    expect(db.query((nodes, links) => links.filter((ii) => ii.data[TAG_FEEL] === TAG_FEEL_VALS[0])).length).toEqual(2);
+    db.destroy();
   });
 });

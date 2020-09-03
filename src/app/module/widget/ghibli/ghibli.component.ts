@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
+import {DoneSubject, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {filter, finalize, map, switchMap, tap} from 'rxjs/operators';
 import {
@@ -11,6 +11,7 @@ import {
   GHIBLI_TYPE_SPECIES,
   GHIBLI_TYPE_VEHICLES,
 } from 'src/app/module/service/ghibli-api';
+import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 @Component({
   selector: 'app-ghibli',
@@ -27,7 +28,8 @@ export class GhibliComponent implements OnDestroy, OnInit {
     [GHIBLI_TYPE_SPECIES]: this.api.species$,
     [GHIBLI_TYPE_VEHICLES]: this.api.vehicle$,
   };
-  @RxCleanup() private readonly done$ = new DoneSubject();
+
+  private readonly done$ = new DoneSubject();
 
   readonly TYPE_TO_GET_LIST = {
     [GHIBLI_TYPE_FILM]: this.api.films$,
@@ -38,20 +40,22 @@ export class GhibliComponent implements OnDestroy, OnInit {
   };
   readonly TYPES_LISTS = Object.keys(this.TYPE_TO_GET_LIST);
 
-  @RxCleanup() readonly anyData$ = new Subject();
-  @RxCleanup() readonly busyCount$ = new BehaviorSubject(0);
+  readonly anyData$ = new Subject();
+  readonly busyCount$ = new BehaviorSubject(0);
 
-  readonly tableAllData$ = this.anyData$.pipe(map(_ => (Array.isArray(_) ? _ : null)));
+  readonly tableAllData$ = this.anyData$.pipe(map((_) => (Array.isArray(_) ? _ : null)));
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    cleanupRx(this.anyData$, this.busyCount$, this.done$);
+  }
 
   ngOnInit() {}
 
-  clickableValue = (key: string, value: any) => typeof value === 'string' && GHIBLI_TYPES.findIndex(_ => value.includes(_)) >= 0;
+  clickableValue = (key: string, value: any) => typeof value === 'string' && GHIBLI_TYPES.findIndex((_) => value.includes(_)) >= 0;
 
   onClickedValue = (key: string, value: any) => {
     if (typeof value === 'string') {
-      const ghibliType = GHIBLI_TYPES.find(_ => value.includes(_));
+      const ghibliType = GHIBLI_TYPES.find((_) => value.includes(_));
       if (ghibliType) {
         const id = value.substr(ghibliType.length);
         const getter = (id ? this.TYPE_TO_GET_DETAILS : this.TYPE_TO_GET_LIST)[ghibliType];
@@ -63,7 +67,7 @@ export class GhibliComponent implements OnDestroy, OnInit {
   toAnyData = <T>(switchTo: (val: T) => Observable<any>, param?: T) =>
     of(param)
       .pipe(
-        filter(_ => !!switchTo),
+        filter((_) => !!switchTo),
         tap(() => this.busyCount$.next(this.busyCount$.value + 1)),
         switchMap(switchTo),
         finalize(() => this.busyCount$.next(this.busyCount$.value - 1)),

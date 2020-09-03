@@ -9,7 +9,7 @@ export interface ImageMeta {
 export interface ImageHolder<T> {
   images$: Observable<ImageMeta>;
   get$(url: string): Observable<T>;
-  ngOnDestroy();
+  destroy(): void;
 }
 
 export interface EngineGlobal {
@@ -30,7 +30,7 @@ export interface EngineNode<T> {
   render: (ctx: CanvasRenderingContext2D) => void;
   setName: (val: string) => void;
   setState: (val: T) => void;
-  ngOnDestroy();
+  destroy(): void;
 }
 
 export interface FrameParam {
