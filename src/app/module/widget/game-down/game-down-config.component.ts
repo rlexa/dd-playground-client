@@ -1,12 +1,13 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnDestroy} from '@angular/core';
 import {watch} from 'dd-rx-state';
 import {DoneSubject} from 'dd-rxjs';
-import {BehaviorSubject, combineLatest, of} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {distinctUntilChanged, filter, map, shareReplay, takeUntil, withLatestFrom} from 'rxjs/operators';
 import {buildSituation1, checkProblems, DEF_FAMEDOWN_STATE_FIELDS, GameDownField, modField} from 'src/app/module/widget/game-down/data';
 import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
 import {trackByIndex} from 'src/app/util';
 import {cleanupRx} from 'src/app/util/cleanup-rx';
+import {DiSceneSelectedIndex} from './di-game-down-values';
 
 @Component({
   selector: 'app-game-down-config',
@@ -14,7 +15,11 @@ import {cleanupRx} from 'src/app/util/cleanup-rx';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameDownConfigComponent implements OnDestroy {
-  constructor(private readonly rxState: RxStateService, private readonly rxStateMutate: RxStateSetGameDownService) {}
+  constructor(
+    private readonly rxState: RxStateService,
+    private readonly rxStateMutate: RxStateSetGameDownService,
+    @Inject(DiSceneSelectedIndex) public readonly selectedFieldIndex$: Observable<number>,
+  ) {}
 
   private readonly done$ = new DoneSubject();
 
@@ -25,7 +30,6 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly fieldValues$ = this.rxState.state$.pipe(watch((state) => state.game.down.fieldValues));
   readonly renderer$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.renderer));
   readonly renderers$ = this.rxState.state$.pipe(watch((state) => state.game.down.rendererValues));
-  readonly selectedFieldIndex$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.selectedIndex));
   readonly theme$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.theme));
   readonly themes$ = this.rxState.state$.pipe(
     watch((state) => state.game.down.themes),

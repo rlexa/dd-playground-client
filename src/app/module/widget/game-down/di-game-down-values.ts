@@ -7,3 +7,9 @@ export const DiSceneHoveredIndex = new InjectionToken<BehaviorSubject<number>>('
   providedIn: 'root',
   factory: () => new StateSubject<number>(null),
 });
+
+/** GameDown scene selected index. */
+export const DiSceneSelectedIndex = new InjectionToken<BehaviorSubject<number>>('DI GameDown scene selected index.', {
+  providedIn: 'root',
+  factory: () => new StateSubject<number>(null),
+});

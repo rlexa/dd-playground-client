@@ -42,7 +42,6 @@ export interface GameDownScene {
   factorMin: number;
   fields: GameDownField[];
   renderer: string;
-  selectedIndex: number;
   theme: string;
 }
 

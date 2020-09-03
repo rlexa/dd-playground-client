@@ -35,7 +35,6 @@ export const setSceneFactor = actor<number>('SET' + SUFFIX + 'scene' + 'factor')
 export const setSceneField = actor<IndexValue<GameDownField>>('SET' + SUFFIX + 'scene' + 'field');
 export const setSceneFields = actor<GameDownField[]>('SET' + SUFFIX + 'scene' + 'fields');
 export const setSceneRenderer = actor<string>('SET' + SUFFIX + 'scene' + 'renderer');
-export const setSceneSelectedIndex = actor<number>('SET' + SUFFIX + 'scene' + 'selectedIndex');
 export const setSceneTheme = actor<string>('SET' + SUFFIX + 'scene' + 'theme');
 export const setThemes = actor<Theme<GameDownColorMap>[]>('SET' + SUFFIX + 'themes');
 export const setViewDebug = actor<boolean>('SET' + SUFFIX + 'viewDebug');
@@ -55,7 +54,6 @@ const stateScene$ = initReduceAssemble$_<GameDownScene>(
     factorMin: 0.5,
     fields: DEF_FAMEDOWN_STATE_FIELDS,
     renderer: DEF_RENDERER,
-    selectedIndex: null,
     theme: null,
   },
   {
@@ -75,7 +73,6 @@ const stateScene$ = initReduceAssemble$_<GameDownScene>(
           ),
     [setSceneFields.type]: redSetPropertyIfNotEqual_('fields'),
     [setSceneRenderer.type]: redSetPropertyIfNotSame_('renderer'),
-    [setSceneSelectedIndex.type]: redSetPropertyIfNotSame_('selectedIndex'),
     [setSceneTheme.type]: redSetPropertyIfNotSame_('theme'),
   },
 );
