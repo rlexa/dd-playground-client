@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
+import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {Game} from '../logic';
 
 type FIELD = 'empty' | 'food' | 'snake' | 'head';
@@ -14,7 +14,7 @@ type FIELD = 'empty' | 'food' | 'snake' | 'head';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameSnakeRenderHtmlComponent implements OnDestroy {
-  public readonly game$ = new BehaviorSubject<Game>(null);
+  @RxCleanup() public readonly game$ = new BehaviorSubject<Game>(null);
 
   @Input() set game(val: Game) {
     this.game$.next(val || null);
@@ -63,7 +63,8 @@ export class GameSnakeRenderHtmlComponent implements OnDestroy {
 
   trackByIndex = trackByIndex;
 
+  destroy() {}
   ngOnDestroy() {
-    cleanupRx(this.game$);
+    this.destroy();
   }
 }

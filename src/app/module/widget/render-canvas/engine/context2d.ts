@@ -1,7 +1,7 @@
+import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ImageHolder, ImageMeta} from './types';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 export interface WithColor {
   color?: string;
@@ -49,7 +49,7 @@ export interface WithText extends WithColor, WithOffset {
 }
 
 export class ImageHolderCanvas implements ImageHolder<CanvasImageSource> {
-  private readonly urlToImage$ = new BehaviorSubject<Record<string, CanvasImageSource>>({});
+  @RxCleanup() private readonly urlToImage$ = new BehaviorSubject<Record<string, CanvasImageSource>>({});
 
   readonly images$ = this.urlToImage$.pipe(
     map((urlToImage) =>
@@ -59,9 +59,7 @@ export class ImageHolderCanvas implements ImageHolder<CanvasImageSource> {
     ),
   );
 
-  destroy() {
-    cleanupRx(this.urlToImage$);
-  }
+  destroy() {}
 
   get$(url: string) {
     if (url && !(url in this.urlToImage$.value)) {

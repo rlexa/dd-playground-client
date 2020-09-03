@@ -1,10 +1,9 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {DoneSubject, rxNext_, rxNull, rxTrue} from 'dd-rxjs';
+import {DoneSubject, RxCleanup, rxNext_, rxNull, rxTrue} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, merge} from 'rxjs';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {FORMAT_DATE_TIMESTAMP} from 'src/app/presets';
 import {trackByIndex} from 'src/app/util';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 @Component({
   selector: 'app-simple-table',
@@ -15,16 +14,16 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   @HostBinding('style.display') readonly styleDisplay = 'flex';
   @HostBinding('style.flexDirection') readonly styleFlexDirection = 'column';
 
-  private readonly done$ = new DoneSubject();
-  private readonly data$ = new BehaviorSubject([]);
+  @RxCleanup() private readonly done$ = new DoneSubject();
+  @RxCleanup() private readonly data$ = new BehaviorSubject([]);
 
   readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;
 
-  readonly filter$ = new BehaviorSubject<string>(null);
-  readonly sortAsc$ = new BehaviorSubject(true);
-  readonly sortBy$ = new BehaviorSubject<string>(null);
-  readonly page$ = new BehaviorSubject(0);
-  readonly pageSize$ = new BehaviorSubject(10);
+  @RxCleanup() readonly filter$ = new BehaviorSubject<string>(null);
+  @RxCleanup() readonly sortAsc$ = new BehaviorSubject(true);
+  @RxCleanup() readonly sortBy$ = new BehaviorSubject<string>(null);
+  @RxCleanup() readonly page$ = new BehaviorSubject(0);
+  @RxCleanup() readonly pageSize$ = new BehaviorSubject(10);
 
   readonly columns$ = this.data$.pipe(
     map((_) =>
@@ -85,8 +84,9 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
   }
   @Input() isClickable: (key: string, val: any) => boolean = null;
 
+  destroy() {}
   ngOnDestroy() {
-    cleanupRx(this.data$, this.done$, this.filter$, this.page$, this.pageSize$, this.sortAsc$, this.sortBy$);
+    this.destroy();
   }
 
   ngOnInit() {

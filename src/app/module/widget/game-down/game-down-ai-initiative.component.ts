@@ -1,12 +1,11 @@
 import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {watch} from 'dd-rx-state';
-import {DoneSubject} from 'dd-rxjs';
+import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {resolveInitiative as resolveInitiativeIndices} from 'src/app/module/widget/game-down/data';
 import {RxStateService} from 'src/app/rx-state';
 import {trackByIndex} from 'src/app/util';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {setUntilThenBack$} from 'src/app/util/set-until-then-back-rx';
 import {DiDashboardVisibilityFooter} from '../dashboard/di-dashboard-options';
 import {DiSceneHoveredIndex, DiSceneSelectedIndex} from './di-game-down-values';
@@ -24,7 +23,7 @@ export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
     @Inject(DiSceneSelectedIndex) public readonly selected$: BehaviorSubject<number>,
   ) {}
 
-  private readonly done$ = new DoneSubject();
+  @RxCleanup() private readonly done$ = new DoneSubject();
 
   readonly fields$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.fields));
 
@@ -32,8 +31,9 @@ export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
 
   trackByIndex = trackByIndex;
 
+  destroy() {}
   ngOnDestroy() {
-    cleanupRx(this.done$);
+    this.destroy();
   }
 
   ngOnInit() {

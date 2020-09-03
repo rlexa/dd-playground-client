@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
+import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {fTthemeColor, Theme} from 'src/app/game';
 import {GameDownColorMap} from 'src/app/module/widget/game-down/data';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 @Component({
   selector: 'app-game-down-field',
@@ -11,7 +11,7 @@ import {cleanupRx} from 'src/app/util/cleanup-rx';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameDownFieldComponent implements OnDestroy {
-  readonly theme$ = new BehaviorSubject<Theme<GameDownColorMap>>(null);
+  @RxCleanup() readonly theme$ = new BehaviorSubject<Theme<GameDownColorMap>>(null);
 
   readonly colorBg$ = this.theme$.pipe(map(fTthemeColor((ii) => ii.fieldBackground)));
 
@@ -19,7 +19,8 @@ export class GameDownFieldComponent implements OnDestroy {
     this.theme$.next(val);
   }
 
+  destroy() {}
   ngOnDestroy() {
-    cleanupRx(this.theme$);
+    this.destroy();
   }
 }

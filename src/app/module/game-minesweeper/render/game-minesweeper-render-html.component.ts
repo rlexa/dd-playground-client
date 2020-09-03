@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {Game, getNeighbourVectorsAround} from '../logic';
 
 type FIELD = 'clear' | 'empty' | 'flag' | 'mine';
@@ -14,7 +14,7 @@ type FIELD = 'clear' | 'empty' | 'flag' | 'mine';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
-  public readonly game$ = new BehaviorSubject<Game>(null);
+  @RxCleanup() public readonly game$ = new BehaviorSubject<Game>(null);
 
   @Input() set game(val: Game) {
     this.game$.next(val || null);
@@ -96,8 +96,9 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
 
   trackByIndex = trackByIndex;
 
+  destroy() {}
   ngOnDestroy() {
-    cleanupRx(this.game$);
+    this.destroy();
   }
 
   onClickIndex = (index: number, ev: MouseEvent) => this.clickedIndex.emit({index, alt: ev.shiftKey || ev.altKey || ev.metaKey});

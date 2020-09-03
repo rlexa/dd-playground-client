@@ -1,8 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {rxFire_, rxNext_} from 'dd-rxjs';
+import {RxCleanup, rxFire_, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {filter, map, withLatestFrom} from 'rxjs/operators';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {Game, initGame, onInput, Preset, processFrame} from './logic';
 
 @Component({
@@ -16,19 +15,20 @@ export class GameMinesweeperComponent implements OnDestroy, OnInit {
 
   public showMines = false;
 
-  public game$ = new BehaviorSubject<Game>(null);
-  public preset$ = new BehaviorSubject<Preset>({height: 15, mines: 15, width: 15});
+  @RxCleanup() public game$ = new BehaviorSubject<Game>(null);
+  @RxCleanup() public preset$ = new BehaviorSubject<Preset>({height: 15, mines: 15, width: 15});
 
-  public triggerInit$ = new Subject();
-  public triggerFrame$ = new Subject();
-  public triggerInputIndex$ = new Subject<{index: number; alt: boolean}>();
-  public toggleLoop$ = new BehaviorSubject(false);
+  @RxCleanup() public triggerInit$ = new Subject();
+  @RxCleanup() public triggerFrame$ = new Subject();
+  @RxCleanup() public triggerInputIndex$ = new Subject<{index: number; alt: boolean}>();
+  @RxCleanup() public toggleLoop$ = new BehaviorSubject(false);
 
   triggerInit = rxFire_(this.triggerInit$);
   triggerFrame = rxFire_(this.triggerFrame$);
 
+  destroy() {}
   ngOnDestroy() {
-    cleanupRx(this.game$, this.preset$, this.toggleLoop$, this.triggerFrame$, this.triggerInit$, this.triggerInputIndex$);
+    this.destroy();
   }
 
   toggleLoop = () => this.toggleLoop$.next(!this.toggleLoop$.value);

@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TRIGGER_WOBBLE_X} from 'src/app/animations';
 import {FORMAT_DATE_TIMESTAMP} from 'src/app/presets';
 import {isNumeric, isWeb} from 'src/app/util';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string' | 'void' | 'array';
 
@@ -17,7 +17,7 @@ type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string'
 export class SimpleViewComponent<T> implements OnDestroy {
   readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;
 
-  readonly data$ = new BehaviorSubject<T>(null);
+  @RxCleanup() readonly data$ = new BehaviorSubject<T>(null);
   @Input() set data(val: T) {
     this.data$.next(val);
   }
@@ -42,8 +42,9 @@ export class SimpleViewComponent<T> implements OnDestroy {
 
   @Output() clicked = new EventEmitter<{key: string; value: any}>();
 
+  destroy() {}
   ngOnDestroy() {
-    cleanupRx(this.data$);
+    this.destroy();
   }
 
   onClicked = (key: string, value: any) => this.clicked.emit({key, value});

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {DoneSubject, rxNext_} from 'dd-rxjs';
+import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {filter, finalize, map, switchMap, tap} from 'rxjs/operators';
 import {
@@ -11,7 +11,6 @@ import {
   GHIBLI_TYPE_SPECIES,
   GHIBLI_TYPE_VEHICLES,
 } from 'src/app/module/service/ghibli-api';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 @Component({
   selector: 'app-ghibli',
@@ -29,7 +28,7 @@ export class GhibliComponent implements OnDestroy, OnInit {
     [GHIBLI_TYPE_VEHICLES]: this.api.vehicle$,
   };
 
-  private readonly done$ = new DoneSubject();
+  @RxCleanup() private readonly done$ = new DoneSubject();
 
   readonly TYPE_TO_GET_LIST = {
     [GHIBLI_TYPE_FILM]: this.api.films$,
@@ -40,13 +39,14 @@ export class GhibliComponent implements OnDestroy, OnInit {
   };
   readonly TYPES_LISTS = Object.keys(this.TYPE_TO_GET_LIST);
 
-  readonly anyData$ = new Subject();
-  readonly busyCount$ = new BehaviorSubject(0);
+  @RxCleanup() readonly anyData$ = new Subject();
+  @RxCleanup() readonly busyCount$ = new BehaviorSubject(0);
 
   readonly tableAllData$ = this.anyData$.pipe(map((_) => (Array.isArray(_) ? _ : null)));
 
+  destroy() {}
   ngOnDestroy() {
-    cleanupRx(this.anyData$, this.busyCount$, this.done$);
+    this.destroy();
   }
 
   ngOnInit() {}

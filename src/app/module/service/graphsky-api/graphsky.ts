@@ -1,6 +1,6 @@
+import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 type GraphskyValue = string | boolean | number | null;
 export interface IGraphskyData {
@@ -69,17 +69,15 @@ export class Graphsky implements IGraphsky {
     this.linkCount$.subscribe((links) => this.log$.next({...this.log$.value, links}));
   }
 
-  private readonly nodes$ = new BehaviorSubject<IGraphskyNode[]>([]);
-  private readonly links$ = new BehaviorSubject<IGraphskyLink[]>([]);
+  @RxCleanup() private readonly nodes$ = new BehaviorSubject<IGraphskyNode[]>([]);
+  @RxCleanup() private readonly links$ = new BehaviorSubject<IGraphskyLink[]>([]);
 
   readonly change$ = merge(this.links$, this.nodes$).pipe(map(() => {}));
-  readonly log$ = new BehaviorSubject<IGraphskyState>({links: 0, nodes: 0});
-  readonly nodeCount$ = new BehaviorSubject(0);
-  readonly linkCount$ = new BehaviorSubject(0);
+  @RxCleanup() readonly log$ = new BehaviorSubject<IGraphskyState>({links: 0, nodes: 0});
+  @RxCleanup() readonly nodeCount$ = new BehaviorSubject(0);
+  @RxCleanup() readonly linkCount$ = new BehaviorSubject(0);
 
-  destroy() {
-    cleanupRx(this.linkCount$, this.links$, this.log$, this.nodeCount$, this.nodes$);
-  }
+  destroy() {}
 
   add = (nodes: IGraphskyData[]) =>
     this.nodes$.next(

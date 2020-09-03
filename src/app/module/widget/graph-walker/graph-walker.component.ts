@@ -1,9 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {rxNext_} from 'dd-rxjs';
+import {RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, of} from 'rxjs';
 import {debounceTime, filter, map, withLatestFrom} from 'rxjs/operators';
 import {GraphskyService, IGraphskyNode} from 'src/app/module/service/graphsky-api';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 
 export const TAG_TYPE = '_type';
 
@@ -54,10 +53,10 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
 
   readonly CMPS = [CMP_LT, CMP_LE, CMP_NE, CMP_EQ, CMP_GE, CMP_GT];
 
-  readonly curType$ = new BehaviorSubject<string>(null);
-  readonly curTag$ = new BehaviorSubject<string>(null);
-  readonly curVal$ = new BehaviorSubject<string>(null);
-  readonly curNode$ = new BehaviorSubject<IGraphskyNode>(null);
+  @RxCleanup() readonly curType$ = new BehaviorSubject<string>(null);
+  @RxCleanup() readonly curTag$ = new BehaviorSubject<string>(null);
+  @RxCleanup() readonly curVal$ = new BehaviorSubject<string>(null);
+  @RxCleanup() readonly curNode$ = new BehaviorSubject<IGraphskyNode>(null);
 
   readonly dbState$ = this.graphsky.log$;
   readonly dbNodeTypeCount$ = this.graphsky.change$.pipe(
@@ -102,8 +101,9 @@ export class GraphWalkerComponent implements OnDestroy, OnInit {
   setCurTag = rxNext_(this.curTag$);
   setCurVal = rxNext_(this.curVal$);
 
+  destroy() {}
   ngOnDestroy() {
-    cleanupRx(this.curNode$, this.curTag$, this.curType$, this.curVal$);
+    this.destroy();
   }
 
   ngOnInit() {

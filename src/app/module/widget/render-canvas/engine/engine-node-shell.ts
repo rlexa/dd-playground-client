@@ -1,7 +1,6 @@
-import {DoneSubject, rxNext_} from 'dd-rxjs';
+import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, isObservable, Observable} from 'rxjs';
 import {distinctUntilChanged, takeUntil} from 'rxjs/operators';
-import {cleanupRx} from 'src/app/util/cleanup-rx';
 import {EngineGlobal, EngineNode, FrameParam, ValueOrStream} from './types';
 
 export type HandleRender<T> = (ctx: CanvasRenderingContext2D, state: T, kids: EngineNode<any>[]) => void;
@@ -40,9 +39,9 @@ export class EngineNodeShell<T> implements EngineNode<T> {
 
   private engine: EngineGlobal = null;
   private config: EngineNodeShellCfg<T> = null;
-  protected readonly done$ = new DoneSubject();
-  readonly name$ = new BehaviorSubject<string>(null);
-  readonly state$ = new BehaviorSubject<T>(null);
+  @RxCleanup() protected readonly done$ = new DoneSubject();
+  @RxCleanup() readonly name$ = new BehaviorSubject<string>(null);
+  @RxCleanup() readonly state$ = new BehaviorSubject<T>(null);
   parent: EngineNode<any> = null;
   kids: EngineNode<any>[] = [];
 
@@ -62,7 +61,6 @@ export class EngineNodeShell<T> implements EngineNode<T> {
 
   destroy() {
     this.kids.forEach((_) => _.destroy());
-    cleanupRx(this.done$, this.name$, this.state$);
   }
 
   addNode = (kid: EngineNode<any>) => (this.engine ? this.engine.addNode(kid, this) : kid);
