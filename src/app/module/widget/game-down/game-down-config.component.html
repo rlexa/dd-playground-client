@@ -73,7 +73,11 @@
       <h3 mat-subheader>Field {{ selectedFieldIndex$ | async }}</h3>
       <mat-list-item>
         <mat-form-field *ngIf="fieldValues$ | async as fields">
-          <mat-select placeholder="Field" [ngModel]="selectedFieldField$ | async" (valueChange)="onMergeSelectedField_Field(field, $event)">
+          <mat-select
+            placeholder="Field"
+            [ngModel]="selectedFieldField$ | async"
+            (valueChange)="onMergeSelectedFieldWithField(field, $event)"
+          >
             <mat-option *ngFor="let key of fields; trackBy: trackByIndex" [value]="key">{{ key }}</mat-option>
           </mat-select>
         </mat-form-field>
