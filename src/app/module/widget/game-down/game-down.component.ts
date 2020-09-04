@@ -3,7 +3,7 @@ import {watch} from 'dd-rx-state';
 import {combineLatest, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
-import {DiSceneHoveredIndex, DiSceneSelectedIndex} from './di-game-down-values';
+import {DiDebugView, DiSceneHoveredIndex, DiSceneSelectedIndex} from './di-game-down-values';
 import {themeDownDefault, themes} from './theming';
 
 @Component({
@@ -15,6 +15,7 @@ export class GameDownComponent {
   constructor(
     private readonly rxState: RxStateService,
     private readonly rxStateMutate: RxStateSetGameDownService,
+    @Inject(DiDebugView) public readonly viewDebug$: Observable<boolean>,
     @Inject(DiSceneHoveredIndex) public readonly hovered$: Observable<number>,
     @Inject(DiSceneSelectedIndex) public readonly selected$: Observable<number>,
   ) {
@@ -22,7 +23,10 @@ export class GameDownComponent {
     this.rxStateMutate.setSceneTheme(themes.find((_) => _.name !== themeDownDefault.name).name);
   }
 
-  readonly state$ = combineLatest([this.rxState.state$.pipe(watch((state) => state.game.down.scene)), this.hovered$, this.selected$]).pipe(
-    map(([state, hovered, selected]) => ({...state, hovered, selected})),
-  );
+  readonly state$ = combineLatest([
+    this.rxState.state$.pipe(watch((state) => state.game.down.scene)),
+    this.hovered$,
+    this.selected$,
+    this.viewDebug$,
+  ]).pipe(map(([state, hovered, selected, debugView]) => ({...state, hovered, selected, debugView})));
 }

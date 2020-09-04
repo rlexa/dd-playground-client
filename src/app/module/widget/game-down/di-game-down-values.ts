@@ -13,3 +13,9 @@ export const DiSceneSelectedIndex = new InjectionToken<BehaviorSubject<number>>(
   providedIn: 'root',
   factory: () => new StateSubject<number>(null),
 });
+
+/** GameDown scene selected index. */
+export const DiDebugView = new InjectionToken<BehaviorSubject<boolean>>('DI GameDown debug view.', {
+  providedIn: 'root',
+  factory: () => new StateSubject<boolean>(false),
+});

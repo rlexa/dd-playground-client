@@ -23,7 +23,6 @@ export interface GameDownState {
   rendererValues?: string[];
   scene?: GameDownScene;
   themes?: Theme<GameDownColorMap>[];
-  viewDebug?: boolean;
 }
 
 export interface IndexValue<T> {
@@ -37,7 +36,6 @@ export const setSceneFields = actor<GameDownField[]>('SET' + SUFFIX + 'scene' + 
 export const setSceneRenderer = actor<string>('SET' + SUFFIX + 'scene' + 'renderer');
 export const setSceneTheme = actor<string>('SET' + SUFFIX + 'scene' + 'theme');
 export const setThemes = actor<Theme<GameDownColorMap>[]>('SET' + SUFFIX + 'themes');
-export const setViewDebug = actor<boolean>('SET' + SUFFIX + 'viewDebug');
 
 // DEFAULTS
 
@@ -83,11 +81,9 @@ export const stateGameDown$ = initReduceAssemble$_<GameDownState>(
     rendererValues: DEF_RENDERER_VALUES,
     scene: null,
     themes: [THEME_MISSING as Theme<GameDownColorMap>],
-    viewDebug: false,
   },
   {
     [setThemes.type]: redSetPropertyIfNotEqual_('themes'),
-    [setViewDebug.type]: redSetPropertyIfNotSame_('viewDebug'),
   },
   {
     scene: stateScene$,

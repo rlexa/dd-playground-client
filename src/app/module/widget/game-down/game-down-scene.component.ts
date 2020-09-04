@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {watch} from 'dd-rx-state';
-import {BehaviorSubject, combineLatest} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {GAMEDOWN_FIELD_H, GAMEDOWN_FIELD_W} from 'src/app/module/widget/game-down/data';
 import {RxStateService} from 'src/app/rx-state';
 import {RENDERER_SIMPLE} from 'src/app/rx-state/state/state-game-down';
-import {DiSceneHoveredIndex, DiSceneSelectedIndex} from './di-game-down-values';
+import {DiDebugView, DiSceneHoveredIndex, DiSceneSelectedIndex} from './di-game-down-values';
 
 @Component({
   selector: 'app-game-down-scene',
@@ -15,6 +15,7 @@ import {DiSceneHoveredIndex, DiSceneSelectedIndex} from './di-game-down-values';
 export class GameDownSceneComponent {
   constructor(
     private readonly rxState: RxStateService,
+    @Inject(DiDebugView) public readonly viewDebug$: Observable<boolean>,
     @Inject(DiSceneHoveredIndex) public readonly hovered$: BehaviorSubject<number>,
     @Inject(DiSceneSelectedIndex) public readonly selected$: BehaviorSubject<number>,
   ) {}
@@ -29,10 +30,6 @@ export class GameDownSceneComponent {
   readonly fields$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.fields));
   readonly renderer$ = this.rxState.state$.pipe(
     watch((state) => state.game.down.scene.renderer),
-    shareReplay(),
-  );
-  readonly viewDebug$ = this.rxState.state$.pipe(
-    watch((state) => state.game.down.viewDebug),
     shareReplay(),
   );
 

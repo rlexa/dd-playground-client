@@ -5,6 +5,7 @@ import {NavigationEnd, Router} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {RxStateService, RxStateSetGlobalService} from './rx-state';
+import {RxCleanup} from 'dd-rxjs';
 
 const userAgent = !window ? '' : window.navigator.userAgent;
 const isBrowserChrome = userAgent.indexOf('Chrome') >= 0;
@@ -39,10 +40,11 @@ export class AppComponent implements OnDestroy {
 
   readonly isBrowserChrome = isBrowserChrome;
   readonly isBrowserIE = isBrowserIE;
-  readonly isForcingStart$ = new BehaviorSubject(false);
+  @RxCleanup() readonly isForcingStart$ = new BehaviorSubject(false);
 
+  destroy() {}
   ngOnDestroy() {
-    this.isForcingStart$.complete();
+    this.destroy();
   }
 
   onForceStart() {
