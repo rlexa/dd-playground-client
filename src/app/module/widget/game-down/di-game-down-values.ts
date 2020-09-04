@@ -1,6 +1,6 @@
 import {InjectionToken} from '@angular/core';
+import {StateSubject} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
-import {StateSubject} from 'src/app/util/state-subject';
 
 /** GameDown scene hovered index. */
 export const DiSceneHoveredIndex = new InjectionToken<BehaviorSubject<number>>('DI GameDown scene hovered index.', {
