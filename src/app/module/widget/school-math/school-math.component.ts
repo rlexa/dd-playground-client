@@ -24,6 +24,12 @@ export class SchoolMathComponent implements OnDestroy, OnInit {
     takeUntil(this.done$),
   );
 
+  readonly pdfMeta$ = this.data$.pipe(
+    map((data) => mathTestToPdf(data)),
+    shareReplay({refCount: true, bufferSize: 1}),
+    takeUntil(this.done$),
+  );
+
   seed = 1;
 
   triggerGenerate = () => this.triggerGenerate$.next();
@@ -37,10 +43,8 @@ export class SchoolMathComponent implements OnDestroy, OnInit {
   ngOnInit() {
     this.triggerPdf$
       .pipe(
-        withLatestFrom(this.data$),
+        withLatestFrom(this.pdfMeta$),
         map(([_, data]) => data),
-        filter((ii) => !!ii),
-        map((data) => mathTestToPdf(data)),
         filter((ii) => !!ii),
         takeUntil(this.done$),
       )
