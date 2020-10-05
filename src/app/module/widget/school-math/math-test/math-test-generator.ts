@@ -1,4 +1,4 @@
-import {fnCompose, fnFloor, fnJoin, fnMap, fnMult, fnSin, fnSome, fnSub, fnSum} from 'src/app/util/fns';
+import {fnAbs, fnCompose, fnFloor, fnJoin, fnMap, fnMult, fnSin, fnSome, fnSub, fnSum} from 'src/app/util/fns';
 
 export type MathTestQuestionType = 'pyramide' | 'shortresult' | 'table' | 'questionline';
 
@@ -6,6 +6,7 @@ export interface MathTestQuestion {
   points?: number;
   result?: string;
   text?: string;
+  title?: string;
   type?: MathTestQuestionType;
 }
 
@@ -49,7 +50,52 @@ const generateTaskNumberByDescription = (rnd: () => number): MathTestTask => {
 };
 
 const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
-  return {title: 'TODO Päckchen'};
+  const leftDelta = rndIntBetween(3)(7)(rnd);
+
+  let rightDelta = leftDelta;
+  while (rightDelta === leftDelta) {
+    rightDelta = rndIntBetween(2)(5)(rnd);
+  }
+
+  const first = rndIntBetween(60)(99)(rnd);
+  const second = rndIntBetween(10)(40)(rnd);
+
+  interface Term {
+    first: number;
+    second: number;
+  }
+  const terms = [0, 0, 0, 0, 0].map<Term>((_, index) => ({first: first + index * leftDelta, second: second + index * rightDelta}));
+
+  return {
+    questions: [
+      {
+        type: 'shortresult',
+        text: terms.map((term, index) => `${index < 3 ? term.first : '__'} - ${index < 3 ? term.second : '__'} = __`).join(','),
+        title: 'Setze fort und rechne.',
+        result: terms.map((term) => `${term.first} - ${term.second} = ${term.first - term.second}`).join(','),
+        points: 5,
+      },
+      {
+        type: 'questionline',
+        title: 'Beschreibe das Päckchen.',
+        text: 'Die erste Zahl',
+        result: `wird um ${leftDelta} erhöht`,
+        points: 1,
+      },
+      {
+        type: 'questionline',
+        text: 'Die zweite Zahl',
+        result: `wird um ${rightDelta} erhöht`,
+        points: 1,
+      },
+      {
+        type: 'questionline',
+        text: 'Deshalb',
+        result: `wird das Ergebnis um ${fnAbs(leftDelta - rightDelta)} ${leftDelta > rightDelta ? 'erhöht' : 'erniedrigt'}`,
+        points: 1,
+      },
+    ],
+  };
 };
 
 const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
@@ -152,7 +198,7 @@ const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
   const leftVals = valsDistinct(leftValCount)(rnd2to9)(rnd);
 
   const errorCount = 5;
-  const rndIndex = rndInt(topValCount * leftValCount);
+  const rndIndex = rndInt(topValCount * leftValCount - 1);
   const errorIndices = valsDistinct(errorCount)(rndIndex)(rnd);
 
   const rnd2to99 = rndIntBetween(2)(99);

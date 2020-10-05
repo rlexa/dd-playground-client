@@ -53,24 +53,30 @@ function questionPyramideToPdf(val: string): Content {
   };
 }
 
-function questionToPdf(val: MathTestQuestion): Content {
-  return val?.type === 'pyramide'
-    ? questionPyramideToPdf(val.text)
-    : val?.type === 'shortresult'
-    ? questionShortResultToPdf(val.text)
-    : val?.type === 'table'
-    ? questionTableToPdf(val.text)
-    : val?.type === 'questionline'
-    ? questionLineToPdf(val.text)
-    : `TODO type ${val?.type || 'undefined'}`;
+function questionToPdf(val: MathTestQuestion, index: number): Content {
+  return [
+    val?.title ? {text: `${String.fromCharCode('a'.charCodeAt(0) + index)}) ${val.title}`} : null,
+    val?.type === 'pyramide'
+      ? questionPyramideToPdf(val.text)
+      : val?.type === 'shortresult'
+      ? questionShortResultToPdf(val.text)
+      : val?.type === 'table'
+      ? questionTableToPdf(val.text)
+      : val?.type === 'questionline'
+      ? questionLineToPdf(val.text)
+      : `TODO type ${val?.type || 'undefined'}`,
+  ].filter((ii) => !!ii);
 }
 
 function taskToPdf(val: MathTestTask, index: number): Content {
-  return [
-    {text: `${index + 1} ${val.title ?? ''}`, style: ['h2', 'marginTop']},
-    {text: val.text ?? '', style: 'marginAll'},
-    ...(val.questions || []).map(questionToPdf).filter((ii) => !!ii),
-  ];
+  return {
+    stack: [
+      {text: `${index + 1} ${val.title ?? ''}`, style: ['h2', 'marginTop']},
+      {text: val.text ?? '', style: 'marginAll'},
+      ...(val.questions || []).map((ii, iindex) => questionToPdf(ii, iindex)).filter((ii) => !!ii),
+    ],
+    unbreakable: true,
+  };
 }
 
 export function mathTestToPdf(data: MathTest) {
