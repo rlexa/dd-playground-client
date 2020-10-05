@@ -1,6 +1,6 @@
 import {fnCompose, fnFloor, fnJoin, fnMap, fnMult, fnSin, fnSome, fnSub, fnSum} from 'src/app/util/fns';
 
-export type MathTestQuestionType = 'pyramide' | 'shortresult' | 'questionline';
+export type MathTestQuestionType = 'pyramide' | 'shortresult' | 'table' | 'questionline';
 
 export interface MathTestQuestion {
   points?: number;
@@ -31,6 +31,8 @@ export function randomize(seed: number) {
   };
 }
 
+const rndInt = (max: number) => (rnd: () => number) => fnCompose(fnFloor, fnSum(0.5), fnMult(max))(rnd());
+
 // GENERATE
 
 const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
@@ -45,15 +47,15 @@ const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
   let terms: Term[] = [];
   while (terms.length < points * 2) {
     if (!(terms.length % 2)) {
-      const first = fnCompose(fnSum(49), fnFloor, fnMult(50))(rnd());
-      const second = fnCompose(fnSum(11), fnFloor, fnMult(first - 11))(rnd());
+      const first = fnCompose(fnSum(49), rndInt(50))(rnd);
+      const second = fnCompose(fnSum(11), rndInt(first - 11))(rnd);
       const term: Term = {first, second, opSum: false};
       if (!fnSome(isSameTerm)(terms)(term)) {
         terms = [...terms, term];
       }
     } else {
-      const first = fnCompose(fnSum(11), fnFloor, fnMult(60))(rnd());
-      const second = fnCompose(fnSum(11), fnFloor, fnMult(100 - first - 11))(rnd());
+      const first = fnCompose(fnSum(11), rndInt(60))(rnd);
+      const second = fnCompose(fnSum(11), rndInt(100 - first - 11))(rnd);
       const term: Term = {first, second, opSum: true};
       if (!fnSome(isSameTerm)(terms)(term)) {
         terms = [...terms, term];
@@ -74,13 +76,13 @@ const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
 };
 
 const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
-  const rndFiveTwenty = fnCompose(fnSum(5), fnFloor, fnMult(20));
-  const valZeroZero = rndFiveTwenty(rnd());
-  const valZeroTwo = rndFiveTwenty(rnd());
-  const valZeroThree = rndFiveTwenty(rnd());
+  const rndFiveTwenty = fnCompose(fnSum(5), rndInt(20));
+  const valZeroZero = rndFiveTwenty(rnd);
+  const valZeroTwo = rndFiveTwenty(rnd);
+  const valZeroThree = rndFiveTwenty(rnd);
 
-  const rndThreeEight = fnCompose(fnSum(3), fnFloor, fnMult(8));
-  const valOneOne = fnSum(valZeroTwo)(rndThreeEight(rnd()));
+  const rndThreeEight = fnCompose(fnSum(3), rndInt(8));
+  const valOneOne = fnSum(valZeroTwo)(rndThreeEight(rnd));
 
   const lvlZero = [valZeroZero, fnSub(valOneOne)(valZeroTwo), valZeroTwo, valZeroThree];
   const lvlOne = [fnSum(lvlZero[0])(lvlZero[1]), fnSum(lvlZero[1])(lvlZero[2]), fnSum(lvlZero[2])(lvlZero[3])];
@@ -104,9 +106,72 @@ const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
   };
 };
 
+const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
+  const valSample = fnCompose(fnSum(2), rndInt(7));
+
+  const topValCount = 4;
+  let topVals: number[] = [];
+  while (topVals.length < topValCount) {
+    const val = valSample(rnd);
+    if (!topVals.includes(val)) {
+      topVals = [...topVals, val];
+    }
+  }
+
+  const leftValCount = 4;
+  let leftVals: number[] = [];
+  while (leftVals.length < leftValCount) {
+    const val = valSample(rnd);
+    if (!leftVals.includes(val)) {
+      leftVals = [...leftVals, val];
+    }
+  }
+
+  const errorCount = 5;
+  const rndIndex = rndInt(topValCount * leftValCount);
+  let errorIndices: number[] = [];
+  while (errorIndices.length < errorCount) {
+    const val = rndIndex(rnd);
+    if (!errorIndices.includes(val)) {
+      errorIndices = [...errorIndices, val];
+    }
+  }
+
+  const rndError = fnCompose(fnSum(2), rndInt(97));
+  const rows = leftVals.map((left, leftIndex) =>
+    topVals.map((top, topIndex) => {
+      const ret = left * top;
+      if (errorIndices.includes(leftIndex * topValCount + topIndex)) {
+        let retError = ret;
+        while (retError === ret) {
+          retError = rndError(rnd);
+        }
+        return retError;
+      }
+      return ret;
+    }),
+  );
+
+  const joinLines = fnJoin('|');
+  const joinVals = fnJoin(',');
+  const asText = fnCompose(joinLines, fnMap<(string | number)[], string>(joinVals));
+
+  return {
+    text: joinText([`In der Rechentafel sind ${errorCount} Fehler.`, `Streiche die falschen Ergebnisse durch.`]),
+    questions: [
+      {
+        type: 'table',
+        text: asText([['*', ...topVals], ...rows.map((row, index) => [leftVals[index], ...row])]),
+        result: joinVals(errorIndices.map((index) => rows[Math.floor(index / topValCount)][index % topValCount])),
+        points: 4,
+      },
+    ],
+  };
+};
+
 const generateTaskTextSumSketch = (rnd: () => number): MathTestTask => {
-  const valBase = fnCompose(fnSum(30), fnFloor, fnMult(30))(rnd());
-  const valPlus = fnCompose(fnSum(10), fnFloor, fnMult(10))(rnd());
+  const valBase = fnCompose(fnSum(30), rndInt(30))(rnd);
+  const valPlus = fnCompose(fnSum(10), rndInt(10))(rnd);
   const valResult = fnSum(valBase)(valPlus);
 
   return {
@@ -126,5 +191,8 @@ const generateTaskTextSumSketch = (rnd: () => number): MathTestTask => {
 
 export function generateMathTestGrade2({seed = 1, title = 'Math Test'}): MathTest {
   const rnd = randomize(seed);
-  return {title, tasks: [generateTaskTextSumSketch(rnd), generateTaskPyramideSum(rnd), generateTaskPlusMinus(rnd)]};
+  return {
+    title,
+    tasks: [generateTaskTextSumSketch(rnd), generateTaskPyramideSum(rnd), generateTaskPlusMinus(rnd), generateTaskTableMulErrors(rnd)],
+  };
 }
