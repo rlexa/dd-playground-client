@@ -32,6 +32,7 @@ export function randomize(seed: number) {
 }
 
 const rndInt = (max: number) => (rnd: () => number) => fnCompose(fnFloor, fnSum(0.5), fnMult(max))(rnd());
+const rndIntBetween = (min: number) => (max: number) => fnCompose(fnSum(min), rndInt(fnSub(max)(min)));
 
 // GENERATE
 
@@ -71,15 +72,15 @@ const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
   let terms: Term[] = [];
   while (terms.length < points * 2) {
     if (!(terms.length % 2)) {
-      const first = fnCompose(fnSum(49), rndInt(50))(rnd);
-      const second = fnCompose(fnSum(11), rndInt(first - 11))(rnd);
+      const first = rndIntBetween(49)(99)(rnd);
+      const second = rndIntBetween(11)(first)(rnd);
       const term: Term = {first, second, opSum: false};
       if (!fnSome(isSameTerm)(terms)(term)) {
         terms = [...terms, term];
       }
     } else {
-      const first = fnCompose(fnSum(11), rndInt(60))(rnd);
-      const second = fnCompose(fnSum(11), rndInt(100 - first - 11))(rnd);
+      const first = rndIntBetween(11)(71)(rnd);
+      const second = rndIntBetween(11)(100 - first)(rnd);
       const term: Term = {first, second, opSum: true};
       if (!fnSome(isSameTerm)(terms)(term)) {
         terms = [...terms, term];
@@ -100,13 +101,13 @@ const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
 };
 
 const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
-  const rndFiveTwenty = fnCompose(fnSum(5), rndInt(20));
-  const valZeroZero = rndFiveTwenty(rnd);
-  const valZeroTwo = rndFiveTwenty(rnd);
-  const valZeroThree = rndFiveTwenty(rnd);
+  const rnd5to25 = rndIntBetween(5)(25);
+  const valZeroZero = rnd5to25(rnd);
+  const valZeroTwo = rnd5to25(rnd);
+  const valZeroThree = rnd5to25(rnd);
 
-  const rndThreeEight = fnCompose(fnSum(3), rndInt(8));
-  const valOneOne = fnSum(valZeroTwo)(rndThreeEight(rnd));
+  const rnd3to11 = rndIntBetween(3)(11);
+  const valOneOne = fnSum(valZeroTwo)(rnd3to11(rnd));
 
   const lvlZero = [valZeroZero, fnSub(valOneOne)(valZeroTwo), valZeroTwo, valZeroThree];
   const lvlOne = [fnSum(lvlZero[0])(lvlZero[1]), fnSum(lvlZero[1])(lvlZero[2]), fnSum(lvlZero[2])(lvlZero[3])];
@@ -131,7 +132,7 @@ const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
 };
 
 const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
-  const valSample = fnCompose(fnSum(2), rndInt(7));
+  const rnd2to9 = rndIntBetween(2)(9);
 
   const valsDistinct = (len: number) => (getAnother: (arg: () => number) => number) => (rndGenerator: () => number) => {
     let vals: number[] = [];
@@ -145,23 +146,23 @@ const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
   };
 
   const topValCount = 4;
-  const topVals = valsDistinct(topValCount)(valSample)(rnd);
+  const topVals = valsDistinct(topValCount)(rnd2to9)(rnd);
 
   const leftValCount = 4;
-  const leftVals = valsDistinct(leftValCount)(valSample)(rnd);
+  const leftVals = valsDistinct(leftValCount)(rnd2to9)(rnd);
 
   const errorCount = 5;
   const rndIndex = rndInt(topValCount * leftValCount);
   const errorIndices = valsDistinct(errorCount)(rndIndex)(rnd);
 
-  const rndError = fnCompose(fnSum(2), rndInt(97));
+  const rnd2to99 = rndIntBetween(2)(99);
   const rows = leftVals.map((left, leftIndex) =>
     topVals.map((top, topIndex) => {
       const ret = left * top;
       if (errorIndices.includes(leftIndex * topValCount + topIndex)) {
         let retError = ret;
         while (retError === ret) {
-          retError = rndError(rnd);
+          retError = rnd2to99(rnd);
         }
         return retError;
       }
@@ -187,8 +188,8 @@ const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
 };
 
 const generateTaskTextSumSketch = (rnd: () => number): MathTestTask => {
-  const valBase = fnCompose(fnSum(30), rndInt(30))(rnd);
-  const valPlus = fnCompose(fnSum(10), rndInt(10))(rnd);
+  const valBase = rndIntBetween(30)(60)(rnd);
+  const valPlus = rndIntBetween(10)(20)(rnd);
   const valResult = fnSum(valBase)(valPlus);
 
   return {
