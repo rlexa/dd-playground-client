@@ -1,9 +1,11 @@
 import {
+  fnAbs,
   fnAnd,
   fnCompose,
   fnDefault,
   fnFirst,
   fnFlip,
+  fnFloat,
   fnFloor,
   fnGt,
   fnGte,
@@ -11,6 +13,7 @@ import {
   fnIdentity,
   fnInvert,
   fnIs,
+  fnJoin,
   fnKey,
   fnLast,
   fnLift1,
@@ -30,7 +33,9 @@ import {
   fnRandomInt,
   fnRepeat,
   fnSame,
+  fnSin,
   fnSome,
+  fnSub,
   fnSum,
   fnTail,
   fnTIdentity,
@@ -46,6 +51,14 @@ describe(`fns`, () => {
   const multTwo = (arg: number) => +arg * 2;
   const isSame = <T>(aa: T) => (bb: T) => aa === bb;
   const concatToString = <T1, T2>(aa: T1) => (bb: T2) => `${aa}.${bb}`;
+
+  describe(`fnAbs`, () => {
+    test(`uses Math.abs`, () => {
+      spyOn(Math, 'abs').and.callThrough();
+      expect(fnAbs(-123)).toBe(123);
+      expect(Math.abs).toHaveBeenCalledWith(-123);
+    });
+  });
 
   describe(`fnAnd`, () => {
     test(`is true for t&&t`, () => expect(fnAnd(1)(2)).toBe(true));
@@ -80,6 +93,11 @@ describe(`fns`, () => {
 
   describe(`fnFlip`, () => {
     test(`flips and applies params`, () => expect(fnFlip((aa: number) => (bb: number) => (aa + 1) * bb)(2)(1)).toBe(4));
+  });
+
+  describe(`fnFloat`, () => {
+    test(`floats positive`, () => expect(fnFloat(1.123)).toBe(0.123));
+    test(`floats negative`, () => expect(fnFloat(-1.123)).toBe(-0.12300000000000022));
   });
 
   describe(`fnFloor`, () => {
@@ -118,6 +136,12 @@ describe(`fns`, () => {
   describe(`fnIs`, () => {
     test(`returns true for t`, () => expect(fnIs(1)).toBe(true));
     test(`returns false for f`, () => expect(fnIs(0)).toBe(false));
+  });
+
+  describe(`fnJoin`, () => {
+    test(`returns '|..' for [.]`, () => expect(fnJoin('|')([1, 2, 3])).toEqual('1|2|3'));
+    test(`returns '' for []`, () => expect(fnJoin(',')([])).toEqual(''));
+    test(`returns undefined for undefined`, () => expect(fnJoin(',')(undefined)).toBe(undefined));
   });
 
   describe(`fnKey, fnTKey`, () => {
@@ -199,10 +223,22 @@ describe(`fns`, () => {
     test(`is different`, () => expect(fnSame('hi')('ih')).toBe(false));
   });
 
+  describe(`fnSin`, () => {
+    test(`uses Math.sin`, () => {
+      spyOn(Math, 'sin').and.callThrough();
+      expect(fnSin(0)).toBe(0);
+      expect(Math.sin).toHaveBeenCalledWith(0);
+    });
+  });
+
   describe(`fnSome`, () => {
     test(`finds`, () => expect(fnSome<number>(isSame)([1, 2])(2)).toBe(true));
     test(`finds none`, () => expect(fnSome<number>(isSame)([1, 2])(3)).toBe(false));
     test(`finds none if empty`, () => expect(fnSome<number>(isSame)([])(2)).toBe(false));
+  });
+
+  describe(`fnSub`, () => {
+    test(`subtracts`, () => expect(fnSub(1)(2)).toBe(-1));
   });
 
   describe(`fnSum`, () => {
