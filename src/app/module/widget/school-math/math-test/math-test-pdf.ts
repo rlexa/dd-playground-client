@@ -1,7 +1,7 @@
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {Content} from 'pdfmake/interfaces';
-import {fnCompose, fnJoin, fnMap, fnPadEnd, fnPadStart} from 'src/app/util/fns';
+import {fnCompose, fnFloor, fnJoin, fnMap, fnPadEnd, fnPadStart} from 'src/app/util/fns';
 import {MathTest, MathTestQuestion, MathTestTask} from './math-test-generator';
 
 // needed for some reason (see docs)
@@ -11,6 +11,15 @@ const wrapIn = (wrap: string) => (val: unknown) => `${wrap}${val}${wrap}`;
 
 function questionLineToPdf(val: string): Content {
   return {text: `${val} ________________________________________`, style: 'marginAll'};
+}
+
+function questionShortResultToPdf(val: string): Content {
+  const terms = val.split(',');
+  const termToPdf = (text: string): Content => ({text, style: {lineHeight: 1.2, fontSize: 15}});
+  return {
+    columns: [terms.slice(0, Math.ceil(terms.length / 2)).map(termToPdf), terms.slice(Math.ceil(terms.length / 2)).map(termToPdf)],
+    style: 'marginAll',
+  };
 }
 
 function questionPyramideToPdf(val: string): Content {
@@ -29,7 +38,13 @@ function questionPyramideToPdf(val: string): Content {
 }
 
 function questionToPdf(val: MathTestQuestion): Content {
-  return val?.type === 'pyramide' ? questionPyramideToPdf(val.text) : val?.type === 'questionline' ? questionLineToPdf(val.text) : null;
+  return val?.type === 'pyramide'
+    ? questionPyramideToPdf(val.text)
+    : val?.type === 'shortresult'
+    ? questionShortResultToPdf(val.text)
+    : val?.type === 'questionline'
+    ? questionLineToPdf(val.text)
+    : null;
 }
 
 function taskToPdf(val: MathTestTask, index: number): Content {

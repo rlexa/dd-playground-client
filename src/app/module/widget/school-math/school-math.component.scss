@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  flex-flow: row wrap;
+  place-content: flex-start;
+  align-items: flex-start;
+
+  > :nth-child(1n) {
+    margin: var(--size-gap);
+  }
+
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  p {
+    display: flex;
+    align-items: center;
+
+    > :nth-child(1n + 1) {
+      margin-left: var(--size-gap);
+    }
+  }
+}

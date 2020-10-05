@@ -10,47 +10,31 @@ exports[`SchoolMathComponent is created 1`] = `
   triggerPdf={[Function Function]}
   triggerPdf$={[Function Subject]}
 >
-  <div
-    ddflexbox="hyscsw"
-  >
-    <mat-card
-      class="childhv"
-    >
-      <mat-card-title>
-        Math Test
-      </mat-card-title>
-      <mat-card-content>
-        <div
-          ddflexbox="vys"
+  <mat-card>
+    <mat-card-title>
+      Math Test
+    </mat-card-title>
+    <mat-card-content>
+      <p>
+        <input
+          matinput=""
+          placeholder="Seed"
+          type="number"
+        />
+        <button
+          color="primary"
+          mat-raised-button=""
         >
-          <input
-            matinput=""
-            placeholder="Seed"
-            type="number"
-          />
-          <button
-            mat-button=""
-          >
-            Generate
-          </button>
-          <button
-            mat-button=""
-          >
-            PDF
-          </button>
-        </div>
-      </mat-card-content>
-    </mat-card>
-    <mat-card
-      class="childhv"
-    >
-      <mat-card-title>
-        Output
-      </mat-card-title>
-      <mat-card-content>
-        <app-simple-view />
-      </mat-card-content>
-    </mat-card>
-  </div>
+          Generate
+        </button>
+        <button
+          mat-raised-button=""
+        >
+          PDF
+        </button>
+      </p>
+      <app-simple-view />
+    </mat-card-content>
+  </mat-card>
 </app-school-math>
 `;

@@ -1,6 +1,6 @@
-import {fnCompose, fnFloor, fnJoin, fnMap, fnMult, fnSin, fnSub, fnSum} from 'src/app/util/fns';
+import {fnCompose, fnFloor, fnJoin, fnMap, fnMult, fnSin, fnSome, fnSub, fnSum} from 'src/app/util/fns';
 
-export type MathTestQuestionType = 'pyramide' | 'questionline';
+export type MathTestQuestionType = 'pyramide' | 'shortresult' | 'questionline';
 
 export interface MathTestQuestion {
   points?: number;
@@ -32,6 +32,46 @@ export function randomize(seed: number) {
 }
 
 // GENERATE
+
+const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
+  interface Term {
+    first: number;
+    second: number;
+    opSum: boolean;
+  }
+  const isSameTerm = (aa: Term) => (bb: Term) => aa.opSum === bb.opSum && aa.first === bb.first && aa.second === bb.second;
+  const points = 4;
+
+  let terms: Term[] = [];
+  while (terms.length < points * 2) {
+    if (!(terms.length % 2)) {
+      const first = fnCompose(fnSum(49), fnFloor, fnMult(50))(rnd());
+      const second = fnCompose(fnSum(11), fnFloor, fnMult(first - 11))(rnd());
+      const term: Term = {first, second, opSum: false};
+      if (!fnSome(isSameTerm)(terms)(term)) {
+        terms = [...terms, term];
+      }
+    } else {
+      const first = fnCompose(fnSum(11), fnFloor, fnMult(60))(rnd());
+      const second = fnCompose(fnSum(11), fnFloor, fnMult(100 - first - 11))(rnd());
+      const term: Term = {first, second, opSum: true};
+      if (!fnSome(isSameTerm)(terms)(term)) {
+        terms = [...terms, term];
+      }
+    }
+  }
+
+  return {
+    questions: [
+      {
+        type: 'shortresult',
+        text: terms.map((term) => `${term.first} ${term.opSum ? '+' : '-'} ${term.second} = __`).join(','),
+        result: terms.map((term) => (term.opSum ? term.first + term.second : term.first - term.second)).join(','),
+        points,
+      },
+    ],
+  };
+};
 
 const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
   const rndFiveTwenty = fnCompose(fnSum(5), fnFloor, fnMult(20));
@@ -86,5 +126,5 @@ const generateTaskTextSumSketch = (rnd: () => number): MathTestTask => {
 
 export function generateMathTestGrade2({seed = 1, title = 'Math Test'}): MathTest {
   const rnd = randomize(seed);
-  return {title, tasks: [generateTaskTextSumSketch(rnd), generateTaskPyramideSum(rnd)]};
+  return {title, tasks: [generateTaskTextSumSketch(rnd), generateTaskPyramideSum(rnd), generateTaskPlusMinus(rnd)]};
 }

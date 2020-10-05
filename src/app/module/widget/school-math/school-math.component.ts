@@ -8,6 +8,7 @@ import {mathTestToPdf} from './math-test/math-test-pdf';
 @Component({
   selector: 'app-school-math',
   templateUrl: './school-math.component.html',
+  styleUrls: ['./school-math.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SchoolMathComponent implements OnDestroy, OnInit {
