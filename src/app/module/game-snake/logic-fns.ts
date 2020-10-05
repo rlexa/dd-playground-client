@@ -24,7 +24,7 @@ import {
   fnTIdentity,
   fnTKey,
   fnWhileDo,
-} from './fns';
+} from 'src/app/util/fns';
 
 const isZero = fnSame(0);
 const increment = fnSum(1);
