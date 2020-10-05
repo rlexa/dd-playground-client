@@ -3,13 +3,13 @@
 exports[`SimpleTableComponent is created 1`] = `
 <app-simple-table
   FORMAT_DATE_TIMESTAMP={[Function String]}
-  clicked={[Function EventEmitter]}
+  clicked={[Function EventEmitter_]}
   columns$={[Function AnonymousSubject]}
   data$={[Function BehaviorSubject]}
   dataBatch$={[Function Observable]}
   dataBatchClickables$={[Function Observable]}
   dataFiltered$={[Function Observable]}
-  dblClick={[Function EventEmitter]}
+  dblClick={[Function EventEmitter_]}
   done$={[Function DoneSubject]}
   filter$={[Function BehaviorSubject]}
   isClickable="null"
@@ -36,13 +36,13 @@ exports[`SimpleTableComponent is created 1`] = `
 exports[`SimpleTableComponent with data renders 1`] = `
 <app-simple-table
   FORMAT_DATE_TIMESTAMP={[Function String]}
-  clicked={[Function EventEmitter]}
+  clicked={[Function EventEmitter_]}
   columns$={[Function AnonymousSubject]}
   data$={[Function BehaviorSubject]}
   dataBatch$={[Function Observable]}
   dataBatchClickables$={[Function Observable]}
   dataFiltered$={[Function Observable]}
-  dblClick={[Function EventEmitter]}
+  dblClick={[Function EventEmitter_]}
   done$={[Function DoneSubject]}
   filter$={[Function BehaviorSubject]}
   isClickable="null"
