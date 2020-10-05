@@ -37,6 +37,7 @@ import {
   fnSame,
   fnSin,
   fnSome,
+  fnSplit,
   fnSub,
   fnSum,
   fnTail,
@@ -245,6 +246,10 @@ describe(`fns`, () => {
     test(`finds`, () => expect(fnSome<number>(isSame)([1, 2])(2)).toBe(true));
     test(`finds none`, () => expect(fnSome<number>(isSame)([1, 2])(3)).toBe(false));
     test(`finds none if empty`, () => expect(fnSome<number>(isSame)([])(2)).toBe(false));
+  });
+
+  describe(`fnSplit`, () => {
+    test(`splits`, () => expect(fnSplit('.')('1.23.456.7890')).toEqual(['1', '23', '456', '7890']));
   });
 
   describe(`fnSub`, () => {

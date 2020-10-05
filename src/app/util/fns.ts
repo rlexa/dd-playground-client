@@ -114,6 +114,7 @@ export const fnSub = (arg1: number) => (arg2: number) => fnSum(arg1)(fnInvert(ar
 
 export const fnPadEnd = (padWith: string) => (maxLen: number) => (val: string) => val.padEnd(maxLen, padWith);
 export const fnPadStart = (padWith: string) => (maxLen: number) => (val: string) => val.padStart(maxLen, padWith);
+export const fnSplit = (separator: string | RegExp) => (val: string) => val.split(separator);
 
 // LOOP
 
