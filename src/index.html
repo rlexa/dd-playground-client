@@ -1,20 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- angular router root -->
+    <base href="/" />
 
-<head>
-  <!-- angular router root -->
-  <base href="/">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>...</title>
 
-  <title>...</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
+    <script>
+      function checkBrowser() {
+        if (/MSIE|Trident|Edge/.test(window.navigator.userAgent)) {
+          document.getElementById('browserWarning').style.opacity = 1;
+          document.getElementById('appContainer').remove();
+        } else {
+          document.getElementById('browserWarning').remove();
+        }
+      }
+    </script>
+  </head>
 
-<body class="position-absolute match-parent">
-  <app-root class="position-absolute match-parent"></app-root>
-</body>
-
+  <body class="position-absolute match-parent" onload="checkBrowser()">
+    <div id="browserWarning" style="opacity: 0; font-size: 1.15rem; color: white; background: #ff6700; padding: 10px; text-align: center">
+      Browser is not supported. Please switch to e.g. Chrome.
+    </div>
+    <app-root class="position-absolute match-parent" id="appContainer"></app-root>
+  </body>
 </html>
