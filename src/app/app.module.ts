@@ -52,8 +52,6 @@ const appRoutes: Routes = [
 @NgModule({
   /* DECLARATIONS: components, directives, and pipes belonging to that module (declare only once in app) */
   declarations: [AppComponent],
-  /* ENTRYCOMPONENTS: components that can't be resolved only by their selector e.g. when router targeted */
-  entryComponents: [],
   /* IMPORTS: Import modules with exported declarable classes referenced in this module's component templates */
   imports: [
     // angular
