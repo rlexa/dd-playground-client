@@ -3,9 +3,12 @@
 exports[`SchoolMathComponent is created 1`] = `
 <app-school-math
   data$={[Function Observable]}
+  done$={[Function DoneSubject]}
   seed={[Function Number]}
   triggerGenerate={[Function Function]}
   triggerGenerate$={[Function Subject]}
+  triggerPdf={[Function Function]}
+  triggerPdf$={[Function Subject]}
 >
   <div
     ddflexbox="hyscsw"
@@ -30,7 +33,11 @@ exports[`SchoolMathComponent is created 1`] = `
           >
             Generate
           </button>
-          <app-simple-view />
+          <button
+            mat-button=""
+          >
+            PDF
+          </button>
         </div>
       </mat-card-content>
     </mat-card>
@@ -41,9 +48,7 @@ exports[`SchoolMathComponent is created 1`] = `
         Output
       </mat-card-title>
       <mat-card-content>
-        <pre>
-          null
-        </pre>
+        <app-simple-view />
       </mat-card-content>
     </mat-card>
   </div>

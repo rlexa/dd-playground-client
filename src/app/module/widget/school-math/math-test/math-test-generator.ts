@@ -54,10 +54,9 @@ const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
     questions: [
       {
         type: 'pyramide',
-        text:
-          '|' +
-          joinPyramide(fnMap(joinNumbers)([[null], [null, null], [null, valOneOne, null], [valZeroZero, null, valZeroTwo, valZeroThree]])) +
-          '|',
+        text: joinPyramide(
+          fnMap(joinNumbers)([[null], [null, null], [null, valOneOne, null], [valZeroZero, null, valZeroTwo, valZeroThree]]),
+        ),
         result: joinPyramide(fnMap(joinNumbers)([lvlThree, lvlTwo, lvlOne, lvlZero])),
         points: 3,
       },

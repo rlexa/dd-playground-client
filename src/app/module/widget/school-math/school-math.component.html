@@ -5,7 +5,7 @@
       <div ddFlexbox="vys">
         <input type="number" matInput placeholder="Seed" [value]="seed" (change)="seed = +$event.target.value" />
         <button mat-button (click)="triggerGenerate()">Generate</button>
-        <app-simple-view [data]="data$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+        <button mat-button [disabled]="!(data$ | async)" (click)="triggerPdf()">PDF</button>
       </div>
     </mat-card-content>
   </mat-card>
@@ -13,7 +13,7 @@
   <mat-card class="childhv">
     <mat-card-title>Output</mat-card-title>
     <mat-card-content>
-      <pre>{{ data$ | async | json }}</pre>
+      <app-simple-view [data]="data$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
     </mat-card-content>
   </mat-card>
 </div>

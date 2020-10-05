@@ -58,6 +58,7 @@
     "dd-rx-state": "^1.1.0",
     "dd-rxjs": "^1.4.0",
     "font-awesome": "^4.7.0",
+    "pdfmake": "^0.1.68",
     "rxjs": "^6.5.5",
     "ts-mockery": "^1.2.0",
     "zone.js": "~0.10.2"
@@ -70,6 +71,7 @@
     "@types/d3": "^5.0.0",
     "@types/jest": "^25.2.3",
     "@types/node": "^12.11.1",
+    "@types/pdfmake": "^0.1.15",
     "codelyzer": "^5.1.2",
     "copyfiles": "^2.0.0",
     "dd-angular-graph": "^1.0.4",

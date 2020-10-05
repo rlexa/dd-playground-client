@@ -28,6 +28,8 @@ import {
   fnMult,
   fnNot,
   fnOr,
+  fnPadEnd,
+  fnPadStart,
   fnPipe,
   fnRandom,
   fnRandomInt,
@@ -194,6 +196,14 @@ describe(`fns`, () => {
   describe(`fnNot`, () => {
     test(`is true for f`, () => expect(fnNot(0)).toBe(true));
     test(`is false for t`, () => expect(fnNot(1)).toBe(false));
+  });
+
+  describe(`fnPadEnd`, () => {
+    test(`pads`, () => expect(fnPadEnd('-=-')(7)('123')).toBe('123-=--'));
+  });
+
+  describe(`fnPadStart`, () => {
+    test(`pads`, () => expect(fnPadStart('-=-')(7)('123')).toBe('-=--123'));
   });
 
   describe(`fnPipe`, () => {

@@ -110,6 +110,11 @@ export const fnInvert = (arg: number) => -arg;
 export const fnFloat = (arg: number) => (arg < 0 ? arg - 1 - fnFloor(arg) : arg - fnFloor(arg));
 export const fnSub = (arg1: number) => (arg2: number) => fnSum(arg1)(fnInvert(arg2));
 
+// STRING
+
+export const fnPadEnd = (padWith: string) => (maxLen: number) => (val: string) => val.padEnd(maxLen, padWith);
+export const fnPadStart = (padWith: string) => (maxLen: number) => (val: string) => val.padStart(maxLen, padWith);
+
 // LOOP
 
 export interface FnRecur {
