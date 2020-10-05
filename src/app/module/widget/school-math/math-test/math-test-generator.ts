@@ -35,6 +35,30 @@ const rndInt = (max: number) => (rnd: () => number) => fnCompose(fnFloor, fnSum(
 
 // GENERATE
 
+const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
+  return {title: 'TODO Teilen mit und ohne Rest.'};
+};
+
+const generateTaskDotBeforeLinePriority = (rnd: () => number): MathTestTask => {
+  return {title: 'TODO Denke an die Regel.'};
+};
+
+const generateTaskNumberByDescription = (rnd: () => number): MathTestTask => {
+  return {title: 'TODO Zahlen rausfinden'};
+};
+
+const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
+  return {title: 'TODO Päckchen'};
+};
+
+const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
+  return {title: 'TODO Setze ein. > < ='};
+};
+
+const generateTaskInsertOperation = (rnd: () => number): MathTestTask => {
+  return {title: 'TODO Setze ein. + - * :'};
+};
+
 const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
   interface Term {
     first: number;
@@ -109,33 +133,26 @@ const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
 const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
   const valSample = fnCompose(fnSum(2), rndInt(7));
 
-  const topValCount = 4;
-  let topVals: number[] = [];
-  while (topVals.length < topValCount) {
-    const val = valSample(rnd);
-    if (!topVals.includes(val)) {
-      topVals = [...topVals, val];
+  const valsDistinct = (len: number) => (getAnother: (arg: () => number) => number) => (rndGenerator: () => number) => {
+    let vals: number[] = [];
+    while (vals.length < len) {
+      const val = getAnother(rndGenerator);
+      if (!vals.includes(val)) {
+        vals = [...vals, val];
+      }
     }
-  }
+    return vals;
+  };
+
+  const topValCount = 4;
+  const topVals = valsDistinct(topValCount)(valSample)(rnd);
 
   const leftValCount = 4;
-  let leftVals: number[] = [];
-  while (leftVals.length < leftValCount) {
-    const val = valSample(rnd);
-    if (!leftVals.includes(val)) {
-      leftVals = [...leftVals, val];
-    }
-  }
+  const leftVals = valsDistinct(leftValCount)(valSample)(rnd);
 
   const errorCount = 5;
   const rndIndex = rndInt(topValCount * leftValCount);
-  let errorIndices: number[] = [];
-  while (errorIndices.length < errorCount) {
-    const val = rndIndex(rnd);
-    if (!errorIndices.includes(val)) {
-      errorIndices = [...errorIndices, val];
-    }
-  }
+  const errorIndices = valsDistinct(errorCount)(rndIndex)(rnd);
 
   const rndError = fnCompose(fnSum(2), rndInt(97));
   const rows = leftVals.map((left, leftIndex) =>
@@ -193,6 +210,17 @@ export function generateMathTestGrade2({seed = 1, title = 'Math Test'}): MathTes
   const rnd = randomize(seed);
   return {
     title,
-    tasks: [generateTaskTextSumSketch(rnd), generateTaskPyramideSum(rnd), generateTaskPlusMinus(rnd), generateTaskTableMulErrors(rnd)],
+    tasks: [
+      generateTaskTextSumSketch(rnd),
+      generateTaskPyramideSum(rnd),
+      generateTaskPlusMinus(rnd),
+      generateTaskTableMulErrors(rnd),
+      generateTaskNumberPack(rnd),
+      generateTaskNumberByDescription(rnd),
+      generateTaskDivideWithSomeRest(rnd),
+      generateTaskDotBeforeLinePriority(rnd),
+      generateTaskInsertComparison(rnd),
+      generateTaskInsertOperation(rnd),
+    ],
   };
 }
