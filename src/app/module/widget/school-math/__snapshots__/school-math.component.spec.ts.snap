@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SchoolMathComponent is created 1`] = `
+<app-school-math
+  data$={[Function Observable]}
+>
+  <div
+    ddflexbox="hyscsw"
+  >
+    <mat-card
+      class="childhv"
+    >
+      <mat-card-title>
+        Math Test
+      </mat-card-title>
+      <mat-card-content>
+        <div
+          ddflexbox="vys"
+        >
+          <button
+            mat-button=""
+          >
+            Generate
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card
+      class="childhv"
+    >
+      <mat-card-title>
+        Output
+      </mat-card-title>
+      <mat-card-content>
+        <app-simple-view />
+      </mat-card-content>
+    </mat-card>
+  </div>
+</app-school-math>
+`;

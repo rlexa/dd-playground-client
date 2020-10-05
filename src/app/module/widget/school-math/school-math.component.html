@@ -1,0 +1,17 @@
+<div ddFlexbox="hyscsw">
+  <mat-card class="childhv">
+    <mat-card-title>Math Test</mat-card-title>
+    <mat-card-content>
+      <div ddFlexbox="vys">
+        <button mat-button>Generate</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="childhv">
+    <mat-card-title>Output</mat-card-title>
+    <mat-card-content>
+      <app-simple-view [data]="data$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+    </mat-card-content>
+  </mat-card>
+</div>

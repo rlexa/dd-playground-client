@@ -17,9 +17,11 @@ import {
   ROUTE_GAME_MINESWEEPER,
   ROUTE_GAME_SNAKE,
   ROUTE_GRAPH,
+  ROUTE_MATH,
   ROUTE_OVERVIEW,
   ROUTE_PLAYGROUND,
   ROUTE_RENDER_CANVAS,
+  ROUTE_SCHOOL,
   ROUTE_SETTINGS,
   ROUTE_WALKER,
 } from 'src/app/routing';
@@ -78,6 +80,12 @@ export class DashboardComponent {
       route: ROUTE_CRYPTO,
       label: 'Cryptocurrency',
       subs: [{icon: 'items1', route: ROUTE_BLOCKCHAIN, label: 'Blockchain', subs: []}],
+    },
+    {
+      icon: 'school',
+      route: ROUTE_SCHOOL,
+      label: 'School',
+      subs: [{icon: 'items1', route: ROUTE_MATH, label: 'Math', subs: []}],
     },
     {
       icon: 'game',

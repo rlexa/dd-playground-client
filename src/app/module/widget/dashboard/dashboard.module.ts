@@ -16,15 +16,17 @@ import {
   ROUTE_DEMO_STATE,
   ROUTE_GAME,
   ROUTE_GAME_DOWN,
+  ROUTE_GAME_MINESWEEPER,
   ROUTE_GAME_SNAKE,
   ROUTE_GRAPH,
+  ROUTE_MATH,
   ROUTE_OVERVIEW,
   ROUTE_PLAYGROUND,
   ROUTE_RENDER_CANVAS,
   ROUTE_ROOT,
+  ROUTE_SCHOOL,
   ROUTE_SETTINGS,
   ROUTE_WILDCARD,
-  ROUTE_GAME_MINESWEEPER,
 } from 'src/app/routing';
 import {FlexboxModule} from '../../directive/flexbox';
 import {IconPipeModule} from '../../pipe/icon';
@@ -40,7 +42,7 @@ const ROUTING: Routes = [
         path: ROUTE_OVERVIEW,
         component: RoutedContentComponent,
         children: [
-          {path: ROUTE_CURRENT, loadChildren: () => import('src/app/module/widget/overview/overview.module').then(m => m.OverviewModule)},
+          {path: ROUTE_CURRENT, loadChildren: () => import('src/app/module/widget/overview/overview.module').then((m) => m.OverviewModule)},
           {path: ROUTE_ROOT, redirectTo: ROUTE_CURRENT, pathMatch: 'full'},
           {path: ROUTE_WILDCARD, redirectTo: ROUTE_CURRENT, pathMatch: 'full'},
         ],
@@ -51,19 +53,19 @@ const ROUTING: Routes = [
         children: [
           {
             path: ROUTE_GAME_DOWN,
-            loadChildren: () => import('src/app/module/widget/game-down/game-down.module').then(m => m.GameDownModule),
+            loadChildren: () => import('src/app/module/widget/game-down/game-down.module').then((m) => m.GameDownModule),
           },
           {
             path: ROUTE_GAME_MINESWEEPER,
-            loadChildren: () => import('src/app/module/game-minesweeper/game-minesweeper.module').then(m => m.GameMinesweeperModule),
+            loadChildren: () => import('src/app/module/game-minesweeper/game-minesweeper.module').then((m) => m.GameMinesweeperModule),
           },
           {
             path: ROUTE_GAME_SNAKE,
-            loadChildren: () => import('src/app/module/game-snake/game-snake.module').then(m => m.GameSnakeModule),
+            loadChildren: () => import('src/app/module/game-snake/game-snake.module').then((m) => m.GameSnakeModule),
           },
           {
             path: ROUTE_RENDER_CANVAS,
-            loadChildren: () => import('src/app/module/widget/render-canvas/render-canvas.module').then(m => m.RenderCanvasModule),
+            loadChildren: () => import('src/app/module/widget/render-canvas/render-canvas.module').then((m) => m.RenderCanvasModule),
           },
           {path: ROUTE_ROOT, redirectTo: ROUTE_GAME_MINESWEEPER, pathMatch: 'full'},
           {path: ROUTE_WILDCARD, redirectTo: ROUTE_GAME_MINESWEEPER, pathMatch: 'full'},
@@ -71,15 +73,27 @@ const ROUTING: Routes = [
       },
       {
         path: ROUTE_GRAPH,
-        loadChildren: () => import('src/app/module/widget/graph-top-level/graph-top-level.module').then(m => m.GraphTopLevelModule),
+        loadChildren: () => import('src/app/module/widget/graph-top-level/graph-top-level.module').then((m) => m.GraphTopLevelModule),
       },
       {
         path: ROUTE_CRYPTO,
         component: RoutedContentComponent,
         children: [
-          {path: ROUTE_BLOCKCHAIN, loadChildren: () => import('src/app/module/widget/crypto/crypto.module').then(m => m.CryptoModule)},
+          {path: ROUTE_BLOCKCHAIN, loadChildren: () => import('src/app/module/widget/crypto/crypto.module').then((m) => m.CryptoModule)},
           {path: ROUTE_ROOT, redirectTo: ROUTE_BLOCKCHAIN, pathMatch: 'full'},
           {path: ROUTE_WILDCARD, redirectTo: ROUTE_BLOCKCHAIN, pathMatch: 'full'},
+        ],
+      },
+      {
+        path: ROUTE_SCHOOL,
+        component: RoutedContentComponent,
+        children: [
+          {
+            path: ROUTE_MATH,
+            loadChildren: () => import('src/app/module/widget/school-math/school-math.module').then((m) => m.SchoolMathModule),
+          },
+          {path: ROUTE_ROOT, redirectTo: ROUTE_MATH, pathMatch: 'full'},
+          {path: ROUTE_WILDCARD, redirectTo: ROUTE_MATH, pathMatch: 'full'},
         ],
       },
       {
@@ -88,13 +102,13 @@ const ROUTING: Routes = [
         children: [
           {
             path: ROUTE_DEMO_MISC,
-            loadChildren: () => import('src/app/module/widget/demo-misc/demo-misc.module').then(m => m.DemoMiscModule),
+            loadChildren: () => import('src/app/module/widget/demo-misc/demo-misc.module').then((m) => m.DemoMiscModule),
           },
           {
             path: ROUTE_DEMO_STATE,
-            loadChildren: () => import('src/app/module/widget/demo-state/demo-state.module').then(m => m.DemoStateModule),
+            loadChildren: () => import('src/app/module/widget/demo-state/demo-state.module').then((m) => m.DemoStateModule),
           },
-          {path: ROUTE_DEMO_GHIBLI, loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then(m => m.GhibliModule)},
+          {path: ROUTE_DEMO_GHIBLI, loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule)},
           {path: ROUTE_ROOT, redirectTo: ROUTE_DEMO_MISC, pathMatch: 'full'},
           {path: ROUTE_WILDCARD, redirectTo: ROUTE_DEMO_MISC, pathMatch: 'full'},
         ],
@@ -103,8 +117,8 @@ const ROUTING: Routes = [
         path: ROUTE_SETTINGS,
         component: RoutedContentComponent,
         children: [
-          {path: ROUTE_CONFIGURATION, loadChildren: () => import('src/app/module/widget/config/config.module').then(m => m.ConfigModule)},
-          {path: ROUTE_BUILDCONFIG, loadChildren: () => import('src/app/module/widget/build/build.module').then(m => m.BuildModule)},
+          {path: ROUTE_CONFIGURATION, loadChildren: () => import('src/app/module/widget/config/config.module').then((m) => m.ConfigModule)},
+          {path: ROUTE_BUILDCONFIG, loadChildren: () => import('src/app/module/widget/build/build.module').then((m) => m.BuildModule)},
           {path: ROUTE_ROOT, redirectTo: ROUTE_CONFIGURATION, pathMatch: 'full'},
         ],
       },

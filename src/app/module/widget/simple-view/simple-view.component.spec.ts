@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatButton} from '@angular/material/button';
 import {MatList, MatListItem} from '@angular/material/list';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -11,7 +11,7 @@ import {StartuppercasePipe} from '../../pipe/startuppercase';
 import {SimpleViewComponent} from './simple-view.component';
 
 describe('SimpleViewComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NoopAnimationsModule],
       declarations: [
@@ -25,7 +25,7 @@ describe('SimpleViewComponent', () => {
     })
       .overrideComponent(SimpleViewComponent, overrideForChangeDetection)
       .compileComponents();
-  }));
+  });
 
   let fixture: ComponentFixture<SimpleViewComponent<any>>;
 

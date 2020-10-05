@@ -79,6 +79,20 @@ exports[`DashboardComponent is created 1`] = `
           
           
           <a
+            href="/dashboard/school"
+            mat-button=""
+            routerlinkactive="active"
+            style="min-width: auto;"
+          >
+            <i
+              class="material-icons transition-transform active-scale"
+            >
+              icon school
+            </i>
+          </a>
+          
+          
+          <a
             href="/dashboard/game"
             mat-button=""
             routerlinkactive="active"
