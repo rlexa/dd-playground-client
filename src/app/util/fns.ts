@@ -82,6 +82,8 @@ export const fnJoin = (separator: string) => <T>(vals: T[]) => vals?.join(separa
 export const fnLast = <T>(vals: T[]) => vals?.pop();
 export const fnTail = <T>(vals: T[]) => vals?.slice(1);
 
+export const fnLen = <T extends {length: number}>(vals: T) => vals?.length;
+
 export const fnMap = <T, R>(fn: (arg: T) => R) => (args: T[]): R[] => args?.map((ii) => fn(ii));
 
 export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) => (val: T) => vals?.some(equals(val));

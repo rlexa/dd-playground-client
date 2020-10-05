@@ -1,4 +1,19 @@
-import {fnAbs, fnCompose, fnFloor, fnJoin, fnMap, fnMult, fnSin, fnSome, fnSub, fnSum} from 'src/app/util/fns';
+import {
+  fnAbs,
+  fnCompose,
+  fnFloor,
+  fnGt,
+  fnJoin,
+  fnLen,
+  fnMap,
+  fnMult,
+  fnSame,
+  fnSin,
+  fnSome,
+  fnSub,
+  fnSum,
+  fnWhileDo,
+} from 'src/app/util/fns';
 
 export type MathTestQuestionType = 'pyramide' | 'shortresult' | 'table' | 'questionline';
 
@@ -35,6 +50,8 @@ export function randomize(seed: number) {
 const rndInt = (max: number) => (rnd: () => number) => fnCompose(fnFloor, fnSum(0.5), fnMult(max))(rnd());
 const rndIntBetween = (min: number) => (max: number) => fnCompose(fnSum(min), rndInt(fnSub(max)(min)));
 
+const needMoreItems = <T>(want: number) => fnCompose<boolean, T[], number>(fnGt(want), fnLen);
+
 // GENERATE
 
 const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
@@ -52,11 +69,7 @@ const generateTaskNumberByDescription = (rnd: () => number): MathTestTask => {
 const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
   const leftDelta = rndIntBetween(3)(7)(rnd);
 
-  let rightDelta = leftDelta;
-  while (rightDelta === leftDelta) {
-    rightDelta = rndIntBetween(2)(5)(rnd);
-  }
-
+  const rightDelta = fnWhileDo<number>(fnSame(leftDelta))(() => rndIntBetween(2)(5)(rnd))(leftDelta);
   const first = rndIntBetween(60)(99)(rnd);
   const second = rndIntBetween(10)(40)(rnd);
 
@@ -115,24 +128,20 @@ const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
   const isSameTerm = (aa: Term) => (bb: Term) => aa.opSum === bb.opSum && aa.first === bb.first && aa.second === bb.second;
   const points = 4;
 
-  let terms: Term[] = [];
-  while (terms.length < points * 2) {
-    if (!(terms.length % 2)) {
+  const termCount = fnMult(2)(points);
+  const terms = fnWhileDo(needMoreItems<Term>(termCount))((trms) => {
+    let term: Term = null;
+    if (!(trms.length % 2)) {
       const first = rndIntBetween(49)(99)(rnd);
       const second = rndIntBetween(11)(first)(rnd);
-      const term: Term = {first, second, opSum: false};
-      if (!fnSome(isSameTerm)(terms)(term)) {
-        terms = [...terms, term];
-      }
+      term = {first, second, opSum: false};
     } else {
       const first = rndIntBetween(11)(71)(rnd);
       const second = rndIntBetween(11)(100 - first)(rnd);
-      const term: Term = {first, second, opSum: true};
-      if (!fnSome(isSameTerm)(terms)(term)) {
-        terms = [...terms, term];
-      }
+      term = {first, second, opSum: true};
     }
-  }
+    return fnSome(isSameTerm)(trms)(term) ? trms : [...trms, term];
+  })([]);
 
   return {
     questions: [
@@ -180,16 +189,11 @@ const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
 const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
   const rnd2to9 = rndIntBetween(2)(9);
 
-  const valsDistinct = (len: number) => (getAnother: (arg: () => number) => number) => (rndGenerator: () => number) => {
-    let vals: number[] = [];
-    while (vals.length < len) {
+  const valsDistinct = (len: number) => (getAnother: (arg: () => number) => number) => (rndGenerator: () => number) =>
+    fnWhileDo(needMoreItems<number>(len))((vals) => {
       const val = getAnother(rndGenerator);
-      if (!vals.includes(val)) {
-        vals = [...vals, val];
-      }
-    }
-    return vals;
-  };
+      return vals.includes(val) ? vals : [...vals, val];
+    })([]);
 
   const topValCount = 4;
   const topVals = valsDistinct(topValCount)(rnd2to9)(rnd);
@@ -206,11 +210,7 @@ const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
     topVals.map((top, topIndex) => {
       const ret = left * top;
       if (errorIndices.includes(leftIndex * topValCount + topIndex)) {
-        let retError = ret;
-        while (retError === ret) {
-          retError = rnd2to99(rnd);
-        }
-        return retError;
+        return fnWhileDo(fnSame(ret))(() => rnd2to99(rnd))(ret);
       }
       return ret;
     }),

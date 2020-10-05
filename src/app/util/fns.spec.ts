@@ -16,6 +16,7 @@ import {
   fnJoin,
   fnKey,
   fnLast,
+  fnLen,
   fnLift1,
   fnLift2,
   fnLift2to2,
@@ -156,6 +157,12 @@ describe(`fns`, () => {
     test(`returns last for [.]`, () => expect(fnLast([1, 2, 3])).toBe(3));
     test(`returns undefined for []`, () => expect(fnLast([])).toBe(undefined));
     test(`returns undefined for undefined`, () => expect(fnLast(undefined)).toBe(undefined));
+  });
+
+  describe(`fnLen`, () => {
+    test(`returns for [.]`, () => expect(fnLen([1, 2, 3])).toBe(3));
+    test(`returns for 'asd'`, () => expect(fnLen('123')).toBe(3));
+    test(`returns undefined for undefined`, () => expect(fnLen(undefined)).toBe(undefined));
   });
 
   describe(`fnLiftx`, () => {
