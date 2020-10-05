@@ -25,8 +25,6 @@ export class AppComponent implements OnDestroy {
       .subscribe((ev) => rxStateMutate.setRoute(router.routerState.snapshot.url));
   }
 
-  private start: () => void = null;
-
   destroy() {}
   ngOnDestroy() {
     this.destroy();
