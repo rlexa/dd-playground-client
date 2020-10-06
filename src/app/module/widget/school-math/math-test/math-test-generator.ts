@@ -40,6 +40,8 @@ export interface MathTest {
 
 const joinText = fnJoin(' ');
 
+const fnJsonEqual = <T>(aa: T) => (bb: T) => JSON.stringify(aa) === JSON.stringify(bb);
+
 export function randomize(seed: number) {
   return () => {
     seed = fnMult(10000)(fnSin(seed));
@@ -52,6 +54,14 @@ const rndIntBetween = (min: number) => (max: number) => fnCompose(fnSum(min), rn
 
 const needMoreItems = <T>(want: number) => fnCompose<boolean, T[], number>(fnGt(want), fnLen);
 
+const addDistinctItemsUntil = <T>(newItem: (items: T[]) => T) => (compare: (aa: T) => (bb: T) => boolean) => (want: number) => (
+  init: T[],
+) =>
+  fnWhileDo(needMoreItems<T>(want))((items) => {
+    const item = newItem(items);
+    return fnSome(compare)(items)(item) ? items : [...items, item];
+  })(init);
+
 // GENERATE
 
 const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
@@ -62,8 +72,28 @@ const generateTaskDotBeforeLinePriority = (rnd: () => number): MathTestTask => {
   return {title: 'TODO Denke an die Regel.'};
 };
 
+const generateQuestionNumberByDescription = (rnd: () => number): MathTestQuestion => {
+  const base = rndIntBetween(5)(9)(rnd);
+  const mult = rndIntBetween(3)(9)(rnd);
+  const result = fnMult(base)(mult);
+
+  const deviation = rndInt(base - 1);
+  const left = fnCompose(fnSub(result), deviation)(rnd);
+  const right = fnCompose(fnSum(result), deviation)(rnd);
+
+  return {
+    type: 'questionline',
+    text: `Meine Zahl ist ${result % 2 ? 'ungerade' : 'gerade'}. Sie ist eine ${base}-Zahl. Sie liegt zwischen ${left} und ${right}.`,
+    result: String(result),
+    points: 1,
+  };
+};
+
 const generateTaskNumberByDescription = (rnd: () => number): MathTestTask => {
-  return {title: 'TODO Zahlen rausfinden'};
+  return {
+    text: 'Wie heißen die Zahlen?',
+    questions: addDistinctItemsUntil(() => generateQuestionNumberByDescription(rnd))(fnJsonEqual)(2)([]),
+  };
 };
 
 const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
@@ -125,13 +155,13 @@ const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
     second: number;
     opSum: boolean;
   }
-  const isSameTerm = (aa: Term) => (bb: Term) => aa.opSum === bb.opSum && aa.first === bb.first && aa.second === bb.second;
-  const points = 4;
 
+  const points = 4;
   const termCount = fnMult(2)(points);
-  const terms = fnWhileDo(needMoreItems<Term>(termCount))((trms) => {
+
+  const terms = addDistinctItemsUntil((items: Term[]) => {
     let term: Term = null;
-    if (!(trms.length % 2)) {
+    if (!(items.length % 2)) {
       const first = rndIntBetween(49)(99)(rnd);
       const second = rndIntBetween(11)(first)(rnd);
       term = {first, second, opSum: false};
@@ -140,8 +170,8 @@ const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
       const second = rndIntBetween(11)(100 - first)(rnd);
       term = {first, second, opSum: true};
     }
-    return fnSome(isSameTerm)(trms)(term) ? trms : [...trms, term];
-  })([]);
+    return term;
+  })(fnJsonEqual)(termCount)([]);
 
   return {
     questions: [
@@ -189,21 +219,15 @@ const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
 const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
   const rnd2to9 = rndIntBetween(2)(9);
 
-  const valsDistinct = (len: number) => (getAnother: (arg: () => number) => number) => (rndGenerator: () => number) =>
-    fnWhileDo(needMoreItems<number>(len))((vals) => {
-      const val = getAnother(rndGenerator);
-      return vals.includes(val) ? vals : [...vals, val];
-    })([]);
-
   const topValCount = 4;
-  const topVals = valsDistinct(topValCount)(rnd2to9)(rnd);
+  const topVals = addDistinctItemsUntil(() => rnd2to9(rnd))(fnSame)(topValCount)([]);
 
   const leftValCount = 4;
-  const leftVals = valsDistinct(leftValCount)(rnd2to9)(rnd);
+  const leftVals = addDistinctItemsUntil(() => rnd2to9(rnd))(fnSame)(leftValCount)([]);
 
   const errorCount = 5;
   const rndIndex = rndInt(topValCount * leftValCount - 1);
-  const errorIndices = valsDistinct(errorCount)(rndIndex)(rnd);
+  const errorIndices = addDistinctItemsUntil(() => rndIndex(rnd))(fnSame)(errorCount)([]);
 
   const rnd2to99 = rndIntBetween(2)(99);
   const rows = leftVals.map((left, leftIndex) =>
