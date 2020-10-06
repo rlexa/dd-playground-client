@@ -85,6 +85,7 @@ export const fnTail = <T>(vals: T[]) => vals?.slice(1);
 export const fnLen = <T extends {length: number}>(vals: T) => vals?.length;
 
 export const fnMap = <T, R>(fn: (arg: T) => R) => (args: T[]): R[] => args?.map((ii) => fn(ii));
+export const fnMapIndexed = <T, R>(fn: (index: number) => (arg: T) => R) => (args: T[]): R[] => args?.map((ii, index) => fn(index)(ii));
 
 export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) => (val: T) => vals?.some(equals(val));
 

@@ -7,6 +7,7 @@ import {
   fnJoin,
   fnLen,
   fnMap,
+  fnMapIndexed,
   fnMult,
   fnSame,
   fnSin,
@@ -40,6 +41,7 @@ export interface MathTest {
 // UTIL
 
 const joinText = fnJoin(' ');
+const joinComma = fnJoin(',');
 
 const fnJsonEqual = <T>(aa: T) => (bb: T) => JSON.stringify(aa) === JSON.stringify(bb);
 
@@ -80,15 +82,14 @@ const generateQuestionDivideWithSomeRest = (rnd: () => number): MathTestQuestion
 
 const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionDivideWithSomeRest(rnd))(fnJsonEqual)(10)([]);
-  const joinWithComma = fnJoin(',');
   return {
     title: 'Teilen mit und ohne Rest.',
     questions: [
       questions.reduce<MathTestQuestion>(
         (acc, ii) => ({
           ...acc,
-          text: acc.text ? joinWithComma([acc.text, ii.text]) : ii.text,
-          result: acc.result ? joinWithComma([acc.result, ii.result]) : ii.result,
+          text: acc.text ? joinComma([acc.text, ii.text]) : ii.text,
+          result: acc.result ? joinComma([acc.result, ii.result]) : ii.result,
           points: acc.points + ii.points,
         }),
         {type: 'shortresult', text: '', result: '', points: 0},
@@ -121,15 +122,14 @@ const generateQuestionDotBeforeLinePriority = (rnd: () => number): MathTestQuest
 
 const generateTaskDotBeforeLinePriority = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionDotBeforeLinePriority(rnd))(fnJsonEqual)(6)([]);
-  const joinWithComma = fnJoin(',');
   return {
     title: 'Denke an die Regel.',
     questions: [
       questions.reduce<MathTestQuestion>(
         (acc, ii) => ({
           ...acc,
-          text: acc.text ? joinWithComma([acc.text, ii.text]) : ii.text,
-          result: acc.result ? joinWithComma([acc.result, ii.result]) : ii.result,
+          text: acc.text ? joinComma([acc.text, ii.text]) : ii.text,
+          result: acc.result ? joinComma([acc.result, ii.result]) : ii.result,
           points: acc.points + ii.points,
         }),
         {type: 'shortresult', text: '', result: '', points: 0},
@@ -173,17 +173,19 @@ const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
     first: number;
     second: number;
   }
-  const terms = [0, 0, 0, 0, 0].map<Term>((_, index) => ({first: first + index * leftDelta, second: second + index * rightDelta}));
+  const indexToFirst = fnCompose(fnSum(first), fnMult(leftDelta));
+  const indexToSecond = fnCompose(fnSum(second), fnMult(rightDelta));
+  const terms = fnMapIndexed((index) => (): Term => ({first: indexToFirst(index), second: indexToSecond(index)}))([0, 0, 0, 0, 0]);
 
   return {
     questions: [
-      ...terms.map<MathTestQuestion>((term, index) => ({
+      ...fnMapIndexed((index) => (term: Term): MathTestQuestion => ({
         type: 'shortresult',
         text: `${index < 3 ? term.first : '__'} - ${index < 3 ? term.second : '__'} = __`,
         title: !index ? 'Setze fort und rechne.' : undefined,
         result: `${term.first} - ${term.second} = ${term.first - term.second}`,
         points: 1,
-      })),
+      }))(terms),
       {
         type: 'questionline',
         title: 'Beschreibe das Päckchen.',
@@ -226,15 +228,14 @@ const generateQuestionInsertComparison = (rnd: () => number): MathTestQuestion =
 
 const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionInsertComparison(rnd))(fnJsonEqual)(4)([]);
-  const joinWithComma = fnJoin(',');
   return {
     title: 'Setze ein. > < =',
     questions: [
       questions.reduce<MathTestQuestion>(
         (acc, ii) => ({
           ...acc,
-          text: acc.text ? joinWithComma([acc.text, ii.text]) : ii.text,
-          result: acc.result ? joinWithComma([acc.result, ii.result]) : ii.result,
+          text: acc.text ? joinComma([acc.text, ii.text]) : ii.text,
+          result: acc.result ? joinComma([acc.result, ii.result]) : ii.result,
           points: acc.points + ii.points,
         }),
         {type: 'shortresult', text: '', result: '', points: 0},
@@ -271,15 +272,18 @@ const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
     return term;
   })(fnJsonEqual)(termCount)([]);
 
+  const termsToText = fnCompose(
+    joinComma,
+    fnMap((term: Term) => `${term.first} ${term.opSum ? '+' : '-'} ${term.second} = __`),
+  );
+
+  const termsToResult = fnCompose(
+    joinComma,
+    fnMap((term: Term) => (term.opSum ? term.first + term.second : term.first - term.second)),
+  );
+
   return {
-    questions: [
-      {
-        type: 'shortresult',
-        text: terms.map((term) => `${term.first} ${term.opSum ? '+' : '-'} ${term.second} = __`).join(','),
-        result: terms.map((term) => (term.opSum ? term.first + term.second : term.first - term.second)).join(','),
-        points,
-      },
-    ],
+    questions: [{type: 'shortresult', text: termsToText(terms), result: termsToResult(terms), points}],
   };
 };
 
@@ -298,16 +302,15 @@ const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
   const lvlThree = [fnSum(lvlTwo[0])(lvlTwo[1])];
 
   const joinPyramide = fnJoin('|');
-  const joinNumbers = fnJoin(',');
 
   return {
     questions: [
       {
         type: 'pyramide',
         text: joinPyramide(
-          fnMap(joinNumbers)([[null], [null, null], [null, valOneOne, null], [valZeroZero, null, valZeroTwo, valZeroThree]]),
+          fnMap(joinComma)([[null], [null, null], [null, valOneOne, null], [valZeroZero, null, valZeroTwo, valZeroThree]]),
         ),
-        result: joinPyramide(fnMap(joinNumbers)([lvlThree, lvlTwo, lvlOne, lvlZero])),
+        result: joinPyramide(fnMap(joinComma)([lvlThree, lvlTwo, lvlOne, lvlZero])),
         points: 3,
       },
     ],
@@ -339,8 +342,7 @@ const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
   );
 
   const joinLines = fnJoin('|');
-  const joinVals = fnJoin(',');
-  const asText = fnCompose(joinLines, fnMap<(string | number)[], string>(joinVals));
+  const asText = fnCompose(joinLines, fnMap<(string | number)[], string>(joinComma));
 
   return {
     text: joinText([`In der Rechentafel sind ${errorCount} Fehler.`, `Streiche die falschen Ergebnisse durch.`]),
@@ -348,7 +350,7 @@ const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
       {
         type: 'table',
         text: asText([['*', ...topVals], ...rows.map((row, index) => [leftVals[index], ...row])]),
-        result: joinVals(errorIndices.map((index) => rows[Math.floor(index / topValCount)][index % topValCount])),
+        result: joinComma(errorIndices.map((index) => rows[Math.floor(index / topValCount)][index % topValCount])),
         points: 4,
       },
     ],

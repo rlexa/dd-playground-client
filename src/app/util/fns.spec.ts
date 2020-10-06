@@ -24,6 +24,7 @@ import {
   fnLt,
   fnLte,
   fnMap,
+  fnMapIndexed,
   fnMerge,
   fnMod,
   fnMult,
@@ -187,6 +188,12 @@ describe(`fns`, () => {
   describe(`fnMap`, () => {
     test(`maps`, () => expect(fnMap(plusOne)([1, 2, 3])).toEqual([2, 3, 4]));
     test(`maps null to undefined`, () => expect(fnMap(plusOne)(null)).toEqual(undefined));
+  });
+
+  describe(`fnMapIndexed`, () => {
+    const toIndex = (index: number) => (item: any) => index;
+    test(`maps`, () => expect(fnMapIndexed(toIndex)([1, 1, 1])).toEqual([0, 1, 2]));
+    test(`maps null to undefined`, () => expect(fnMapIndexed(toIndex)(null)).toEqual(undefined));
   });
 
   describe(`fnMerge`, () => {
