@@ -5,6 +5,7 @@ exports[`SchoolMathComponent is created 1`] = `
   data$={[Function Observable]}
   done$={[Function DoneSubject]}
   pdfMeta$={[Function Observable]}
+  points$={[Function Observable]}
   seed={[Function Number]}
   triggerGenerate={[Function Function]}
   triggerGenerate$={[Function Subject]}
@@ -34,6 +35,11 @@ exports[`SchoolMathComponent is created 1`] = `
           PDF
         </button>
       </p>
+      <label
+        class="right"
+      >
+        0 points
+      </label>
       <app-simple-view
         subheader="JSON"
       />

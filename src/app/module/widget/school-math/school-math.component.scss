@@ -21,4 +21,12 @@
       margin-left: var(--size-gap);
     }
   }
+
+  label {
+    font-size: var(--size-font-small);
+  }
+
+  .right {
+    text-align: right;
+  }
 }

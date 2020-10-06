@@ -30,6 +30,14 @@ export class SchoolMathComponent implements OnDestroy, OnInit {
     takeUntil(this.done$),
   );
 
+  readonly points$ = this.data$.pipe(
+    map(
+      (data) =>
+        data?.tasks?.reduce((acc, task) => acc + (task?.questions?.reduce((acc2, question) => acc2 + question.points ?? 0, 0) ?? 0), 0) ??
+        0,
+    ),
+  );
+
   seed = 1;
 
   triggerGenerate = () => this.triggerGenerate$.next();
