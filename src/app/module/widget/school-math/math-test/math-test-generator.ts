@@ -184,26 +184,26 @@ const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
         text: `${index < 3 ? term.first : '__'} - ${index < 3 ? term.second : '__'} = __`,
         title: !index ? 'Setze fort und rechne.' : undefined,
         result: `${term.first} - ${term.second} = ${term.first - term.second}`,
-        points: 1,
+        points: index < 3 ? 0.5 : 1.5,
       }))(terms),
       {
         type: 'questionline',
         title: 'Beschreibe das Päckchen.',
         text: 'Die erste Zahl',
         result: `wird um ${leftDelta} erhöht`,
-        points: 1,
+        points: 0.5,
       },
       {
         type: 'questionline',
         text: 'Die zweite Zahl',
         result: `wird um ${rightDelta} erhöht`,
-        points: 1,
+        points: 0.5,
       },
       {
         type: 'questionline',
         text: 'Deshalb',
         result: `wird das Ergebnis um ${fnAbs(leftDelta - rightDelta)} ${leftDelta > rightDelta ? 'erhöht' : 'erniedrigt'}`,
-        points: 1,
+        points: 0.5,
       },
     ],
   };
@@ -343,6 +343,7 @@ const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
   const joinPyramide = fnJoin('|');
 
   return {
+    title: 'Summenpyramide (+).',
     questions: [
       {
         type: 'pyramide',

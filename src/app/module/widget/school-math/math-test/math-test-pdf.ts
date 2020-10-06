@@ -79,6 +79,22 @@ function taskToPdf(val: MathTestTask, index: number): Content {
   };
 }
 
+export const mathTestTaskToPoints = (data: MathTestTask) =>
+  data?.questions?.reduce((acc2, question) => acc2 + question.points ?? 0, 0) ?? 0;
+
+function questionToResultsPdf(data: MathTestQuestion): Content {
+  return `Punkte: ${data.points}. Ergebnis: ${data.result}`;
+}
+
+function taskToResultsPdf(data: MathTestTask, index: number): Content {
+  return {
+    stack: [{text: `${index + 1}. Punkte: ${mathTestTaskToPoints(data)}`}, ...data?.questions?.map(questionToResultsPdf)],
+    style: 'marginAll',
+  };
+}
+
+export const mathTestToPoints = (data: MathTest) => data?.tasks?.reduce((acc, task) => acc + mathTestTaskToPoints(task), 0) ?? 0;
+
 export function mathTestToPdf(data: MathTest) {
   return !data
     ? null
@@ -86,6 +102,9 @@ export function mathTestToPdf(data: MathTest) {
         content: [
           {text: data.title || 'Math Test', style: 'h1'},
           ...data?.tasks?.map((ii, index) => taskToPdf(ii, index)).filter((ii) => !!ii),
+          {pageBreak: 'before', text: `Ergebnisse für: ${data.title}`, style: 'h1'},
+          {text: `Punkte: ${mathTestToPoints(data)}`},
+          ...data?.tasks?.map((ii, index) => taskToResultsPdf(ii, index)).filter((ii) => !!ii),
         ],
         styles: {
           defaultStyle: {fontSize: 14},

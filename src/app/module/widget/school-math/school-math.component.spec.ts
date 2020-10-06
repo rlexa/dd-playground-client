@@ -1,25 +1,17 @@
 import {TestBed} from '@angular/core/testing';
-import {FormsModule} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
-import {RouterTestingModule} from '@angular/router/testing';
-import {MockComponents, MockDirectives} from 'ng-mocks';
-import {detectChanges, mockAll, overrideForChangeDetection} from 'src/app/test';
-import {FlexboxDirective} from '../../directive/flexbox';
-import {CryptoApiService} from '../../service/crypto-api';
+import {MockComponents} from 'ng-mocks';
+import {detectChanges, overrideForChangeDetection} from 'src/app/test';
 import {SimpleViewComponent} from '../simple-view';
 import {SchoolMathComponent} from './school-math.component';
 
 describe('SchoolMathComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule],
-      declarations: [
-        SchoolMathComponent,
-        MockComponents(MatButton, MatCard, MatCardTitle, MatCardContent, SimpleViewComponent),
-        MockDirectives(FlexboxDirective),
-      ],
-      providers: [mockAll(CryptoApiService)],
+      imports: [],
+      declarations: [SchoolMathComponent, MockComponents(MatButton, MatCard, MatCardTitle, MatCardContent, SimpleViewComponent)],
+      providers: [],
     })
       .overrideComponent(SchoolMathComponent, overrideForChangeDetection)
       .compileComponents();

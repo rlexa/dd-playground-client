@@ -3,7 +3,7 @@ import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {Subject} from 'rxjs';
 import {filter, map, shareReplay, startWith, takeUntil, withLatestFrom} from 'rxjs/operators';
 import {generateMathTestGrade2, MathTest} from './math-test/math-test-generator';
-import {mathTestToPdf} from './math-test/math-test-pdf';
+import {mathTestToPdf, mathTestToPoints} from './math-test/math-test-pdf';
 
 @Component({
   selector: 'app-school-math',
@@ -18,7 +18,7 @@ export class SchoolMathComponent implements OnDestroy, OnInit {
   @RxCleanup() readonly triggerPdf$ = new Subject();
 
   readonly data$ = this.triggerGenerate$.pipe(
-    map(() => generateMathTestGrade2({seed: this.seed, title: 'Mathe Arbeit'})),
+    map(() => generateMathTestGrade2({seed: this.seed, title: `Mathe Arbeit #${this.seed}`})),
     startWith<MathTest>(null as MathTest),
     shareReplay({refCount: true, bufferSize: 1}),
     takeUntil(this.done$),
@@ -30,13 +30,7 @@ export class SchoolMathComponent implements OnDestroy, OnInit {
     takeUntil(this.done$),
   );
 
-  readonly points$ = this.data$.pipe(
-    map(
-      (data) =>
-        data?.tasks?.reduce((acc, task) => acc + (task?.questions?.reduce((acc2, question) => acc2 + question.points ?? 0, 0) ?? 0), 0) ??
-        0,
-    ),
-  );
+  readonly points$ = this.data$.pipe(map(mathTestToPoints));
 
   seed = 1;
 
