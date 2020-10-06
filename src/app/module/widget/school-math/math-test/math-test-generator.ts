@@ -207,8 +207,40 @@ const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
   };
 };
 
+const generateQuestionInsertComparison = (rnd: () => number): MathTestQuestion => {
+  const left1 = rndInt(9)(rnd);
+  const left2 = rndInt(9)(rnd);
+  const right1 = rndInt(9)(rnd);
+  const right2 = rndInt(9)(rnd);
+
+  const left = fnMult(left1)(left2);
+  const right = fnMult(right1)(right2);
+
+  return {
+    type: 'shortresult',
+    text: `${left1} * ${left2} __ ${right1} * ${right2}`,
+    result: `${left === right ? '=' : left > right ? '>' : '<'}`,
+    points: 0.5,
+  };
+};
+
 const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
-  return {title: 'TODO Setze ein. > < ='};
+  const questions = addDistinctItemsUntil(() => generateQuestionInsertComparison(rnd))(fnJsonEqual)(4)([]);
+  const joinWithComma = fnJoin(',');
+  return {
+    title: 'Setze ein. > < =',
+    questions: [
+      questions.reduce<MathTestQuestion>(
+        (acc, ii) => ({
+          ...acc,
+          text: acc.text ? joinWithComma([acc.text, ii.text]) : ii.text,
+          result: acc.result ? joinWithComma([acc.result, ii.result]) : ii.result,
+          points: acc.points + ii.points,
+        }),
+        {type: 'shortresult', text: '', result: '', points: 0},
+      ),
+    ],
+  };
 };
 
 const generateTaskInsertOperation = (rnd: () => number): MathTestTask => {
