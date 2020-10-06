@@ -3,6 +3,7 @@ import {
   fnAnd,
   fnCompose,
   fnDefault,
+  fnFilter,
   fnFirst,
   fnFlip,
   fnFloat,
@@ -85,9 +86,10 @@ describe(`fns`, () => {
     test(`defaults not for ''`, () => expect(fnDefault('1')('')).toBe(''));
   });
 
-  describe(`fnWhileDo`, () => {
-    test(`loops until break`, () => expect(fnWhileDo((nr) => nr < 4)(plusOne)(0)).toBe(4));
-    test(`does not loop on immediate break`, () => expect(fnWhileDo(() => false)(plusOne)(0)).toBe(0));
+  describe(`fnFilter`, () => {
+    test(`null for null`, () => expect(fnFilter(Boolean)(null)).toBe(undefined));
+    test(`undefined for undefined`, () => expect(fnFilter(Boolean)(null)).toBe(undefined));
+    test(`filters`, () => expect(fnFilter(Boolean)([0, 1, false, true, '', 'text'])).toEqual([1, true, 'text']));
   });
 
   describe(`fnFirst`, () => {
@@ -293,5 +295,10 @@ describe(`fns`, () => {
       expect(fnTrace('tag')(1)).toBe(1);
       expect(console.log).toHaveBeenCalledWith('tag: 1');
     });
+  });
+
+  describe(`fnWhileDo`, () => {
+    test(`loops until break`, () => expect(fnWhileDo((nr) => nr < 4)(plusOne)(0)).toBe(4));
+    test(`does not loop on immediate break`, () => expect(fnWhileDo(() => false)(plusOne)(0)).toBe(0));
   });
 });

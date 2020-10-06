@@ -236,7 +236,7 @@ const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
           ...acc,
           text: acc.text ? joinComma([acc.text, ii.text]) : ii.text,
           result: acc.result ? joinComma([acc.result, ii.result]) : ii.result,
-          points: acc.points + ii.points,
+          points: fnSum(acc.points)(ii.points),
         }),
         {type: 'shortresult', text: '', result: '', points: 0},
       ),

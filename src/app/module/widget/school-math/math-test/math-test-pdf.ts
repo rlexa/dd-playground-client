@@ -1,7 +1,7 @@
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {Content} from 'pdfmake/interfaces';
-import {fnCompose, fnJoin, fnMap, fnPadEnd, fnPadStart, fnSplit} from 'src/app/util/fns';
+import {fnCompose, fnFilter, fnJoin, fnMap, fnMapIndexed, fnPadEnd, fnPadStart, fnSplit} from 'src/app/util/fns';
 import {MathTest, MathTestQuestion, MathTestTask} from './math-test-generator';
 
 // needed for some reason (see docs)
@@ -11,9 +11,10 @@ const splitByComma = fnSplit(',');
 const splitByWall = fnSplit('|');
 const wrapIn = (wrap: string) => (val: unknown) => `${wrap}${val}${wrap}`;
 
-function questionLineToPdf(val: string): Content {
-  return {text: `${val} _____`, style: 'marginAll'};
-}
+const indexedItemToPdfContentWith = <T>(mapIndexed: (index: number) => (val: T) => Content) =>
+  fnCompose(fnFilter<Content>(Boolean), fnMapIndexed(mapIndexed));
+
+const questionLineToPdf = (val: string): Content => ({text: `${val} _____`, style: 'marginAll'});
 
 function questionShortResultToPdf(val: string): Content {
   const terms = splitByComma(val);
@@ -53,8 +54,8 @@ function questionPyramideToPdf(val: string): Content {
   };
 }
 
-function questionToPdf(val: MathTestQuestion, index: number): Content {
-  return [
+const questionToPdf = (index: number) => (val: MathTestQuestion): Content =>
+  fnFilter<Content>(Boolean)([
     val?.title ? {text: `${String.fromCharCode('a'.charCodeAt(0) + index)}) ${val.title}`} : null,
     val?.type === 'pyramide'
       ? questionPyramideToPdf(val.text)
@@ -65,33 +66,25 @@ function questionToPdf(val: MathTestQuestion, index: number): Content {
       : val?.type === 'questionline'
       ? questionLineToPdf(val.text)
       : `TODO type ${val?.type || 'undefined'}`,
-  ].filter((ii) => !!ii);
-}
+  ]);
 
-function taskToPdf(val: MathTestTask, index: number): Content {
-  return {
-    stack: [
-      {text: `${index + 1}. ${val.title ?? ''}`, style: ['h2', 'marginTop']},
-      {text: val.text ?? '', style: 'marginAll'},
-      ...(val.questions || []).map((ii, iindex) => questionToPdf(ii, iindex)).filter((ii) => !!ii),
-    ],
-    unbreakable: true,
-  };
-}
+const taskToPdf = (index: number) => (val: MathTestTask): Content => ({
+  stack: [
+    {text: `${index + 1}. ${val.title ?? ''}`, style: ['h2', 'marginTop']},
+    {text: val.text ?? '', style: 'marginAll'},
+    ...indexedItemToPdfContentWith(questionToPdf)(val.questions ?? []),
+  ],
+  unbreakable: true,
+});
 
-export const mathTestTaskToPoints = (data: MathTestTask) =>
-  data?.questions?.reduce((acc2, question) => acc2 + question.points ?? 0, 0) ?? 0;
+export const mathTestTaskToPoints = (data: MathTestTask) => data?.questions?.reduce((acc, question) => acc + question.points ?? 0, 0) ?? 0;
 
-function questionToResultsPdf(data: MathTestQuestion): Content {
-  return `Punkte: ${data.points}. Ergebnis: ${data.result}`;
-}
+const questionToResultsPdf = (data: MathTestQuestion): Content => `Punkte: ${data.points}. Ergebnis: ${data.result}`;
 
-function taskToResultsPdf(data: MathTestTask, index: number): Content {
-  return {
-    stack: [{text: `${index + 1}. Punkte: ${mathTestTaskToPoints(data)}`}, ...data?.questions?.map(questionToResultsPdf)],
-    style: 'marginAll',
-  };
-}
+const taskToResultsPdf = (index: number) => (data: MathTestTask): Content => ({
+  stack: [{text: `${index + 1}. Punkte: ${mathTestTaskToPoints(data)}`}, ...data?.questions?.map(questionToResultsPdf)],
+  style: 'marginAll',
+});
 
 export const mathTestToPoints = (data: MathTest) => data?.tasks?.reduce((acc, task) => acc + mathTestTaskToPoints(task), 0) ?? 0;
 
@@ -101,10 +94,10 @@ export function mathTestToPdf(data: MathTest) {
     : pdfMake.createPdf({
         content: [
           {text: data.title || 'Math Test', style: 'h1'},
-          ...data?.tasks?.map((ii, index) => taskToPdf(ii, index)).filter((ii) => !!ii),
+          ...indexedItemToPdfContentWith(taskToPdf)(data?.tasks),
           {pageBreak: 'before', text: `Ergebnisse für: ${data.title}`, style: 'h1'},
           {text: `Punkte: ${mathTestToPoints(data)}`},
-          ...data?.tasks?.map((ii, index) => taskToResultsPdf(ii, index)).filter((ii) => !!ii),
+          ...indexedItemToPdfContentWith(taskToResultsPdf)(data?.tasks),
         ],
         styles: {
           defaultStyle: {fontSize: 14},
