@@ -64,8 +64,41 @@ const addDistinctItemsUntil = <T>(newItem: (items: T[]) => T) => (compare: (aa: 
 
 // GENERATE
 
+const generateQuestionDivideWithSomeRest = (rnd: () => number): MathTestQuestion => {
+  const left = rndIntBetween(15)(100)(rnd);
+  const right = rndIntBetween(2)(9)(rnd);
+  const rest = left % right;
+
+  return {
+    type: 'shortresult',
+    text: `${left} : ${right} = __`,
+    result: `${fnFloor(left / right)}${rest ? 'R' + rest : ''}`,
+    points: 0.5,
+  };
+};
+
 const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
-  return {title: 'TODO Teilen mit und ohne Rest.'};
+  const questions = addDistinctItemsUntil(() => generateQuestionDivideWithSomeRest(rnd))(fnJsonEqual)(10)([]);
+  const fnJoinWithComma = fnJoin(',');
+  return {
+    title: 'Teilen mit und ohne Rest.',
+    questions: [
+      questions.reduce<MathTestQuestion>(
+        (acc, ii) => ({
+          ...acc,
+          text: acc.text ? fnJoinWithComma([acc.text, ii.text]) : ii.text,
+          result: acc.result ? fnJoinWithComma([acc.result, ii.result]) : ii.result,
+          points: acc.points + ii.points,
+        }),
+        {
+          type: 'shortresult',
+          text: '',
+          result: '',
+          points: 0,
+        },
+      ),
+    ],
+  };
 };
 
 const generateTaskDotBeforeLinePriority = (rnd: () => number): MathTestTask => {
@@ -111,13 +144,13 @@ const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
 
   return {
     questions: [
-      {
+      ...terms.map<MathTestQuestion>((term, index) => ({
         type: 'shortresult',
-        text: terms.map((term, index) => `${index < 3 ? term.first : '__'} - ${index < 3 ? term.second : '__'} = __`).join(','),
-        title: 'Setze fort und rechne.',
-        result: terms.map((term) => `${term.first} - ${term.second} = ${term.first - term.second}`).join(','),
-        points: 5,
-      },
+        text: `${index < 3 ? term.first : '__'} - ${index < 3 ? term.second : '__'} = __`,
+        title: !index ? 'Setze fort und rechne.' : undefined,
+        result: `${term.first} - ${term.second} = ${term.first - term.second}`,
+        points: 1,
+      })),
       {
         type: 'questionline',
         title: 'Beschreibe das Päckchen.',
