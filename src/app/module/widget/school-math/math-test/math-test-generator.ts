@@ -157,7 +157,7 @@ const generateQuestionNumberByDescription = (rnd: () => number): MathTestQuestio
 
 const generateTaskNumberByDescription = (rnd: () => number): MathTestTask => {
   return {
-    text: 'Wie heißen die Zahlen?',
+    title: 'Wie heißen die Zahlen?',
     questions: addDistinctItemsUntil(() => generateQuestionNumberByDescription(rnd))(fnJsonEqual)(2)([]),
   };
 };
@@ -244,8 +244,47 @@ const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
   };
 };
 
+const generateQuestionInsertOperation = (rnd: () => number): MathTestQuestion => {
+  const rndBoolean = fnCompose(fnGte(50), rndInt(100));
+  const isMult = rndBoolean(rnd);
+
+  const dot1 = rndIntBetween(2)(9)(rnd);
+  const dot2 = rndIntBetween(2)(9)(rnd);
+  const dotResult = fnMult(dot1)(dot2);
+
+  const result = isMult ? dotResult : dot2;
+
+  const isSum = rndBoolean(rnd);
+  const other1 = isSum ? rndIntBetween(0)(result)(rnd) : result + rndIntBetween(1)(30)(rnd);
+  const other2 = isSum ? fnSub(result)(other1) : fnSub(other1)(result);
+
+  const dotText = `${isMult ? dot1 : dotResult} __ ${isMult ? dot2 : dot1}`;
+  const sumText = `${other1} __ ${other2}`;
+
+  return {
+    type: 'shortresult',
+    text: `${dotText} = ${sumText}`,
+    result: `${isMult ? '*' : ':'} ${isSum ? '+' : '-'}`,
+    points: 0.5,
+  };
+};
+
 const generateTaskInsertOperation = (rnd: () => number): MathTestTask => {
-  return {title: 'TODO Setze ein. + - * :'};
+  const questions = addDistinctItemsUntil(() => generateQuestionInsertOperation(rnd))(fnJsonEqual)(4)([]);
+  return {
+    title: ' Setze ein. + - * :',
+    questions: [
+      questions.reduce<MathTestQuestion>(
+        (acc, ii) => ({
+          ...acc,
+          text: acc.text ? joinComma([acc.text, ii.text]) : ii.text,
+          result: acc.result ? joinComma([acc.result, ii.result]) : ii.result,
+          points: acc.points + ii.points,
+        }),
+        {type: 'shortresult', text: '', result: '', points: 0},
+      ),
+    ],
+  };
 };
 
 const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
@@ -345,7 +384,7 @@ const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
   const asText = fnCompose(joinLines, fnMap<(string | number)[], string>(joinComma));
 
   return {
-    text: joinText([`In der Rechentafel sind ${errorCount} Fehler.`, `Streiche die falschen Ergebnisse durch.`]),
+    title: joinText([`In der Rechentafel sind ${errorCount} Fehler.`, `Streiche die falschen Ergebnisse durch.`]),
     questions: [
       {
         type: 'table',

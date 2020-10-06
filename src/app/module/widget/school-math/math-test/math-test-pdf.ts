@@ -12,12 +12,12 @@ const splitByWall = fnSplit('|');
 const wrapIn = (wrap: string) => (val: unknown) => `${wrap}${val}${wrap}`;
 
 function questionLineToPdf(val: string): Content {
-  return {text: `${val} ________________________________________`, style: 'marginAll'};
+  return {text: `${val} _____`, style: 'marginAll'};
 }
 
 function questionShortResultToPdf(val: string): Content {
   const terms = splitByComma(val);
-  const termToPdf = (text: string): Content => ({text, style: {lineHeight: 1.2, fontSize: 15}});
+  const termToPdf = (text: string): Content => ({text, style: {lineHeight: 1.2}});
   return {
     columns: [terms.slice(0, Math.ceil(terms.length / 2)).map(termToPdf), terms.slice(Math.ceil(terms.length / 2)).map(termToPdf)],
     style: 'marginAll',
@@ -26,7 +26,7 @@ function questionShortResultToPdf(val: string): Content {
 
 function questionTableToPdf(val: string): Content {
   const rows = splitByWall(val);
-  const stringToContent = (text: string): Content => ({text, style: {margin: 1, fontSize: 16}});
+  const stringToContent = (text: string): Content => ({text, style: {margin: 1}});
   const rowToContents = fnCompose(fnMap(stringToContent), splitByComma);
   return {
     table: {
@@ -71,7 +71,7 @@ function questionToPdf(val: MathTestQuestion, index: number): Content {
 function taskToPdf(val: MathTestTask, index: number): Content {
   return {
     stack: [
-      {text: `${index + 1} ${val.title ?? ''}`, style: ['h2', 'marginTop']},
+      {text: `${index + 1}. ${val.title ?? ''}`, style: ['h2', 'marginTop']},
       {text: val.text ?? '', style: 'marginAll'},
       ...(val.questions || []).map((ii, iindex) => questionToPdf(ii, iindex)).filter((ii) => !!ii),
     ],
@@ -89,8 +89,8 @@ export function mathTestToPdf(data: MathTest) {
         ],
         styles: {
           defaultStyle: {fontSize: 14},
-          h1: {fontSize: 18, bold: true, alignment: 'center', lineHeight: 1.2},
-          h2: {fontSize: 16, bold: true, lineHeight: 1.1},
+          h1: {fontSize: 16, bold: true, alignment: 'center', lineHeight: 1.2},
+          h2: {fontSize: 15, bold: true, lineHeight: 1.1},
           marginAll: {margin: 5},
           marginTop: {margin: [0, 10, 0, 0]},
         },
