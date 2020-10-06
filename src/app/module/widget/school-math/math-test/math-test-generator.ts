@@ -3,6 +3,7 @@ import {
   fnCompose,
   fnFloor,
   fnGt,
+  fnGte,
   fnJoin,
   fnLen,
   fnMap,
@@ -79,30 +80,62 @@ const generateQuestionDivideWithSomeRest = (rnd: () => number): MathTestQuestion
 
 const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionDivideWithSomeRest(rnd))(fnJsonEqual)(10)([]);
-  const fnJoinWithComma = fnJoin(',');
+  const joinWithComma = fnJoin(',');
   return {
     title: 'Teilen mit und ohne Rest.',
     questions: [
       questions.reduce<MathTestQuestion>(
         (acc, ii) => ({
           ...acc,
-          text: acc.text ? fnJoinWithComma([acc.text, ii.text]) : ii.text,
-          result: acc.result ? fnJoinWithComma([acc.result, ii.result]) : ii.result,
+          text: acc.text ? joinWithComma([acc.text, ii.text]) : ii.text,
+          result: acc.result ? joinWithComma([acc.result, ii.result]) : ii.result,
           points: acc.points + ii.points,
         }),
-        {
-          type: 'shortresult',
-          text: '',
-          result: '',
-          points: 0,
-        },
+        {type: 'shortresult', text: '', result: '', points: 0},
       ),
     ],
   };
 };
 
+const generateQuestionDotBeforeLinePriority = (rnd: () => number): MathTestQuestion => {
+  const rndBoolean = fnCompose(fnGte(50), rndInt(100));
+  const isMult = rndBoolean(rnd);
+  const isSum = rndBoolean(rnd);
+  const isDotFirst = rndBoolean(rnd);
+
+  const right = rndIntBetween(2)(9)(rnd);
+  const left = isMult ? rndIntBetween(2)(9)(rnd) : fnMult(right)(rndIntBetween(2)(9)(rnd));
+  const dotResult = isMult ? left * right : left / right;
+  const last = isSum ? rndIntBetween(5)(30)(rnd) : isDotFirst ? rndIntBetween(0)(dotResult)(rnd) : rndIntBetween(dotResult)(100)(rnd);
+  const result = isSum ? dotResult + last : isDotFirst ? dotResult - last : last - dotResult;
+
+  const textDot = `${left} ${isMult ? '*' : ':'} ${right}`;
+
+  return {
+    type: 'shortresult',
+    text: `${isDotFirst ? textDot : last} ${isSum ? '+' : '-'} ${isDotFirst ? last : textDot} = __`,
+    result: `${result}`,
+    points: 0.5,
+  };
+};
+
 const generateTaskDotBeforeLinePriority = (rnd: () => number): MathTestTask => {
-  return {title: 'TODO Denke an die Regel.'};
+  const questions = addDistinctItemsUntil(() => generateQuestionDotBeforeLinePriority(rnd))(fnJsonEqual)(6)([]);
+  const joinWithComma = fnJoin(',');
+  return {
+    title: 'Denke an die Regel.',
+    questions: [
+      questions.reduce<MathTestQuestion>(
+        (acc, ii) => ({
+          ...acc,
+          text: acc.text ? joinWithComma([acc.text, ii.text]) : ii.text,
+          result: acc.result ? joinWithComma([acc.result, ii.result]) : ii.result,
+          points: acc.points + ii.points,
+        }),
+        {type: 'shortresult', text: '', result: '', points: 0},
+      ),
+    ],
+  };
 };
 
 const generateQuestionNumberByDescription = (rnd: () => number): MathTestQuestion => {
