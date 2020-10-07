@@ -68,14 +68,15 @@ const addDistinctItemsUntil = <T>(newItem: (items: T[]) => T) => (compare: (aa: 
 // GENERATE
 
 const generateQuestionDivideWithSomeRest = (rnd: () => number): MathTestQuestion => {
-  const left = rndIntBetween(15)(100)(rnd);
+  const result = rndIntBetween(2)(9)(rnd);
   const right = rndIntBetween(2)(9)(rnd);
-  const rest = left % right;
+  const rest = rndIntBetween(0)(right - 1)(rnd);
+  const left = fnCompose(fnSum(rest), fnMult(right))(result);
 
   return {
     type: 'shortresult',
     text: `${left} : ${right} = __`,
-    result: `${fnFloor(left / right)}${rest ? 'R' + rest : ''}`,
+    result: `${result}${rest ? 'R' + rest : ''}`,
     points: 0.5,
   };
 };
