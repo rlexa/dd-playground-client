@@ -1,5 +1,8 @@
 // BASE
 
+/** @returns `arg` converted to `() => arg` */
+export const fnFn = <T>(arg: T) => () => arg;
+
 export const fnIdentity = <T>(arg: T) => arg;
 export const fnTIdentity = <T>() => (arg: T) => fnIdentity(arg);
 
@@ -11,6 +14,9 @@ export const fnTrace = (label: string) => <T>(value: T): T => {
 };
 
 // COMPOSITION
+
+/** @returns `fn(arg1)(arg2)` result. */
+export const fnApply2 = <T1>(arg1: T1) => <T2>(arg2: T2) => <R>(fn: (arg1: T1) => (arg2: T2) => R) => fn(arg1)(arg2);
 
 /** @returns flipped args i.e. `b => a => c` */
 export const fnFlip = <T1, T2, R>(fn: (arg1: T1) => (arg2: T2) => R) => (arg2: T2) => (arg1: T1) => fn(arg1)(arg2);
@@ -74,6 +80,12 @@ export const fnNot = (arg1: any) => !Boolean(arg1);
 export const fnAnd = (arg1: any) => (arg2: any) => Boolean(arg1) && Boolean(arg2);
 export const fnOr = (arg1: any) => (arg2: any) => Boolean(arg1) || Boolean(arg2);
 
+export const fnIfThenElse = (condition: boolean) => <T1>(thenResult: T1) => <T2>(elseResult: T2) => (condition ? thenResult : elseResult);
+export const fnThenElseIf = <T1>(thenResult: T1) => <T2>(elseResult: T2) => (condition: boolean) =>
+  fnIfThenElse(condition)(thenResult)(elseResult);
+export const fnElseThenIf = <T2>(elseResult: T2) => <T1>(thenResult: T1) => (condition: boolean) =>
+  fnIfThenElse(condition)(thenResult)(elseResult);
+
 // LISTS
 
 export const fnFirst = <T>(vals: T[]) => vals?.[0];
@@ -107,6 +119,7 @@ export const fnFloor = (arg: number) => Math.floor(arg);
 export const fnSum = (arg1: number) => (arg2: number) => arg1 + arg2;
 export const fnMod = (arg1: number) => (arg2: number) => arg1 % arg2;
 export const fnMult = (arg1: number) => (arg2: number) => arg1 * arg2;
+export const fnDiv = (arg1: number) => (arg2: number) => arg1 / arg2;
 export const fnSin = (arg: number) => Math.sin(arg);
 
 export const fnInvert = (arg: number) => -arg;
@@ -130,7 +143,9 @@ export const fnRecur = (...values: any[]) => ({fnRecur, values} as FnRecur);
 
 export const fnLoop = <T>(fn: (...values: any[]) => T | FnRecur) => {
   let result = fn();
-  while ((result as FnRecur)?.fnRecur === fnRecur) result = fn(...(result as FnRecur).values);
+  while ((result as FnRecur)?.fnRecur === fnRecur) {
+    result = fn(...(result as FnRecur).values);
+  }
   return result as T;
 };
 
@@ -139,3 +154,8 @@ export const fnWhileDo = <T>(fnContinue: (arg: T) => boolean) => (fn: (arg: T) =
 
 export const fnRepeat = (times: number) => <T, R>(fn: (arg: T) => R) => (init: R): R =>
   fnLoop((counter = times, result = init) => (counter <= 0 ? result : fnRecur(counter - 1, fn(result))));
+
+export const fnCompareGenerateOther = <T>(compare: (aa: T) => (bb: T) => boolean) => (generate: (current: T) => T) => (otherThanThat: T) =>
+  fnWhileDo(compare(otherThanThat))(generate)(otherThanThat);
+
+export const fnGenerateOther = fnCompareGenerateOther(fnSame);

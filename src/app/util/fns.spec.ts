@@ -1,17 +1,22 @@
 import {
   fnAbs,
   fnAnd,
+  fnApply2,
+  fnCompareGenerateOther,
   fnCompose,
   fnDefault,
+  fnDiv,
   fnFilter,
   fnFirst,
   fnFlip,
   fnFloat,
   fnFloor,
+  fnFn,
   fnGt,
   fnGte,
   fnHead,
   fnIdentity,
+  fnIfThenElse,
   fnInvert,
   fnIs,
   fnJoin,
@@ -73,6 +78,14 @@ describe(`fns`, () => {
     test(`is false for f&&f`, () => expect(fnAnd(0)(0)).toBe(false));
   });
 
+  describe(`fnApply2`, () => {
+    test(`applies`, () => expect(fnApply2(2)(3)(sum)).toBe(5));
+  });
+
+  describe(`fnCompareGenerateOtherThan`, () => {
+    test(`generates next`, () => expect(fnCompareGenerateOther((aa) => (bb) => aa === bb)(plusOne)(1)).toBe(2));
+  });
+
   describe(`fnCompose`, () => {
     test(`applies identity if no fns`, () => expect(fnCompose<number>()(123)).toBe(123));
     test(`applies single`, () => expect(fnCompose(multTwo)(123)).toBe(multTwo(123)));
@@ -84,6 +97,10 @@ describe(`fns`, () => {
     test(`defaults for undefined`, () => expect(fnDefault(1)(undefined)).toBe(1));
     test(`defaults not for 0`, () => expect(fnDefault(1)(0)).toBe(0));
     test(`defaults not for ''`, () => expect(fnDefault('1')('')).toBe(''));
+  });
+
+  describe(`fnDiv`, () => {
+    test(`divides`, () => expect(fnDiv(4)(2)).toEqual(2));
   });
 
   describe(`fnFilter`, () => {
@@ -112,6 +129,10 @@ describe(`fns`, () => {
     test(`floors undefined to NaN`, () => expect(fnFloor(undefined)).toBe(NaN));
   });
 
+  describe(`fnFn`, () => {
+    test(`returns function`, () => expect(fnFn(123)()).toBe(123));
+  });
+
   describe(`fnGt`, () => {
     test(`is false for 0 1`, () => expect(fnGt(0)(1)).toBe(false));
     test(`is false for 1 1`, () => expect(fnGt(1)(1)).toBe(false));
@@ -133,6 +154,11 @@ describe(`fns`, () => {
   describe(`fnIdentity`, () => {
     test(`returns same`, () => expect(fnIdentity(123)).toBe(123));
     test(`returns same (pre-typed)`, () => expect(fnTIdentity<number>()(123)).toBe(123));
+  });
+
+  describe(`fnIfThenElse`, () => {
+    test(`returns then`, () => expect(fnIfThenElse(true)(1)(0)).toBe(1));
+    test(`returns else`, () => expect(fnIfThenElse(false)(1)(0)).toBe(0));
   });
 
   describe(`fnInvert`, () => {

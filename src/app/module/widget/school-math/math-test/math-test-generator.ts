@@ -1,9 +1,14 @@
 import {
   fnAbs,
+  fnApply2,
   fnCompose,
+  fnDiv,
   fnFloor,
+  fnFn,
+  fnGenerateOther,
   fnGt,
   fnGte,
+  fnIfThenElse,
   fnJoin,
   fnLen,
   fnMap,
@@ -43,6 +48,9 @@ export interface MathTest {
 const joinText = fnJoin(' ');
 const joinComma = fnJoin(',');
 
+const appendString = (joinWith: string) => (current: string) => (append: string) =>
+  fnIfThenElse(Boolean(current))(fnJoin(joinWith)([current, append]))(append);
+
 const fnJsonEqual = <T>(aa: T) => (bb: T) => JSON.stringify(aa) === JSON.stringify(bb);
 
 export function randomize(seed: number) {
@@ -54,6 +62,7 @@ export function randomize(seed: number) {
 
 const rndInt = (max: number) => (rnd: () => number) => fnCompose(fnFloor, fnSum(0.5), fnMult(max))(rnd());
 const rndIntBetween = (min: number) => (max: number) => fnCompose(fnSum(min), rndInt(fnSub(max)(min)));
+const rndBoolean = fnCompose(fnGte(50), rndInt(100));
 
 const needMoreItems = <T>(want: number) => fnCompose<boolean, T[], number>(fnGt(want), fnLen);
 
@@ -89,9 +98,9 @@ const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
       questions.reduce<MathTestQuestion>(
         (acc, ii) => ({
           ...acc,
-          text: acc.text ? joinComma([acc.text, ii.text]) : ii.text,
-          result: acc.result ? joinComma([acc.result, ii.result]) : ii.result,
-          points: acc.points + ii.points,
+          text: appendString(',')(acc.text)(ii.text),
+          result: appendString(',')(acc.result)(ii.result),
+          points: fnSum(acc.points)(ii.points),
         }),
         {type: 'shortresult', text: '', result: '', points: 0},
       ),
@@ -100,15 +109,20 @@ const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
 };
 
 const generateQuestionDotBeforeLinePriority = (rnd: () => number): MathTestQuestion => {
-  const rndBoolean = fnCompose(fnGte(50), rndInt(100));
   const isMult = rndBoolean(rnd);
   const isSum = rndBoolean(rnd);
   const isDotFirst = rndBoolean(rnd);
 
-  const right = rndIntBetween(2)(9)(rnd);
-  const left = isMult ? rndIntBetween(2)(9)(rnd) : fnMult(right)(rndIntBetween(2)(9)(rnd));
-  const dotResult = isMult ? left * right : left / right;
-  const last = isSum ? rndIntBetween(5)(30)(rnd) : isDotFirst ? rndIntBetween(0)(dotResult)(rnd) : rndIntBetween(dotResult)(100)(rnd);
+  const rnd2to9 = rndIntBetween(2)(9);
+  const rnd5to30 = rndIntBetween(5)(30);
+  const right = rnd2to9(rnd);
+  const left = fnIfThenElse(isMult)(rnd2to9)(fnCompose(fnMult(right), rnd2to9))(rnd);
+
+  const dotParamsApply = fnApply2(left)(right);
+  const dotOperation = fnIfThenElse(isMult)(fnMult)(fnDiv);
+  const dotResult = dotParamsApply(dotOperation);
+
+  const last = isSum ? rnd5to30(rnd) : isDotFirst ? rndIntBetween(0)(dotResult)(rnd) : rndIntBetween(dotResult)(100)(rnd);
   const result = isSum ? dotResult + last : isDotFirst ? dotResult - last : last - dotResult;
 
   const textDot = `${left} ${isMult ? '*' : ':'} ${right}`;
@@ -166,7 +180,9 @@ const generateTaskNumberByDescription = (rnd: () => number): MathTestTask => {
 const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
   const leftDelta = rndIntBetween(3)(7)(rnd);
 
-  const rightDelta = fnWhileDo<number>(fnSame(leftDelta))(() => rndIntBetween(2)(5)(rnd))(leftDelta);
+  const rnd2to5 = fnFn(rndIntBetween(2)(5)(rnd));
+  const rightDelta = fnGenerateOther(rnd2to5)(leftDelta);
+
   const first = rndIntBetween(60)(99)(rnd);
   const second = rndIntBetween(10)(40)(rnd);
 
@@ -211,32 +227,38 @@ const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
 };
 
 const generateQuestionInsertComparison = (rnd: () => number): MathTestQuestion => {
-  const left1 = rndInt(9)(rnd);
-  const left2 = rndInt(9)(rnd);
-  const right1 = rndInt(9)(rnd);
-  const right2 = rndInt(9)(rnd);
+  const rnd0to9 = rndInt(9);
+  const left1 = rnd0to9(rnd);
+  const left2 = rnd0to9(rnd);
+  const right1 = rnd0to9(rnd);
+  const right2 = rnd0to9(rnd);
 
   const left = fnMult(left1)(left2);
   const right = fnMult(right1)(right2);
 
+  const resultGreaterOrLess = fnIfThenElse(fnGt(left)(right))('>')('<');
+  const resultEqualElse = fnIfThenElse(fnSame(left)(right))('=');
+  const result = resultEqualElse(resultGreaterOrLess);
+
   return {
     type: 'shortresult',
     text: `${left1} * ${left2} __ ${right1} * ${right2}`,
-    result: `${left === right ? '=' : left > right ? '>' : '<'}`,
+    result,
     points: 0.5,
   };
 };
 
 const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionInsertComparison(rnd))(fnJsonEqual)(4)([]);
+
   return {
     title: 'Setze ein. > < =',
     questions: [
       questions.reduce<MathTestQuestion>(
         (acc, ii) => ({
           ...acc,
-          text: acc.text ? joinComma([acc.text, ii.text]) : ii.text,
-          result: acc.result ? joinComma([acc.result, ii.result]) : ii.result,
+          text: appendString(',')(acc.text)(ii.text),
+          result: appendString(',')(acc.result)(ii.result),
           points: fnSum(acc.points)(ii.points),
         }),
         {type: 'shortresult', text: '', result: '', points: 0},
@@ -246,7 +268,6 @@ const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
 };
 
 const generateQuestionInsertOperation = (rnd: () => number): MathTestQuestion => {
-  const rndBoolean = fnCompose(fnGte(50), rndInt(100));
   const isMult = rndBoolean(rnd);
 
   const dot1 = rndIntBetween(2)(9)(rnd);
