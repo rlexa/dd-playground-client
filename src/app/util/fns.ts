@@ -100,6 +100,9 @@ export const fnFilter = <T>(fn: (arg: T) => boolean) => (args: T[]): T[] => args
 export const fnMap = <T, R>(fn: (arg: T) => R) => (args: T[]): R[] => args?.map((ii) => fn(ii));
 export const fnMapIndexed = <T, R>(fn: (index: number) => (arg: T) => R) => (args: T[]): R[] => args?.map((ii, index) => fn(index)(ii));
 
+export const fnReduce = <R>(init: R) => <T>(fn: (index: number) => (accumulate: R) => (item: T) => R) => (from: T[]) =>
+  from?.reduce<R>((acc, ii, index) => fn(index)(acc)(ii), init);
+
 export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) => (val: T) => vals?.some(equals(val));
 
 // OBJECTS
@@ -107,7 +110,7 @@ export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) 
 export const fnKey = <T extends object, K extends keyof T>(key: K) => (val: T) => val?.[key];
 export const fnTKey = <T extends object>() => <K extends keyof T>(key: K) => fnKey<T, K>(key);
 
-export const fnMerge = <T extends object>(arg1: T) => (arg2?: T) => Object.assign(arg1 || {}, arg2 || {}) as T;
+export const fnMerge = <T extends object>(arg1: T) => (arg2?: T): T => ({...(arg1 || {}), ...(arg2 || {})} as T);
 
 // MATH
 

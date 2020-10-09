@@ -1,15 +1,17 @@
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {Content} from 'pdfmake/interfaces';
-import {fnCompose, fnFilter, fnJoin, fnMap, fnMapIndexed, fnPadEnd, fnPadStart, fnSplit} from 'src/app/util/fns';
-import {MathTest, MathTestQuestion, MathTestTask} from './math-test-generator';
+import {fnCompose, fnFilter, fnIfThenElse, fnJoin, fnMap, fnMapIndexed, fnPadEnd, fnPadStart, fnSplit, fnSum} from 'src/app/util/fns';
+import {MathTest, MathTestQuestion, MathTestQuestionType, MathTestTask} from './math-test-generator';
 
 // needed for some reason (see docs)
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
+const indexToChar = fnCompose(String.fromCharCode, fnSum('a'.charCodeAt(0)));
 const splitByComma = fnSplit(',');
 const splitByWall = fnSplit('|');
 const wrapIn = (wrap: string) => (val: unknown) => `${wrap}${val}${wrap}`;
+const getText = <V, T extends {text?: V}>(obj: T) => obj?.text;
 
 const indexedItemToPdfContentWith = <T>(mapIndexed: (index: number) => (val: T) => Content) =>
   fnCompose(fnFilter<Content>(Boolean), fnMapIndexed(mapIndexed));
@@ -54,18 +56,17 @@ function questionPyramideToPdf(val: string): Content {
   };
 }
 
+const typeHandle: Record<MathTestQuestionType, (val: MathTestQuestion) => Content> = {
+  pyramide: fnCompose(questionPyramideToPdf, getText),
+  questionline: fnCompose(questionLineToPdf, getText),
+  shortresult: fnCompose(questionShortResultToPdf, getText),
+  table: fnCompose(questionTableToPdf, getText),
+};
+
 const questionToPdf = (index: number) => (val: MathTestQuestion): Content =>
   fnFilter<Content>(Boolean)([
-    val?.title ? {text: `${String.fromCharCode('a'.charCodeAt(0) + index)}) ${val.title}`} : null,
-    val?.type === 'pyramide'
-      ? questionPyramideToPdf(val.text)
-      : val?.type === 'shortresult'
-      ? questionShortResultToPdf(val.text)
-      : val?.type === 'table'
-      ? questionTableToPdf(val.text)
-      : val?.type === 'questionline'
-      ? questionLineToPdf(val.text)
-      : `TODO type ${val?.type || 'undefined'}`,
+    fnIfThenElse(Boolean(val?.title))({text: `${indexToChar(index)}) ${val.title}`})(null),
+    (typeHandle[val?.type] ?? ((value: MathTestQuestion) => `TODO type ${value?.type || 'undefined'}`))(val),
   ]);
 
 const taskToPdf = (index: number) => (val: MathTestTask): Content => ({

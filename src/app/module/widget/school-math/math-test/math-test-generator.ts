@@ -13,7 +13,10 @@ import {
   fnLen,
   fnMap,
   fnMapIndexed,
+  fnMerge,
+  fnMod,
   fnMult,
+  fnReduce,
   fnSame,
   fnSin,
   fnSome,
@@ -74,6 +77,15 @@ const addDistinctItemsUntil = <T>(newItem: (items: T[]) => T) => (compare: (aa: 
     return fnSome(compare)(items)(item) ? items : [...items, item];
   })(init);
 
+const mergeQuestionsToQuestionShortresult = fnReduce<MathTestQuestion>({type: 'shortresult', text: '', result: '', points: 0})(
+  (index) => (acc) => (ii: MathTestQuestion) =>
+    fnMerge(acc)({
+      text: appendString(',')(acc.text)(ii.text),
+      result: appendString(',')(acc.result)(ii.result),
+      points: fnSum(acc.points)(ii.points),
+    }),
+);
+
 // GENERATE
 
 const generateQuestionDivideWithSomeRest = (rnd: () => number): MathTestQuestion => {
@@ -94,17 +106,7 @@ const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionDivideWithSomeRest(rnd))(fnJsonEqual)(10)([]);
   return {
     title: 'Teilen mit und ohne Rest.',
-    questions: [
-      questions.reduce<MathTestQuestion>(
-        (acc, ii) => ({
-          ...acc,
-          text: appendString(',')(acc.text)(ii.text),
-          result: appendString(',')(acc.result)(ii.result),
-          points: fnSum(acc.points)(ii.points),
-        }),
-        {type: 'shortresult', text: '', result: '', points: 0},
-      ),
-    ],
+    questions: [mergeQuestionsToQuestionShortresult(questions)],
   };
 };
 
@@ -139,17 +141,7 @@ const generateTaskDotBeforeLinePriority = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionDotBeforeLinePriority(rnd))(fnJsonEqual)(6)([]);
   return {
     title: 'Denke an die Regel.',
-    questions: [
-      questions.reduce<MathTestQuestion>(
-        (acc, ii) => ({
-          ...acc,
-          text: acc.text ? joinComma([acc.text, ii.text]) : ii.text,
-          result: acc.result ? joinComma([acc.result, ii.result]) : ii.result,
-          points: acc.points + ii.points,
-        }),
-        {type: 'shortresult', text: '', result: '', points: 0},
-      ),
-    ],
+    questions: [mergeQuestionsToQuestionShortresult(questions)],
   };
 };
 
@@ -250,20 +242,9 @@ const generateQuestionInsertComparison = (rnd: () => number): MathTestQuestion =
 
 const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionInsertComparison(rnd))(fnJsonEqual)(4)([]);
-
   return {
     title: 'Setze ein. > < =',
-    questions: [
-      questions.reduce<MathTestQuestion>(
-        (acc, ii) => ({
-          ...acc,
-          text: appendString(',')(acc.text)(ii.text),
-          result: appendString(',')(acc.result)(ii.result),
-          points: fnSum(acc.points)(ii.points),
-        }),
-        {type: 'shortresult', text: '', result: '', points: 0},
-      ),
-    ],
+    questions: [mergeQuestionsToQuestionShortresult(questions)],
   };
 };
 
@@ -295,17 +276,7 @@ const generateTaskInsertOperation = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionInsertOperation(rnd))(fnJsonEqual)(4)([]);
   return {
     title: ' Setze ein. + - * :',
-    questions: [
-      questions.reduce<MathTestQuestion>(
-        (acc, ii) => ({
-          ...acc,
-          text: acc.text ? joinComma([acc.text, ii.text]) : ii.text,
-          result: acc.result ? joinComma([acc.result, ii.result]) : ii.result,
-          points: acc.points + ii.points,
-        }),
-        {type: 'shortresult', text: '', result: '', points: 0},
-      ),
-    ],
+    questions: [mergeQuestionsToQuestionShortresult(questions)],
   };
 };
 
@@ -412,7 +383,7 @@ const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
       {
         type: 'table',
         text: asText([['*', ...topVals], ...rows.map((row, index) => [leftVals[index], ...row])]),
-        result: joinComma(errorIndices.map((index) => rows[Math.floor(index / topValCount)][index % topValCount])),
+        result: joinComma(errorIndices.map((index) => rows[fnFloor(fnDiv(index)(topValCount))][fnMod(index)(topValCount)])),
         points: 4,
       },
     ],

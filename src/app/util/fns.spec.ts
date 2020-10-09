@@ -41,6 +41,7 @@ import {
   fnPipe,
   fnRandom,
   fnRandomInt,
+  fnReduce,
   fnRepeat,
   fnSame,
   fnSin,
@@ -265,6 +266,10 @@ describe(`fns`, () => {
       spyOn(Math, 'random').and.returnValue(0.5);
       expect(fnRandomInt(10)).toBe(5);
     });
+  });
+
+  describe(`fnReduce`, () => {
+    test(`reduces`, () => expect(fnReduce('')((index) => (acc) => (ii) => `${acc},${index}:${ii}`)(['a', 'b', 'c'])).toBe(',0:a,1:b,2:c'));
   });
 
   describe(`fnRepeat`, () => {
