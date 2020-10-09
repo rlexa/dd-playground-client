@@ -1,6 +1,7 @@
 import {
   fnAbs,
   fnAnd,
+  fnAnds,
   fnApply2,
   fnCompareGenerateOther,
   fnCompose,
@@ -36,6 +37,7 @@ import {
   fnMult,
   fnNot,
   fnOr,
+  fnOrs,
   fnPadEnd,
   fnPadStart,
   fnPipe,
@@ -77,6 +79,11 @@ describe(`fns`, () => {
     test(`is false for t&&f`, () => expect(fnAnd(1)(0)).toBe(false));
     test(`is false for f&&t`, () => expect(fnAnd(0)(1)).toBe(false));
     test(`is false for f&&f`, () => expect(fnAnd(0)(0)).toBe(false));
+
+    describe(`fnAnds`, () => {
+      test(`is true for t,t`, () => expect(fnAnds(1, 2)).toBe(true));
+      test(`is false for t,f`, () => expect(fnAnds(1, 0)).toBe(false));
+    });
   });
 
   describe(`fnApply2`, () => {
@@ -312,6 +319,11 @@ describe(`fns`, () => {
     test(`is true for t||f`, () => expect(fnOr(1)(0)).toBe(true));
     test(`is true for f||t`, () => expect(fnOr(0)(1)).toBe(true));
     test(`is false for f||f`, () => expect(fnOr(0)(0)).toBe(false));
+
+    describe(`fnOrs`, () => {
+      test(`is true for f,t`, () => expect(fnOrs(0, 1)).toBe(true));
+      test(`is false for f,f`, () => expect(fnOrs(0, 0)).toBe(false));
+    });
   });
 
   describe(`fnTail`, () => {

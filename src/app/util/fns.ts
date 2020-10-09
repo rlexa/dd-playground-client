@@ -75,10 +75,13 @@ export const fnLte = <T>(arg1: T) => (arg2: T) => arg1 <= arg2;
 // LOGIC
 
 export const fnIs = (arg1: any) => Boolean(arg1);
-export const fnNot = (arg1: any) => !Boolean(arg1);
+export const fnNot = (arg1: any) => !fnIs(arg1);
 
-export const fnAnd = (arg1: any) => (arg2: any) => Boolean(arg1) && Boolean(arg2);
-export const fnOr = (arg1: any) => (arg2: any) => Boolean(arg1) || Boolean(arg2);
+export const fnAnd = (arg1: any) => (arg2: any) => fnIs(arg1) && fnIs(arg2);
+export const fnOr = (arg1: any) => (arg2: any) => fnIs(arg1) || fnIs(arg2);
+
+export const fnAnds = (...args: any[]) => (args || []).reduce<boolean>((acc, ii) => fnAnd(acc)(ii), true);
+export const fnOrs = (...args: any[]) => (!args ? true : args.reduce<boolean>((acc, ii) => fnOr(acc)(ii), false));
 
 export const fnIfThenElse = (condition: boolean) => <T1>(thenResult: T1) => <T2>(elseResult: T2) => (condition ? thenResult : elseResult);
 export const fnThenElseIf = <T1>(thenResult: T1) => <T2>(elseResult: T2) => (condition: boolean) =>
