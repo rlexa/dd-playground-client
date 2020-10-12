@@ -9,8 +9,8 @@ import {FlexboxModule} from '../../directive/flexbox';
 import {OverviewComponent} from './overview.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: OverviewComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: OverviewComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

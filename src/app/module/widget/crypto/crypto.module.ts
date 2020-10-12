@@ -13,8 +13,8 @@ import {SimpleViewModule} from '../simple-view';
 import {CryptoComponent} from './crypto.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: CryptoComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: CryptoComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

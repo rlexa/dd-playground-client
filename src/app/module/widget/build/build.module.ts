@@ -7,8 +7,8 @@ import {SimpleViewModule} from '../simple-view';
 import {BuildComponent} from './build.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: BuildComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: BuildComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

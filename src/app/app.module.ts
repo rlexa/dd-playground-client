@@ -46,7 +46,7 @@ const appRoutes: Routes = [
     loadChildren: () => import('src/app/module/widget/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {path: ROUTE_ROOT, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full'},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_DASHBOARD, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_DASHBOARD},
 ];
 
 @NgModule({

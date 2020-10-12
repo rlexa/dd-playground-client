@@ -7,8 +7,8 @@ import {SimpleViewModule} from '../simple-view';
 import {RenderCanvasComponent} from './render-canvas.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: RenderCanvasComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: RenderCanvasComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

@@ -14,8 +14,8 @@ const ROUTING: Routes = [
     data,
     children: [
       {path: ROUTE_BLOCKCHAIN, loadChildren: () => import('src/app/module/widget/crypto/crypto.module').then((m) => m.CryptoModule)},
-      {path: ROUTE_ROOT, redirectTo: ROUTE_BLOCKCHAIN},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_BLOCKCHAIN, pathMatch: 'full'},
+      {path: ROUTE_ROOT, redirectTo: ROUTE_BLOCKCHAIN, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: ROUTE_BLOCKCHAIN},
     ],
   },
 ];

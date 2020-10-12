@@ -8,8 +8,8 @@ import {SimpleViewModule} from '../simple-view';
 import {SchoolMathComponent} from './school-math.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: SchoolMathComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: SchoolMathComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

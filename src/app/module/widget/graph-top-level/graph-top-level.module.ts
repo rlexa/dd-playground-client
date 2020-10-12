@@ -13,13 +13,12 @@ const ROUTING: Routes = [
     children: [
       {
         path: ROUTE_WALKER,
-        loadChildren: () => import('src/app/module/widget/graph-walker/graph-walker.module').then(m => m.GraphWalkerModule),
+        loadChildren: () => import('src/app/module/widget/graph-walker/graph-walker.module').then((m) => m.GraphWalkerModule),
       },
       {path: ROUTE_ROOT, redirectTo: ROUTE_WALKER, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_WALKER, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: ROUTE_WALKER},
     ],
   },
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
 ];
 
 @NgModule({

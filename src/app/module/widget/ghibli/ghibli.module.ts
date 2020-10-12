@@ -12,8 +12,8 @@ import {SimpleViewModule} from '../simple-view';
 import {GhibliComponent} from './ghibli.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: GhibliComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: GhibliComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

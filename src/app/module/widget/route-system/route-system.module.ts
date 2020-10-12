@@ -18,8 +18,8 @@ const ROUTING: Routes = [
     children: [
       {path: ROUTE_CONFIGURATION, loadChildren: () => import('src/app/module/widget/config/config.module').then((m) => m.ConfigModule)},
       {path: ROUTE_BUILDCONFIG, loadChildren: () => import('src/app/module/widget/build/build.module').then((m) => m.BuildModule)},
-      {path: ROUTE_ROOT, redirectTo: ROUTE_CONFIGURATION},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_CONFIGURATION, pathMatch: 'full'},
+      {path: ROUTE_ROOT, redirectTo: ROUTE_CONFIGURATION, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: ROUTE_CONFIGURATION},
     ],
   },
 ];

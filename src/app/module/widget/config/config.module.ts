@@ -7,8 +7,8 @@ import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {ConfigComponent} from './config.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: ConfigComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: ConfigComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

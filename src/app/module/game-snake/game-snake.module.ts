@@ -7,8 +7,8 @@ import {GameSnakeComponent} from './game-snake.component';
 import {GameSnakeRenderHtmlModule} from './render/game-snake-render-html.module';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: GameSnakeComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: GameSnakeComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

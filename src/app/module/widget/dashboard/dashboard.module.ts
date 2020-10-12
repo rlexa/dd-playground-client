@@ -62,8 +62,8 @@ const ROUTING: Routes = [
         path: ROUTE_SETTINGS,
         loadChildren: () => import('src/app/module/widget/route-system/route-system.module').then((m) => m.RouteSystemModule),
       },
-      {path: ROUTE_ROOT, redirectTo: ROUTE_OVERVIEW},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_OVERVIEW, pathMatch: 'full'},
+      {path: ROUTE_ROOT, redirectTo: ROUTE_OVERVIEW, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: ROUTE_OVERVIEW},
     ],
   },
 ];

@@ -15,8 +15,8 @@ import {SimpleViewModule} from '../simple-view';
 import {GraphWalkerComponent, TAG_TYPE} from './graph-walker.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: GraphWalkerComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: GraphWalkerComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

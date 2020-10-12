@@ -14,8 +14,8 @@ const ROUTING: Routes = [
     data,
     children: [
       {path: ROUTE_CURRENT, loadChildren: () => import('src/app/module/widget/overview/overview.module').then((m) => m.OverviewModule)},
-      {path: ROUTE_ROOT, redirectTo: ROUTE_CURRENT},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_CURRENT, pathMatch: 'full'},
+      {path: ROUTE_ROOT, redirectTo: ROUTE_CURRENT, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: ROUTE_CURRENT},
     ],
   },
 ];

@@ -9,8 +9,8 @@ import {SimpleViewModule} from '../simple-view';
 import {DemoMiscComponent} from './demo-misc.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: DemoMiscComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: DemoMiscComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

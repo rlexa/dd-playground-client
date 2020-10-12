@@ -34,8 +34,8 @@ const ROUTING: Routes = [
         path: ROUTE_RENDER_CANVAS,
         loadChildren: () => import('src/app/module/widget/render-canvas/render-canvas.module').then((m) => m.RenderCanvasModule),
       },
-      {path: ROUTE_ROOT, redirectTo: ROUTE_GAME_MINESWEEPER},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_GAME_MINESWEEPER, pathMatch: 'full'},
+      {path: ROUTE_ROOT, redirectTo: ROUTE_GAME_MINESWEEPER, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: ROUTE_GAME_MINESWEEPER},
     ],
   },
 ];

@@ -26,8 +26,8 @@ const ROUTING: Routes = [
         loadChildren: () => import('src/app/module/widget/demo-state/demo-state.module').then((m) => m.DemoStateModule),
       },
       {path: ROUTE_DEMO_GHIBLI, loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule)},
-      {path: ROUTE_ROOT, redirectTo: ROUTE_DEMO_MISC},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_DEMO_MISC, pathMatch: 'full'},
+      {path: ROUTE_ROOT, redirectTo: ROUTE_DEMO_MISC, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: ROUTE_DEMO_MISC},
     ],
   },
 ];

@@ -21,8 +21,8 @@ import {GameDownComponent} from './game-down.component';
 import {RenderSimpleFieldComponent} from './renderer';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: GameDownComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: GameDownComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({

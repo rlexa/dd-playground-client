@@ -8,8 +8,8 @@ import {SimpleViewModule} from '../simple-view';
 import {DemoStateComponent} from './demo-state.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: DemoStateComponent},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT, pathMatch: 'full'},
+  {path: ROUTE_ROOT, component: DemoStateComponent, pathMatch: 'full'},
+  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
 ];
 
 @NgModule({
