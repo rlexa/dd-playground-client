@@ -1,5 +1,5 @@
 <div class="content mat-app-background">
-  <app-navigation-bar *ngIf="isVisibleHeader$ | async" [items]="navs$ | async"></app-navigation-bar>
+  <app-navigation-bar [items]="navs$ | async"></app-navigation-bar>
 
   <main>
     <router-outlet></router-outlet>
@@ -7,67 +7,3 @@
 
   <app-footer *ngIf="isVisibleFooter$ | async"></app-footer>
 </div>
-
-<!-- <div
-  class="mat-app-background position-absolute match-parent"
-  [ngStyle]="{
-    display: 'grid',
-    'grid-template-areas': GRID,
-    'grid-template-columns': 'max-content auto',
-    'grid-template-rows': 'max-content auto max-content'
-  }"
->
-  <div [ngStyle]="{'grid-area': GRID_HEAD, background: 'blue'}">
-    <ng-container *ngIf="isVisibleHeader$ | async">
-      <mat-toolbar color="primary">
-        <span class="mat-toolbar-filler"></span>
-        <nav class="mat-nav-list">
-          <ng-container *ngFor="let ii of ROUTES">
-            <a
-              mat-button
-              [style.min-width]="'auto'"
-              [routerLink]="'/' + ROUTE_ROOT + '/' + ii.route"
-              routerLinkActive="active"
-              [matTooltip]="ii.label"
-            >
-              <i class="material-icons transition-transform active-scale">{{ ii.icon | icon }}</i>
-            </a>
-          </ng-container>
-        </nav>
-        <span class="mat-toolbar-filler"></span>
-      </mat-toolbar>
-    </ng-container>
-  </div>
-
-  <div [ngStyle]="{'grid-area': GRID_SIDE}" class="position-relative">
-    <ng-container *ngIf="isVisibleSide$ | async">
-      <mat-toolbar color="primary" class="toolbar-column">
-        <nav *ngIf="(subRoute$ | async) && (subRoutes$ | async).length" class="mat-nav-list">
-          <ng-container *ngFor="let ii of subRoutes$ | async">
-            <a
-              mat-button
-              [style.minWidth]="'auto'"
-              [routerLink]="'/' + ROUTE_ROOT + '/' + (subRoute$ | async) + '/' + ii.route"
-              routerLinkActive="active"
-              [matTooltip]="ii.label"
-              matTooltipPosition="right"
-            >
-              <i class="material-icons transition-transform active-scale">{{ ii.icon | icon }}</i>
-            </a>
-          </ng-container>
-        </nav>
-        <span class="mat-toolbar-filler"></span>
-      </mat-toolbar>
-    </ng-container>
-  </div>
-
-  <main class="position-relative" [ngStyle]="{'grid-area': GRID_CONTENT}">
-    <router-outlet></router-outlet>
-  </main>
-
-  <footer [ngStyle]="{'grid-area': GRID_FOOTER}">
-    <div *ngIf="isVisibleFooter$ | async" ddFlexbox="hycr" class="border-top contenthv">
-      <app-version class="margin-bottom-narrow"></app-version>
-    </div>
-  </footer>
-</div> -->

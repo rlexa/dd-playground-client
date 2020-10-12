@@ -2,6 +2,8 @@
 
 exports[`FooterComponent renders 1`] = `
 <app-footer>
-  <app-version />
+  <span
+    class="filler"
+  /><app-version />
 </app-footer>
 `;

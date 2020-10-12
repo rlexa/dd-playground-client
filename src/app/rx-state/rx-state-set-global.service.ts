@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {mergeFlags, setRoute} from 'src/app/rx-state/state/state-global';
-import {or_} from 'dd-rx-state';
+import {mergeFlags} from 'src/app/rx-state/state/state-global';
 import {RxStateService} from './rx-state.service';
 
 @Injectable({providedIn: 'root'})
@@ -8,5 +7,4 @@ export class RxStateSetGlobalService {
   constructor(private readonly rxState: RxStateService) {}
 
   mergeFlags = this.rxState.act_(mergeFlags);
-  setRoute = this.rxState.act_(setRoute, or_(''));
 }

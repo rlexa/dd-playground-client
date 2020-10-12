@@ -3,7 +3,6 @@ import {ActivatedRoute} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MockComponents} from 'ng-mocks';
 import {Subject} from 'rxjs';
-import {provideRxState} from 'src/app/rx-state/test';
 import {detectChanges, getterMockedComponent, mockWith, overrideForChangeDetection} from 'src/app/test';
 import {Mock} from 'ts-mockery';
 import {FooterComponent} from '../footer';
@@ -28,7 +27,6 @@ describe('DashboardComponent', () => {
       imports: [RouterTestingModule],
       declarations: [DashboardComponent, MockComponents(NavigationBarComponent, FooterComponent)],
       providers: [
-        provideRxState,
         mockWith(
           ActivatedRoute,
           Mock.from<ActivatedRoute>({data: data$}),

@@ -2,26 +2,13 @@
 
 exports[`DashboardComponent renders 1`] = `
 <app-dashboard
-  GRID={[Function String]}
-  GRID_CONTENT={[Function String]}
-  GRID_FOOTER={[Function String]}
-  GRID_HEAD={[Function String]}
-  GRID_SIDE={[Function String]}
-  ROUTES={[Function Array]}
   activatedRoute={[Function Object]}
   isVisibleFooter$={[Function StateSubject]}
-  isVisibleHeader$={[Function StateSubject]}
-  isVisibleSide$={[Function StateSubject]}
   navs$={[Function AnonymousSubject]}
-  rxState={[Function RxStateService]}
-  subRoute$={[Function AnonymousSubject]}
-  subRoutes$={[Function AnonymousSubject]}
-  trackByIndex={[Function Function]}
 >
   <div
     class="content mat-app-background"
   >
-    
     <app-navigation-bar />
     <main>
       <router-outlet />
@@ -34,26 +21,13 @@ exports[`DashboardComponent renders 1`] = `
 
 exports[`DashboardComponent with routes=3 renders 1`] = `
 <app-dashboard
-  GRID={[Function String]}
-  GRID_CONTENT={[Function String]}
-  GRID_FOOTER={[Function String]}
-  GRID_HEAD={[Function String]}
-  GRID_SIDE={[Function String]}
-  ROUTES={[Function Array]}
   activatedRoute={[Function Object]}
   isVisibleFooter$={[Function StateSubject]}
-  isVisibleHeader$={[Function StateSubject]}
-  isVisibleSide$={[Function StateSubject]}
   navs$={[Function AnonymousSubject]}
-  rxState={[Function RxStateService]}
-  subRoute$={[Function AnonymousSubject]}
-  subRoutes$={[Function AnonymousSubject]}
-  trackByIndex={[Function Function]}
 >
   <div
     class="content mat-app-background"
   >
-    
     <app-navigation-bar />
     <main>
       <router-outlet />

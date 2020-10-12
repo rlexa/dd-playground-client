@@ -14,6 +14,7 @@ export interface NavigationBarItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationBarComponent {
+  @Input() layout: 'row' | 'column' = 'row';
   @Input() items: NavigationBarItem[] = null;
 
   trackByIndex = trackByIndex;

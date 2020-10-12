@@ -1,5 +1,5 @@
-<mat-toolbar color="primary">
-  <span class="mat-toolbar-filler"></span>
+<mat-toolbar color="primary" [class.toolbar-column]="layout == 'column'">
+  <span *ngIf="layout == 'row'" class="mat-toolbar-filler"></span>
   <ng-container *ngIf="items as iis">
     <nav class="mat-nav-list">
       <a
@@ -9,6 +9,7 @@
         [routerLink]="ii.route"
         routerLinkActive="active"
         [matTooltip]="ii.label"
+        [matTooltipPosition]="layout == 'row' ? 'below' : 'right'"
       >
         <i class="material-icons transition-transform active-scale">{{ ii.icon | icon }}</i>
       </a>

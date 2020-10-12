@@ -45,5 +45,14 @@ describe('NavigationBarComponent', () => {
     });
 
     it(`renders`, () => expect(fixture).toMatchSnapshot());
+
+    describe(`with layout column`, () => {
+      beforeEach(() => {
+        fixture.componentInstance.layout = 'column';
+        detectChanges(fixture);
+      });
+
+      it(`renders`, () => expect(fixture).toMatchSnapshot());
+    });
   });
 });

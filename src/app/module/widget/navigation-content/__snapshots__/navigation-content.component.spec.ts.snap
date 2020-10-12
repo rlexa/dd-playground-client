@@ -31,7 +31,9 @@ exports[`NavigationContentComponent with routes=3 renders 1`] = `
   activatedRoute={[Function Object]}
   navs$={[Function AnonymousSubject]}
 >
-  <app-navigation-bar /><main>
+  <app-navigation-bar
+    layout="column"
+  /><main>
     <div>
       <router-outlet />
     </div>
