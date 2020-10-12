@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {watch} from 'dd-rx-state';
-import {RxStateService} from 'src/app/rx-state';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
+import {Observable} from 'rxjs';
+import {DiGlobalFlags, GlobalFlags} from 'src/app/di-global';
 
 @Component({
   selector: 'app-build',
@@ -8,7 +8,5 @@ import {RxStateService} from 'src/app/rx-state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BuildComponent {
-  constructor(private rxState: RxStateService) {}
-
-  readonly data$ = this.rxState.state$.pipe(watch((st) => st.globalValues.flags));
+  constructor(@Inject(DiGlobalFlags) public readonly globalFlags$: Observable<GlobalFlags>) {}
 }

@@ -1,22 +1,23 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatButton} from '@angular/material/button';
 import {By} from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {MockComponents} from 'ng-mocks';
-import {provideRxState} from 'src/app/rx-state/test';
+import {of} from 'rxjs';
+import {DiGlobalVersion} from 'src/app/di-global';
 import {detectChanges, mockAll, overrideForChangeDetection} from 'src/app/test';
 import {VersionComponent} from './version.component';
 
 describe('VersionComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [],
       declarations: [VersionComponent, MockComponents(MatButton)],
-      providers: [provideRxState, mockAll(Router)],
+      providers: [mockAll(Router), {provide: DiGlobalVersion, useValue: of('version')}],
     })
       .overrideComponent(VersionComponent, overrideForChangeDetection)
       .compileComponents();
-  }));
+  });
 
   let fixture: ComponentFixture<VersionComponent>;
 

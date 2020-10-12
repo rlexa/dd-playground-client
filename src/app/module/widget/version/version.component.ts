@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {Router} from '@angular/router';
-import {watch} from 'dd-rx-state';
+import {Observable} from 'rxjs';
+import {DiGlobalVersion} from 'src/app/di-global';
 import {routeToSettings} from 'src/app/routing';
-import {RxStateService} from 'src/app/rx-state';
 
 @Component({
   selector: 'app-version',
@@ -10,9 +10,7 @@ import {RxStateService} from 'src/app/rx-state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VersionComponent {
-  constructor(private rxState: RxStateService, private router: Router) {}
-
-  readonly version$ = this.rxState.state$.pipe(watch((state) => state.globalValues.flags.version));
+  constructor(@Inject(DiGlobalVersion) public readonly version$: Observable<string>, private readonly router: Router) {}
 
   onGotoSettings = () => routeToSettings(this.router);
 }

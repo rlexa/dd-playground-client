@@ -1,44 +1,14 @@
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {NgModule} from '@angular/core';
 import {MatNativeDateModule, NativeDateModule} from '@angular/material/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule, Routes} from '@angular/router';
 import {AppComponent} from './app.component';
+import {DiGlobalModule} from './di-global.module';
 import {FlexboxModule} from './module/directive/flexbox';
 import {ROUTE_DASHBOARD, ROUTE_ROOT, ROUTE_WILDCARD} from './routing';
-import {AppRxStore, createAppRxStore, RxStateSetGlobalService} from './rx-state';
-
-async function loadHttp(path: string, http: HttpClient, handler: (data: any) => void, parseAs: 'json' | 'text' = 'json') {
-  try {
-    handler(
-      parseAs === 'text'
-        ? await http
-            .get(path, {
-              responseType: 'text',
-              headers: {'content-type': 'text/plain;charset=utf-8'},
-            })
-            .toPromise()
-        : await http.get(path, {responseType: 'json'}).toPromise(),
-    );
-  } catch (ex) {
-    console.error('While loading "' + path + '"', ex);
-  }
-}
-
-export function beforeInit(http: HttpClient, rxMutateGlobal: RxStateSetGlobalService) {
-  return () =>
-    Promise.all([
-      loadHttp('/assets/flags.json', http, (data) =>
-        rxMutateGlobal.mergeFlags({
-          ...data,
-          ...{
-            isProduction: data && data.buildVariant && data.buildVariant.toLowerCase() === 'prod',
-          },
-        }),
-      ),
-    ]);
-}
+import {AppRxStore, createAppRxStore} from './rx-state';
 
 const appRoutes: Routes = [
   {
@@ -65,19 +35,13 @@ const appRoutes: Routes = [
     FlexboxModule,
     // routing
     RouterModule.forRoot(appRoutes, {enableTracing: false}),
+    // local
+    DiGlobalModule,
   ],
   /* EXPORTS: Export declared classes that components in other modules are able to reference in their templates */
   exports: [],
   /* PROVIDERS: all providers in any module imported in root have application scope */
-  providers: [
-    {provide: AppRxStore, useFactory: createAppRxStore},
-    {
-      provide: APP_INITIALIZER,
-      deps: [HttpClient, RxStateSetGlobalService],
-      multi: true,
-      useFactory: beforeInit,
-    },
-  ],
+  providers: [{provide: AppRxStore, useFactory: createAppRxStore}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
