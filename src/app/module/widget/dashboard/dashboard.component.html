@@ -1,4 +1,14 @@
-<div
+<div class="content mat-app-background">
+  <app-navigation-bar *ngIf="isVisibleHeader$ | async" [items]="navs$ | async"></app-navigation-bar>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+  <app-footer *ngIf="isVisibleFooter$ | async"></app-footer>
+</div>
+
+<!-- <div
   class="mat-app-background position-absolute match-parent"
   [ngStyle]="{
     display: 'grid',
@@ -60,4 +70,4 @@
       <app-version class="margin-bottom-narrow"></app-version>
     </div>
   </footer>
-</div>
+</div> -->

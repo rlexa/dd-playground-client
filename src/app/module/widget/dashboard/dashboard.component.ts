@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
+import {ActivatedRoute, Data} from '@angular/router';
 import {watch} from 'dd-rx-state';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -26,6 +27,8 @@ import {
   ROUTE_WALKER,
 } from 'src/app/routing';
 import {RxStateService} from 'src/app/rx-state';
+import {trackByIndex} from 'src/app/util';
+import {NavigationBarItem} from '../navigation-bar';
 import {DiDashboardVisibilityFooter, DiDashboardVisibilityHeader, DiDashboardVisibilitySidebar} from './di-dashboard-options';
 
 interface RouteDef {
@@ -35,14 +38,20 @@ interface RouteDef {
   subs: RouteDef[];
 }
 
+export interface DashboardComponentRouteData extends Data {
+  navs: NavigationBarItem[];
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
   constructor(
     private readonly rxState: RxStateService,
+    private readonly activatedRoute: ActivatedRoute,
     @Inject(DiDashboardVisibilityHeader) public readonly isVisibleHeader$: Observable<boolean>,
     @Inject(DiDashboardVisibilityFooter) public readonly isVisibleFooter$: Observable<boolean>,
     @Inject(DiDashboardVisibilitySidebar) public readonly isVisibleSide$: Observable<boolean>,
@@ -60,7 +69,7 @@ export class DashboardComponent {
     .map((line) => '"' + line.join(' ') + '"')
     .join(' ');
 
-  readonly ROUTE_ROOT = ROUTE_DASHBOARD;
+  readonly navs$ = this.activatedRoute.data.pipe(map((data: DashboardComponentRouteData) => data?.navs ?? null));
 
   readonly ROUTES: RouteDef[] = [
     {
@@ -134,4 +143,6 @@ export class DashboardComponent {
       return route ? route.subs : [];
     }),
   );
+
+  trackByIndex = trackByIndex;
 }

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DashboardComponent is created 1`] = `
+exports[`DashboardComponent renders 1`] = `
 <app-dashboard
   GRID={[Function String]}
   GRID_CONTENT={[Function String]}
@@ -8,173 +8,58 @@ exports[`DashboardComponent is created 1`] = `
   GRID_HEAD={[Function String]}
   GRID_SIDE={[Function String]}
   ROUTES={[Function Array]}
-  ROUTE_ROOT={[Function String]}
+  activatedRoute={[Function Object]}
   isVisibleFooter$={[Function StateSubject]}
   isVisibleHeader$={[Function StateSubject]}
   isVisibleSide$={[Function StateSubject]}
+  navs$={[Function AnonymousSubject]}
   rxState={[Function RxStateService]}
   subRoute$={[Function AnonymousSubject]}
   subRoutes$={[Function AnonymousSubject]}
+  trackByIndex={[Function Function]}
 >
   <div
-    class="mat-app-background position-absolute match-parent"
-    style="display: grid; grid-template-areas: \\"head head\\" \\"side cont\\" \\"foot foot\\"; grid-template-columns: max-content auto; grid-template-rows: max-content auto max-content;"
+    class="content mat-app-background"
   >
-    <div
-      style="grid-area: head; background: blue;"
-    >
-      
-      
-      <mat-toolbar
-        color="primary"
-      >
-        <span
-          class="mat-toolbar-filler"
-        />
-        <nav
-          class="mat-nav-list"
-        >
-          
-          
-          <a
-            href="/dashboard/overview"
-            mat-button=""
-            routerlinkactive="active"
-            style="min-width: auto;"
-          >
-            <i
-              class="material-icons transition-transform active-scale"
-            >
-              icon overview
-            </i>
-          </a>
-          
-          
-          <a
-            href="/dashboard/graph"
-            mat-button=""
-            routerlinkactive="active"
-            style="min-width: auto;"
-          >
-            <i
-              class="material-icons transition-transform active-scale"
-            >
-              icon graph
-            </i>
-          </a>
-          
-          
-          <a
-            href="/dashboard/crypto"
-            mat-button=""
-            routerlinkactive="active"
-            style="min-width: auto;"
-          >
-            <i
-              class="material-icons transition-transform active-scale"
-            >
-              icon cryptocurrency
-            </i>
-          </a>
-          
-          
-          <a
-            href="/dashboard/school"
-            mat-button=""
-            routerlinkactive="active"
-            style="min-width: auto;"
-          >
-            <i
-              class="material-icons transition-transform active-scale"
-            >
-              icon school
-            </i>
-          </a>
-          
-          
-          <a
-            href="/dashboard/game"
-            mat-button=""
-            routerlinkactive="active"
-            style="min-width: auto;"
-          >
-            <i
-              class="material-icons transition-transform active-scale"
-            >
-              icon game
-            </i>
-          </a>
-          
-          
-          <a
-            href="/dashboard/playground"
-            mat-button=""
-            routerlinkactive="active"
-            style="min-width: auto;"
-          >
-            <i
-              class="material-icons transition-transform active-scale"
-            >
-              icon playground
-            </i>
-          </a>
-          
-          
-          <a
-            href="/dashboard/settings"
-            mat-button=""
-            routerlinkactive="active"
-            style="min-width: auto;"
-          >
-            <i
-              class="material-icons transition-transform active-scale"
-            >
-              icon settings
-            </i>
-          </a>
-          
-        </nav>
-        <span
-          class="mat-toolbar-filler"
-        />
-      </mat-toolbar>
-    </div>
-    <div
-      class="position-relative"
-      style="grid-area: side;"
-    >
-      
-      
-      <mat-toolbar
-        class="toolbar-column"
-        color="primary"
-      >
-        
-        <span
-          class="mat-toolbar-filler"
-        />
-      </mat-toolbar>
-    </div>
-    <main
-      class="position-relative"
-      style="grid-area: cont;"
-    >
+    
+    <app-navigation-bar />
+    <main>
       <router-outlet />
     </main>
-    <footer
-      style="grid-area: foot;"
-    >
-      
-      <div
-        class="border-top contenthv"
-        ddflexbox="hycr"
-      >
-        <app-version
-          class="margin-bottom-narrow"
-        />
-      </div>
-      
-    </footer>
+    
+    <app-footer />
+  </div>
+</app-dashboard>
+`;
+
+exports[`DashboardComponent with routes=3 renders 1`] = `
+<app-dashboard
+  GRID={[Function String]}
+  GRID_CONTENT={[Function String]}
+  GRID_FOOTER={[Function String]}
+  GRID_HEAD={[Function String]}
+  GRID_SIDE={[Function String]}
+  ROUTES={[Function Array]}
+  activatedRoute={[Function Object]}
+  isVisibleFooter$={[Function StateSubject]}
+  isVisibleHeader$={[Function StateSubject]}
+  isVisibleSide$={[Function StateSubject]}
+  navs$={[Function AnonymousSubject]}
+  rxState={[Function RxStateService]}
+  subRoute$={[Function AnonymousSubject]}
+  subRoutes$={[Function AnonymousSubject]}
+  trackByIndex={[Function Function]}
+>
+  <div
+    class="content mat-app-background"
+  >
+    
+    <app-navigation-bar />
+    <main>
+      <router-outlet />
+    </main>
+    
+    <app-footer />
   </div>
 </app-dashboard>
 `;

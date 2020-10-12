@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <span class="mat-toolbar-filler"></span>
+  <ng-container *ngIf="items as iis">
+    <nav class="mat-nav-list">
+      <a
+        *ngFor="let ii of iis; trackBy: trackByIndex"
+        mat-button
+        [style.min-width]="'auto'"
+        [routerLink]="ii.route"
+        routerLinkActive="active"
+        [matTooltip]="ii.label"
+      >
+        <i class="material-icons transition-transform active-scale">{{ ii.icon | icon }}</i>
+      </a>
+    </nav>
+    <span class="mat-toolbar-filler"></span>
+  </ng-container>
+</mat-toolbar>

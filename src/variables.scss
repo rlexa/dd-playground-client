@@ -1,7 +1,7 @@
 @import 'md-custom-theme.scss';
 
 :root {
-  --font-family-root: Roboto, "Helvetica Neue", sans-serif;
+  --font-family-root: Roboto, 'Helvetica Neue', sans-serif;
 
   --size-cell: 23rem;
   --size-font-h1: 2.4rem;
@@ -11,15 +11,18 @@
   --size-font-smaller: 1.3rem;
   --size-font-small: 1.2rem;
   --size-gap: 1rem;
+  --size-gap-narrow: 0.5rem;
   --size-gap-bottom-table-column-input: -1rem;
   --size-gap-wide: 2rem;
   --size-pad: 2rem;
-  --size-radius: .5rem;
+  --size-radius: 0.5rem;
   --size-squared: 2.3rem;
   --size-viewport-min: 80rem;
 
   --transition-duration-fast: 100ms;
   --transition-duration: 300ms;
+
+  --color-border: hsla(0, 0%, 0%, 0.12);
 }
 
 $clr-primary: mat-color($primary);
@@ -30,19 +33,18 @@ $clr-item-bg: #e0e0e0;
 $clr-item-bg-connected: lightgreen;
 $clr-item-bg-light: #f0f0f0;
 $clr-item-fg: #000;
-$clr-mat-dark: fade-out(black, .13);
-$clr-mat-dark-disabled: fade-out(black, .74);
-$clr-mat-dark-divider: fade-out(black, .88);
-$clr-mat-dark-icon: fade-out(black, .46);
+$clr-mat-dark: fade-out(black, 0.13);
+$clr-mat-dark-disabled: fade-out(black, 0.74);
+$clr-mat-dark-divider: fade-out(black, 0.88);
+$clr-mat-dark-icon: fade-out(black, 0.46);
 $clr-mat-dark-row-hover: #eeeeee;
 $clr-mat-dark-row-select: #f5f5f5;
-$clr-mat-dark-secondary: fade-out(black, .46);
+$clr-mat-dark-secondary: fade-out(black, 0.46);
 $clr-mat-light: fade-out(white, 0);
-$clr-mat-light-disabled: fade-out(white, .7);
-$clr-mat-light-divider: fade-out(white, .88);
+$clr-mat-light-disabled: fade-out(white, 0.7);
 $clr-mat-light-icon: $clr-mat-light;
 $clr-mat-light-row-hover: #f1f1f1;
-$clr-mat-light-secondary: fade-out(white, .3);
+$clr-mat-light-secondary: fade-out(white, 0.3);
 $clr-mat-table-dialog-color: #f9f9f9;
 $clr-scrollbar-thumb: fade-out(black, 0.5);
 $clr-scrollbar-track: fade-out(black, 0.9);

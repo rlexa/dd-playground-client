@@ -1,0 +1,15 @@
+.content {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+
+  display: flex;
+  flex-direction: column;
+
+  > main {
+    flex: 1 1 auto;
+    position: relative;
+  }
+}

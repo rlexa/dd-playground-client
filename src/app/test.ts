@@ -1,5 +1,7 @@
 import {Provider, Type} from '@angular/core';
 import {ComponentFixture} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {MockedComponent} from 'ng-mocks';
 import {Observable} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {Mock} from 'ts-mockery';
@@ -23,6 +25,12 @@ export function detectChanges<T>(fixture: ComponentFixture<T>) {
   fixture.debugElement.triggerEventHandler('click', null);
   fixture.detectChanges();
 }
+
+/**
+ * Builds a getter of existing mocked component by type.
+ */
+export const getterMockedComponent = <T>(type: Type<T>) => (fixture: ComponentFixture<any>): MockedComponent<T> =>
+  fixture.debugElement.query(By.directive(type))?.componentInstance;
 
 /**
  * Converts the given Observable<T> to a Promise<T> using the rxjs operator take.

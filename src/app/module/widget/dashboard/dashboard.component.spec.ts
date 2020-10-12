@@ -1,36 +1,61 @@
-import {async, TestBed} from '@angular/core/testing';
-import {MatButton} from '@angular/material/button';
-import {MatToolbar} from '@angular/material/toolbar';
-import {MatTooltip} from '@angular/material/tooltip';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ActivatedRoute} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {MockComponents, MockDirectives, MockPipe} from 'ng-mocks';
+import {MockComponents} from 'ng-mocks';
+import {Subject} from 'rxjs';
 import {provideRxState} from 'src/app/rx-state/test';
-import {detectChanges, overrideForChangeDetection} from 'src/app/test';
-import {FlexboxDirective} from '../../directive/flexbox';
-import {IconPipe} from '../../pipe/icon';
-import {VersionComponent} from '../version';
-import {DashboardComponent} from './dashboard.component';
+import {detectChanges, getterMockedComponent, mockWith, overrideForChangeDetection} from 'src/app/test';
+import {Mock} from 'ts-mockery';
+import {FooterComponent} from '../footer';
+import {NavigationBarComponent, NavigationBarItem} from '../navigation-bar';
+import {DashboardComponent, DashboardComponentRouteData} from './dashboard.component';
 
 describe('DashboardComponent', () => {
-  beforeEach(async(() => {
+  let fixture: ComponentFixture<DashboardComponent>;
+
+  const navs = [1, 2, 3].map<NavigationBarItem>((ii) => ({
+    icon: `icon${ii}`,
+    label: `label${ii}`,
+    route: `route${ii}`,
+  }));
+
+  const data$ = new Subject<DashboardComponentRouteData>();
+
+  afterAll(() => data$.complete());
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [
-        DashboardComponent,
-        MockComponents(MatButton, MatToolbar),
-        MockDirectives(MatTooltip, FlexboxDirective),
-        MockComponents(VersionComponent),
-        MockPipe(IconPipe, val => `icon ${val}`),
+      declarations: [DashboardComponent, MockComponents(NavigationBarComponent, FooterComponent)],
+      providers: [
+        provideRxState,
+        mockWith(
+          ActivatedRoute,
+          Mock.from<ActivatedRoute>({data: data$}),
+        ),
       ],
-      providers: [provideRxState],
     })
       .overrideComponent(DashboardComponent, overrideForChangeDetection)
       .compileComponents();
-  }));
+  });
 
-  test('is created', () => {
-    const fixture = TestBed.createComponent(DashboardComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(DashboardComponent);
     detectChanges(fixture);
-    expect(fixture).toMatchSnapshot();
+  });
+
+  it('creates instance', () => expect(fixture.componentInstance).toBeTruthy());
+  it(`renders`, () => expect(fixture).toMatchSnapshot());
+
+  describe(`with routes=${navs.length}`, () => {
+    beforeEach(() => {
+      data$.next({navs});
+      detectChanges(fixture);
+    });
+
+    it(`renders`, () => expect(fixture).toMatchSnapshot());
+
+    it(`does show nav bar`, () => expect(!!getterMockedComponent(NavigationBarComponent)(fixture)).toBe(true));
+    it(`forwards routed items`, () => expect(getterMockedComponent(NavigationBarComponent)(fixture).items).toBe(navs));
   });
 });

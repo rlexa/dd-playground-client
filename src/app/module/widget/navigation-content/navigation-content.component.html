@@ -1,0 +1,9 @@
+<ng-container *ngIf="navs$ | async as navs">
+  <app-navigation-bar *ngIf="navs.length > 1" [items]="navs"></app-navigation-bar>
+</ng-container>
+
+<main>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</main>

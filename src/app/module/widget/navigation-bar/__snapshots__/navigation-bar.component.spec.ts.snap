@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavigationBarComponent renders 1`] = `
+<app-navigation-bar
+  items="null"
+  trackByIndex={[Function Function]}
+>
+  <mat-toolbar
+    color="primary"
+  >
+    <span
+      class="mat-toolbar-filler"
+    />
+    
+  </mat-toolbar>
+</app-navigation-bar>
+`;
+
+exports[`NavigationBarComponent with items renders 1`] = `
+<app-navigation-bar
+  items={[Function Array]}
+  trackByIndex={[Function Function]}
+>
+  <mat-toolbar
+    color="primary"
+  >
+    <span
+      class="mat-toolbar-filler"
+    />
+    
+    
+    <nav
+      class="mat-nav-list"
+    >
+      
+      <a
+        href="/route1"
+        mat-button=""
+        routerlinkactive="active"
+        style="min-width: auto;"
+      >
+        <i
+          class="material-icons transition-transform active-scale"
+        >
+          icon icon1
+        </i>
+      </a>
+      
+      <a
+        href="/route2"
+        mat-button=""
+        routerlinkactive="active"
+        style="min-width: auto;"
+      >
+        <i
+          class="material-icons transition-transform active-scale"
+        >
+          icon icon2
+        </i>
+      </a>
+      
+      <a
+        href="/route3"
+        mat-button=""
+        routerlinkactive="active"
+        style="min-width: auto;"
+      >
+        <i
+          class="material-icons transition-transform active-scale"
+        >
+          icon icon3
+        </i>
+      </a>
+      
+    </nav>
+    <span
+      class="mat-toolbar-filler"
+    />
+  </mat-toolbar>
+</app-navigation-bar>
+`;
