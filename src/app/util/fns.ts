@@ -113,7 +113,7 @@ export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) 
 export const fnKey = <T extends object, K extends keyof T>(key: K) => (val: T) => val?.[key];
 export const fnTKey = <T extends object>() => <K extends keyof T>(key: K) => fnKey<T, K>(key);
 
-export const fnMerge = <T extends object>(arg1: T) => (arg2?: T): T => ({...(arg1 || {}), ...(arg2 || {})} as T);
+export const fnMerge = <T extends object>(arg1?: Partial<T>) => (arg2?: Partial<T>): T => ({...(arg1 || {}), ...(arg2 || {})} as T);
 
 // MATH
 
