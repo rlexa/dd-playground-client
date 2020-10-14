@@ -5,7 +5,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule, Routes} from '@angular/router';
 import {AppComponent} from './app.component';
-import {DiGlobalModule} from './di-global.module';
 import {FlexboxModule} from './module/directive/flexbox';
 import {ROUTE_DASHBOARD, ROUTE_ROOT, ROUTE_WILDCARD} from './routing';
 import {AppRxStore, createAppRxStore} from './rx-state';
@@ -35,8 +34,6 @@ const appRoutes: Routes = [
     FlexboxModule,
     // routing
     RouterModule.forRoot(appRoutes, {enableTracing: false}),
-    // local
-    DiGlobalModule,
   ],
   /* EXPORTS: Export declared classes that components in other modules are able to reference in their templates */
   exports: [],
