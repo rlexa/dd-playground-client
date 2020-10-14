@@ -1,4 +1,4 @@
-import {InjectionToken, Provider} from '@angular/core';
+import {inject, InjectionToken, Provider} from '@angular/core';
 import {StateSubject} from 'dd-rxjs';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {filter, map, withLatestFrom} from 'rxjs/operators';
@@ -37,52 +37,40 @@ export const DiGameSnakeTriggerInit = new InjectionToken<Subject<any>>('DI init 
 /** Game processors intended for multi DI. */
 export const DiGameSnakeProcessors = new InjectionToken<Observable<Game>>('DI game processors.');
 
-export function factoryDiGameSnakeProcessorDirection(
-  game$: BehaviorSubject<Game>,
-  triggerDirection$: Observable<string>,
-): Observable<Game> {
-  return triggerDirection$.pipe(
-    filter((dir) => ['L', 'U', 'R', 'D'].includes(dir)),
-    map((dir) => ({x: dir === 'L' ? -1 : dir === 'R' ? 1 : 0, y: dir === 'U' ? -1 : dir === 'D' ? 1 : 0} as Vector)),
-    withLatestFrom(game$),
-    filter(([vec, game]) => !!game),
-    map(([vec, game]) => onInputDirection(game, vec)),
-  );
-}
 /** Processor part for direction. */
 export const DiGameSnakeProcessorDirectionProvider: Provider = {
   provide: DiGameSnakeProcessors,
   multi: true,
-  deps: [DiGameSnake, DiGameSnakeTriggerDirection],
-  useFactory: factoryDiGameSnakeProcessorDirection,
+  useFactory: () =>
+    inject(DiGameSnakeTriggerDirection).pipe(
+      filter((dir) => ['L', 'U', 'R', 'D'].includes(dir)),
+      map((dir) => ({x: dir === 'L' ? -1 : dir === 'R' ? 1 : 0, y: dir === 'U' ? -1 : dir === 'D' ? 1 : 0} as Vector)),
+      withLatestFrom(inject(DiGameSnake)),
+      filter(([vec, game]) => !!game),
+      map(([vec, game]) => onInputDirection(game, vec)),
+    ),
 };
 
-export function factoryDiGameSnakeProcessorFrame(game$: BehaviorSubject<Game>, triggerFrame$: Observable<any>): Observable<Game> {
-  return triggerFrame$.pipe(
-    withLatestFrom(game$),
-    filter(([__, game]) => !!game),
-    map(([__, game]) => processFrame(game)),
-  );
-}
 /** Processor part for frame. */
 export const DiGameSnakeProcessorFrameProvider: Provider = {
   provide: DiGameSnakeProcessors,
   multi: true,
-  deps: [DiGameSnake, DiGameSnakeTriggerFrame],
-  useFactory: factoryDiGameSnakeProcessorFrame,
+  useFactory: () =>
+    inject(DiGameSnakeTriggerFrame).pipe(
+      withLatestFrom(inject(DiGameSnake)),
+      filter(([__, game]) => !!game),
+      map(([__, game]) => processFrame(game)),
+    ),
 };
 
-export function factoryDiGameSnakeProcessorInit(preset$: Observable<Preset>, triggerInit$: Observable<any>): Observable<Game> {
-  return triggerInit$.pipe(
-    withLatestFrom(preset$),
-    map(([_, preset]) => preset),
-    map(initGame),
-  );
-}
 /** Processor part for init. */
 export const DiGameSnakeProcessorInitProvider: Provider = {
   provide: DiGameSnakeProcessors,
   multi: true,
-  deps: [DiGameSnakePreset, DiGameSnakeTriggerInit],
-  useFactory: factoryDiGameSnakeProcessorInit,
+  useFactory: () =>
+    inject(DiGameSnakeTriggerInit).pipe(
+      withLatestFrom(inject(DiGameSnakePreset)),
+      map(([_, preset]) => preset),
+      map(initGame),
+    ),
 };
