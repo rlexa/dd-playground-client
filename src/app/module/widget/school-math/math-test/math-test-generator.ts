@@ -410,7 +410,7 @@ const generateTaskTextSumSketch = (rnd: () => number): MathTestTask => {
   };
 };
 
-export function generateMathTestGrade2({seed = 1, title = 'Math Test'}): MathTest {
+export function generateMathTestGrade3({seed = 1, title = 'Math Test'}): MathTest {
   const rnd = randomize(seed);
   return {
     title,

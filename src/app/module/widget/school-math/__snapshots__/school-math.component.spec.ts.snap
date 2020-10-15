@@ -8,8 +8,6 @@ exports[`SchoolMathComponent is created 1`] = `
   points$={[Function Observable]}
   seed$={[Function BehaviorSubject]}
   setSeed={[Function Function]}
-  triggerGenerate={[Function Function]}
-  triggerGenerate$={[Function Subject]}
   triggerPdf={[Function Function]}
   triggerPdf$={[Function Subject]}
 >
@@ -27,12 +25,6 @@ exports[`SchoolMathComponent is created 1`] = `
             type="number"
           />
         </mat-form-field>
-        <button
-          color="primary"
-          mat-raised-button=""
-        >
-          Generate
-        </button>
         <button
           mat-raised-button=""
         >

@@ -3,10 +3,12 @@ import {MatButton} from '@angular/material/button';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {MatFormField} from '@angular/material/form-field';
 import {MockComponents} from 'ng-mocks';
-import {BehaviorSubject} from 'rxjs';
+import {TCreatedPdf} from 'pdfmake/build/pdfmake';
+import {BehaviorSubject, of} from 'rxjs';
 import {detectChanges, overrideForChangeDetection} from 'src/app/test';
 import {SimpleViewComponent} from '../simple-view';
-import {DiSchoolMathSeed} from './di-school-math-data';
+import {DiSchoolMathSeed, DiSchoolMathTest, DiSchoolMathTestPdfMeta} from './di-school-math-data';
+import {MathTest} from './math-test/math-test-generator';
 import {SchoolMathComponent} from './school-math.component';
 
 describe('SchoolMathComponent', () => {
@@ -23,7 +25,11 @@ describe('SchoolMathComponent', () => {
         SchoolMathComponent,
         MockComponents(MatButton, MatCard, MatCardTitle, MatCardContent, MatFormField, SimpleViewComponent),
       ],
-      providers: [{provide: DiSchoolMathSeed, useValue: seed$}],
+      providers: [
+        {provide: DiSchoolMathSeed, useValue: seed$},
+        {provide: DiSchoolMathTest, useValue: of<MathTest>({title: 'title', tasks: []})},
+        {provide: DiSchoolMathTestPdfMeta, useValue: of<TCreatedPdf>({} as TCreatedPdf)},
+      ],
     })
       .overrideComponent(SchoolMathComponent, overrideForChangeDetection)
       .compileComponents();

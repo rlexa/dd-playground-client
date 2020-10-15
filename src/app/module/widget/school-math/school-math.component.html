@@ -5,7 +5,6 @@
       <mat-form-field>
         <input type="number" matInput [min]="1" placeholder="Seed" [value]="seed$ | async" (change)="setSeed(+$event.target.value)" />
       </mat-form-field>
-      <button mat-raised-button color="primary" [disabled]="(seed$ | async) < 1" (click)="triggerGenerate()">Generate</button>
       <button mat-raised-button [disabled]="!(data$ | async)" (click)="triggerPdf()">PDF</button>
     </p>
     <label class="right">{{ points$ | async }} points</label>
