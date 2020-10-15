@@ -2,9 +2,11 @@ import {
   fnAbs,
   fnApply2,
   fnCompose,
+  fnDefault,
   fnDiv,
   fnFloor,
   fnGenerateOther,
+  fnGetter,
   fnGt,
   fnGte,
   fnIfThenElse,
@@ -27,10 +29,27 @@ import {
 
 export type MathTestQuestionType = 'pyramide' | 'shortresult' | 'table' | 'questionline';
 
-export interface MathTestQuestion {
+export interface WithPointsNumber {
   points?: number;
+}
+
+const getPoints = fnGetter<WithPointsNumber, 'points'>('points');
+const getPointsOrZero = fnCompose(fnDefault(0), getPoints);
+const sumPoints = fnReduce(0)((index) => (acc) => fnCompose(fnSum(acc), getPointsOrZero));
+
+export interface WithResultString {
   result?: string;
+}
+
+const getResult = fnGetter<WithResultString, 'result'>('result');
+
+export interface WithTextString {
   text?: string;
+}
+
+const getText = fnGetter<WithTextString, 'text'>('text');
+
+export interface MathTestQuestion extends WithPointsNumber, WithResultString, WithTextString {
   title?: string;
   type?: MathTestQuestionType;
 }
@@ -41,30 +60,26 @@ const setQuestionText = fnSetter<MathTestQuestion, 'text'>('text');
 const setQuestionTitle = fnSetter<MathTestQuestion, 'title'>('title');
 const setQuestionType = fnSetter<MathTestQuestion, 'type'>('type');
 
-const mathTestQuestionToPoints = (question: MathTestQuestion) => question.points ?? 0;
-
-export interface MathTestTask {
-  points?: number;
-  text?: string;
-  title?: string;
+export interface WithMathTestQuestionList {
   questions?: MathTestQuestion[];
 }
 
-const mathTestTaskToPoints = (task: MathTestTask) =>
-  task?.questions?.reduce((acc, question) => acc + mathTestQuestionToPoints(question), 0) ?? 0;
+const getQuestions = fnGetter<WithMathTestQuestionList, 'questions'>('questions');
 
-const mathTestTasksToPoints = (tasks: MathTestTask[]) => tasks?.reduce((acc, task) => acc + task.points, 0) ?? 0;
+export interface MathTestTask extends WithPointsNumber, WithMathTestQuestionList, WithTextString {
+  title?: string;
+}
 
 const setTaskPoints = fnSetter<MathTestTask, 'points'>('points');
 const setTaskQuestions = fnSetter<MathTestTask, 'questions'>('questions');
 const setTaskText = fnSetter<MathTestTask, 'text'>('text');
 const setTaskTitle = fnSetter<MathTestTask, 'title'>('title');
 
-const insertTaskPoints = (task: MathTestTask): MathTestTask => setTaskPoints(mathTestTaskToPoints(task))(task);
+const calcPointsFromQuestions = fnCompose(sumPoints, getQuestions);
+const insertTaskPoints = (task: MathTestTask): MathTestTask => setTaskPoints(calcPointsFromQuestions(task))(task);
 const setTaskQuestionsCalcPoints = (questions: MathTestQuestion[]) => fnCompose(insertTaskPoints, setTaskQuestions(questions));
 
-export interface MathTest {
-  points?: number;
+export interface MathTest extends WithPointsNumber {
   tasks?: MathTestTask[];
   title?: string;
 }
@@ -104,13 +119,14 @@ const addDistinctItemsUntil = <T>(newItem: (items: T[]) => T) => (compare: (aa: 
     return fnSome(compare)(items)(item) ? items : [...items, item];
   })(init);
 
-const mergeQuestionsToQuestionShortresult = fnReduce<MathTestQuestion>({type: 'shortresult', text: '', result: '', points: 0})(
-  (index) => (acc) => (ii: MathTestQuestion) =>
-    fnMerge(acc)({
-      text: appendString(',')(acc.text)(ii.text),
-      result: appendString(',')(acc.result)(ii.result),
-      points: fnSum(acc.points)(ii.points),
-    }),
+const mergeQuestionsToQuestionShortresult = fnReduce(
+  fnCompose(setQuestionPoints(0), setQuestionType('shortresult'))(null),
+)((index) => (acc) => (ii: MathTestQuestion) =>
+  fnCompose(
+    setQuestionPoints(fnSum(getPoints(acc))(getPoints(ii))),
+    setQuestionResult(appendString(',')(getResult(acc))(getResult(ii))),
+    setQuestionText(appendString(',')(getText(acc))(getText(ii))),
+  )(acc),
 );
 
 // GENERATE
@@ -449,5 +465,5 @@ export function generateMathTestGrade3({seed = 1, title = 'Math Test'}): MathTes
     generateTaskInsertComparison(rnd),
     generateTaskInsertOperation(rnd),
   ];
-  return fnCompose(setTestPoints(mathTestTasksToPoints(tasks)), setTestTasks(tasks), setTestTitle(title))(null);
+  return fnCompose(setTestPoints(sumPoints(tasks)), setTestTasks(tasks), setTestTitle(title))(null);
 }

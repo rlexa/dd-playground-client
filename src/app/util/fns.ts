@@ -17,6 +17,7 @@ export const fnTrace = (label: string) => <T>(value: T): T => {
 
 /** @returns `fn(arg1)(arg2)` result. */
 export const fnApply2 = <T1>(arg1: T1) => <T2>(arg2: T2) => <R>(fn: (arg1: T1) => (arg2: T2) => R) => fn(arg1)(arg2);
+export const fnApplyFn2 = <T1, T2, R>(fn: (arg1: T1) => (arg2: T2) => R) => (arg1: T1) => (arg2: T2) => fnApply2(arg1)(arg2)(fn);
 
 /** @returns flipped args i.e. `b => a => c` */
 export const fnFlip = <T1, T2, R>(fn: (arg1: T1) => (arg2: T2) => R) => (arg2: T2) => (arg1: T1) => fn(arg1)(arg2);
