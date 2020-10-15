@@ -4,7 +4,6 @@ import {
   fnCompose,
   fnDiv,
   fnFloor,
-  fnFn,
   fnGenerateOther,
   fnGt,
   fnGte,
@@ -172,8 +171,8 @@ const generateTaskNumberByDescription = (rnd: () => number): MathTestTask => {
 const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
   const leftDelta = rndIntBetween(3)(7)(rnd);
 
-  const rnd2to5 = fnFn(rndIntBetween(2)(5)(rnd));
-  const rightDelta = fnGenerateOther(rnd2to5)(leftDelta);
+  const rnd2to5 = rndIntBetween(2)(5);
+  const rightDelta = fnGenerateOther(() => rnd2to5(rnd))(leftDelta);
 
   const first = rndIntBetween(60)(99)(rnd);
   const second = rndIntBetween(10)(40)(rnd);
