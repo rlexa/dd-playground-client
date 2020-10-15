@@ -17,6 +17,7 @@ import {
   fnMult,
   fnReduce,
   fnSame,
+  fnSetter,
   fnSin,
   fnSome,
   fnSub,
@@ -34,6 +35,14 @@ export interface MathTestQuestion {
   type?: MathTestQuestionType;
 }
 
+const setQuestionPoints = fnSetter<MathTestQuestion, 'points'>('points');
+const setQuestionResult = fnSetter<MathTestQuestion, 'result'>('result');
+const setQuestionText = fnSetter<MathTestQuestion, 'text'>('text');
+const setQuestionTitle = fnSetter<MathTestQuestion, 'title'>('title');
+const setQuestionType = fnSetter<MathTestQuestion, 'type'>('type');
+
+const mathTestQuestionToPoints = (question: MathTestQuestion) => question.points ?? 0;
+
 export interface MathTestTask {
   points?: number;
   text?: string;
@@ -41,11 +50,28 @@ export interface MathTestTask {
   questions?: MathTestQuestion[];
 }
 
+const mathTestTaskToPoints = (task: MathTestTask) =>
+  task?.questions?.reduce((acc, question) => acc + mathTestQuestionToPoints(question), 0) ?? 0;
+
+const mathTestTasksToPoints = (tasks: MathTestTask[]) => tasks?.reduce((acc, task) => acc + task.points, 0) ?? 0;
+
+const setTaskPoints = fnSetter<MathTestTask, 'points'>('points');
+const setTaskQuestions = fnSetter<MathTestTask, 'questions'>('questions');
+const setTaskText = fnSetter<MathTestTask, 'text'>('text');
+const setTaskTitle = fnSetter<MathTestTask, 'title'>('title');
+
+const insertTaskPoints = (task: MathTestTask): MathTestTask => setTaskPoints(mathTestTaskToPoints(task))(task);
+const setTaskQuestionsCalcPoints = (questions: MathTestQuestion[]) => fnCompose(insertTaskPoints, setTaskQuestions(questions));
+
 export interface MathTest {
   points?: number;
   tasks?: MathTestTask[];
   title?: string;
 }
+
+const setTestPoints = fnSetter<MathTest, 'points'>('points');
+const setTestTasks = fnSetter<MathTest, 'tasks'>('tasks');
+const setTestTitle = fnSetter<MathTest, 'title'>('title');
 
 // UTIL
 
@@ -87,15 +113,6 @@ const mergeQuestionsToQuestionShortresult = fnReduce<MathTestQuestion>({type: 's
     }),
 );
 
-const mathTestQuestionToPoints = (question: MathTestQuestion) => question.points ?? 0;
-
-const mathTestTaskToPoints = (task: MathTestTask) =>
-  task?.questions?.reduce((acc, question) => acc + mathTestQuestionToPoints(question), 0) ?? 0;
-
-const mathTestTasksToPoints = (tasks: MathTestTask[]) => tasks?.reduce((acc, task) => acc + mathTestTaskToPoints(task), 0) ?? 0;
-
-const taskWithPoints = (task: MathTestTask): MathTestTask => ({...task, points: mathTestTaskToPoints(task)});
-
 // GENERATE
 
 const generateQuestionDivideWithSomeRest = (rnd: () => number): MathTestQuestion => {
@@ -104,20 +121,20 @@ const generateQuestionDivideWithSomeRest = (rnd: () => number): MathTestQuestion
   const rest = rndIntBetween(0)(right - 1)(rnd);
   const left = fnCompose(fnSum(rest), fnMult(right))(result);
 
-  return {
-    type: 'shortresult',
-    text: `${left} : ${right} = __`,
-    result: `${result}${rest ? 'R' + rest : ''}`,
-    points: 0.5,
-  };
+  return fnCompose(
+    setQuestionPoints(0.5),
+    setQuestionResult(`${result}${rest ? 'R' + rest : ''}`),
+    setQuestionText(`${left} : ${right} = __`),
+    setQuestionType('shortresult'),
+  )(null);
 };
 
 const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionDivideWithSomeRest(rnd))(fnJsonEqual)(10)([]);
-  return {
-    title: 'Teilen mit und ohne Rest.',
-    questions: [mergeQuestionsToQuestionShortresult(questions)],
-  };
+  return fnCompose(
+    setTaskTitle('Teilen mit und ohne Rest.'),
+    setTaskQuestionsCalcPoints([mergeQuestionsToQuestionShortresult(questions)]),
+  )(null);
 };
 
 const generateQuestionDotBeforeLinePriority = (rnd: () => number): MathTestQuestion => {
@@ -139,20 +156,17 @@ const generateQuestionDotBeforeLinePriority = (rnd: () => number): MathTestQuest
 
   const textDot = `${left} ${isMult ? '*' : ':'} ${right}`;
 
-  return {
-    type: 'shortresult',
-    text: `${isDotFirst ? textDot : last} ${isSum ? '+' : '-'} ${isDotFirst ? last : textDot} = __`,
-    result: `${result}`,
-    points: 0.5,
-  };
+  return fnCompose(
+    setQuestionPoints(0.5),
+    setQuestionResult(`${result}`),
+    setQuestionText(`${isDotFirst ? textDot : last} ${isSum ? '+' : '-'} ${isDotFirst ? last : textDot} = __`),
+    setQuestionType('shortresult'),
+  )(null);
 };
 
 const generateTaskDotBeforeLinePriority = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionDotBeforeLinePriority(rnd))(fnJsonEqual)(6)([]);
-  return {
-    title: 'Denke an die Regel.',
-    questions: [mergeQuestionsToQuestionShortresult(questions)],
-  };
+  return fnCompose(setTaskTitle('Denke an die Regel.'), setTaskQuestionsCalcPoints([mergeQuestionsToQuestionShortresult(questions)]))(null);
 };
 
 const generateQuestionNumberByDescription = (rnd: () => number): MathTestQuestion => {
@@ -164,19 +178,23 @@ const generateQuestionNumberByDescription = (rnd: () => number): MathTestQuestio
   const left = fnCompose(fnSub(result), deviation)(rnd);
   const right = fnCompose(fnSum(result), deviation)(rnd);
 
-  return {
-    type: 'questionline',
-    text: `Meine Zahl ist ${result % 2 ? 'ungerade' : 'gerade'}. Sie ist eine ${base}-Zahl. Sie liegt zwischen ${left} und ${right}.`,
-    result: String(result),
-    points: 1,
-  };
+  return fnCompose(
+    setQuestionPoints(1),
+    setQuestionResult(`${result}`),
+    setQuestionText(
+      joinText([
+        `Meine Zahl ist ${result % 2 ? 'ungerade' : 'gerade'}.`,
+        `Sie ist eine ${base}-Zahl.`,
+        `Sie liegt zwischen ${left} und ${right}.`,
+      ]),
+    ),
+    setQuestionType('questionline'),
+  )(null);
 };
 
 const generateTaskNumberByDescription = (rnd: () => number): MathTestTask => {
-  return {
-    title: 'Wie heißen die Zahlen?',
-    questions: addDistinctItemsUntil(() => generateQuestionNumberByDescription(rnd))(fnJsonEqual)(2)([]),
-  };
+  const questions = addDistinctItemsUntil(() => generateQuestionNumberByDescription(rnd))(fnJsonEqual)(2)([]);
+  return fnCompose(setTaskTitle('Wie heißen die Zahlen?'), setTaskQuestionsCalcPoints(questions))(null);
 };
 
 const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
@@ -196,36 +214,29 @@ const generateTaskNumberPack = (rnd: () => number): MathTestTask => {
   const indexToSecond = fnCompose(fnSum(second), fnMult(rightDelta));
   const terms = fnMapIndexed((index) => (): Term => ({first: indexToFirst(index), second: indexToSecond(index)}))([0, 0, 0, 0, 0]);
 
-  return {
-    questions: [
-      ...fnMapIndexed((index) => (term: Term): MathTestQuestion => ({
-        type: 'shortresult',
-        text: `${index < 3 ? term.first : '__'} - ${index < 3 ? term.second : '__'} = __`,
-        title: !index ? 'Setze fort und rechne.' : undefined,
-        result: `${term.first} - ${term.second} = ${term.first - term.second}`,
-        points: index < 3 ? 0.5 : 1.5,
-      }))(terms),
-      {
-        type: 'questionline',
-        title: 'Beschreibe das Päckchen.',
-        text: 'Die erste Zahl',
-        result: `wird um ${leftDelta} erhöht`,
-        points: 0.5,
-      },
-      {
-        type: 'questionline',
-        text: 'Die zweite Zahl',
-        result: `wird um ${rightDelta} erhöht`,
-        points: 0.5,
-      },
-      {
-        type: 'questionline',
-        text: 'Deshalb',
-        result: `wird das Ergebnis um ${fnAbs(leftDelta - rightDelta)} ${leftDelta > rightDelta ? 'erhöht' : 'erniedrigt'}`,
-        points: 0.5,
-      },
-    ],
-  };
+  const questionLineBase = fnCompose(setQuestionPoints(0.5), setQuestionType('questionline'))(null);
+  const indexedTermToQuestion = (index: number) => (term: Term) =>
+    fnCompose(
+      setQuestionPoints(index < 3 ? 0.5 : 1.5),
+      setQuestionResult(`${term.first} - ${term.second} = ${term.first - term.second}`),
+      setQuestionText(`${index < 3 ? term.first : '__'} - ${index < 3 ? term.second : '__'} = __`),
+      setQuestionTitle(!index ? 'Setze fort und rechne.' : undefined),
+      setQuestionType('shortresult'),
+    )(null);
+
+  return setTaskQuestionsCalcPoints([
+    ...fnMapIndexed(indexedTermToQuestion)(terms),
+    fnCompose(
+      setQuestionResult(`wird um ${leftDelta} erhöht`),
+      setQuestionText('Die erste Zahl'),
+      setQuestionTitle('Beschreibe das Päckchen.'),
+    )(questionLineBase),
+    fnCompose(setQuestionResult(`wird um ${rightDelta} erhöht`), setQuestionText('Die zweite Zahl'))(questionLineBase),
+    fnCompose(
+      setQuestionResult(`wird das Ergebnis um ${fnAbs(leftDelta - rightDelta)} ${leftDelta > rightDelta ? 'erhöht' : 'erniedrigt'}`),
+      setQuestionText('Deshalb'),
+    )(questionLineBase),
+  ])(null);
 };
 
 const generateQuestionInsertComparison = (rnd: () => number): MathTestQuestion => {
@@ -242,20 +253,17 @@ const generateQuestionInsertComparison = (rnd: () => number): MathTestQuestion =
   const resultEqualElse = fnIfThenElse(fnSame(left)(right))('=');
   const result = resultEqualElse(resultGreaterOrLess);
 
-  return {
-    type: 'shortresult',
-    text: `${left1} * ${left2} __ ${right1} * ${right2}`,
-    result,
-    points: 0.5,
-  };
+  return fnCompose(
+    setQuestionPoints(0.5),
+    setQuestionResult(result),
+    setQuestionText(`${left1} * ${left2} __ ${right1} * ${right2}`),
+    setQuestionType('shortresult'),
+  )(null);
 };
 
 const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionInsertComparison(rnd))(fnJsonEqual)(4)([]);
-  return {
-    title: 'Setze ein. > < =',
-    questions: [mergeQuestionsToQuestionShortresult(questions)],
-  };
+  return fnCompose(setTaskTitle('Setze ein. > < ='), setTaskQuestionsCalcPoints([mergeQuestionsToQuestionShortresult(questions)]))(null);
 };
 
 const generateQuestionInsertOperation = (rnd: () => number): MathTestQuestion => {
@@ -274,20 +282,17 @@ const generateQuestionInsertOperation = (rnd: () => number): MathTestQuestion =>
   const dotText = `${isMult ? dot1 : dotResult} __ ${isMult ? dot2 : dot1}`;
   const sumText = `${other1} __ ${other2}`;
 
-  return {
-    type: 'shortresult',
-    text: `${dotText} = ${sumText}`,
-    result: `${isMult ? '*' : ':'} ${isSum ? '+' : '-'}`,
-    points: 0.5,
-  };
+  return fnCompose(
+    setQuestionPoints(0.5),
+    setQuestionResult(`${isMult ? '*' : ':'} ${isSum ? '+' : '-'}`),
+    setQuestionText(`${dotText} = ${sumText}`),
+    setQuestionType('shortresult'),
+  )(null);
 };
 
 const generateTaskInsertOperation = (rnd: () => number): MathTestTask => {
   const questions = addDistinctItemsUntil(() => generateQuestionInsertOperation(rnd))(fnJsonEqual)(4)([]);
-  return {
-    title: ' Setze ein. + - * :',
-    questions: [mergeQuestionsToQuestionShortresult(questions)],
-  };
+  return fnCompose(setTaskTitle(' Setze ein. + - * :'), setTaskQuestionsCalcPoints([mergeQuestionsToQuestionShortresult(questions)]))(null);
 };
 
 const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
@@ -324,9 +329,14 @@ const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
     fnMap((term: Term) => (term.opSum ? term.first + term.second : term.first - term.second)),
   );
 
-  return {
-    questions: [{type: 'shortresult', text: termsToText(terms), result: termsToResult(terms), points}],
-  };
+  return setTaskQuestionsCalcPoints([
+    fnCompose(
+      setQuestionPoints(points),
+      setQuestionResult(termsToResult(terms)),
+      setQuestionText(termsToText(terms)),
+      setQuestionType('shortresult'),
+    )(null),
+  ])(null);
 };
 
 const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
@@ -345,19 +355,19 @@ const generateTaskPyramideSum = (rnd: () => number): MathTestTask => {
 
   const joinPyramide = fnJoin('|');
 
-  return {
-    title: 'Summenpyramide (+).',
-    questions: [
-      {
-        type: 'pyramide',
-        text: joinPyramide(
-          fnMap(joinComma)([[null], [null, null], [null, valOneOne, null], [valZeroZero, null, valZeroTwo, valZeroThree]]),
+  return fnCompose(
+    setTaskTitle('Summenpyramide (+).'),
+    setTaskQuestionsCalcPoints([
+      fnCompose(
+        setQuestionPoints(3),
+        setQuestionResult(joinPyramide(fnMap(joinComma)([lvlThree, lvlTwo, lvlOne, lvlZero]))),
+        setQuestionText(
+          joinPyramide(fnMap(joinComma)([[null], [null, null], [null, valOneOne, null], [valZeroZero, null, valZeroTwo, valZeroThree]])),
         ),
-        result: joinPyramide(fnMap(joinComma)([lvlThree, lvlTwo, lvlOne, lvlZero])),
-        points: 3,
-      },
-    ],
-  };
+        setQuestionType('pyramide'),
+      )(null),
+    ]),
+  )(null);
 };
 
 const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
@@ -387,17 +397,17 @@ const generateTaskTableMulErrors = (rnd: () => number): MathTestTask => {
   const joinLines = fnJoin('|');
   const asText = fnCompose(joinLines, fnMap<(string | number)[], string>(joinComma));
 
-  return {
-    title: joinText([`In der Rechentafel sind ${errorCount} Fehler.`, `Streiche die falschen Ergebnisse durch.`]),
-    questions: [
-      {
-        type: 'table',
-        text: asText([['*', ...topVals], ...rows.map((row, index) => [leftVals[index], ...row])]),
-        result: joinComma(errorIndices.map((index) => rows[fnFloor(fnDiv(index)(topValCount))][fnMod(index)(topValCount)])),
-        points: 4,
-      },
-    ],
-  };
+  return fnCompose(
+    setTaskTitle(joinText([`In der Rechentafel sind ${errorCount} Fehler.`, `Streiche die falschen Ergebnisse durch.`])),
+    setTaskQuestionsCalcPoints([
+      fnCompose(
+        setQuestionPoints(4),
+        setQuestionResult(joinComma(errorIndices.map((index) => rows[fnFloor(fnDiv(index)(topValCount))][fnMod(index)(topValCount)]))),
+        setQuestionText(asText([['*', ...topVals], ...rows.map((row, index) => [leftVals[index], ...row])])),
+        setQuestionType('table'),
+      )(null),
+    ]),
+  )(null);
 };
 
 const generateTaskTextSumSketch = (rnd: () => number): MathTestTask => {
@@ -405,24 +415,29 @@ const generateTaskTextSumSketch = (rnd: () => number): MathTestTask => {
   const valPlus = rndIntBetween(10)(20)(rnd);
   const valResult = fnSum(valBase)(valPlus);
 
-  return {
-    text: joinText([
-      `Zeichne eine Skizze.`,
-      `Rechne und antworte.`,
-      `Jule schwimmt ${valBase}m weit.`,
-      `Max schafft ${valPlus}m mehr als Jule.`,
-      `Wie weit schwimmt Max?`,
-    ]),
-    questions: [
-      {type: 'questionline', text: 'Rechnung:', result: `${valBase}m + ${valPlus}m = ${valResult}m`, points: 1},
-      {type: 'questionline', text: 'Antwort:', result: `Max schwimmt ${valResult}m weit.`, points: 1},
-    ],
-  };
+  const questionBase = fnCompose(setQuestionPoints(1), setQuestionTitle(null), setQuestionType('questionline'))(null);
+
+  const question1 = fnCompose(setQuestionText('Rechnung:'), setQuestionResult(`${valBase}m + ${valPlus}m = ${valResult}m`))(questionBase);
+  const question2 = fnCompose(setQuestionText('Antwort:'), setQuestionResult(`Max schwimmt ${valResult}m weit.`))(questionBase);
+
+  return fnCompose(
+    setTaskTitle(null),
+    setTaskText(
+      joinText([
+        `Zeichne eine Skizze.`,
+        `Rechne und antworte.`,
+        `Jule schwimmt ${valBase}m weit.`,
+        `Max schafft ${valPlus}m mehr als Jule.`,
+        `Wie weit schwimmt Max?`,
+      ]),
+    ),
+    setTaskQuestionsCalcPoints([question1, question2]),
+  )(null);
 };
 
 export function generateMathTestGrade3({seed = 1, title = 'Math Test'}): MathTest {
   const rnd = randomize(seed);
-  const tasks = fnMap(taskWithPoints)([
+  const tasks = [
     generateTaskTextSumSketch(rnd),
     generateTaskPyramideSum(rnd),
     generateTaskPlusMinus(rnd),
@@ -433,6 +448,6 @@ export function generateMathTestGrade3({seed = 1, title = 'Math Test'}): MathTes
     generateTaskDotBeforeLinePriority(rnd),
     generateTaskInsertComparison(rnd),
     generateTaskInsertOperation(rnd),
-  ]);
-  return {points: mathTestTasksToPoints(tasks), title, tasks};
+  ];
+  return fnCompose(setTestPoints(mathTestTasksToPoints(tasks)), setTestTasks(tasks), setTestTitle(title))(null);
 }

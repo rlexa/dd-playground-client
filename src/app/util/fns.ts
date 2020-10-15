@@ -60,6 +60,13 @@ export function fnCompose<R, T, T1, T2, T3>(
   fn2: (arg: T1) => T2,
   fn1: (arg: T) => T1,
 ): (arg: T) => R;
+export function fnCompose<R, T, T1, T2, T3, T4>(
+  fn5: (arg: T4) => R,
+  fn4: (arg: T3) => T4,
+  fn3: (arg: T2) => T3,
+  fn2: (arg: T1) => T2,
+  fn1: (arg: T) => T1,
+): (arg: T) => R;
 export function fnCompose(...funcs: ((arg: any) => any)[]) {
   return <T>(arg1: T) => funcs.reduceRight((acc, fn) => fn(acc), fnIdentity(arg1));
 }
@@ -113,7 +120,15 @@ export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) 
 export const fnKey = <T extends object, K extends keyof T>(key: K) => (val: T) => val?.[key];
 export const fnTKey = <T extends object>() => <K extends keyof T>(key: K) => fnKey<T, K>(key);
 
-export const fnMerge = <T extends object>(arg1?: Partial<T>) => (arg2?: Partial<T>): T => ({...(arg1 || {}), ...(arg2 || {})} as T);
+/** Merges `{}` < `baseValue` < `overwriteWith` */
+export const fnMerge = <T extends object>(baseValue?: Partial<T>) => (overwriteWith?: Partial<T>): T =>
+  ({...(baseValue || {}), ...(overwriteWith || {})} as T);
+
+/** Merges `{}` < `baseValue` < `overwriteWith` */
+export const fnRMerge = <T extends object>(overwriteWith?: Partial<T>) => (baseValue?: Partial<T>): T => fnMerge(baseValue)(overwriteWith);
+
+export const fnGetter = <T extends object, K extends keyof T>(key: K) => (obj: T) => obj?.[key];
+export const fnSetter = <T extends object, K extends keyof T>(key: K) => (value: T[K]) => fnRMerge<T>({[key]: value} as T);
 
 // MATH
 

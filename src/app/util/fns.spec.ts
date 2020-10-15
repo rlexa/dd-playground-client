@@ -13,6 +13,7 @@ import {
   fnFloat,
   fnFloor,
   fnFn,
+  fnGetter,
   fnGt,
   fnGte,
   fnHead,
@@ -45,7 +46,9 @@ import {
   fnRandomInt,
   fnReduce,
   fnRepeat,
+  fnRMerge,
   fnSame,
+  fnSetter,
   fnSin,
   fnSome,
   fnSplit,
@@ -141,6 +144,10 @@ describe(`fns`, () => {
     test(`returns function`, () => expect(fnFn(123)()).toBe(123));
   });
 
+  describe(`fnGetter`, () => {
+    test(`gets`, () => expect(fnGetter<{key: string}, 'key'>('key')({key: 'value'})).toBe('value'));
+  });
+
   describe(`fnGt`, () => {
     test(`is false for 0 1`, () => expect(fnGt(0)(1)).toBe(false));
     test(`is false for 1 1`, () => expect(fnGt(1)(1)).toBe(false));
@@ -232,8 +239,9 @@ describe(`fns`, () => {
     test(`maps null to undefined`, () => expect(fnMapIndexed(toIndex)(null)).toEqual(undefined));
   });
 
-  describe(`fnMerge`, () => {
+  describe(`fnMerge, fnRMerge`, () => {
     test(`merges`, () => expect(fnMerge({a: 1, b: 2})({b: 3, c: 4} as any)).toEqual({a: 1, b: 3, c: 4}));
+    test(`merges-r`, () => expect(fnRMerge({b: 3, c: 4} as any)({a: 1, b: 2})).toEqual({a: 1, b: 3, c: 4}));
   });
 
   describe(`fnMod`, () => {
@@ -286,6 +294,10 @@ describe(`fns`, () => {
   describe(`fnSame`, () => {
     test(`is same`, () => expect(fnSame('hi')('hi')).toBe(true));
     test(`is different`, () => expect(fnSame('hi')('ih')).toBe(false));
+  });
+
+  describe(`fnSetter`, () => {
+    test(`sets`, () => expect(fnSetter<{key: string}, 'key'>('key')('value')({key: 'oldValue'})).toEqual({key: 'value'}));
   });
 
   describe(`fnSin`, () => {
