@@ -35,12 +35,14 @@ export interface MathTestQuestion {
 }
 
 export interface MathTestTask {
+  points?: number;
   text?: string;
   title?: string;
   questions?: MathTestQuestion[];
 }
 
 export interface MathTest {
+  points?: number;
   tasks?: MathTestTask[];
   title?: string;
 }
@@ -84,6 +86,15 @@ const mergeQuestionsToQuestionShortresult = fnReduce<MathTestQuestion>({type: 's
       points: fnSum(acc.points)(ii.points),
     }),
 );
+
+const mathTestQuestionToPoints = (question: MathTestQuestion) => question.points ?? 0;
+
+const mathTestTaskToPoints = (task: MathTestTask) =>
+  task?.questions?.reduce((acc, question) => acc + mathTestQuestionToPoints(question), 0) ?? 0;
+
+const mathTestTasksToPoints = (tasks: MathTestTask[]) => tasks?.reduce((acc, task) => acc + mathTestTaskToPoints(task), 0) ?? 0;
+
+const taskWithPoints = (task: MathTestTask): MathTestTask => ({...task, points: mathTestTaskToPoints(task)});
 
 // GENERATE
 
@@ -411,19 +422,17 @@ const generateTaskTextSumSketch = (rnd: () => number): MathTestTask => {
 
 export function generateMathTestGrade3({seed = 1, title = 'Math Test'}): MathTest {
   const rnd = randomize(seed);
-  return {
-    title,
-    tasks: [
-      generateTaskTextSumSketch(rnd),
-      generateTaskPyramideSum(rnd),
-      generateTaskPlusMinus(rnd),
-      generateTaskTableMulErrors(rnd),
-      generateTaskNumberPack(rnd),
-      generateTaskNumberByDescription(rnd),
-      generateTaskDivideWithSomeRest(rnd),
-      generateTaskDotBeforeLinePriority(rnd),
-      generateTaskInsertComparison(rnd),
-      generateTaskInsertOperation(rnd),
-    ],
-  };
+  const tasks = fnMap(taskWithPoints)([
+    generateTaskTextSumSketch(rnd),
+    generateTaskPyramideSum(rnd),
+    generateTaskPlusMinus(rnd),
+    generateTaskTableMulErrors(rnd),
+    generateTaskNumberPack(rnd),
+    generateTaskNumberByDescription(rnd),
+    generateTaskDivideWithSomeRest(rnd),
+    generateTaskDotBeforeLinePriority(rnd),
+    generateTaskInsertComparison(rnd),
+    generateTaskInsertOperation(rnd),
+  ]);
+  return {points: mathTestTasksToPoints(tasks), title, tasks};
 }

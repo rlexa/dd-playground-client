@@ -78,16 +78,12 @@ const taskToPdf = (index: number) => (val: MathTestTask): Content => ({
   unbreakable: true,
 });
 
-export const mathTestTaskToPoints = (data: MathTestTask) => data?.questions?.reduce((acc, question) => acc + question.points ?? 0, 0) ?? 0;
-
 const questionToResultsPdf = (data: MathTestQuestion): Content => `Punkte: ${data.points}. Ergebnis: ${data.result}`;
 
 const taskToResultsPdf = (index: number) => (data: MathTestTask): Content => ({
-  stack: [{text: `${index + 1}. Punkte: ${mathTestTaskToPoints(data)}`}, ...data?.questions?.map(questionToResultsPdf)],
+  stack: [{text: `${index + 1}. Punkte: ${data.points}`}, ...data?.questions?.map(questionToResultsPdf)],
   style: 'marginAll',
 });
-
-export const mathTestToPoints = (data: MathTest) => data?.tasks?.reduce((acc, task) => acc + mathTestTaskToPoints(task), 0) ?? 0;
 
 export function mathTestToPdf(data: MathTest) {
   return !data
@@ -97,7 +93,7 @@ export function mathTestToPdf(data: MathTest) {
           {text: data.title || 'Math Test', style: 'h1'},
           ...indexedItemToPdfContentWith(taskToPdf)(data?.tasks),
           {pageBreak: 'before', text: `Ergebnisse für: ${data.title}`, style: 'h1'},
-          {text: `Punkte: ${mathTestToPoints(data)}`},
+          {text: `Punkte: ${data.points}`},
           ...indexedItemToPdfContentWith(taskToResultsPdf)(data?.tasks),
         ],
         styles: {

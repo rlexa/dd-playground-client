@@ -5,7 +5,6 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {filter, map, takeUntil, withLatestFrom} from 'rxjs/operators';
 import {DiSchoolMathSeed, DiSchoolMathTest, DiSchoolMathTestPdfMeta} from './di-school-math-data';
 import {MathTest} from './math-test/math-test-generator';
-import {mathTestToPoints} from './math-test/math-test-pdf';
 
 @Component({
   selector: 'app-school-math',
@@ -23,8 +22,6 @@ export class SchoolMathComponent implements OnDestroy, OnInit {
   @RxCleanup() private readonly done$ = new DoneSubject();
 
   @RxCleanup() readonly triggerPdf$ = new Subject();
-
-  readonly points$ = this.data$.pipe(map(mathTestToPoints));
 
   triggerPdf = () => this.triggerPdf$.next();
   setSeed = (seed: number) => this.seed$.next(seed);
