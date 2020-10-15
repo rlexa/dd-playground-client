@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {filter, map, shareReplay, startWith, takeUntil, withLatestFrom} from 'rxjs/operators';
+import {DiSchoolMathSeed} from './di-school-math-data';
 import {generateMathTestGrade2, MathTest} from './math-test/math-test-generator';
 import {mathTestToPdf, mathTestToPoints} from './math-test/math-test-pdf';
 
@@ -12,15 +13,17 @@ import {mathTestToPdf, mathTestToPoints} from './math-test/math-test-pdf';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SchoolMathComponent implements OnDestroy, OnInit {
+  constructor(@Inject(DiSchoolMathSeed) public readonly seed$: BehaviorSubject<number>) {}
+
   @RxCleanup() private readonly done$ = new DoneSubject();
 
   @RxCleanup() readonly triggerGenerate$ = new Subject();
   @RxCleanup() readonly triggerPdf$ = new Subject();
 
   readonly data$ = this.triggerGenerate$.pipe(
-    map(() => this.seed),
+    map(() => this.seed$.value),
     filter((seed) => seed > 0),
-    map((seed) => generateMathTestGrade2({seed, title: `Mathe Arbeit #${this.seed}`})),
+    map((seed) => generateMathTestGrade2({seed, title: `Mathe Arbeit #${seed}`})),
     startWith<MathTest>(null as MathTest),
     shareReplay({refCount: true, bufferSize: 1}),
     takeUntil(this.done$),
@@ -34,10 +37,9 @@ export class SchoolMathComponent implements OnDestroy, OnInit {
 
   readonly points$ = this.data$.pipe(map(mathTestToPoints));
 
-  seed = 1;
-
   triggerGenerate = () => this.triggerGenerate$.next();
   triggerPdf = () => this.triggerPdf$.next();
+  setSeed = (seed: number) => this.seed$.next(seed);
 
   destroy() {}
   ngOnDestroy() {
