@@ -18,7 +18,9 @@ export class SchoolMathComponent implements OnDestroy, OnInit {
   @RxCleanup() readonly triggerPdf$ = new Subject();
 
   readonly data$ = this.triggerGenerate$.pipe(
-    map(() => generateMathTestGrade2({seed: this.seed, title: `Mathe Arbeit #${this.seed}`})),
+    map(() => this.seed),
+    filter((seed) => seed > 0),
+    map((seed) => generateMathTestGrade2({seed, title: `Mathe Arbeit #${this.seed}`})),
     startWith<MathTest>(null as MathTest),
     shareReplay({refCount: true, bufferSize: 1}),
     takeUntil(this.done$),

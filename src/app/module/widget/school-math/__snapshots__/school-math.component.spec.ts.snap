@@ -18,11 +18,14 @@ exports[`SchoolMathComponent is created 1`] = `
     </mat-card-title>
     <mat-card-content>
       <p>
-        <input
-          matinput=""
-          placeholder="Seed"
-          type="number"
-        />
+        <mat-form-field>
+          <input
+            matinput=""
+            min="1"
+            placeholder="Seed"
+            type="number"
+          />
+        </mat-form-field>
         <button
           color="primary"
           mat-raised-button=""

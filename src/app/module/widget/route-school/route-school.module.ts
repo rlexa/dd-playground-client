@@ -15,7 +15,7 @@ const ROUTING: Routes = [
     children: [
       {
         path: ROUTE_MATH,
-        loadChildren: () => import('src/app/module/widget/school-math/school-math.module').then((m) => m.SchoolMathModule),
+        loadChildren: () => import('src/app/module/widget/school-math/school-math.module').then((m) => m.RoutedSchoolMathModule),
       },
       {path: ROUTE_ROOT, redirectTo: ROUTE_MATH, pathMatch: 'full'},
       {path: ROUTE_WILDCARD, redirectTo: ROUTE_MATH},
