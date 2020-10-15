@@ -9,12 +9,14 @@ import {
   fnGetter,
   fnGt,
   fnGte,
+  fnIdentity,
   fnIfThenElse,
   fnJoin,
   fnLen,
+  fnLift2,
+  fnLift2to2,
   fnMap,
   fnMapIndexed,
-  fnMerge,
   fnMod,
   fnMult,
   fnReduce,
@@ -24,6 +26,7 @@ import {
   fnSome,
   fnSub,
   fnSum,
+  fnThenElseIf,
   fnWhileDo,
 } from 'src/app/util/fns';
 
@@ -76,7 +79,7 @@ const setTaskText = fnSetter<MathTestTask, 'text'>('text');
 const setTaskTitle = fnSetter<MathTestTask, 'title'>('title');
 
 const calcPointsFromQuestions = fnCompose(sumPoints, getQuestions);
-const insertTaskPoints = (task: MathTestTask): MathTestTask => setTaskPoints(calcPointsFromQuestions(task))(task);
+const insertTaskPoints = fnLift2(setTaskPoints)(calcPointsFromQuestions)(fnIdentity);
 const setTaskQuestionsCalcPoints = (questions: MathTestQuestion[]) => fnCompose(insertTaskPoints, setTaskQuestions(questions));
 
 export interface MathTest extends WithPointsNumber {
@@ -119,14 +122,18 @@ const addDistinctItemsUntil = <T>(newItem: (items: T[]) => T) => (compare: (aa: 
     return fnSome(compare)(items)(item) ? items : [...items, item];
   })(init);
 
-const mergeQuestionsToQuestionShortresult = fnReduce(
-  fnCompose(setQuestionPoints(0), setQuestionType('shortresult'))(null),
-)((index) => (acc) => (ii: MathTestQuestion) =>
-  fnCompose(
-    setQuestionPoints(fnSum(getPoints(acc))(getPoints(ii))),
-    setQuestionResult(appendString(',')(getResult(acc))(getResult(ii))),
-    setQuestionText(appendString(',')(getText(acc))(getText(ii))),
-  )(acc),
+const mergeQuestionsToQuestionShortresult = fnReduce(fnCompose(setQuestionPoints(0), setQuestionType('shortresult'))(null))(
+  (index) => (acc) => (ii: MathTestQuestion) => {
+    const mergePoints = fnLift2to2(fnSum)(getPoints)(getPoints);
+    const mergeResult = fnLift2to2(appendString(','))(getResult)(getResult);
+    const mergeText = fnLift2to2(appendString(','))(getText)(getText);
+
+    return fnCompose(
+      setQuestionPoints(mergePoints(acc)(ii)),
+      setQuestionResult(mergeResult(acc)(ii)),
+      setQuestionText(mergeText(acc)(ii)),
+    )(acc);
+  },
 );
 
 // GENERATE
@@ -170,7 +177,8 @@ const generateQuestionDotBeforeLinePriority = (rnd: () => number): MathTestQuest
   const last = isSum ? rnd5to30(rnd) : isDotFirst ? rndIntBetween(0)(dotResult)(rnd) : rndIntBetween(dotResult)(100)(rnd);
   const result = isSum ? dotResult + last : isDotFirst ? dotResult - last : last - dotResult;
 
-  const textDot = `${left} ${isMult ? '*' : ':'} ${right}`;
+  const dotSign = fnThenElseIf('*')(':');
+  const textDot = `${left} ${dotSign(isMult)} ${right}`;
 
   return fnCompose(
     setQuestionPoints(0.5),
