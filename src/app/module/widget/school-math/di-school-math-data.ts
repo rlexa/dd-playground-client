@@ -1,9 +1,9 @@
 import {inject, InjectionToken} from '@angular/core';
-import {jsonEqual} from 'dd-rx-state';
 import {StateSubject} from 'dd-rxjs';
 import {TCreatedPdf} from 'pdfmake/build/pdfmake';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {distinctUntilChanged, filter, map, shareReplay, startWith} from 'rxjs/operators';
+import {isEqualValue} from 'src/app/util';
 import {generateMathTestGrade3, MathTest} from './math-test/math-test-generator';
 import {mathTestToPdf} from './math-test/math-test-pdf';
 
@@ -21,7 +21,7 @@ export const DiSchoolMathTest = new InjectionToken<Observable<MathTest>>('DI mat
       filter((seed) => seed > 0),
       map((seed) => generateMathTestGrade3({seed, title: `Mathe Arbeit #${seed}`})),
       startWith<MathTest>(null as MathTest),
-      distinctUntilChanged(jsonEqual),
+      distinctUntilChanged(isEqualValue),
       shareReplay({refCount: true, bufferSize: 1}),
     ),
 });

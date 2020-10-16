@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {inject, InjectionToken} from '@angular/core';
-import {jsonEqual} from 'dd-rx-state';
 import {Observable, of} from 'rxjs';
 import {catchError, distinctUntilChanged, map, shareReplay} from 'rxjs/operators';
+import {isEqualValue} from './util';
 
 export interface GlobalFlags {
   buildId?: string;
@@ -23,7 +23,7 @@ export const DiGlobalFlags = new InjectionToken<Observable<GlobalFlags>>('Global
       .get<GlobalFlags>('/assets/flags.json', {responseType: 'json'})
       .pipe(
         catchError(() => of<GlobalFlags>(null)),
-        distinctUntilChanged(jsonEqual),
+        distinctUntilChanged(isEqualValue),
         shareReplay(1),
       ),
 });

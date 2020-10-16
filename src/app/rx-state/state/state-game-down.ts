@@ -1,7 +1,6 @@
 import {
   actor,
   initReduceAssemble$_,
-  jsonEqual,
   redSetPropertyIfNotEqual_,
   redSetPropertyIfNotSame_,
   setPropertyIfNotEqual,
@@ -16,6 +15,7 @@ import {
   GameDownField,
   GameDownScene,
 } from 'src/app/module/widget/game-down/data';
+import {isEqualValue} from 'src/app/util';
 import {SUFFIX} from './state-game-down.suffix';
 
 export interface GameDownState {
@@ -62,7 +62,7 @@ const stateScene$ = initReduceAssemble$_<GameDownScene>(
         typeof val !== 'number' ? DEF_SCENE_FACTOR : Math.max(state.factorMin, Math.min(state.factorMax, val)),
       ),
     [setSceneField.type]: (state, val: IndexValue<GameDownField>) =>
-      !val || !val.value || !(val.index in state.fields) || jsonEqual(val.value, state.fields[val.index])
+      !val || !val.value || !(val.index in state.fields) || isEqualValue(val.value, state.fields[val.index])
         ? state
         : setPropertyIfNotEqual(
             state,
