@@ -63,8 +63,8 @@ export class EngineNodeShell<T> implements EngineNode<T> {
     this.kids.forEach((_) => _.destroy());
   }
 
-  addNode = (kid: EngineNode<any>) => (this.engine ? this.engine.addNode(kid, this) : kid);
-  delNode = (kid: EngineNode<any>, destroy = false) => (this.engine ? this.engine.delNode(kid, destroy) : {});
+  addNode = (kid: EngineNode<any>) => this.engine?.addNode(kid, this) ?? kid;
+  delNode = (kid: EngineNode<any>, destroy = false) => this.engine?.delNode(kid, destroy);
 
   frame = (param: FrameParam) =>
     [this.config.frame_self, this.config.frame_kids]
@@ -83,5 +83,5 @@ export class EngineNodeShell<T> implements EngineNode<T> {
       .filter((_) => typeof _ === 'function')
       .forEach((_) => _(ctx, this.state$.value, this.kids));
 
-  private markChanges = () => (this.engine ? this.engine.markChanges() : {});
+  private markChanges = () => this.engine?.markChanges();
 }

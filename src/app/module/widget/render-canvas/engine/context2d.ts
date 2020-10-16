@@ -74,7 +74,7 @@ export class ImageHolderCanvas implements ImageHolder<CanvasImageSource> {
 }
 
 export const blitImage = (ctx: CanvasRenderingContext2D, data: WithImage) =>
-  !data || !data.image
+  !data?.image
     ? {}
     : ctx.drawImage(
         data.image,
@@ -111,9 +111,9 @@ export const transformPush = (ctx: CanvasRenderingContext2D) => ctx.save();
 
 const each = <T>(ctx: CanvasRenderingContext2D, data: T, ...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) =>
   (funcs || []).forEach((_) => _(ctx, data));
-const fEeach = <T>(...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) => (ctx: CanvasRenderingContext2D, data: T) =>
+const fEach = <T>(...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) => (ctx: CanvasRenderingContext2D, data: T) =>
   each(ctx, data, ...funcs);
 
-export const renderBackground = fEeach(fillStyle, fillCanvas);
-export const renderImage = fEeach(blitImage);
-export const renderText = fEeach<WithText>(fillStyle, textAlign, textBase, textFont, fillText);
+export const renderBackground = fEach(fillStyle, fillCanvas);
+export const renderImage = fEach(blitImage);
+export const renderText = fEach<WithText>(fillStyle, textAlign, textBase, textFont, fillText);
