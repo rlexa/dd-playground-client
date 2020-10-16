@@ -175,15 +175,17 @@ const generateQuestionDotBeforeLinePriority = (rnd: () => number): MathTestQuest
   const dotResult = dotParamsApply(dotOperation);
 
   const last = isSum ? rnd5to30(rnd) : isDotFirst ? rndIntBetween(0)(dotResult)(rnd) : rndIntBetween(dotResult)(100)(rnd);
-  const result = isSum ? dotResult + last : isDotFirst ? dotResult - last : last - dotResult;
+  const result = isSum ? fnSum(dotResult)(last) : isDotFirst ? fnSub(dotResult)(last) : fnSub(last)(dotResult);
 
   const dotSign = fnThenElseIf('*')(':');
+  const lineSign = fnThenElseIf('+')('-');
+
   const textDot = `${left} ${dotSign(isMult)} ${right}`;
 
   return fnCompose(
     setQuestionPoints(0.5),
     setQuestionResult(`${result}`),
-    setQuestionText(`${isDotFirst ? textDot : last} ${isSum ? '+' : '-'} ${isDotFirst ? last : textDot} = __`),
+    setQuestionText(`${fnIfThenElse(isDotFirst)(textDot)(last)} ${lineSign(isSum)} ${fnIfThenElse(isDotFirst)(last)(textDot)} = __`),
     setQuestionType('shortresult'),
   )(null);
 };
