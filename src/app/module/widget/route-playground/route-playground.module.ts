@@ -1,14 +1,18 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_DEMO_GHIBLI, ROUTE_DEMO_MISC, ROUTE_DEMO_STATE, ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {NavigationBarItem} from '../navigation-bar';
 import {NavigationContentComponent, NavigationContentComponentRouteData, NavigationContentModule} from '../navigation-content';
+import {PlaygroundRoute} from './playground-route';
+
+const routeNavs: Record<PlaygroundRoute, NavigationBarItem> = {
+  [PlaygroundRoute.DemoGhibli]: {icon: 'items3', route: PlaygroundRoute.DemoGhibli, label: 'Ghibli'},
+  [PlaygroundRoute.DemoMisc]: {icon: 'items1', route: PlaygroundRoute.DemoMisc, label: 'Misc.'},
+  [PlaygroundRoute.DemoState]: {icon: 'items2', route: PlaygroundRoute.DemoState, label: 'State'},
+};
 
 const data: NavigationContentComponentRouteData = {
-  navs: [
-    {icon: 'items1', route: ROUTE_DEMO_MISC, label: 'Misc.'},
-    {icon: 'items2', route: ROUTE_DEMO_STATE, label: 'State'},
-    {icon: 'items3', route: ROUTE_DEMO_GHIBLI, label: 'Ghibli'},
-  ],
+  navs: Object.values(PlaygroundRoute).map((ii) => routeNavs[ii]),
 };
 
 const ROUTING: Routes = [
@@ -18,16 +22,19 @@ const ROUTING: Routes = [
     data,
     children: [
       {
-        path: ROUTE_DEMO_MISC,
+        path: PlaygroundRoute.DemoMisc,
         loadChildren: () => import('src/app/module/widget/demo-misc/demo-misc.module').then((m) => m.DemoMiscModule),
       },
       {
-        path: ROUTE_DEMO_STATE,
+        path: PlaygroundRoute.DemoState,
         loadChildren: () => import('src/app/module/widget/demo-state/demo-state.module').then((m) => m.DemoStateModule),
       },
-      {path: ROUTE_DEMO_GHIBLI, loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule)},
-      {path: ROUTE_ROOT, redirectTo: ROUTE_DEMO_MISC, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_DEMO_MISC},
+      {
+        path: PlaygroundRoute.DemoGhibli,
+        loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule),
+      },
+      {path: ROUTE_ROOT, redirectTo: PlaygroundRoute.DemoMisc, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: PlaygroundRoute.DemoMisc},
     ],
   },
 ];

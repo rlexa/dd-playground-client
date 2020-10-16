@@ -1,10 +1,16 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_MATH, ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {NavigationBarItem} from '../navigation-bar';
 import {NavigationContentComponent, NavigationContentComponentRouteData, NavigationContentModule} from '../navigation-content';
+import {SchoolRoute} from './school-route';
+
+const routeNavs: Record<SchoolRoute, NavigationBarItem> = {
+  [SchoolRoute.Math]: {icon: 'items1', route: SchoolRoute.Math, label: 'Math'},
+};
 
 const data: NavigationContentComponentRouteData = {
-  navs: [{icon: 'items1', route: ROUTE_MATH, label: 'Math'}],
+  navs: Object.values(SchoolRoute).map((ii) => routeNavs[ii]),
 };
 
 const ROUTING: Routes = [
@@ -14,11 +20,11 @@ const ROUTING: Routes = [
     data,
     children: [
       {
-        path: ROUTE_MATH,
+        path: SchoolRoute.Math,
         loadChildren: () => import('src/app/module/widget/school-math/school-math.module').then((m) => m.RoutedSchoolMathModule),
       },
-      {path: ROUTE_ROOT, redirectTo: ROUTE_MATH, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_MATH},
+      {path: ROUTE_ROOT, redirectTo: SchoolRoute.Math, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: SchoolRoute.Math},
     ],
   },
 ];

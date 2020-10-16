@@ -1,31 +1,24 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {
-  ROUTE_CRYPTO,
-  ROUTE_GAME,
-  ROUTE_GRAPH,
-  ROUTE_OVERVIEW,
-  ROUTE_PLAYGROUND,
-  ROUTE_ROOT,
-  ROUTE_SCHOOL,
-  ROUTE_SETTINGS,
-  ROUTE_WILDCARD,
-} from 'src/app/routing';
+import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {FooterModule} from '../footer';
-import {NavigationBarModule} from '../navigation-bar';
+import {NavigationBarItem, NavigationBarModule} from '../navigation-bar';
+import {DashboardRoute} from './dashboard-route';
 import {DashboardComponent, DashboardComponentRouteData} from './dashboard.component';
 
+const routeNavs: Record<DashboardRoute, NavigationBarItem> = {
+  [DashboardRoute.Crypto]: {icon: 'cryptocurrency', route: DashboardRoute.Crypto, label: 'Cryptocurrency'},
+  [DashboardRoute.Game]: {icon: 'game', route: DashboardRoute.Game, label: 'Game'},
+  [DashboardRoute.Graph]: {icon: 'graph', route: DashboardRoute.Graph, label: 'Graph'},
+  [DashboardRoute.Overview]: {icon: 'overview', route: DashboardRoute.Overview, label: 'Overview'},
+  [DashboardRoute.Playground]: {icon: 'playground', route: DashboardRoute.Playground, label: 'Demo'},
+  [DashboardRoute.School]: {icon: 'school', route: DashboardRoute.School, label: 'School'},
+  [DashboardRoute.Settings]: {icon: 'settings', route: DashboardRoute.Settings, label: 'Settings'},
+};
+
 const data: DashboardComponentRouteData = {
-  navs: [
-    {icon: 'overview', route: ROUTE_OVERVIEW, label: 'Overview'},
-    {icon: 'graph', route: ROUTE_GRAPH, label: 'Graph'},
-    {icon: 'cryptocurrency', route: ROUTE_CRYPTO, label: 'Cryptocurrency'},
-    {icon: 'school', route: ROUTE_SCHOOL, label: 'School'},
-    {icon: 'game', route: ROUTE_GAME, label: 'Game'},
-    {icon: 'playground', route: ROUTE_PLAYGROUND, label: 'Demo'},
-    {icon: 'settings', route: ROUTE_SETTINGS, label: 'Settings'},
-  ],
+  navs: Object.values(DashboardRoute).map((ii) => routeNavs[ii]),
 };
 
 const ROUTING: Routes = [
@@ -35,35 +28,35 @@ const ROUTING: Routes = [
     data,
     children: [
       {
-        path: ROUTE_OVERVIEW,
+        path: DashboardRoute.Overview,
         loadChildren: () => import('src/app/module/widget/route-overview/route-overview.module').then((m) => m.RouteOverviewModule),
       },
       {
-        path: ROUTE_GAME,
+        path: DashboardRoute.Game,
         loadChildren: () => import('src/app/module/widget/route-game/route-game.module').then((m) => m.RouteGameModule),
       },
       {
-        path: ROUTE_GRAPH,
+        path: DashboardRoute.Graph,
         loadChildren: () => import('src/app/module/widget/graph-top-level/graph-top-level.module').then((m) => m.GraphTopLevelModule),
       },
       {
-        path: ROUTE_CRYPTO,
+        path: DashboardRoute.Crypto,
         loadChildren: () => import('src/app/module/widget/route-crypto/route-crypto.module').then((m) => m.RouteCryptoModule),
       },
       {
-        path: ROUTE_SCHOOL,
+        path: DashboardRoute.School,
         loadChildren: () => import('src/app/module/widget/route-school/route-school.module').then((m) => m.RouteSchoolModule),
       },
       {
-        path: ROUTE_PLAYGROUND,
+        path: DashboardRoute.Playground,
         loadChildren: () => import('src/app/module/widget/route-playground/route-playground.module').then((m) => m.RoutePlaygroundModule),
       },
       {
-        path: ROUTE_SETTINGS,
+        path: DashboardRoute.Settings,
         loadChildren: () => import('src/app/module/widget/route-system/route-system.module').then((m) => m.RouteSystemModule),
       },
-      {path: ROUTE_ROOT, redirectTo: ROUTE_OVERVIEW, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_OVERVIEW},
+      {path: ROUTE_ROOT, redirectTo: DashboardRoute.Overview, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: DashboardRoute.Overview},
     ],
   },
 ];

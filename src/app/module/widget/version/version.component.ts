@@ -1,8 +1,10 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
+import {AppRoute} from 'src/app/app-route';
 import {DiGlobalVersion} from 'src/app/di-global';
-import {routeToSettings} from 'src/app/routing';
+import {DashboardRoute} from '../dashboard/dashboard-route';
+import {SystemRoute} from '../route-system/system-route';
 
 @Component({
   selector: 'app-version',
@@ -12,5 +14,5 @@ import {routeToSettings} from 'src/app/routing';
 export class VersionComponent {
   constructor(@Inject(DiGlobalVersion) public readonly version$: Observable<string>, private readonly router: Router) {}
 
-  onGotoSettings = () => routeToSettings(this.router);
+  onGotoSettings = () => this.router.navigate([AppRoute.Dashboard, DashboardRoute.Settings, SystemRoute.BuildConfig]);
 }
