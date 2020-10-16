@@ -1,6 +1,4 @@
-<ng-container *ngIf="navs$ | async as navs">
-  <app-navigation-bar *ngIf="navs.length > 1" [items]="navs" layout="column"></app-navigation-bar>
-</ng-container>
+<app-navigation-bar appNavigationBarItemsFromRoute layout="column"></app-navigation-bar>
 
 <main>
   <div>

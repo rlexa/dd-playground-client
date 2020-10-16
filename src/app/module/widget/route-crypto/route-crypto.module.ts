@@ -1,16 +1,16 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {NavigationBarItem} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentComponentRouteData, NavigationContentModule} from '../navigation-content';
+import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
+import {NavigationContentComponent, NavigationContentModule} from '../navigation-content';
 import {CryptoRoute} from './crypto-route';
 
 const routeNavs: Record<CryptoRoute, NavigationBarItem> = {
   [CryptoRoute.Blockchain]: {icon: 'items1', route: CryptoRoute.Blockchain, label: 'Blockchain'},
 };
 
-const data: NavigationContentComponentRouteData = {
-  navs: Object.values(CryptoRoute).map((ii) => routeNavs[ii]),
+const data: NavigationBarItemsData = {
+  navigationBarItems: Object.values(CryptoRoute).map((ii) => routeNavs[ii]),
 };
 
 const ROUTING: Routes = [

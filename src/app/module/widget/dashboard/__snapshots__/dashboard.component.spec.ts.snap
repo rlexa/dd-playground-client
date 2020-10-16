@@ -2,33 +2,14 @@
 
 exports[`DashboardComponent renders 1`] = `
 <app-dashboard
-  activatedRoute={[Function Object]}
   isVisibleFooter$={[Function StateSubject]}
-  navs$={[Function AnonymousSubject]}
 >
   <div
     class="content mat-app-background"
   >
-    <app-navigation-bar />
-    <main>
-      <router-outlet />
-    </main>
-    
-    <app-footer />
-  </div>
-</app-dashboard>
-`;
-
-exports[`DashboardComponent with routes=3 renders 1`] = `
-<app-dashboard
-  activatedRoute={[Function Object]}
-  isVisibleFooter$={[Function StateSubject]}
-  navs$={[Function AnonymousSubject]}
->
-  <div
-    class="content mat-app-background"
-  >
-    <app-navigation-bar />
+    <app-navigation-bar
+      appnavigationbaritemsfromroute=""
+    />
     <main>
       <router-outlet />
     </main>

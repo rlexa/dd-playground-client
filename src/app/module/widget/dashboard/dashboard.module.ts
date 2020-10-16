@@ -3,9 +3,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {FooterModule} from '../footer';
-import {NavigationBarItem, NavigationBarModule} from '../navigation-bar';
+import {NavigationBarItem, NavigationBarItemsData, NavigationBarModule} from '../navigation-bar';
 import {DashboardRoute} from './dashboard-route';
-import {DashboardComponent, DashboardComponentRouteData} from './dashboard.component';
+import {DashboardComponent} from './dashboard.component';
 
 const routeNavs: Record<DashboardRoute, NavigationBarItem> = {
   [DashboardRoute.Crypto]: {icon: 'cryptocurrency', route: DashboardRoute.Crypto, label: 'Cryptocurrency'},
@@ -17,8 +17,8 @@ const routeNavs: Record<DashboardRoute, NavigationBarItem> = {
   [DashboardRoute.Settings]: {icon: 'settings', route: DashboardRoute.Settings, label: 'Settings'},
 };
 
-const data: DashboardComponentRouteData = {
-  navs: Object.values(DashboardRoute).map((ii) => routeNavs[ii]),
+const data: NavigationBarItemsData = {
+  navigationBarItems: Object.values(DashboardRoute).map((ii) => routeNavs[ii]),
 };
 
 const ROUTING: Routes = [

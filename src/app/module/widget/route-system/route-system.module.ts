@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {NavigationBarItem} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentComponentRouteData, NavigationContentModule} from '../navigation-content';
+import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
+import {NavigationContentComponent, NavigationContentModule} from '../navigation-content';
 import {SystemRoute} from './system-route';
 
 const routeNavs: Record<SystemRoute, NavigationBarItem> = {
@@ -10,8 +10,8 @@ const routeNavs: Record<SystemRoute, NavigationBarItem> = {
   [SystemRoute.Configuration]: {icon: 'configuration', route: SystemRoute.Configuration, label: 'Configuration'},
 };
 
-const data: NavigationContentComponentRouteData = {
-  navs: Object.values(SystemRoute).map((ii) => routeNavs[ii]),
+const data: NavigationBarItemsData = {
+  navigationBarItems: Object.values(SystemRoute).map((ii) => routeNavs[ii]),
 };
 
 const ROUTING: Routes = [

@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {NavigationBarItem} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentComponentRouteData, NavigationContentModule} from '../navigation-content';
+import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
+import {NavigationContentComponent, NavigationContentModule} from '../navigation-content';
 import {OverviewComponent} from '../overview/overview.module';
 import {OverviewRoute} from './overview-route';
 
@@ -10,8 +10,8 @@ const routeNavs: Record<OverviewRoute, NavigationBarItem> = {
   [OverviewRoute.Current]: {icon: 'current', route: OverviewRoute.Current, label: 'Current'},
 };
 
-const data: NavigationContentComponentRouteData = {
-  navs: Object.values(OverviewRoute).map((ii) => routeNavs[ii]),
+const data: NavigationBarItemsData = {
+  navigationBarItems: Object.values(OverviewRoute).map((ii) => routeNavs[ii]),
 };
 
 const ROUTING: Routes = [

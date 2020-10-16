@@ -5,6 +5,6 @@ exports[`GraphTopLevelComponent is created 1`] = `
   graphsky={[Function GraphskyService]}
   http={[Function Object]}
 >
-  <app-routed-content />
+  <app-navigation-content />
 </app-graph-top-level>
 `;

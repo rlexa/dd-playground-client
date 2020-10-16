@@ -1,37 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavigationContentComponent renders 1`] = `
-<app-navigation-content
-  activatedRoute={[Function Object]}
-  navs$={[Function AnonymousSubject]}
->
-  <main>
-    <div>
-      <router-outlet />
-    </div>
-  </main>
-</app-navigation-content>
-`;
-
-exports[`NavigationContentComponent with routes=1 renders 1`] = `
-<app-navigation-content
-  activatedRoute={[Function Object]}
-  navs$={[Function AnonymousSubject]}
->
-  <main>
-    <div>
-      <router-outlet />
-    </div>
-  </main>
-</app-navigation-content>
-`;
-
-exports[`NavigationContentComponent with routes=3 renders 1`] = `
-<app-navigation-content
-  activatedRoute={[Function Object]}
-  navs$={[Function AnonymousSubject]}
->
+<app-navigation-content>
   <app-navigation-bar
+    appnavigationbaritemsfromroute=""
     layout="column"
   /><main>
     <div>

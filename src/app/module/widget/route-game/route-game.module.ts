@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {NavigationBarItem} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentComponentRouteData, NavigationContentModule} from '../navigation-content';
+import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
+import {NavigationContentComponent, NavigationContentModule} from '../navigation-content';
 import {GameRoute} from './game-route';
 
 const routeNavs: Record<GameRoute, NavigationBarItem> = {
@@ -12,8 +12,8 @@ const routeNavs: Record<GameRoute, NavigationBarItem> = {
   [GameRoute.Snake]: {icon: 'items2', route: GameRoute.Snake, label: 'Snake'},
 };
 
-const data: NavigationContentComponentRouteData = {
-  navs: Object.values(GameRoute).map((ii) => routeNavs[ii]),
+const data: NavigationBarItemsData = {
+  navigationBarItems: Object.values(GameRoute).map((ii) => routeNavs[ii]),
 };
 
 const ROUTING: Routes = [

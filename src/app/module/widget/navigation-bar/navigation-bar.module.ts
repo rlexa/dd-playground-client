@@ -5,13 +5,14 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {RouterModule} from '@angular/router';
 import {IconPipeModule} from '../../pipe/icon';
+import {NavigationBarItemsData, NavigationBarItemsFromRouteDirective} from './navigation-bar-items-from-route.directive';
 import {NavigationBarComponent, NavigationBarItem} from './navigation-bar.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MatButtonModule, MatToolbarModule, MatTooltipModule, IconPipeModule],
-  exports: [NavigationBarComponent],
-  declarations: [NavigationBarComponent],
+  exports: [NavigationBarComponent, NavigationBarItemsFromRouteDirective],
+  declarations: [NavigationBarComponent, NavigationBarItemsFromRouteDirective],
 })
 class NavigationBarModule {}
 
-export {NavigationBarModule, NavigationBarComponent, NavigationBarItem};
+export {NavigationBarModule, NavigationBarComponent, NavigationBarItemsFromRouteDirective, NavigationBarItemsData, NavigationBarItem};
