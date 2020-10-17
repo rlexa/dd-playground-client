@@ -19,3 +19,8 @@ export const DiDebugView = new InjectionToken<BehaviorSubject<boolean>>('DI Game
   providedIn: 'root',
   factory: () => new StateSubject<boolean>(false),
 });
+
+export const DiTheme = new InjectionToken<BehaviorSubject<string>>('Theme name.', {
+  providedIn: 'root',
+  factory: () => new StateSubject<string>(null),
+});

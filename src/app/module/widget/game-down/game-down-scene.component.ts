@@ -5,7 +5,7 @@ import {map, shareReplay} from 'rxjs/operators';
 import {GAMEDOWN_FIELD_H, GAMEDOWN_FIELD_W} from 'src/app/module/widget/game-down/data';
 import {RxStateService} from 'src/app/rx-state';
 import {RENDERER_SIMPLE} from 'src/app/rx-state/state/state-game-down';
-import {DiDebugView, DiSceneHoveredIndex, DiSceneSelectedIndex} from './di-game-down-values';
+import {DiDebugView, DiSceneHoveredIndex, DiSceneSelectedIndex, DiTheme} from './di-game-down-values';
 
 @Component({
   selector: 'app-game-down-scene',
@@ -18,9 +18,8 @@ export class GameDownSceneComponent {
     @Inject(DiDebugView) public readonly viewDebug$: Observable<boolean>,
     @Inject(DiSceneHoveredIndex) public readonly hovered$: BehaviorSubject<number>,
     @Inject(DiSceneSelectedIndex) public readonly selected$: BehaviorSubject<number>,
+    @Inject(DiTheme) public readonly themeName$: BehaviorSubject<string>,
   ) {}
-
-  private readonly themeName$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.theme));
 
   readonly HEIGHT = Array.from(Array(GAMEDOWN_FIELD_H), (_, index) => index);
   readonly RENDERER_SIMPLE = RENDERER_SIMPLE;

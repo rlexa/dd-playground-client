@@ -6,7 +6,7 @@ import {distinctUntilChanged, filter, map, shareReplay, takeUntil, withLatestFro
 import {buildSituation1, checkProblems, DEF_FAMEDOWN_STATE_FIELDS, GameDownField, modField} from 'src/app/module/widget/game-down/data';
 import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
 import {trackByIndex} from 'src/app/util';
-import {DiDebugView, DiSceneSelectedIndex} from './di-game-down-values';
+import {DiDebugView, DiSceneSelectedIndex, DiTheme} from './di-game-down-values';
 
 @Component({
   selector: 'app-game-down-config',
@@ -19,6 +19,7 @@ export class GameDownConfigComponent implements OnDestroy {
     private readonly rxStateMutate: RxStateSetGameDownService,
     @Inject(DiDebugView) public readonly viewDebug$: BehaviorSubject<boolean>,
     @Inject(DiSceneSelectedIndex) public readonly selectedFieldIndex$: Observable<number>,
+    @Inject(DiTheme) public readonly theme$: BehaviorSubject<string>,
   ) {}
 
   @RxCleanup() private readonly done$ = new DoneSubject();
@@ -30,7 +31,6 @@ export class GameDownConfigComponent implements OnDestroy {
   readonly fieldValues$ = this.rxState.state$.pipe(watch((state) => state.game.down.fieldValues));
   readonly renderer$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.renderer));
   readonly renderers$ = this.rxState.state$.pipe(watch((state) => state.game.down.rendererValues));
-  readonly theme$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.theme));
   readonly themes$ = this.rxState.state$.pipe(
     watch((state) => state.game.down.themes),
     map((_) => _.map((ii) => ii.name)),
@@ -64,8 +64,9 @@ export class GameDownConfigComponent implements OnDestroy {
 
   onSetFactor = this.rxStateMutate.setSceneFactor;
   onSetRenderer = this.rxStateMutate.setSceneRenderer;
-  onSetTheme = this.rxStateMutate.setSceneTheme;
   trackByIndex = trackByIndex;
+
+  onSetTheme = (val: string) => this.theme$.next(val);
 
   destroy() {}
   ngOnDestroy() {

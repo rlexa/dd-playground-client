@@ -34,7 +34,6 @@ export const setSceneFactor = actor<number>('SET' + SUFFIX + 'scene' + 'factor')
 export const setSceneField = actor<IndexValue<GameDownField>>('SET' + SUFFIX + 'scene' + 'field');
 export const setSceneFields = actor<GameDownField[]>('SET' + SUFFIX + 'scene' + 'fields');
 export const setSceneRenderer = actor<string>('SET' + SUFFIX + 'scene' + 'renderer');
-export const setSceneTheme = actor<string>('SET' + SUFFIX + 'scene' + 'theme');
 export const setThemes = actor<Theme<GameDownColorMap>[]>('SET' + SUFFIX + 'themes');
 
 // DEFAULTS
@@ -52,7 +51,6 @@ const stateScene$ = initReduceAssemble$_<GameDownScene>(
     factorMin: 0.5,
     fields: DEF_FAMEDOWN_STATE_FIELDS,
     renderer: DEF_RENDERER,
-    theme: null,
   },
   {
     [setSceneFactor.type]: (state, val: number) =>
@@ -71,7 +69,6 @@ const stateScene$ = initReduceAssemble$_<GameDownScene>(
           ),
     [setSceneFields.type]: redSetPropertyIfNotEqual_('fields'),
     [setSceneRenderer.type]: redSetPropertyIfNotSame_('renderer'),
-    [setSceneTheme.type]: redSetPropertyIfNotSame_('theme'),
   },
 );
 
