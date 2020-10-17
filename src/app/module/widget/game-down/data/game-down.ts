@@ -48,19 +48,16 @@ export interface GameDownScene {
 export class GameDownModify<T> {
   constructor(public readonly type: string, public readonly def: T = null) {}
 
-  private fFind = (from: GameDownModifier[]) => (!from ? null : from.find((_) => _.type === this.type));
+  private fFind = (from: GameDownModifier[]) => from?.find((mod) => mod.type === this.type) ?? null;
 
   new = (val: T = this.def): GameDownModifier => ({type: this.type, data: val});
 
   find = (obj: GameDownModified | GameDownModifier[]) => (!obj ? null : this.fFind(Array.isArray(obj) ? obj : obj.modifiers));
 
-  get = (obj: GameDownModified) => {
-    const mod = this.find(obj);
-    return !mod ? null : (mod.data as T);
-  };
+  get = (obj: GameDownModified) => (this.find(obj)?.data as T) ?? null;
 
   set = (obj: GameDownModified, val: T = this.def) => {
-    if (obj && obj.modifiers) {
+    if (obj?.modifiers) {
       const modifiers = this.modify(obj.modifiers, val);
       if (obj.modifiers !== modifiers) {
         obj = {...obj, modifiers};
