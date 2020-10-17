@@ -7,19 +7,19 @@ import {NavigationBarItem, NavigationBarItemsData, NavigationBarModule} from '..
 import {DashboardRoute} from './dashboard-route';
 import {DashboardComponent} from './dashboard.component';
 
-const routeNavs: Record<DashboardRoute, NavigationBarItem> = {
-  [DashboardRoute.Api]: {icon: 'view_list', route: DashboardRoute.Api, label: 'API'},
-  [DashboardRoute.Crypto]: {icon: 'cryptocurrency', route: DashboardRoute.Crypto, label: 'Cryptocurrency'},
-  [DashboardRoute.Game]: {icon: 'game', route: DashboardRoute.Game, label: 'Game'},
-  [DashboardRoute.Graph]: {icon: 'graph', route: DashboardRoute.Graph, label: 'Graph'},
-  [DashboardRoute.Overview]: {icon: 'overview', route: DashboardRoute.Overview, label: 'Overview'},
-  [DashboardRoute.Playground]: {icon: 'playground', route: DashboardRoute.Playground, label: 'Demo'},
-  [DashboardRoute.School]: {icon: 'school', route: DashboardRoute.School, label: 'School'},
-  [DashboardRoute.Settings]: {icon: 'settings', route: DashboardRoute.Settings, label: 'Settings'},
+const routeNavs: Record<DashboardRoute, Omit<NavigationBarItem, 'route'>> = {
+  [DashboardRoute.Api]: {icon: 'view_list', label: 'API'},
+  [DashboardRoute.Crypto]: {icon: 'cryptocurrency', label: 'Cryptocurrency'},
+  [DashboardRoute.Game]: {icon: 'game', label: 'Game'},
+  [DashboardRoute.Graph]: {icon: 'graph', label: 'Graph'},
+  [DashboardRoute.Overview]: {icon: 'overview', label: 'Overview'},
+  [DashboardRoute.Playground]: {icon: 'playground', label: 'Demo'},
+  [DashboardRoute.School]: {icon: 'school', label: 'School'},
+  [DashboardRoute.Settings]: {icon: 'settings', label: 'Settings'},
 };
 
 const data: NavigationBarItemsData = {
-  navigationBarItems: Object.values(DashboardRoute).map((ii) => routeNavs[ii]),
+  navigationBarItems: Object.values(DashboardRoute).map<NavigationBarItem>((ii) => ({...routeNavs[ii], route: ii})),
 };
 
 const ROUTING: Routes = [
