@@ -11,7 +11,7 @@ export const checkProblemsOnField = (field: GameDownField) => {
 
   switch (prop) {
     case FIELD_WATER:
-      if ([...field.entities, field.actor].some(_ => !!_ && !modHovering.find(_))) {
+      if ([...field.entities, field.actor].some((entity) => !!entity && !modHovering.find(entity))) {
         ret.push('field type + entity');
       }
       break;
@@ -19,11 +19,12 @@ export const checkProblemsOnField = (field: GameDownField) => {
 
   return ret;
 };
+
 export const checkProblems = (fields: GameDownField[]) => (fields || []).map(checkProblemsOnField);
 
 /** @todo what about same-initiative actors */
 export const resolveInitiative = (fields: GameDownField[]) =>
   (fields || [])
     .map((_, ii) => ii)
-    .filter(ii => fields[ii].actor && modInitiative.find(fields[ii].actor))
+    .filter((ii) => fields[ii].actor && modInitiative.find(fields[ii].actor))
     .sort((aa, bb) => modInitiative.get(fields[bb].actor) - modInitiative.get(fields[aa].actor));
