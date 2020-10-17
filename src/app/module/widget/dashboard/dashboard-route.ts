@@ -4,6 +4,7 @@ export enum DashboardRoute {
   Crypto = 'crypto',
   School = 'school',
   Game = 'game',
+  Api = 'api',
   Playground = 'playground',
   Settings = 'settings',
 }
