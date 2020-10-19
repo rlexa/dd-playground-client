@@ -1,0 +1,11 @@
+<cdk-virtual-scroll-viewport class="list" [itemSize]="48">
+  <mat-nav-list>
+    <a *cdkVirtualFor="let item of data$ | async; trackBy: trackById" mat-list-item class="text-ellipsis">
+      {{ item.title }}
+    </a>
+  </mat-nav-list>
+</cdk-virtual-scroll-viewport>
+
+<div class="content">
+  <app-simple-view [data]="data$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+</div>

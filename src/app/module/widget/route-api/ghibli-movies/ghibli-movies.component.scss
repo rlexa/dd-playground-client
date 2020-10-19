@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  height: 100%;
+  position: relative;
+
+  > .list {
+    --list-size: 25rem;
+    min-width: var(--list-size);
+    max-width: var(--list-size);
+
+    a {
+      max-width: calc(var(--list-size) - 1rem);
+    }
+  }
+
+  > .content {
+    flex: 1 1 auto;
+  }
+}

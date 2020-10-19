@@ -2,7 +2,7 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {NavigationBarModule} from '../navigation-bar';
-import {NavigationContentComponent} from './navigation-content.component';
+import {NavigationContentComponent, NavigationContentComponentData} from './navigation-content.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule, NavigationBarModule],
@@ -11,4 +11,4 @@ import {NavigationContentComponent} from './navigation-content.component';
 })
 class NavigationContentModule {}
 
-export {NavigationContentModule, NavigationContentComponent};
+export {NavigationContentModule, NavigationContentComponent, NavigationContentComponentData};

@@ -1,7 +1,7 @@
 <app-navigation-bar appNavigationBarItemsFromRoute layout="column"></app-navigation-bar>
 
 <main>
-  <div>
+  <div [class.scroll-in-y]="scrollable$ | async">
     <router-outlet></router-outlet>
   </div>
 </main>

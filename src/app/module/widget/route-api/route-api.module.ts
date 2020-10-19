@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentModule} from '../navigation-content';
+import {NavigationContentComponent, NavigationContentComponentData, NavigationContentModule} from '../navigation-content';
 import {ApiRoute} from './api-route';
 
 const routeNavs: Record<ApiRoute, NavigationBarItem> = {
@@ -13,8 +13,9 @@ const routeNavs: Record<ApiRoute, NavigationBarItem> = {
   [ApiRoute.Vehicle]: {icon: 'airport_shuttle', route: ApiRoute.Vehicle, label: 'Vehicles'},
 };
 
-const data: NavigationBarItemsData = {
+const data: NavigationBarItemsData & NavigationContentComponentData = {
   navigationBarItems: Object.values(ApiRoute).map((ii) => routeNavs[ii]),
+  navigationContentScrollable: false,
 };
 
 const ROUTING: Routes = [
@@ -29,7 +30,8 @@ const ROUTING: Routes = [
       },
       {
         path: ApiRoute.Movie,
-        loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule),
+        loadChildren: () =>
+          import('src/app/module/widget/route-api/ghibli-movies/ghibli-movies.module').then((m) => m.RoutedGhibliMoviesModule),
       },
       {
         path: ApiRoute.Person,

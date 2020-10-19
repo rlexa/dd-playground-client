@@ -76,6 +76,11 @@
   will-change: scroll-position, transform;
 }
 
+.scroll-in-y {
+  @extend .scroll-y-always;
+  @extend .scroll-performance;
+}
+
 .no-paddingh {
   padding-left: 0rem;
   padding-right: 0rem;

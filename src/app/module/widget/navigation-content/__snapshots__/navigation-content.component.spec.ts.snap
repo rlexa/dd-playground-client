@@ -1,12 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavigationContentComponent renders 1`] = `
-<app-navigation-content>
+<app-navigation-content
+  activatedRoute={[Function Object]}
+  scrollable$={[Function Observable]}
+>
   <app-navigation-bar
     appnavigationbaritemsfromroute=""
     layout="column"
   /><main>
-    <div>
+    <div
+      class="scroll-in-y"
+    >
       <router-outlet />
     </div>
   </main>
