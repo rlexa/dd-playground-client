@@ -1,6 +1,6 @@
 export enum ApiRoute {
-  Movie = 'movie',
   Location = 'location',
+  Movie = 'movie',
   Person = 'person',
   Species = 'species',
   Vehicle = 'vehicle',
