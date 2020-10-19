@@ -1,4 +1,4 @@
-import {async, TestBed} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {MatButton} from '@angular/material/button';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {MatList, MatListItem} from '@angular/material/list';
@@ -13,7 +13,7 @@ import {SimpleViewComponent} from '../simple-view';
 import {GhibliComponent} from './ghibli.component';
 
 describe('GhibliComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [
@@ -26,7 +26,7 @@ describe('GhibliComponent', () => {
     })
       .overrideComponent(GhibliComponent, overrideForChangeDetection)
       .compileComponents();
-  }));
+  });
 
   test('is created', () => {
     const fixture = TestBed.createComponent(GhibliComponent);

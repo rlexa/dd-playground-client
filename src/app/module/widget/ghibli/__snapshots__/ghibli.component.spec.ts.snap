@@ -3,8 +3,6 @@
 exports[`GhibliComponent is created 1`] = `
 <app-ghibli
   TYPES_LISTS={[Function Array]}
-  TYPE_TO_GET_DETAILS={[Function Object]}
-  TYPE_TO_GET_LIST={[Function Object]}
   anyData$={[Function Subject]}
   api={[Function Object]}
   busyCount$={[Function BehaviorSubject]}
@@ -13,6 +11,8 @@ exports[`GhibliComponent is created 1`] = `
   onClickedValue={[Function Function]}
   tableAllData$={[Function AnonymousSubject]}
   toAnyData={[Function Function]}
+  typeToDetails$={[Function Object]}
+  typeToList$={[Function Object]}
 >
   <div
     ddflexbox="hyscsw"
@@ -40,14 +40,14 @@ exports[`GhibliComponent is created 1`] = `
               <button
                 mat-raised-button=""
               >
-                /films/
+                /locations/
               </button>
             </mat-list-item>
             <mat-list-item>
               <button
                 mat-raised-button=""
               >
-                /locations/
+                /films/
               </button>
             </mat-list-item>
             <mat-list-item>

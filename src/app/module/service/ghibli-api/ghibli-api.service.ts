@@ -5,12 +5,20 @@ import {map} from 'rxjs/operators';
 
 const API = 'https://ghibliapi.herokuapp.com';
 
+export enum GhibliType {
+  Location = '/locations/',
+  Movie = '/films/',
+  Person = '/people/',
+  Species = '/species/',
+  Vehicles = '/vehicles/',
+}
+
 export const GHIBLI_TYPE_FILM = '/films/';
 export const GHIBLI_TYPE_LOCATION = '/locations/';
 export const GHIBLI_TYPE_PEOPLE = '/people/';
 export const GHIBLI_TYPE_SPECIES = '/species/';
 export const GHIBLI_TYPE_VEHICLES = '/vehicles/';
-export const GHIBLI_TYPES = [GHIBLI_TYPE_FILM, GHIBLI_TYPE_LOCATION, GHIBLI_TYPE_PEOPLE, GHIBLI_TYPE_SPECIES, GHIBLI_TYPE_VEHICLES];
+export const GHIBLI_TYPES = Object.values(GhibliType);
 
 export interface GhibliEntity {
   id: string;
@@ -32,8 +40,8 @@ const sanitizeApiPrefix = (item: GhibliEntity) =>
 
 const mapGhibliEntity = (from: any) => {
   const url = Array.isArray(from.url) ? from.url[0] : from.url;
-  const ret: GhibliEntity = {...(from || {})};
-  ret.ghibliType = typeof url === 'string' ? GHIBLI_TYPES.find(_ => url.includes(_)) : '';
+  const ret: GhibliEntity = {...from};
+  ret.ghibliType = typeof url === 'string' ? GHIBLI_TYPES.find((_) => url.includes(_)) : '';
   ret.id = ret.ghibliType + ret.id;
 
   sanitizeApiPrefix(ret);

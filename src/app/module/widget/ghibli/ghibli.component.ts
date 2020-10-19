@@ -4,6 +4,8 @@ import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {filter, finalize, map, switchMap, tap} from 'rxjs/operators';
 import {
   GhibliApiService,
+  GhibliEntity,
+  GhibliType,
   GHIBLI_TYPES,
   GHIBLI_TYPE_FILM,
   GHIBLI_TYPE_LOCATION,
@@ -20,24 +22,24 @@ import {
 export class GhibliComponent implements OnDestroy, OnInit {
   constructor(private readonly api: GhibliApiService) {}
 
-  private readonly TYPE_TO_GET_DETAILS = {
-    [GHIBLI_TYPE_FILM]: this.api.film$,
-    [GHIBLI_TYPE_LOCATION]: this.api.location$,
-    [GHIBLI_TYPE_PEOPLE]: this.api.person$,
-    [GHIBLI_TYPE_SPECIES]: this.api.species$,
-    [GHIBLI_TYPE_VEHICLES]: this.api.vehicle$,
+  private readonly typeToDetails$: Record<GhibliType, (id: string) => Observable<GhibliEntity>> = {
+    [GhibliType.Location]: this.api.location$,
+    [GhibliType.Movie]: this.api.film$,
+    [GhibliType.Person]: this.api.person$,
+    [GhibliType.Species]: this.api.species$,
+    [GhibliType.Vehicles]: this.api.vehicle$,
   };
 
   @RxCleanup() private readonly done$ = new DoneSubject();
 
-  readonly TYPE_TO_GET_LIST = {
-    [GHIBLI_TYPE_FILM]: this.api.films$,
-    [GHIBLI_TYPE_LOCATION]: this.api.locations$,
-    [GHIBLI_TYPE_PEOPLE]: this.api.persons$,
-    [GHIBLI_TYPE_SPECIES]: this.api.speciess$,
-    [GHIBLI_TYPE_VEHICLES]: this.api.vehicles$,
+  readonly typeToList$: Record<GhibliType, () => Observable<GhibliEntity[]>> = {
+    [GhibliType.Location]: this.api.locations$,
+    [GhibliType.Movie]: this.api.films$,
+    [GhibliType.Person]: this.api.persons$,
+    [GhibliType.Species]: this.api.speciess$,
+    [GhibliType.Vehicles]: this.api.vehicles$,
   };
-  readonly TYPES_LISTS = Object.keys(this.TYPE_TO_GET_LIST);
+  readonly TYPES_LISTS = Object.keys(this.typeToList$);
 
   @RxCleanup() readonly anyData$ = new Subject();
   @RxCleanup() readonly busyCount$ = new BehaviorSubject(0);
@@ -58,7 +60,7 @@ export class GhibliComponent implements OnDestroy, OnInit {
       const ghibliType = GHIBLI_TYPES.find((_) => value.includes(_));
       if (ghibliType) {
         const id = value.substr(ghibliType.length);
-        const getter = (id ? this.TYPE_TO_GET_DETAILS : this.TYPE_TO_GET_LIST)[ghibliType];
+        const getter = (id ? this.typeToDetails$ : this.typeToList$)[ghibliType];
         this.toAnyData(getter, id);
       }
     }
