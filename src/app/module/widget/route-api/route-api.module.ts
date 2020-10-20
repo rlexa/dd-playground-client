@@ -30,8 +30,7 @@ const ROUTING: Routes = [
       },
       {
         path: ApiRoute.Movie,
-        loadChildren: () =>
-          import('src/app/module/widget/route-api/ghibli-movies/ghibli-movies.module').then((m) => m.RoutedGhibliMoviesModule),
+        loadChildren: () => import('src/app/module/widget/route-api/ghibli-movies/ghibli-movies.module').then((m) => m.GhibliMoviesModule),
       },
       {
         path: ApiRoute.Person,

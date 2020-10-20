@@ -4,25 +4,44 @@ import {NgModule} from '@angular/core';
 import {MatListModule} from '@angular/material/list';
 import {RouterModule} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {SimpleViewModule} from '../../simple-view';
+import {routeParamIdMovie} from '../api-route';
 import {GhibliMoviesComponent} from './ghibli-movies.component';
 
 @NgModule({
-  imports: [CommonModule, MatListModule, ScrollingModule, SimpleViewModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatListModule,
+    ScrollingModule,
+    RouterModule.forChild([
+      {
+        path: ROUTE_ROOT,
+        component: GhibliMoviesComponent,
+        children: [
+          {
+            path: `:${routeParamIdMovie}`,
+            loadChildren: () =>
+              import('src/app/module/widget/route-api/ghibli-movies/ghibli-movie/ghibli-movie.module').then(
+                (m) => m.RoutedGhibliMovieModule,
+              ),
+          },
+          {
+            path: ROUTE_ROOT,
+            loadChildren: () =>
+              import('src/app/module/widget/route-api/ghibli-movies/ghibli-movie/ghibli-movie.module').then(
+                (m) => m.RoutedGhibliMovieModule,
+              ),
+            pathMatch: 'full',
+          },
+          {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
+        ],
+      },
+      {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
+    ]),
+  ],
   exports: [GhibliMoviesComponent],
   declarations: [GhibliMoviesComponent],
 })
 class GhibliMoviesModule {}
 
-@NgModule({
-  imports: [
-    GhibliMoviesModule,
-    RouterModule.forChild([
-      {path: ROUTE_ROOT, component: GhibliMoviesComponent, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
-    ]),
-  ],
-})
-class RoutedGhibliMoviesModule {}
-
-export {GhibliMoviesModule, GhibliMoviesComponent, RoutedGhibliMoviesModule};
+export {GhibliMoviesModule, GhibliMoviesComponent};
