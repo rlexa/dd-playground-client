@@ -4,6 +4,7 @@ import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
 import {NavigationContentComponent, NavigationContentComponentData, NavigationContentModule} from '../navigation-content';
 import {ApiRoute} from './api-route';
+import {DiRouteMovieProvider} from './di-ghibli-movie';
 
 const routeNavs: Record<ApiRoute, NavigationBarItem> = {
   [ApiRoute.Location]: {icon: 'place', route: ApiRoute.Location, label: 'Location'},
@@ -50,7 +51,7 @@ const ROUTING: Routes = [
   },
 ];
 
-@NgModule({imports: [NavigationContentModule, RouterModule.forChild(ROUTING)]})
+@NgModule({imports: [NavigationContentModule, RouterModule.forChild(ROUTING)], providers: [DiRouteMovieProvider]})
 class RouteApiModule {}
 
 export {RouteApiModule};

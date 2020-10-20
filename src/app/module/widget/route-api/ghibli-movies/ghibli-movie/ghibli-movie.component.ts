@@ -1,7 +1,5 @@
-import {ChangeDetectionStrategy, Component, Inject, Input} from '@angular/core';
-import {Observable} from 'rxjs';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {GhibliMovie} from '../../api-ghibli.service';
-import {DiRouteMovieId} from '../../di-ghibli-movie';
 
 @Component({
   selector: 'app-ghibli-movie',
@@ -10,7 +8,5 @@ import {DiRouteMovieId} from '../../di-ghibli-movie';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GhibliMovieComponent {
-  constructor(@Inject(DiRouteMovieId) public readonly id$: Observable<string>) {}
-
   @Input() data: GhibliMovie = null;
 }

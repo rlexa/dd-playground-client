@@ -1,4 +1,4 @@
-import {Directive, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Directive, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {filter, map, takeUntil} from 'rxjs/operators';
@@ -10,7 +10,11 @@ export interface NavigationBarItemsData extends Data {
 
 @Directive({selector: '[appNavigationBarItemsFromRoute]'})
 export class NavigationBarItemsFromRouteDirective implements OnDestroy, OnInit {
-  constructor(private readonly activatedRoute: ActivatedRoute, private readonly navigationBarComponent: NavigationBarComponent) {}
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly navigationBarComponent: NavigationBarComponent,
+    private readonly changeDetectorRef: ChangeDetectorRef,
+  ) {}
 
   @RxCleanup() private readonly done$ = new DoneSubject();
 
@@ -26,6 +30,9 @@ export class NavigationBarItemsFromRouteDirective implements OnDestroy, OnInit {
         map((data: NavigationBarItemsData) => data?.navigationBarItems ?? null),
         takeUntil(this.done$),
       )
-      .subscribe((items) => (this.navigationBarComponent.items = items));
+      .subscribe((items) => {
+        this.navigationBarComponent.items = items;
+        this.changeDetectorRef.markForCheck();
+      });
   }
 }

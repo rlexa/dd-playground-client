@@ -1,6 +1,6 @@
-import {inject, InjectionToken} from '@angular/core';
+import {inject, InjectionToken, Provider} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {catchError, distinctUntilChanged, map, shareReplay} from 'rxjs/operators';
+import {catchError, distinctUntilChanged, map, shareReplay, switchMap} from 'rxjs/operators';
 import {DiGlobalRouterParams} from 'src/app/di-global';
 import {isEqualValue} from 'src/app/util';
 import {ApiGhibliService, GhibliMovie} from './api-ghibli.service';
@@ -27,3 +27,15 @@ export const DiRouteMovieId = new InjectionToken<Observable<string>>('Route movi
       shareReplay({refCount: true, bufferSize: 1}),
     ),
 });
+
+export const DiRouteMovie = new InjectionToken<Observable<GhibliMovie>>('Route movie.');
+export const DiRouteMovieProvider: Provider = {
+  provide: DiRouteMovie,
+  deps: [DiRouteMovieId, ApiGhibliService],
+  useFactory: (id$: Observable<string>, api: ApiGhibliService) =>
+    id$.pipe(
+      switchMap((id) => (!id ? of<GhibliMovie>(null) : api.movie$(id))),
+      distinctUntilChanged(),
+      shareReplay({refCount: true, bufferSize: 1}),
+    ),
+};

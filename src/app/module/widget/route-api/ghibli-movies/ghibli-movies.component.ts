@@ -20,6 +20,5 @@ export class GhibliMoviesComponent implements OnDestroy {
   destroy() {}
   ngOnDestroy() {
     this.destroy();
-    console.log('destr');
   }
 }

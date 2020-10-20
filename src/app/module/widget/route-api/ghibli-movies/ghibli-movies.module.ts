@@ -21,14 +21,14 @@ import {GhibliMoviesComponent} from './ghibli-movies.component';
           {
             path: `:${routeParamIdMovie}`,
             loadChildren: () =>
-              import('src/app/module/widget/route-api/ghibli-movies/ghibli-movie/ghibli-movie.module').then(
+              import('src/app/module/widget/route-api/ghibli-movies/ghibli-movie/routed-ghibli-movie.module').then(
                 (m) => m.RoutedGhibliMovieModule,
               ),
           },
           {
             path: ROUTE_ROOT,
             loadChildren: () =>
-              import('src/app/module/widget/route-api/ghibli-movies/ghibli-movie/ghibli-movie.module').then(
+              import('src/app/module/widget/route-api/ghibli-movies/ghibli-movie/routed-ghibli-movie.module').then(
                 (m) => m.RoutedGhibliMovieModule,
               ),
             pathMatch: 'full',
