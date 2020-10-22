@@ -36,7 +36,8 @@ const ROUTING: Routes = [
       },
       {
         path: ApiRoute.Person,
-        loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule),
+        loadChildren: () =>
+          import('src/app/module/widget/route-api/route-api-people/route-api-people.module').then((m) => m.RouteApiPeopleModule),
       },
       {
         path: ApiRoute.Species,
