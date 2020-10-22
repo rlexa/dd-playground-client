@@ -41,7 +41,8 @@ const ROUTING: Routes = [
       },
       {
         path: ApiRoute.Species,
-        loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule),
+        loadChildren: () =>
+          import('src/app/module/widget/route-api/route-api-species/route-api-species.module').then((m) => m.RouteApiSpeciesModule),
       },
       {
         path: ApiRoute.Vehicle,
