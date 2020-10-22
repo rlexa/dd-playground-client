@@ -46,7 +46,8 @@ const ROUTING: Routes = [
       },
       {
         path: ApiRoute.Vehicle,
-        loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule),
+        loadChildren: () =>
+          import('src/app/module/widget/route-api/route-api-vehicles/route-api-vehicles.module').then((m) => m.RouteApiVehiclesModule),
       },
       {path: ROUTE_ROOT, redirectTo: ApiRoute.Movie, pathMatch: 'full'},
       {path: ROUTE_WILDCARD, redirectTo: ApiRoute.Movie},

@@ -1,0 +1,1 @@
+export const routeParamIdVehicle = 'idVehicle';
