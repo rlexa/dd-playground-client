@@ -5,5 +5,3 @@ export enum ApiRoute {
   Species = 'species',
   Vehicle = 'vehicle',
 }
-
-export const routeParamIdMovie = 'idMovie';

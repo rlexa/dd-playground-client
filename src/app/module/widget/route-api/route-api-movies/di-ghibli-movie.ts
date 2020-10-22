@@ -3,8 +3,8 @@ import {Observable, of} from 'rxjs';
 import {catchError, distinctUntilChanged, map, shareReplay, switchMap} from 'rxjs/operators';
 import {DiGlobalRouterParams} from 'src/app/di-global';
 import {isEqualValue} from 'src/app/util';
-import {ApiGhibliService, GhibliMovie} from './api-ghibli.service';
-import {routeParamIdMovie} from './api-route';
+import {ApiGhibliService, GhibliMovie} from '../api-ghibli.service';
+import {routeParamIdMovie} from './api-movies-route';
 
 export const DiRemoteGhibliMovies = new InjectionToken<Observable<GhibliMovie[]>>('API loaded movies.', {
   providedIn: 'root',

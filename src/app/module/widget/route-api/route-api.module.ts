@@ -4,7 +4,6 @@ import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
 import {NavigationContentComponent, NavigationContentComponentData, NavigationContentModule} from '../navigation-content';
 import {ApiRoute} from './api-route';
-import {DiRouteMovieProvider} from './di-ghibli-movie';
 
 const routeNavs: Record<ApiRoute, NavigationBarItem> = {
   [ApiRoute.Location]: {icon: 'place', route: ApiRoute.Location, label: 'Location'},
@@ -27,11 +26,13 @@ const ROUTING: Routes = [
     children: [
       {
         path: ApiRoute.Location,
-        loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule),
+        loadChildren: () =>
+          import('src/app/module/widget/route-api/route-api-locations/route-api-locations.module').then((m) => m.RouteApiLocationsModule),
       },
       {
         path: ApiRoute.Movie,
-        loadChildren: () => import('src/app/module/widget/route-api/ghibli-movies/ghibli-movies.module').then((m) => m.GhibliMoviesModule),
+        loadChildren: () =>
+          import('src/app/module/widget/route-api/route-api-movies/route-api-movies.module').then((m) => m.RouteApiMoviesModule),
       },
       {
         path: ApiRoute.Person,
@@ -51,7 +52,7 @@ const ROUTING: Routes = [
   },
 ];
 
-@NgModule({imports: [NavigationContentModule, RouterModule.forChild(ROUTING)], providers: [DiRouteMovieProvider]})
+@NgModule({imports: [NavigationContentModule, RouterModule.forChild(ROUTING)]})
 class RouteApiModule {}
 
 export {RouteApiModule};
