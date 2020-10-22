@@ -4,5 +4,5 @@ import {WithId} from '../api-ghibli.service';
 
 export const DiRemoteCurrentList = new InjectionToken<Observable<WithId[]>>('API loaded items.');
 
-export type FunItemToTitle = <T extends WithId>(item: T) => string;
-export const DiRemoteCurrentItemToTitle = new InjectionToken<FunItemToTitle>('Item -> Title getter.');
+export type FnItemToTitle = <T extends WithId>(item: T) => string;
+export const DiRemoteCurrentItemToTitle = new InjectionToken<FnItemToTitle>('Item -> Title getter.');
