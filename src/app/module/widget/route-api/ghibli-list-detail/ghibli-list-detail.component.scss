@@ -10,11 +10,19 @@
     min-width: var(--list-size);
     max-width: var(--list-size);
 
-    a {
-      max-width: calc(var(--list-size) - 1rem);
+    .links {
+      display: flex;
+      flex-direction: column;
 
-      &.active {
-        color: $clr-primary;
+      .link {
+        cursor: pointer;
+        max-width: calc(var(--list-size) - 2em);
+        font-size: var(--size-font-bigger);
+        padding: 0.75em;
+
+        &.active {
+          color: $clr-primary;
+        }
       }
     }
   }
