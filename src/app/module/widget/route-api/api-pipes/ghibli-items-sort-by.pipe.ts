@@ -1,5 +1,5 @@
 import {Inject, Pipe, PipeTransform} from '@angular/core';
-import {DiRemoteCurrentItemToTitle} from './di-ghibli-list';
+import {DiRemoteCurrentItemToTitle} from '../di-api-common';
 
 @Pipe({name: 'itemsSortBy', pure: true})
 export class ItemsSortByPipe<T> implements PipeTransform {

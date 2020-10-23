@@ -3,13 +3,12 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {MatListModule} from '@angular/material/list';
 import {RouterModule} from '@angular/router';
-import {ItemToTitlePipe} from './ghibli-item-title.pipe';
-import {ItemsSortByPipe} from './ghibli-items-sort-by.pipe';
+import {ApiPipesModule} from '../api-pipes/api-pipes.module';
 import {GhibliListDetailComponent} from './ghibli-list-detail.component';
 
 @NgModule({
-  declarations: [GhibliListDetailComponent, ItemsSortByPipe, ItemToTitlePipe],
-  imports: [CommonModule, RouterModule, MatListModule, ScrollingModule],
+  declarations: [GhibliListDetailComponent],
+  imports: [CommonModule, RouterModule, MatListModule, ScrollingModule, ApiPipesModule],
 })
 class GhibliListDetailModule {}
 

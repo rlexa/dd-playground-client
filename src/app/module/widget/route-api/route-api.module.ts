@@ -3,7 +3,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
 import {NavigationContentComponent, NavigationContentComponentData, NavigationContentModule} from '../navigation-content';
+import {GhibliLocation, GhibliMovie, GhibliPerson, GhibliSpecies, GhibliVehicle} from './api-ghibli.service';
 import {ApiRoute} from './api-route';
+import {DiRemoteCurrentItemToId} from './di-api-common';
 
 const routeNavs: Record<ApiRoute, NavigationBarItem> = {
   [ApiRoute.Location]: {icon: 'place', route: ApiRoute.Location, label: 'Location'},
@@ -55,7 +57,15 @@ const ROUTING: Routes = [
   },
 ];
 
-@NgModule({imports: [NavigationContentModule, RouterModule.forChild(ROUTING)]})
+@NgModule({
+  imports: [NavigationContentModule, RouterModule.forChild(ROUTING)],
+  providers: [
+    {
+      provide: DiRemoteCurrentItemToId,
+      useValue: (item: GhibliLocation | GhibliMovie | GhibliPerson | GhibliSpecies | GhibliVehicle) => item.id,
+    },
+  ],
+})
 class RouteApiModule {}
 
 export {RouteApiModule};

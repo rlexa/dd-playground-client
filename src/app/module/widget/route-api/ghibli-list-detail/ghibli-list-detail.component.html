@@ -3,7 +3,7 @@
     <label
       *cdkVirtualFor="let item of items$ | async | itemsSortBy; trackBy: trackById"
       class="link text-ellipsis"
-      [routerLink]="item.id"
+      [routerLink]="item | itemToId"
       routerLinkActive="active"
     >
       {{ item | itemToTitle }}
