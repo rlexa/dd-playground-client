@@ -1,0 +1,42 @@
+<div *ngIf="item$ | async as item">
+  <label>
+    <button *ngIf="item.url | ghibliRouteLink as routerLink" mat-mini-fab matTooltip="Person" [routerLink]="routerLink">
+      <i class="material-icons">{{ 'person' | icon }}</i>
+    </button>
+    {{ item.name }}
+  </label>
+
+  <div class="links">
+    <button *ngIf="item.species | ghibliRouteLink as routerLink" mat-mini-fab matTooltip="Species" [routerLink]="routerLink">
+      <i class="material-icons">{{ 'pets' | icon }}</i>
+    </button>
+    <ng-container *ngFor="let movie of item.films; trackBy: trackByIndex">
+      <button *ngIf="movie | ghibliRouteLink as routerLink" mat-mini-fab matTooltip="Movie" [routerLink]="routerLink">
+        <i class="material-icons">{{ 'movie' | icon }}</i>
+      </button>
+    </ng-container>
+  </div>
+
+  <table>
+    <colgroup>
+      <col />
+      <col />
+    </colgroup>
+    <tr>
+      <td>Gender</td>
+      <td>{{ item.gender }}</td>
+    </tr>
+    <tr>
+      <td>Age</td>
+      <td>{{ item.age }}</td>
+    </tr>
+    <tr>
+      <td>Eye Color</td>
+      <td>{{ item.eye_color }}</td>
+    </tr>
+    <tr>
+      <td>Hair Color</td>
+      <td>{{ item.hair_color }}</td>
+    </tr>
+  </table>
+</div>

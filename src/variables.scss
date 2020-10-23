@@ -5,6 +5,11 @@
 
   --margin: 0.5rem;
   --margin-bigger: 0.75rem;
+  --margin-big: 1rem;
+
+  --padding: var(--margin);
+  --padding-bigger: var(--margin-bigger);
+  --padding-big: var(--margin-big);
 
   --size-cell: 23rem;
   --size-font-h1: 2.4rem;

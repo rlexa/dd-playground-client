@@ -1,0 +1,47 @@
+:host {
+  > div {
+    display: inline-flex;
+    flex-direction: column;
+
+    padding: var(--padding-big);
+
+    > :nth-child(1n + 2) {
+      margin-top: var(--margin);
+    }
+
+    label {
+      font-size: var(--size-font-big);
+    }
+
+    .links {
+      display: inline-flex;
+      flex-wrap: wrap;
+
+      > :nth-child(1n + 1) {
+        margin: var(--margin);
+      }
+    }
+
+    table {
+      colgroup {
+        :first-child {
+          width: fit-content;
+        }
+      }
+      tr {
+        :first-child {
+          min-width: 7rem;
+          max-width: 9rem;
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        td {
+          padding: var(--padding);
+        }
+      }
+    }
+  }
+}
