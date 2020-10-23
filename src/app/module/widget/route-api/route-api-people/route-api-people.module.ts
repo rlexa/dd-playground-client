@@ -8,7 +8,7 @@ import {DiRemoteCurrentList, GhibliListDetailModule} from '../ghibli-list-detail
 import {GhibliListDetailComponent} from '../ghibli-list-detail/ghibli-list-detail.component';
 import {routeParamIdPerson} from './api-people-route';
 import {DiRemoteGhibliPeople, DiRoutePerson, DiRoutePersonProvider} from './di-ghibli-people';
-import {GhibliPersonDetailComponent, GhibliPersonDetailModule} from './ghibli-person-detail';
+import {GhibliPersonDetailModule, RoutedGhibliPersonDetailComponent} from './ghibli-person-detail';
 
 @NgModule({
   providers: [
@@ -25,7 +25,7 @@ import {GhibliPersonDetailComponent, GhibliPersonDetailModule} from './ghibli-pe
         path: ROUTE_ROOT,
         component: GhibliListDetailComponent,
         children: [
-          {path: `:${routeParamIdPerson}`, component: GhibliPersonDetailComponent},
+          {path: `:${routeParamIdPerson}`, component: RoutedGhibliPersonDetailComponent},
           {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
         ],
       },

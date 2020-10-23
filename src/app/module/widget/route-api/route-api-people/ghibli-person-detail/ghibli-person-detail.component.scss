@@ -17,8 +17,8 @@
       display: inline-flex;
       flex-wrap: wrap;
 
-      > :nth-child(1n + 1) {
-        margin: var(--margin);
+      > :nth-child(1n + 2) {
+        margin-left: var(--margin);
       }
     }
 

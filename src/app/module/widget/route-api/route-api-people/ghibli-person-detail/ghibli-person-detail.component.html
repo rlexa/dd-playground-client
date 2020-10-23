@@ -1,4 +1,4 @@
-<div *ngIf="item$ | async as item">
+<div *ngIf="item">
   <label>
     <button *ngIf="item.url | ghibliRouteLink as routerLink" mat-mini-fab matTooltip="Person" [routerLink]="routerLink">
       <i class="material-icons">{{ 'person' | icon }}</i>

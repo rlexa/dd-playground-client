@@ -6,12 +6,13 @@ import {RouterModule} from '@angular/router';
 import {IconPipeModule} from 'src/app/module/pipe/icon';
 import {ApiPipesModule} from '../../api-pipes/api-pipes.module';
 import {GhibliPersonDetailComponent} from './ghibli-person-detail.component';
+import {RoutedGhibliPersonDetailComponent} from './routed-ghibli-person-detail.component';
 
 @NgModule({
-  declarations: [GhibliPersonDetailComponent],
+  declarations: [GhibliPersonDetailComponent, RoutedGhibliPersonDetailComponent],
   imports: [CommonModule, RouterModule, MatButtonModule, MatTooltipModule, IconPipeModule, ApiPipesModule],
-  exports: [GhibliPersonDetailComponent],
+  exports: [GhibliPersonDetailComponent, RoutedGhibliPersonDetailComponent],
 })
 class GhibliPersonDetailModule {}
 
-export {GhibliPersonDetailModule, GhibliPersonDetailComponent};
+export {GhibliPersonDetailModule, GhibliPersonDetailComponent, RoutedGhibliPersonDetailComponent};
