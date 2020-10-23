@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {Observable} from 'rxjs';
-import {WithId} from '../api-ghibli.service';
+import {DiRemoteCurrentItemToId} from '../di-api-common';
 import {DiRemoteCurrentList} from './di-ghibli-list';
 
 @Component({
@@ -9,8 +9,9 @@ import {DiRemoteCurrentList} from './di-ghibli-list';
   styleUrls: ['./ghibli-list-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GhibliListDetailComponent<T extends WithId> {
-  constructor(@Inject(DiRemoteCurrentList) public readonly items$: Observable<T[]>) {}
-
-  trackById = (item: WithId) => item.id;
+export class GhibliListDetailComponent<T> {
+  constructor(
+    @Inject(DiRemoteCurrentList) public readonly items$: Observable<T[]>,
+    @Inject(DiRemoteCurrentItemToId) public readonly trackById: (item: T) => string,
+  ) {}
 }

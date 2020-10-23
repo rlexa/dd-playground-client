@@ -2,13 +2,10 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 
-export interface WithId {
-  id?: string;
-}
-
-export interface GhibliLocation extends WithId {
+export interface GhibliLocation {
   climate?: string;
   films?: string[];
+  id?: string;
   name?: string;
   residents?: string[];
   surface_water?: string;
@@ -16,9 +13,10 @@ export interface GhibliLocation extends WithId {
   url?: string[];
 }
 
-export interface GhibliMovie extends WithId {
+export interface GhibliMovie {
   description?: string;
   director?: string;
+  id?: string;
   locations?: string[];
   people?: string[];
   producer?: string;
@@ -30,30 +28,33 @@ export interface GhibliMovie extends WithId {
   vehicles?: string[];
 }
 
-export interface GhibliPerson extends WithId {
+export interface GhibliPerson {
   age?: string;
   eye_color?: string;
   films?: string[];
   gender?: string;
   hair_color?: string;
+  id?: string;
   name?: string;
   species?: string;
   url?: string;
 }
 
-export interface GhibliSpecies extends WithId {
+export interface GhibliSpecies {
   classification?: string;
   eye_colors?: string;
   films?: string[];
   hair_colors?: string;
+  id?: string;
   name?: string;
   people?: string[];
   url?: string;
 }
 
-export interface GhibliVehicle extends WithId {
+export interface GhibliVehicle {
   description?: string;
   films?: string;
+  id?: string;
   length?: string;
   name?: string;
   pilot?: string;
