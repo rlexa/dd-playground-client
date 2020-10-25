@@ -9,6 +9,20 @@ import {GhibliPerson} from '../../api-ghibli.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GhibliPersonDetailComponent {
-  @Input() item: GhibliPerson;
+  public item: GhibliPerson = null;
+  public keyVals: {[key: string]: string | number} = null;
+
+  @Input() set person(val: GhibliPerson) {
+    if (val !== this.item) {
+      this.item = val;
+      this.keyVals = {
+        Gender: val?.gender,
+        Age: val?.age,
+        'Eye Color': val?.eye_color,
+        'Hair Color': val?.hair_color,
+      };
+    }
+  }
+
   public readonly trackByIndex = trackByIndex;
 }

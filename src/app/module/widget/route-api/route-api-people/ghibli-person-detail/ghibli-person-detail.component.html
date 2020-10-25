@@ -5,27 +5,5 @@
 
 <ng-container *ngIf="item">
   <app-ghibli-link [links]="[item.species, item.films] | flat"></app-ghibli-link>
-
-  <table>
-    <colgroup>
-      <col />
-      <col />
-    </colgroup>
-    <tr>
-      <td>Gender</td>
-      <td>{{ item.gender }}</td>
-    </tr>
-    <tr>
-      <td>Age</td>
-      <td>{{ item.age }}</td>
-    </tr>
-    <tr>
-      <td>Eye Color</td>
-      <td>{{ item.eye_color }}</td>
-    </tr>
-    <tr>
-      <td>Hair Color</td>
-      <td>{{ item.hair_color }}</td>
-    </tr>
-  </table>
+  <app-simple-view [data]="keyVals" [isDense]="true"></app-simple-view>
 </ng-container>
