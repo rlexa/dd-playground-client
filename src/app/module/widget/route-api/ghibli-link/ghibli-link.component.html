@@ -1,3 +1,15 @@
-<button mat-mini-fab [matTooltip]="link | ghibliRouteLink: 'tooltip'" [routerLink]="link | ghibliRouteLink">
-  <i class="material-icons">{{ link | ghibliRouteLink: 'icon' | icon }}</i>
-</button>
+<ng-template #templateLink let-link>
+  <button mat-mini-fab [matTooltip]="link | ghibliRouteLink: 'tooltip'" [routerLink]="link | ghibliRouteLink">
+    <i class="material-icons">{{ link | ghibliRouteLink: 'icon' | icon }}</i>
+  </button>
+</ng-template>
+
+<ng-container *ngIf="links?.length === 1">
+  <ng-container *ngTemplateOutlet="templateLink; context: {$implicit: links[0]}"> </ng-container>
+</ng-container>
+
+<div *ngIf="links?.length > 1" class="links">
+  <ng-container *ngFor="let item of links; trackBy: trackByIndex">
+    <ng-container *ngTemplateOutlet="templateLink; context: {$implicit: item}"> </ng-container>
+  </ng-container>
+</div>

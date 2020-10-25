@@ -1,15 +1,10 @@
-<div *ngIf="item">
-  <label>
-    <app-ghibli-link [link]="item.url"></app-ghibli-link>
-    {{ item.name }}
-  </label>
+<label>
+  <app-ghibli-link [links]="[item?.url]"></app-ghibli-link>
+  {{ item?.name || '-' }}
+</label>
 
-  <div class="links">
-    <app-ghibli-link *ngIf="item.species" [link]="item.species"></app-ghibli-link>
-    <ng-container *ngFor="let movie of item.films; trackBy: trackByIndex">
-      <app-ghibli-link *ngIf="movie" [link]="movie"></app-ghibli-link>
-    </ng-container>
-  </div>
+<ng-container *ngIf="item">
+  <app-ghibli-link [links]="[item.species, item.films] | flat"></app-ghibli-link>
 
   <table>
     <colgroup>
@@ -33,4 +28,4 @@
       <td>{{ item.hair_color }}</td>
     </tr>
   </table>
-</div>
+</ng-container>

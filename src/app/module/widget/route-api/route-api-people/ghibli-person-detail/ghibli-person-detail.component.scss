@@ -1,46 +1,35 @@
 :host {
-  > div {
-    display: inline-flex;
-    flex-direction: column;
+  display: inline-flex;
+  flex-direction: column;
 
-    padding: var(--padding-big);
+  padding: var(--padding-big);
 
-    > :nth-child(1n + 2) {
-      margin-top: var(--margin);
-    }
+  > :nth-child(1n + 2) {
+    margin-top: var(--margin);
+  }
 
-    label {
-      font-size: var(--size-font-big);
-    }
+  label {
+    font-size: var(--size-font-big);
+  }
 
-    .links {
-      display: inline-flex;
-      flex-wrap: wrap;
-
-      > :nth-child(1n + 2) {
-        margin-left: var(--margin);
+  table {
+    colgroup {
+      :first-child {
+        width: fit-content;
       }
     }
+    tr {
+      :first-child {
+        min-width: 7rem;
+        max-width: 9rem;
 
-    table {
-      colgroup {
-        :first-child {
-          width: fit-content;
-        }
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
-      tr {
-        :first-child {
-          min-width: 7rem;
-          max-width: 9rem;
 
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        td {
-          padding: var(--padding);
-        }
+      td {
+        padding: var(--padding);
       }
     }
   }
