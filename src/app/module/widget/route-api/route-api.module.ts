@@ -4,19 +4,15 @@ import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
 import {NavigationContentComponent, NavigationContentComponentData, NavigationContentModule} from '../navigation-content';
 import {GhibliLocation, GhibliMovie, GhibliPerson, GhibliSpecies, GhibliVehicle} from './api-ghibli.service';
-import {ApiRoute} from './api-route';
+import {ApiRoute, apiRouteIcon, apiRouteTooltip} from './api-route';
 import {DiRemoteCurrentItemToId} from './di-api-common';
 
-const routeNavs: Record<ApiRoute, NavigationBarItem> = {
-  [ApiRoute.Location]: {icon: 'place', route: ApiRoute.Location, label: 'Location'},
-  [ApiRoute.Movie]: {icon: 'movie', route: ApiRoute.Movie, label: 'Movie'},
-  [ApiRoute.Person]: {icon: 'person', route: ApiRoute.Person, label: 'People'},
-  [ApiRoute.Species]: {icon: 'pets', route: ApiRoute.Species, label: 'Species'},
-  [ApiRoute.Vehicle]: {icon: 'airport_shuttle', route: ApiRoute.Vehicle, label: 'Vehicles'},
-};
-
 const data: NavigationBarItemsData & NavigationContentComponentData = {
-  navigationBarItems: Object.values(ApiRoute).map((ii) => routeNavs[ii]),
+  navigationBarItems: Object.values(ApiRoute).map<NavigationBarItem>((route) => ({
+    route,
+    icon: apiRouteIcon[route],
+    label: apiRouteTooltip[route],
+  })),
   navigationContentScrollable: false,
 };
 

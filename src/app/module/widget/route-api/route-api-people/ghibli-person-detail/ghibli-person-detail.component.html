@@ -1,19 +1,13 @@
 <div *ngIf="item">
   <label>
-    <button *ngIf="item.url | ghibliRouteLink as routerLink" mat-mini-fab matTooltip="Person" [routerLink]="routerLink">
-      <i class="material-icons">{{ 'person' | icon }}</i>
-    </button>
+    <app-ghibli-link [link]="item.url"></app-ghibli-link>
     {{ item.name }}
   </label>
 
   <div class="links">
-    <button *ngIf="item.species | ghibliRouteLink as routerLink" mat-mini-fab matTooltip="Species" [routerLink]="routerLink">
-      <i class="material-icons">{{ 'pets' | icon }}</i>
-    </button>
+    <app-ghibli-link *ngIf="item.species" [link]="item.species"></app-ghibli-link>
     <ng-container *ngFor="let movie of item.films; trackBy: trackByIndex">
-      <button *ngIf="movie | ghibliRouteLink as routerLink" mat-mini-fab matTooltip="Movie" [routerLink]="routerLink">
-        <i class="material-icons">{{ 'movie' | icon }}</i>
-      </button>
+      <app-ghibli-link *ngIf="movie" [link]="movie"></app-ghibli-link>
     </ng-container>
   </div>
 
