@@ -3,13 +3,13 @@ import {NgModule} from '@angular/core';
 import {FlatPipeModule} from 'src/app/module/pipe/flat';
 import {ApiPipesModule} from '../../api-pipes/api-pipes.module';
 import {GhibliItemDetailModule} from '../../ghibli-item-detail';
-import {RoutedGhibliMovieDetailComponent} from './routed-ghibli-movie-detail.component';
+import {RoutedGhibliLocationDetailComponent} from './routed-ghibli-location-detail.component';
 
 @NgModule({
-  declarations: [RoutedGhibliMovieDetailComponent],
+  declarations: [RoutedGhibliLocationDetailComponent],
   imports: [CommonModule, FlatPipeModule, ApiPipesModule, GhibliItemDetailModule],
-  exports: [RoutedGhibliMovieDetailComponent],
+  exports: [RoutedGhibliLocationDetailComponent],
 })
-class GhibliMovieDetailModule {}
+class GhibliLocationDetailModule {}
 
-export {GhibliMovieDetailModule, RoutedGhibliMovieDetailComponent};
+export {GhibliLocationDetailModule, RoutedGhibliLocationDetailComponent};

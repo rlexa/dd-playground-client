@@ -1,1 +1,7 @@
-<app-ghibli-person-detail [person]="item$ | async"></app-ghibli-person-detail>
+<app-ghibli-item-detail
+  *ngIf="item$ | async as item"
+  [title]="item | itemToTitle"
+  [linkSelf]="item.url"
+  [links]="[item.locations, item.people, item.species, item.vehicles] | flat"
+  [keyVals]="keyVals$ | async"
+></app-ghibli-item-detail>

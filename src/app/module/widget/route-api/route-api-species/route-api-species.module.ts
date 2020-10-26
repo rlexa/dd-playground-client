@@ -3,11 +3,12 @@ import {RouterModule} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {GhibliSpecies} from '../api-ghibli.service';
 import {DiRemoteCurrentItemToTitle} from '../di-api-common';
-import {DiRemoteCurrentItem, GhibliDetailComponent, GhibliDetailModule} from '../ghibli-detail';
+import {DiRemoteCurrentItem} from '../ghibli-detail';
 import {DiRemoteCurrentList, GhibliListDetailModule} from '../ghibli-list-detail';
 import {GhibliListDetailComponent} from '../ghibli-list-detail/ghibli-list-detail.component';
 import {routeParamIdSpecies} from './api-species-route';
 import {DiRemoteGhibliSpecies, DiRouteSpecies, DiRouteSpeciesProvider} from './di-ghibli-species';
+import {GhibliSpeciesDetailModule, RoutedGhibliSpeciesDetailComponent} from './ghibli-species-detail';
 
 @NgModule({
   providers: [
@@ -18,13 +19,13 @@ import {DiRemoteGhibliSpecies, DiRouteSpecies, DiRouteSpeciesProvider} from './d
   ],
   imports: [
     GhibliListDetailModule,
-    GhibliDetailModule,
+    GhibliSpeciesDetailModule,
     RouterModule.forChild([
       {
         path: ROUTE_ROOT,
         component: GhibliListDetailComponent,
         children: [
-          {path: `:${routeParamIdSpecies}`, component: GhibliDetailComponent},
+          {path: `:${routeParamIdSpecies}`, component: RoutedGhibliSpeciesDetailComponent},
           {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
         ],
       },

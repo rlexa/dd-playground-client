@@ -1,9 +1,0 @@
-<label>
-  <app-ghibli-link [links]="[item?.url]"></app-ghibli-link>
-  {{ (item | itemToTitle) || '-' }}
-</label>
-
-<ng-container *ngIf="item">
-  <app-ghibli-link [links]="[item.species, item.films] | flat"></app-ghibli-link>
-  <app-simple-view [data]="keyVals" [isDense]="true"></app-simple-view>
-</ng-container>

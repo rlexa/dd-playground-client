@@ -1,0 +1,7 @@
+<label>
+  <app-ghibli-link *ngIf="linkSelf" [links]="[linkSelf]"></app-ghibli-link>
+  {{ title || '-' }}
+</label>
+
+<app-ghibli-link *ngIf="links?.length > 0" [links]="links"></app-ghibli-link>
+<app-simple-view *ngIf="keyVals" [data]="keyVals" [isDense]="true"></app-simple-view>

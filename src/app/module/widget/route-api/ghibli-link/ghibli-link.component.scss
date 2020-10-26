@@ -1,8 +1,8 @@
 .links {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
 
-  > :nth-child(1n + 2) {
-    margin-left: var(--margin);
+  > :nth-child(1n + 0) {
+    margin: var(--margin-smaller);
   }
 }
