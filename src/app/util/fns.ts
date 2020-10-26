@@ -129,7 +129,10 @@ export const fnMerge = <T extends object>(baseValue?: Partial<T>) => (overwriteW
 export const fnRMerge = <T extends object>(overwriteWith?: Partial<T>) => (baseValue?: Partial<T>): T => fnMerge(baseValue)(overwriteWith);
 
 export const fnGetter = <T extends object, K extends keyof T>(key: K) => (obj: T) => obj?.[key];
-export const fnSetter = <T extends object, K extends keyof T>(key: K) => (value: T[K]) => fnRMerge<T>({[key]: value} as T);
+export const fnSetter = <T extends object, K extends keyof T>(key: K) => (value: T[K]) => (baseValue?: Partial<T>): T =>
+  typeof baseValue === 'object' && baseValue !== null && baseValue[key] === value
+    ? (baseValue as T)
+    : fnRMerge<T>({[key]: value} as T)(baseValue);
 
 // MATH
 

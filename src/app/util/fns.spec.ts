@@ -297,7 +297,19 @@ describe(`fns`, () => {
   });
 
   describe(`fnSetter`, () => {
-    test(`sets`, () => expect(fnSetter<{key: string}, 'key'>('key')('value')({key: 'oldValue'})).toEqual({key: 'value'}));
+    test(`sets if value different`, () => {
+      const source = {key: 'oldValue'};
+      const target = fnSetter<{key: string}, 'key'>('key')('value')(source);
+      expect(target).toEqual({key: 'value'});
+      expect(target).not.toBe(source);
+    });
+
+    test(`sets if base is null`, () => expect(fnSetter<{key: string}, 'key'>('key')('value')(null)).toEqual({key: 'value'}));
+
+    test(`ignores if value same`, () => {
+      const base = {key: 'value'};
+      expect(fnSetter<{key: string}, 'key'>('key')('value')(base)).toBe(base);
+    });
   });
 
   describe(`fnSin`, () => {
