@@ -31,6 +31,6 @@ export class GhibliRouteLinkPipe implements PipeTransform {
         ? apiRouteTooltip[apiRoute]
         : `/${AppRoute.Dashboard}/${DashboardRoute.Api}/${apiRoute}/${id}`;
     }
-    return null;
+    return context === 'icon' ? 'warning' : context === 'tooltip' ? 'Error' : null;
   }
 }
