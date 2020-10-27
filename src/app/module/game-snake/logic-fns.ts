@@ -1,5 +1,6 @@
-import {not, process, processIf, processIn} from 'src/app/game';
+import {not, process, processIf} from 'src/app/game';
 import {
+  fnAddFirst,
   fnAnd,
   fnCompose,
   fnDefault,
@@ -183,7 +184,8 @@ const getNewSnakeHeadPosition = (st: Game): Vector => {
   return newPos;
 };
 
-const getSnakeHead = fnCompose(fnHead, gameSnakePositions);
+const moveSnakeHead = fnLift2<Vector[], Vector, Vector[]>(fnAddFirst)(getNewSnakeHeadPosition)(gameSnakePositions);
+const cutSnakeTail = fnCompose(fnHead, gameSnakePositions);
 
 const whenFood = fnCompose(fnIs, gameFood);
 const whenFoodInSnake = fnLift2(includesVector)(gameSnakePositions)(gameFoodPosition);
@@ -206,9 +208,6 @@ const reducerSnake = fnWrapSet(wrapGameSceneMapSnake);
 const reducerSnakeDirection = fnWrapSet(wrapGameSceneMapSnakeDirection);
 const reducerSnakePositions = fnWrapSet(wrapGameSceneMapSnakePositions);
 
-const inGame = processIn<Game>();
-const forSnakePositions = inGame((st) => st.scene.map.snake.positions);
-
 const redFoodClear = reducerFood(null);
 const redFoodRandomize = fnLift1(reducerFoodPosition)(getRandomFoodPosition);
 const redGameLost = reducerState('lost');
@@ -217,8 +216,8 @@ const redGameWon = reducerState('won');
 const redInputDirectionClear = reducerInputDirection(null);
 const redInputDirectionToSnake = fnLift1(reducerSnakeDirection)(gameInputDirection);
 const redSnakeInit = reducerSnake(initSnake());
-const redSnakeHeadMove = forSnakePositions((st, top) => [getNewSnakeHeadPosition(top), ...st]);
-const redSnakeTailCut = fnLift1(reducerSnakePositions)(getSnakeHead);
+const redSnakeHeadMove = fnLift1(reducerSnakePositions)(moveSnakeHead);
+const redSnakeTailCut = fnLift1(reducerSnakePositions)(cutSnakeTail);
 
 const processLoop = process(
   processIf(whenInputDirection)(
