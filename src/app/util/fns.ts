@@ -90,6 +90,8 @@ export const fnOrs = (...args: any[]) => (!args ? true : args.reduce<boolean>((a
 export const fnIfThenElse = (condition: boolean) => <T1>(thenResult: T1) => <T2>(elseResult: T2) => (condition ? thenResult : elseResult);
 export const fnThenElseIf = <T1>(thenResult: T1) => <T2>(elseResult: T2) => (condition: boolean) =>
   fnIfThenElse(condition)(thenResult)(elseResult);
+export const fnThenIfElse = <T1>(thenResult: T1) => (condition: boolean) => <T2>(elseResult: T2) =>
+  fnIfThenElse(condition)(thenResult)(elseResult);
 export const fnElseThenIf = <T2>(elseResult: T2) => <T1>(thenResult: T1) => (condition: boolean) =>
   fnIfThenElse(condition)(thenResult)(elseResult);
 
