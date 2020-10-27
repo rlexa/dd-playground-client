@@ -1,5 +1,7 @@
 import {
   fnAbs,
+  fnAddFirst,
+  fnAddLast,
   fnAnd,
   fnAnds,
   fnApply2,
@@ -59,6 +61,11 @@ import {
   fnTKey,
   fnTrace,
   fnWhileDo,
+  fnWrap,
+  fnWrapGet,
+  fnWrapIn,
+  fnWrapKey,
+  fnWrapSet,
 } from './fns';
 
 describe(`fns`, () => {
@@ -75,6 +82,18 @@ describe(`fns`, () => {
       expect(fnAbs(-123)).toBe(123);
       expect(Math.abs).toHaveBeenCalledWith(-123);
     });
+  });
+
+  describe(`fnAddFirst`, () => {
+    test(`adds first for undefined`, () => expect(fnAddFirst(1)(undefined)).toEqual([1]));
+    test(`adds first for []`, () => expect(fnAddFirst(1)([])).toEqual([1]));
+    test(`adds first for [.]`, () => expect(fnAddFirst(1)([2, 3])).toEqual([1, 2, 3]));
+  });
+
+  describe(`fnAddLast`, () => {
+    test(`adds first for undefined`, () => expect(fnAddLast(1)(undefined)).toEqual([1]));
+    test(`adds first for []`, () => expect(fnAddLast(1)([])).toEqual([1]));
+    test(`adds first for [.]`, () => expect(fnAddLast(1)([2, 3])).toEqual([2, 3, 1]));
   });
 
   describe(`fnAnd`, () => {
@@ -210,7 +229,7 @@ describe(`fns`, () => {
   });
 
   describe(`fnLiftx`, () => {
-    test(`lifts fnLift1`, () => expect(fnLift1<number, number>(plusOne)(multTwo)(2)).toBe(5));
+    test(`lifts fnLift1`, () => expect(fnLift1(sum)(plusOne)(2)).toBe(5));
     test(`lifts fnLift2`, () => expect(fnLift2<string, number, number>(concatToString)(plusOne)(multTwo)(2)).toBe('3.4'));
     test(`lifts fnLift2to2`, () => expect(fnLift2to2<string, number, number>(concatToString)(plusOne)(multTwo)(2)(3)).toBe('3.6'));
     test(`lifts fnLift2x2`, () => expect(fnLift2x2<string, number, number>(concatToString)(mult)(sum)(2)(3)).toBe('6.5'));
@@ -367,5 +386,51 @@ describe(`fns`, () => {
   describe(`fnWhileDo`, () => {
     test(`loops until break`, () => expect(fnWhileDo((nr) => nr < 4)(plusOne)(0)).toBe(4));
     test(`does not loop on immediate break`, () => expect(fnWhileDo(() => false)(plusOne)(0)).toBe(0));
+  });
+
+  describe(`fnWrap`, () => {
+    interface WrapTest {
+      number: number;
+    }
+
+    interface WrapNestedTest {
+      nested: WrapTest;
+    }
+
+    test(`fnWrap`, () => {
+      const wrap = fnWrap((arg: WrapTest) => arg.number)((val) => (obj) => ({...obj, number: val}));
+      expect(wrap).toBeTruthy();
+      expect(wrap.getter({number: 123})).toBe(123);
+      expect(wrap.setter(321)({number: 123})).toEqual({number: 321});
+    });
+
+    test(`fnWrapKey`, () => {
+      const wrap = fnWrapKey<WrapTest, 'number'>('number');
+      expect(wrap).toBeTruthy();
+      expect(wrap.getter({number: 123})).toBe(123);
+      expect(wrap.setter(321)({number: 123})).toEqual({number: 321});
+    });
+
+    test(`fnWrapGet`, () => expect(fnWrapGet({getter: (obj: WrapTest) => obj.number, setter: null})({number: 123})).toBe(123));
+
+    test(`fnWrapSet`, () =>
+      expect(
+        fnWrapSet({getter: null, setter: (value: number) => (obj: WrapTest) => ({...obj, number: value})})(321)({number: 123}),
+      ).toEqual({number: 321}));
+
+    test(`fnWrapIn`, () => {
+      const wrapNumber = fnWrapKey<WrapTest, 'number'>('number');
+      const wrapNested = fnWrapKey<WrapNestedTest, 'nested'>('nested');
+      const wrap = fnWrapIn(wrapNested)(wrapNumber);
+
+      const old: WrapNestedTest = {nested: {number: 123}};
+      expect(wrap).toBeTruthy();
+      expect(wrap.getter(old)).toBe(123);
+
+      expect(wrap.setter(321)(old)).toEqual({nested: {number: 321}});
+      expect(wrap.setter(321)(old)).not.toBe(old);
+
+      expect(wrap.setter(old.nested.number)(old)).toBe(old);
+    });
   });
 });

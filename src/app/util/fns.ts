@@ -22,16 +22,12 @@ export const fnApplyFn2 = <T1, T2, R>(fn: (arg1: T1) => (arg2: T2) => R) => (arg
 /** @returns flipped args i.e. `b => a => c` */
 export const fnFlip = <T1, T2, R>(fn: (arg1: T1) => (arg2: T2) => R) => (arg2: T2) => (arg1: T1) => fn(arg1)(arg2);
 
-/**
- * Note: basically `fnCompose(f, f1)`
- *
- * @returns `a => r` for `a => f (f1(a)): r`
- */
-export const fnLift1 = <R, R1>(fn: (arg1: R1) => R) => <T>(fn1: (arg: T) => R1) => (arg: T) => fn(fn1(arg));
-
 /** @returns `a => r` for `a => f (f1(a)) (f2(a)): r` */
 export const fnLift2 = <R, R1, R2>(fn: (arg1: R1) => (arg2: R2) => R) => <T>(fn1: (arg: T) => R1) => (fn2: (arg: T) => R2) => (arg: T) =>
   fn(fn1(arg))(fn2(arg));
+
+/** @returns `a => r` for `a => f (f1(a)) (a): r` */
+export const fnLift1 = <R, R1, T>(fn: (arg1: R1) => (arg2: T) => R) => (fn1: (arg: T) => R1) => fnLift2(fn)(fn1)(fnIdentity);
 
 /** @returns `a => b => r` for `a => b => f (f1(a)) (f2(b)): r` */
 export const fnLift2to2 = <R, R1, R2>(fn: (arg1: R1) => (arg2: R2) => R) => <T1>(fn1: (arg: T1) => R1) => <T2>(fn2: (arg: T2) => R2) => (
@@ -105,6 +101,9 @@ export const fnJoin = (separator: string) => <T>(vals: T[]) => vals?.join(separa
 export const fnLast = <T>(vals: T[]) => vals?.pop();
 export const fnTail = <T>(vals: T[]) => vals?.slice(1);
 
+export const fnAddFirst = <T>(val: T) => (vals: T[]) => (vals ? [val, ...vals] : [val]);
+export const fnAddLast = <T>(val: T) => (vals: T[]) => (vals ? [...vals, val] : [val]);
+
 export const fnLen = <T extends {length: number}>(vals: T) => vals?.length;
 
 export const fnFilter = <T>(fn: (arg: T) => boolean) => (args: T[]): T[] => args?.filter((ii) => fn(ii));
@@ -133,6 +132,21 @@ export const fnSetter = <T extends object, K extends keyof T>(key: K) => (value:
   typeof baseValue === 'object' && baseValue !== null && baseValue[key] === value
     ? (baseValue as T)
     : fnRMerge<T>({[key]: value} as T)(baseValue);
+
+export interface FnWrap<T, V> {
+  getter: (obj: T) => V;
+  setter: (val: V) => (obj: T) => T;
+}
+export const fnWrap = <T, V>(getter: (obj: T) => V) => (setter: (val: V) => (obj: T) => T): FnWrap<T, V> => ({getter, setter});
+export const fnWrapKey = <T extends object, K extends keyof T>(key: K) => fnWrap<T, T[K]>(fnGetter(key))(fnSetter(key));
+export const fnWrapGet = <T, V>(wrap: FnWrap<T, V>) => wrap.getter;
+export const fnWrapSet = <T, V>(wrap: FnWrap<T, V>) => wrap.setter;
+
+export const fnWrapIn = <T, T1>(wrapIn: FnWrap<T, T1>) => <V>(wrap: FnWrap<T1, V>): FnWrap<T, V> => {
+  const getter = fnCompose(fnWrapGet(wrap), fnWrapGet(wrapIn));
+  const setter = (val: V) => (obj: T) => fnWrapSet(wrapIn)(fnWrapSet(wrap)(val)(fnWrapGet(wrapIn)(obj)))(obj);
+  return fnWrap(getter)(setter);
+};
 
 // MATH
 

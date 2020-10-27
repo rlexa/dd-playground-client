@@ -6,24 +6,31 @@ import {
   fnFirst,
   fnFlip,
   fnGte,
+  fnHead,
   fnInvert,
   fnIs,
-  fnKey,
+  fnLen,
+  fnLift1,
   fnLift2,
   fnLift2to2,
   fnLift2x2,
   fnMerge,
   fnMod,
   fnMult,
-  fnPipe,
+  fnNot,
   fnRandomInt,
   fnSame,
   fnSome,
   fnSum,
   fnTail,
+  fnThenElseIf,
   fnTIdentity,
   fnTKey,
   fnWhileDo,
+  fnWrapGet,
+  fnWrapIn,
+  fnWrapKey,
+  fnWrapSet,
 } from 'src/app/util/fns';
 
 const isZero = fnSame(0);
@@ -63,14 +70,16 @@ export interface SnakeState {
   direction: Vector;
 }
 
-const snakeKey = fnTKey<SnakeState>();
+const wrapSnakeDirection = fnWrapKey<SnakeState, 'direction'>('direction');
+const wrapSnakePositions = fnWrapKey<SnakeState, 'positions'>('positions');
+
 const initSnake = fnMerge<SnakeState>({direction: vecRight, positions: [vecZero]});
 
 export interface Food {
   position: Vector;
 }
 
-const foodKey = fnTKey<Food>();
+const wrapFoodPosition = fnWrapKey<Food, 'position'>('position');
 
 export interface Map {
   food?: Food;
@@ -79,7 +88,10 @@ export interface Map {
   width?: number;
 }
 
-const mapKey = fnTKey<Map>();
+const wrapMapFood = fnWrapKey<Map, 'food'>('food');
+const wrapMapHeight = fnWrapKey<Map, 'height'>('height');
+const wrapMapSnake = fnWrapKey<Map, 'snake'>('snake');
+const wrapMapWidth = fnWrapKey<Map, 'width'>('width');
 
 const initMap = (from: Preset): Map => ({
   food: null,
@@ -92,7 +104,7 @@ export interface Scene {
   map: Map;
 }
 
-const sceneKey = fnTKey<Scene>();
+const wrapSceneMap = fnWrapKey<Scene, 'map'>('map');
 
 const initScene = (from: Preset): Scene => ({map: initMap(from)});
 
@@ -114,22 +126,33 @@ export interface Game {
   state: GameState;
 }
 
-const gameKey = fnTKey<Game>();
+const wrapGameInputDirection = fnWrapKey<Game, 'inputDirection'>('inputDirection');
+const wrapGameScene = fnWrapKey<Game, 'scene'>('scene');
+const wrapGameState = fnWrapKey<Game, 'state'>('state');
 
-const gameMap = fnPipe(gameKey('scene'), fnKey('map'));
-const gameHeight = fnPipe(gameMap, fnKey('height'));
-const gameWidth = fnPipe(gameMap, fnKey('width'));
-const gameInputDirection = fnPipe(gameKey('inputDirection'));
-const gameFood = fnPipe(gameMap, fnKey('food'));
-const gameFoodPosition = fnPipe(gameFood, fnKey('position'));
-const gameSnake = fnPipe(gameMap, fnKey('snake'));
-const gameSnakeDirection = fnPipe(gameSnake, fnKey('direction'));
-const gameSnakePositions = fnPipe(gameSnake, fnKey('positions'));
-const gameSnakeFirst = fnPipe(gameSnakePositions, fnFirst);
-const gameSnakeTail = fnPipe(gameSnakePositions, fnTail);
-const gameSnakeSize = fnPipe(gameSnakePositions, fnKey('length'), fnDefault(0));
+const wrapGameSceneMap = fnWrapIn(wrapGameScene)(wrapSceneMap);
+const wrapGameSceneMapFood = fnWrapIn(wrapGameSceneMap)(wrapMapFood);
+const wrapGameSceneMapFoodPosition = fnWrapIn(wrapGameSceneMapFood)(wrapFoodPosition);
+const wrapGameSceneMapHeight = fnWrapIn(wrapGameSceneMap)(wrapMapHeight);
+const wrapGameSceneMapSnake = fnWrapIn(wrapGameSceneMap)(wrapMapSnake);
+const wrapGameSceneMapSnakeDirection = fnWrapIn(wrapGameSceneMapSnake)(wrapSnakeDirection);
+const wrapGameSceneMapSnakePositions = fnWrapIn(wrapGameSceneMapSnake)(wrapSnakePositions);
+const wrapGameSceneMapWidth = fnWrapIn(wrapGameSceneMap)(wrapMapWidth);
+
+const gameMap = fnWrapGet(wrapGameSceneMap);
+const gameHeight = fnWrapGet(wrapGameSceneMapHeight);
+const gameWidth = fnWrapGet(wrapGameSceneMapWidth);
+const gameInputDirection = fnWrapGet(wrapGameInputDirection);
+const gameFood = fnWrapGet(wrapGameSceneMapFood);
+const gameFoodPosition = fnWrapGet(wrapGameSceneMapFoodPosition);
+const gameSnake = fnWrapGet(wrapGameSceneMapSnake);
+const gameSnakeDirection = fnWrapGet(wrapGameSceneMapSnakeDirection);
+const gameSnakePositions = fnWrapGet(wrapGameSceneMapSnakePositions);
+const gameSnakeFirst = fnCompose(fnFirst, gameSnakePositions);
+const gameSnakeTail = fnCompose(fnTail, gameSnakePositions);
+const gameSnakeSize = fnCompose(fnDefault(0), fnLen, gameSnakePositions);
 const gameSnakeNextPosition = fnLift2(sumVectors)(gameSnakeFirst)(gameSnakeDirection);
-const gameState = fnPipe(gameKey('state'));
+const gameState = fnWrapGet(wrapGameState);
 
 const gameMapSize = fnLift2(fnMult)(gameHeight)(gameWidth);
 const gameMapFreeSpace = fnLift2(fnSum)(gameMapSize)(fnCompose(fnInvert, gameSnakeSize));
@@ -160,6 +183,8 @@ const getNewSnakeHeadPosition = (st: Game): Vector => {
   return newPos;
 };
 
+const getSnakeHead = fnCompose(fnHead, gameSnakePositions);
+
 const whenFood = fnCompose(fnIs, gameFood);
 const whenFoodInSnake = fnLift2(includesVector)(gameSnakePositions)(gameFoodPosition);
 const whenInputDirection = fnCompose(fnIs, gameInputDirection);
@@ -171,24 +196,29 @@ const whenGameIs = fnLift2to2(fnSame)(fnTIdentity<GameState>())(gameState);
 const whenGameIsPlay = whenGameIs('play');
 const whenGameIsStart = whenGameIs('start');
 
-const inGame = processIn<Game>();
-const forFood = inGame((st) => st.scene.map.food);
-const forInputDirection = inGame((st) => st.inputDirection);
-const forSnake = inGame((st) => st.scene.map.snake);
-const forSnakeInputDirection = inGame((st) => st.scene.map.snake.direction);
-const forSnakePositions = inGame((st) => st.scene.map.snake.positions);
-const forState = inGame((st) => st.state);
+const getNextState = fnCompose(fnThenElseIf<GameState>('start')<GameState>('play'), fnNot, whenGameIsStart);
 
-const redFoodClear = forFood(() => null);
-const redFoodRandomize = forFood((st, top) => ({position: getRandomFoodPosition(top)}));
-const redGameLost = forState(() => 'lost');
-const redGameStartOrPlay = forState((st) => (st !== 'start' ? 'start' : 'play'));
-const redGameWon = forState(() => 'won');
-const redInputDirectionClear = forInputDirection(() => null);
-const redInputDirectionToSnake = forSnakeInputDirection((st, top) => top.inputDirection);
-const redSnakeInit = forSnake(() => initSnake());
+const reducerFood = fnWrapSet(wrapGameSceneMapFood);
+const reducerFoodPosition = fnWrapSet(wrapGameSceneMapFoodPosition);
+const reducerState = fnWrapSet(wrapGameState);
+const reducerInputDirection = fnWrapSet(wrapGameInputDirection);
+const reducerSnake = fnWrapSet(wrapGameSceneMapSnake);
+const reducerSnakeDirection = fnWrapSet(wrapGameSceneMapSnakeDirection);
+const reducerSnakePositions = fnWrapSet(wrapGameSceneMapSnakePositions);
+
+const inGame = processIn<Game>();
+const forSnakePositions = inGame((st) => st.scene.map.snake.positions);
+
+const redFoodClear = reducerFood(null);
+const redFoodRandomize = fnLift1(reducerFoodPosition)(getRandomFoodPosition);
+const redGameLost = reducerState('lost');
+const redGameStartOrPlay = fnLift1(reducerState)(getNextState);
+const redGameWon = reducerState('won');
+const redInputDirectionClear = reducerInputDirection(null);
+const redInputDirectionToSnake = fnLift1(reducerSnakeDirection)(gameInputDirection);
+const redSnakeInit = reducerSnake(initSnake());
 const redSnakeHeadMove = forSnakePositions((st, top) => [getNewSnakeHeadPosition(top), ...st]);
-const redSnakeTailCut = forSnakePositions((st) => st.slice(0, st.length - 1));
+const redSnakeTailCut = fnLift1(reducerSnakePositions)(getSnakeHead);
 
 const processLoop = process(
   processIf(whenInputDirection)(
