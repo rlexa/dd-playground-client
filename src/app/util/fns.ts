@@ -22,9 +22,36 @@ export const fnApplyFn2 = <T1, T2, R>(fn: (arg1: T1) => (arg2: T2) => R) => (arg
 /** @returns flipped args i.e. `b => a => c` */
 export const fnFlip = <T1, T2, R>(fn: (arg1: T1) => (arg2: T2) => R) => (arg2: T2) => (arg1: T1) => fn(arg1)(arg2);
 
+/** @returns `a => r` for `a => f (f1(a)) (f2(a)) (f3(a) ...): r` */
+export const fnLiftX = <T, R>(fn: (arg: any) => any) => (...fns: ((arg: T) => any)[]) => (arg: T): R =>
+  fns.reduce((accFn, iiFn) => accFn(iiFn(arg)), fn) as R;
+
+/** @returns `a => r` for `a => f (f1(a)) (f2(a)) (f3(a)) (f4(a)) (f5(a)) (f6(a)): r` */
+export const fnLift6 = <R, R1, R2, R3, R4, R5, R6>(
+  fn: (arg1: R1) => (arg2: R2) => (arg3: R3) => (arg4: R4) => (arg5: R5) => (arg6: R6) => R,
+) => <T>(fn1: (arg: T) => R1) => (fn2: (arg: T) => R2) => (fn3: (arg: T) => R3) => (fn4: (arg: T) => R4) => (fn5: (arg: T) => R5) => (
+  fn6: (arg: T) => R6,
+) => fnLiftX<T, R>(fn)(fn1, fn2, fn3, fn4, fn5, fn6);
+
+/** @returns `a => r` for `a => f (f1(a)) (f2(a)) (f3(a)) (f4(a)) (f5(a)): r` */
+export const fnLift5 = <R, R1, R2, R3, R4, R5>(fn: (arg1: R1) => (arg2: R2) => (arg3: R3) => (arg4: R4) => (arg5: R5) => R) => <T>(
+  fn1: (arg: T) => R1,
+) => (fn2: (arg: T) => R2) => (fn3: (arg: T) => R3) => (fn4: (arg: T) => R4) => (fn5: (arg: T) => R5) =>
+  fnLiftX<T, R>(fn)(fn1, fn2, fn3, fn4, fn5);
+
+/** @returns `a => r` for `a => f (f1(a)) (f2(a)) (f3(a)) (f4(a)): r` */
+export const fnLift4 = <R, R1, R2, R3, R4>(fn: (arg1: R1) => (arg2: R2) => (arg3: R3) => (arg4: R4) => R) => <T>(fn1: (arg: T) => R1) => (
+  fn2: (arg: T) => R2,
+) => (fn3: (arg: T) => R3) => (fn4: (arg: T) => R4) => fnLiftX<T, R>(fn)(fn1, fn2, fn3, fn4);
+
+/** @returns `a => r` for `a => f (f1(a)) (f2(a)) (f3(a)): r` */
+export const fnLift3 = <R, R1, R2, R3>(fn: (arg1: R1) => (arg2: R2) => (arg3: R3) => R) => <T>(fn1: (arg: T) => R1) => (
+  fn2: (arg: T) => R2,
+) => (fn3: (arg: T) => R3) => fnLiftX<T, R>(fn)(fn1, fn2, fn3);
+
 /** @returns `a => r` for `a => f (f1(a)) (f2(a)): r` */
-export const fnLift2 = <R, R1, R2>(fn: (arg1: R1) => (arg2: R2) => R) => <T>(fn1: (arg: T) => R1) => (fn2: (arg: T) => R2) => (arg: T) =>
-  fn(fn1(arg))(fn2(arg));
+export const fnLift2 = <R, R1, R2>(fn: (arg1: R1) => (arg2: R2) => R) => <T>(fn1: (arg: T) => R1) => (fn2: (arg: T) => R2) =>
+  fnLiftX<T, R>(fn)(fn1, fn2);
 
 /** @returns `a => r` for `a => f (f1(a)) (a): r` */
 export const fnLift1 = <R, R1, T>(fn: (arg1: R1) => (arg2: T) => R) => (fn1: (arg: T) => R1) => fnLift2(fn)(fn1)(fnIdentity);
