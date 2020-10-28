@@ -107,8 +107,10 @@ export function randomize(seed: number) {
   };
 }
 
-const rndInt = (max: number) => (rnd: () => number) => fnCompose(fnFloor, fnSum(0.5), fnMult(max))(rnd());
-const rndIntBetween = (min: number) => (max: number) => fnCompose(fnSum(min), rndInt(fnSub(max)(min)));
+const increment = fnSum(1);
+const rndIntBetween = (min: number) => (max: number) => (rnd: () => number) =>
+  fnCompose(fnFloor, fnSum(min), fnMult(fnSub(increment(max))(min)))(rnd());
+const rndInt = rndIntBetween(0);
 const rndBoolean = fnCompose(fnGte(50), rndInt(100));
 
 const needMoreItems = <T>(want: number) => fnCompose<boolean, T[], number>(fnGt(want), fnLen);
