@@ -2,7 +2,8 @@ import {inject, InjectionToken, Provider} from '@angular/core';
 import {StateSubject} from 'dd-rxjs';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {filter, map, withLatestFrom} from 'rxjs/operators';
-import {Game, initGame, onInputDirection, Preset, processFrame, Vector} from './logic-fns';
+import {Vector} from 'src/app/util/fns-vector';
+import {Game, initGame, onInputDirection, Preset, processFrame} from './logic-fns';
 
 /** Game state. */
 export const DiGameSnake = new InjectionToken<BehaviorSubject<Game>>('DI game state.', {

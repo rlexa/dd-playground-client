@@ -3,7 +3,7 @@ import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
-import {Game} from '../logic';
+import {Game} from '../logic-fns';
 
 type FIELD = 'empty' | 'food' | 'snake' | 'head';
 

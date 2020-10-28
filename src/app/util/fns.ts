@@ -165,7 +165,7 @@ export const fnSetter = <T extends object, K extends keyof T>(key: K) => (value:
 
 export interface FnWrap<T, V> {
   getter: (obj: T) => V;
-  setter: (val: V) => (obj: T) => T;
+  setter: (val: V) => (obj?: Partial<T>) => T;
 }
 export const fnWrap = <T, V>(getter: (obj: T) => V) => (setter: (val: V) => (obj: T) => T): FnWrap<T, V> => ({getter, setter});
 export const fnWrapKey = <T extends object, K extends keyof T>(key: K) => fnWrap<T, T[K]>(fnGetter(key))(fnSetter(key));

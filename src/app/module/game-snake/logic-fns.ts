@@ -1,6 +1,5 @@
 import {
   fnAddFirst,
-  fnAnd,
   fnArr,
   fnCompose,
   fnDefault,
@@ -14,7 +13,6 @@ import {
   fnLift1,
   fnLift2,
   fnLift2to2,
-  fnLift2x2,
   fnMerge,
   fnMod,
   fnMult,
@@ -34,47 +32,27 @@ import {
   fnWrapKey,
   fnWrapSet,
 } from 'src/app/util/fns';
+import {equalVectors, includesVector, isZeroVector, makeVector, sumVectors, Vector, vecZero} from 'src/app/util/fns-vector';
 
 const increment = fnSum(1);
 
-export interface Vector {
-  x: number;
-  y: number;
-}
-
-const vectorX = fnWrapKey<Vector, 'x'>('x');
-const vectorY = fnWrapKey<Vector, 'y'>('y');
-
-const getX = fnWrapGet(vectorX);
-const getY = fnWrapGet(vectorY);
-
-const setX = fnWrapSet(vectorX);
-const setY = fnWrapSet(vectorY);
-
-const makeVector = (x: number) => (y: number) => fnCompose(setX(x), setY(y))(null);
-const vecZero = makeVector(0)(0);
 const vecRight = makeVector(1)(0);
 
-const isVecSameX = fnLift2to2(fnSame)(getX)(getX);
-const isVecSameY = fnLift2to2(fnSame)(getY)(getY);
-
-const sumVecX = fnLift2to2(fnSum)(getX)(getX);
-const sumVecY = fnLift2to2(fnSum)(getY)(getY);
-
-export const equalVectors = fnLift2x2(fnAnd)(isVecSameX)(isVecSameY);
-export const sumVectors = fnLift2x2(makeVector)(sumVecX)(sumVecY);
-export const isZeroVector = equalVectors(vecZero);
-export const includesVector = fnSome(equalVectors);
-
 export interface SnakeState {
-  positions: Vector[];
   direction: Vector;
+  positions: Vector[];
 }
 
 const snakeDirection = fnWrapKey<SnakeState, 'direction'>('direction');
-const snakePositions = fnWrapKey<SnakeState, 'positions'>('positions');
+const setSnakeDirection = fnWrapSet(snakeDirection);
 
-const initSnake = fnMerge<SnakeState>({direction: vecRight, positions: fnArr(vecZero)});
+const snakePositions = fnWrapKey<SnakeState, 'positions'>('positions');
+const setSnakePositions = fnWrapSet(snakePositions);
+
+const makeSnake = (direction: Vector) => (positions: Vector[]) =>
+  fnCompose(setSnakeDirection(direction), setSnakePositions(positions))(null);
+
+const initSnake = fnMerge<SnakeState>(makeSnake(vecRight)(fnArr(vecZero)));
 
 export interface Food {
   position: Vector;
@@ -98,7 +76,7 @@ const initMap = (from: Preset): Map => ({
   food: null,
   width: from.width,
   height: from.height,
-  snake: initSnake(),
+  snake: initSnake(null),
 });
 
 export interface Scene {
@@ -219,7 +197,7 @@ const playGame = redState('play');
 const winGame = redState('won');
 const clearInput = redInputDirection(null);
 const inputToSnake = fnLift1(redSnakeDirection)(getInputDirection);
-const addSnake = redSnake(initSnake());
+const addSnake = redSnake(initSnake(null));
 const moveSnake = fnLift1(redSnakePositions)(moveSnakeHead);
 const cutTail = fnLift1(redSnakePositions)(cutSnakeTail);
 
