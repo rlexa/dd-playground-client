@@ -1,4 +1,4 @@
-import {fnAnd, fnCompose, fnLift2to2, fnLift2x2, fnSame, fnSome, fnSum, fnWrapGet, fnWrapKey, fnWrapSet} from './fns';
+import {fnAnd, fnCompose, fnIndexOf, fnLift2to2, fnLift2x2, fnSame, fnSome, fnSum, fnWrapGet, fnWrapKey, fnWrapSet} from './fns';
 
 export interface Vector {
   x: number;
@@ -27,3 +27,4 @@ export const equalVectors = fnLift2x2(fnAnd)(isVecSameX)(isVecSameY);
 export const sumVectors = fnLift2x2(makeVector)(sumVecX)(sumVecY);
 export const isZeroVector = equalVectors(vecZero);
 export const includesVector = fnSome(equalVectors);
+export const indexOfVector = fnIndexOf(equalVectors);

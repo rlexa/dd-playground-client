@@ -21,6 +21,7 @@ import {
   fnHead,
   fnIdentity,
   fnIfThenElse,
+  fnIndexOf,
   fnInvert,
   fnIs,
   fnJoin,
@@ -193,6 +194,12 @@ describe(`fns`, () => {
   describe(`fnIfThenElse`, () => {
     test(`returns then`, () => expect(fnIfThenElse(true)(1)(0)).toBe(1));
     test(`returns else`, () => expect(fnIfThenElse(false)(1)(0)).toBe(0));
+  });
+
+  describe(`fnIndexOf`, () => {
+    test(`finds none in undefined`, () => expect(fnIndexOf(fnSame)(undefined)(1)).toBe(undefined));
+    test(`finds none in []`, () => expect(fnIndexOf(fnSame)([])(1)).toBe(-1));
+    test(`finds in [.]`, () => expect(fnIndexOf(fnSame)([0, 1, 2])(1)).toBe(1));
   });
 
   describe(`fnInvert`, () => {

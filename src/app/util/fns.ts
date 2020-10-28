@@ -87,6 +87,7 @@ export const fnLte = <T>(arg1: T) => (arg2: T) => arg1 <= arg2;
 // LOGIC
 
 export const fnIs = (arg1: any) => Boolean(arg1);
+export const fnIsFn = <T, V>(fn: (arg: T) => V) => fnCompose(fnIs, fn);
 
 export const fnAnd = (arg1: any) => (arg2: any) => fnIs(arg1) && fnIs(arg2);
 export const fnAnds = (...args: any[]) => (args || []).reduce<boolean>((acc, ii) => fnAnd(acc)(ii), true);
@@ -124,7 +125,7 @@ export const fnElseThenIf = <T2>(elseResult: T2) => <T1>(thenResult: T1) => (con
 
 // LISTS
 
-export const fnArr = <T>(val: T) => [val];
+export const fnArr = <T>(...vals: T[]) => [...vals];
 export const fnFirst = <T>(vals: T[]) => vals?.[0];
 export const fnHead = <T>(vals: T[]) => vals?.slice(0, -1);
 export const fnJoin = (separator: string) => <T>(vals: T[]) => vals?.join(separator);
@@ -144,6 +145,7 @@ export const fnReduce = <R>(init: R) => <T>(fn: (index: number) => (accumulate: 
   from?.reduce<R>((acc, ii, index) => fn(index)(acc)(ii), init);
 
 export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) => (val: T) => vals?.some(equals(val));
+export const fnIndexOf = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) => (val: T) => vals?.findIndex(equals(val));
 
 // OBJECTS
 
