@@ -9,11 +9,10 @@ import {
   fnGetter,
   fnGt,
   fnGte,
-  fnIdentity,
   fnIfThenElse,
   fnJoin,
   fnLen,
-  fnLift2,
+  fnLift1,
   fnLift2to2,
   fnMap,
   fnMapIndexed,
@@ -79,7 +78,7 @@ const setTaskText = fnSetter<MathTestTask, 'text'>('text');
 const setTaskTitle = fnSetter<MathTestTask, 'title'>('title');
 
 const calcPointsFromQuestions = fnCompose(sumPoints, getQuestions);
-const insertTaskPoints = fnLift2(setTaskPoints)(calcPointsFromQuestions)(fnIdentity);
+const insertTaskPoints = fnLift1(setTaskPoints)(calcPointsFromQuestions);
 const setTaskQuestionsCalcPoints = (questions: MathTestQuestion[]) => fnCompose(insertTaskPoints, setTaskQuestions(questions));
 
 export interface MathTest extends WithPointsNumber {
