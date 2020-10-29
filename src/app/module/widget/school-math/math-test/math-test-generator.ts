@@ -4,6 +4,7 @@ import {
   fnCompose,
   fnDefault,
   fnDiv,
+  fnEqual,
   fnFlip,
   fnFloor,
   fnGenerateOther,
@@ -101,8 +102,6 @@ const joinComma = fnJoin(',');
 const appendString = (joinWith: string) => (current: string) => (append: string) =>
   fnIfThenElse(Boolean(current))(fnJoin(joinWith)([current, append]))(append);
 
-const fnJsonEqual = <T>(aa: T) => (bb: T) => JSON.stringify(aa) === JSON.stringify(bb);
-
 export function randomize(seed: number) {
   return () => {
     seed = fnMult(10000)(fnSin(seed));
@@ -157,7 +156,7 @@ const generateQuestionDivideWithSomeRest = (rnd: () => number): MathTestQuestion
 };
 
 const generateTaskDivideWithSomeRest = (rnd: () => number): MathTestTask => {
-  const questions = addDistinctItemsUntil(() => generateQuestionDivideWithSomeRest(rnd))(fnJsonEqual)(10)([]);
+  const questions = addDistinctItemsUntil(() => generateQuestionDivideWithSomeRest(rnd))(fnEqual)(10)([]);
   return fnCompose(
     setTaskTitle('Teilen mit und ohne Rest.'),
     setTaskQuestionsCalcPoints([mergeQuestionsToQuestionShortresult(questions)]),
@@ -195,7 +194,7 @@ const generateQuestionDotBeforeLinePriority = (rnd: () => number): MathTestQuest
 };
 
 const generateTaskDotBeforeLinePriority = (rnd: () => number): MathTestTask => {
-  const questions = addDistinctItemsUntil(() => generateQuestionDotBeforeLinePriority(rnd))(fnJsonEqual)(6)([]);
+  const questions = addDistinctItemsUntil(() => generateQuestionDotBeforeLinePriority(rnd))(fnEqual)(6)([]);
   return fnCompose(setTaskTitle('Denke an die Regel.'), setTaskQuestionsCalcPoints([mergeQuestionsToQuestionShortresult(questions)]))(null);
 };
 
@@ -223,7 +222,7 @@ const generateQuestionNumberByDescription = (rnd: () => number): MathTestQuestio
 };
 
 const generateTaskNumberByDescription = (rnd: () => number): MathTestTask => {
-  const questions = addDistinctItemsUntil(() => generateQuestionNumberByDescription(rnd))(fnJsonEqual)(2)([]);
+  const questions = addDistinctItemsUntil(() => generateQuestionNumberByDescription(rnd))(fnEqual)(2)([]);
   return fnCompose(setTaskTitle('Wie heißen die Zahlen?'), setTaskQuestionsCalcPoints(questions))(null);
 };
 
@@ -292,7 +291,7 @@ const generateQuestionInsertComparison = (rnd: () => number): MathTestQuestion =
 };
 
 const generateTaskInsertComparison = (rnd: () => number): MathTestTask => {
-  const questions = addDistinctItemsUntil(() => generateQuestionInsertComparison(rnd))(fnJsonEqual)(4)([]);
+  const questions = addDistinctItemsUntil(() => generateQuestionInsertComparison(rnd))(fnEqual)(4)([]);
   return fnCompose(setTaskTitle('Setze ein. > < ='), setTaskQuestionsCalcPoints([mergeQuestionsToQuestionShortresult(questions)]))(null);
 };
 
@@ -321,7 +320,7 @@ const generateQuestionInsertOperation = (rnd: () => number): MathTestQuestion =>
 };
 
 const generateTaskInsertOperation = (rnd: () => number): MathTestTask => {
-  const questions = addDistinctItemsUntil(() => generateQuestionInsertOperation(rnd))(fnJsonEqual)(4)([]);
+  const questions = addDistinctItemsUntil(() => generateQuestionInsertOperation(rnd))(fnEqual)(4)([]);
   return fnCompose(setTaskTitle(' Setze ein. + - * :'), setTaskQuestionsCalcPoints([mergeQuestionsToQuestionShortresult(questions)]))(null);
 };
 
@@ -347,7 +346,7 @@ const generateTaskPlusMinus = (rnd: () => number): MathTestTask => {
       term = {first, second, opSum: true};
     }
     return term;
-  })(fnJsonEqual)(termCount)([]);
+  })(fnEqual)(termCount)([]);
 
   const termsToText = fnCompose(
     joinComma,
