@@ -34,7 +34,6 @@ import {
   fnLift2x2,
   fnLt,
   fnLte,
-  fnMap,
   fnMapIndexed,
   fnMax,
   fnMerge,
@@ -52,7 +51,7 @@ import {
   fnProcessApplyScoped,
   fnRandom,
   fnRandomInt,
-  fnReduce,
+  fnReduceIndexed,
   fnRepeat,
   fnRMerge,
   fnSame,
@@ -259,11 +258,6 @@ describe(`fns`, () => {
     test(`is false for 1 0`, () => expect(fnLte(1)(0)).toBe(false));
   });
 
-  describe(`fnMap`, () => {
-    test(`maps`, () => expect(fnMap(plusOne)([1, 2, 3])).toEqual([2, 3, 4]));
-    test(`maps null to undefined`, () => expect(fnMap(plusOne)(null)).toEqual(undefined));
-  });
-
   describe(`fnMapIndexed`, () => {
     const toIndex = (index: number) => (item: any) => index;
     test(`maps`, () => expect(fnMapIndexed(toIndex)([1, 1, 1])).toEqual([0, 1, 2]));
@@ -353,8 +347,9 @@ describe(`fns`, () => {
     });
   });
 
-  describe(`fnReduce`, () => {
-    test(`reduces`, () => expect(fnReduce('')((index) => (acc) => (ii) => `${acc},${index}:${ii}`)(['a', 'b', 'c'])).toBe(',0:a,1:b,2:c'));
+  describe(`fnReduceIndexed`, () => {
+    test(`reduces`, () =>
+      expect(fnReduceIndexed('')((index) => (acc) => (ii) => `${acc},${index}:${ii}`)(['a', 'b', 'c'])).toBe(',0:a,1:b,2:c'));
   });
 
   describe(`fnRepeat`, () => {

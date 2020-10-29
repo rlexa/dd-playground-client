@@ -196,11 +196,13 @@ export const fnAddLast = <T>(val: T) => (vals: T[]) => (vals ? [...vals, val] : 
 export const fnLen = <T extends {length: number}>(vals: T) => vals?.length;
 
 export const fnFilter = <T>(fn: (arg: T) => boolean) => (args: T[]): T[] => args?.filter((ii) => fn(ii));
-export const fnMap = <T, R>(fn: (arg: T) => R) => (args: T[]): R[] => args?.map((ii) => fn(ii));
-export const fnMapIndexed = <T, R>(fn: (index: number) => (arg: T) => R) => (args: T[]): R[] => args?.map((ii, index) => fn(index)(ii));
 
-export const fnReduce = <R>(init: R) => <T>(fn: (index: number) => (accumulate: R) => (item: T) => R) => (from: T[]) =>
+export const fnMapIndexed = <T, R>(fn: (index: number) => (arg: T) => R) => (args: T[]): R[] => args?.map((ii, index) => fn(index)(ii));
+export const fnMap = <T, R>(fn: (arg: T) => R) => fnMapIndexed(() => fn);
+
+export const fnReduceIndexed = <R>(init: R) => <T>(fn: (index: number) => (accumulate: R) => (item: T) => R) => (from: T[]) =>
   from?.reduce<R>((acc, ii, index) => fn(index)(acc)(ii), init);
+export const fnReduce = <R>(init: R) => <T>(fn: (accumulate: R) => (item: T) => R) => fnReduceIndexed(init)(() => fn);
 
 export const fnSome = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) => (val: T) => vals?.some(equals(val));
 export const fnIndexOf = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[]) => (val: T) => vals?.findIndex(equals(val));

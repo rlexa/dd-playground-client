@@ -4,6 +4,7 @@ import {
   fnCompose,
   fnDefault,
   fnDiv,
+  fnFlip,
   fnFloor,
   fnGenerateOther,
   fnGetter,
@@ -18,6 +19,7 @@ import {
   fnMapIndexed,
   fnMod,
   fnMult,
+  fnProcessApply,
   fnReduce,
   fnSame,
   fnSetter,
@@ -37,7 +39,8 @@ export interface WithPointsNumber {
 
 const getPoints = fnGetter<WithPointsNumber, 'points'>('points');
 const getPointsOrZero = fnCompose(fnDefault(0), getPoints);
-const sumPoints = fnReduce(0)((index) => (acc) => fnCompose(fnSum(acc), getPointsOrZero));
+const accPoints = fnFlip(fnProcessApply(fnSum)(getPointsOrZero));
+const sumPoints = fnReduce(0)(accPoints);
 
 export interface WithResultString {
   result?: string;
@@ -124,7 +127,7 @@ const addDistinctItemsUntil = <T>(newItem: (items: T[]) => T) => (compare: (aa: 
   })(init);
 
 const mergeQuestionsToQuestionShortresult = fnReduce(fnCompose(setQuestionPoints(0), setQuestionType('shortresult'))(null))(
-  (index) => (acc) => (ii: MathTestQuestion) => {
+  (acc) => (ii: MathTestQuestion) => {
     const mergePoints = fnLift2to2(fnSum)(getPoints)(getPoints);
     const mergeResult = fnLift2to2(appendString(','))(getResult)(getResult);
     const mergeText = fnLift2to2(appendString(','))(getText)(getText);
