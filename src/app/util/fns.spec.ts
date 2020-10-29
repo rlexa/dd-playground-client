@@ -48,6 +48,8 @@ import {
   fnPadEnd,
   fnPadStart,
   fnPipe,
+  fnProcessApply,
+  fnProcessApplyScoped,
   fnRandom,
   fnRandomInt,
   fnReduce,
@@ -312,6 +314,31 @@ describe(`fns`, () => {
     test(`applies identity if no fns`, () => expect(fnPipe<number>()(123)).toBe(123));
     test(`applies single`, () => expect(fnPipe(multTwo)(123)).toBe(multTwo(123)));
     test(`applies left to right`, () => expect(fnPipe(multTwo, plusOne)(123)).toBe(plusOne(multTwo(123))));
+  });
+
+  describe(`fnProcessApply`, () => {
+    test(`processes`, () => {
+      interface CounterLabeled {
+        counter: number;
+        label: string;
+      }
+      const setValue = (counter: number) => (obj: CounterLabeled) => ({...obj, counter});
+      const setValueInScope = fnProcessApply(setValue)(multTwo);
+      expect(setValueInScope(2)({counter: 5, label: 'hello'})).toEqual({counter: 4, label: 'hello'});
+    });
+  });
+
+  describe(`fnProcessApplyScoped`, () => {
+    test(`processes`, () => {
+      interface CounterLabeled {
+        counter: number;
+        label: string;
+      }
+      const setValue = (counter: number) => (obj: CounterLabeled) => ({...obj, counter});
+      const addOnTop = (add: number) => (obj: CounterLabeled) => obj.counter + add;
+      const addValueInScope = fnProcessApplyScoped(setValue)(addOnTop);
+      expect(addValueInScope(2)({counter: 1, label: 'hello'})).toEqual({counter: 3, label: 'hello'});
+    });
   });
 
   describe(`fnRandom, fnRandomInt`, () => {

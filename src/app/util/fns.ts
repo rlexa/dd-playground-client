@@ -106,6 +106,31 @@ export function fnCompose(...funcs: ((arg: any) => any)[]) {
   return <T>(arg1: T) => funcs.reduceRight((acc, fn) => fn(acc), fnIdentity(arg1));
 }
 
+/**
+ *  Applies result of `fnWith` as first arg of `fn`, both with same scope as second argument.
+ *  @example
+ *  interface CounterLabeled { counter: number; label: string; }
+ *  const setValue = (counter: number) => (obj: CounterLabeled) => ({...obj, counter});
+ *  const addOnTop = (add: number) => (obj: CounterLabeled) => obj.counter + add;
+ *  const addValueInScope = fnProcessWith(setValue)(addOnTop);
+ *  console.log(addValueInScope(2)({counter: 1, label: 'hello'}));
+ *  // {counter: 3, label: 'hello'}
+ */
+export const fnProcessApplyScoped = <T, R>(fn: (from: R) => (scope: T) => T) => <V>(fnWith: (arg1: V) => (scope: T) => R) =>
+  fnCompose(fnLift1(fn), fnWith);
+
+/**
+ *  Applies result of `fnWith` as first arg of `fn`, `fn` with scope as second argument.
+ *  @example
+ *  interface CounterLabeled { counter: number; label: string; }
+ *  const setValue = (counter: number) => (obj: CounterLabeled) => ({...obj, counter});
+ *  const multTwo = (val: number) => 2 * val;
+ *  const setValueInScope = fnProcessWith(setValue)(multTwo);
+ *  console.log(setValueInScope(2)({counter: 1, label: 'hello'}));
+ *  // {counter: 4, label: 'hello'}
+ */
+export const fnProcessApply = <T, R>(fn: (from: R) => (scope: T) => T) => <V>(fnWith: (arg: V) => R) => fnCompose(fn, fnWith);
+
 // COMPARE
 
 export const fnSame = <T>(arg1: T) => (arg2: T) => arg1 === arg2;

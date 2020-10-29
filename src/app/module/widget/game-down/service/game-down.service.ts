@@ -3,15 +3,15 @@ import {RxCleanup, StateSubject} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {Theme, THEME_MISSING} from 'src/app/game';
 import {
-  fnArg,
   fnCompose,
   fnDefault,
   fnEqual,
   fnFlip,
   fnIfThenElse,
-  fnLift1,
   fnLift2,
   fnMinMax,
+  fnProcessApply,
+  fnProcessApplyScoped,
   fnWrapGet,
   fnWrapIn,
   fnWrapKey,
@@ -32,8 +32,8 @@ export interface IndexValue<T> {
 }
 
 export const RENDERER_SIMPLE = 'simple';
-export const DEF_RENDERER = RENDERER_SIMPLE;
-export const DEF_RENDERER_VALUES = [RENDERER_SIMPLE];
+const DEF_RENDERER = RENDERER_SIMPLE;
+const DEF_RENDERER_VALUES = [RENDERER_SIMPLE];
 
 const initScene = (): GameDownScene => ({
   factor: DEF_SCENE_FACTOR,
@@ -65,25 +65,30 @@ const stateSceneFactorMin = fnWrapIn(stateScene)(sceneFactorMin);
 const stateSceneFields = fnWrapIn(stateScene)(sceneFields);
 const stateSceneRenderer = fnWrapIn(stateScene)(sceneRenderer);
 
-const getFactorMax = fnWrapGet(stateSceneFactorMax);
-const getFactorMin = fnWrapGet(stateSceneFactorMin);
-const getFields = fnWrapGet(stateSceneFields);
+const getSceneFactorMax = fnWrapGet(stateSceneFactorMax);
+const getSceneFactorMin = fnWrapGet(stateSceneFactorMin);
+const getSceneFields = fnWrapGet(stateSceneFields);
+
+const setSceneFactor = fnWrapSet(stateSceneFactor);
+const setSceneFields = fnWrapSet(stateSceneFields);
+const setSceneRenderer = fnWrapSet(stateSceneRenderer);
+const setThemes = fnWrapSet(stateThemes);
 
 const toValidFactor = (min: number) => (max: number) => (val: number) =>
   fnMinMax(min)(max)(fnIfThenElse(typeof val === 'number')(val)(DEF_SCENE_FACTOR));
-const normalizeFactor = fnFlip(fnLift2(toValidFactor)(getFactorMin)(getFactorMax));
+const normalizeFactor = fnFlip(fnLift2(toValidFactor)(getSceneFactorMin)(getSceneFactorMax));
 
 const calculateFieldsWithField = (fields: GameDownField[]) => (val: IndexValue<GameDownField>) =>
   !val?.value || !(val.index in fields) || fnEqual(val.value)(fields[val.index])
     ? fields
     : fields.map((ii, index) => (index === val.index ? val.value : ii));
-const calculateStateFieldsWithField = fnFlip(fnCompose(calculateFieldsWithField, getFields));
+const calculateStateFieldsWithField = fnFlip(fnCompose(calculateFieldsWithField, getSceneFields));
 
-const setFactor = fnCompose(fnLift1(fnWrapSet(stateSceneFactor)), normalizeFactor);
-const setFields = fnArg(fnDefault(DEF_FAMEDOWN_STATE_FIELDS))(fnWrapSet(stateSceneFields));
-const setField = fnCompose(fnLift1(setFields), calculateStateFieldsWithField);
-const setRenderer = fnArg(fnDefault(null))(fnWrapSet(stateSceneRenderer));
-const setThemes = fnArg(fnDefault(stateDefault.themes))(fnWrapSet(stateThemes));
+const redFactor = fnProcessApplyScoped(setSceneFactor)(normalizeFactor);
+const redFields = fnProcessApply(setSceneFields)(fnDefault(DEF_FAMEDOWN_STATE_FIELDS));
+const redField = fnProcessApplyScoped(redFields)(calculateStateFieldsWithField);
+const redRenderer = fnProcessApply(setSceneRenderer)(fnDefault(null));
+const redThemes = fnProcessApply(setThemes)(fnDefault(stateDefault.themes));
 
 const setBehaviorSubjectValue = <T>(sbj: BehaviorSubject<T>) => <V>(fn: (arg: V) => (state: T) => T) => (arg: V) =>
   sbj.next(fn(arg)(sbj.value));
@@ -96,11 +101,11 @@ export class GameDownService implements OnDestroy {
 
   readonly state$ = this.game$.asObservable();
 
-  setFactor = this.reduce(setFactor);
-  setField = this.reduce(setField);
-  setFields = this.reduce(setFields);
-  setRenderer = this.reduce(setRenderer);
-  setThemes = this.reduce(setThemes);
+  setFactor = this.reduce(redFactor);
+  setField = this.reduce(redField);
+  setFields = this.reduce(redFields);
+  setRenderer = this.reduce(redRenderer);
+  setThemes = this.reduce(redThemes);
 
   destroy() {}
   ngOnDestroy() {
