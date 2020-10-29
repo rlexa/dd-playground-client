@@ -25,7 +25,6 @@ import {
   fnInvert,
   fnIs,
   fnJoin,
-  fnKey,
   fnLast,
   fnLen,
   fnLift1,
@@ -63,7 +62,6 @@ import {
   fnSum,
   fnTail,
   fnTIdentity,
-  fnTKey,
   fnTrace,
   fnWhileDo,
   fnWrap,
@@ -220,11 +218,6 @@ describe(`fns`, () => {
     test(`returns '|..' for [.]`, () => expect(fnJoin('|')([1, 2, 3])).toEqual('1|2|3'));
     test(`returns '' for []`, () => expect(fnJoin(',')([])).toEqual(''));
     test(`returns undefined for undefined`, () => expect(fnJoin(',')(undefined)).toBe(undefined));
-  });
-
-  describe(`fnKey, fnTKey`, () => {
-    test(`reads value by key`, () => expect(fnKey<{key: string}, 'key'>('key')({key: 'value'})).toBe('value'));
-    test(`reads value by key (pre-typed)`, () => expect(fnTKey<{key: string}>()('key')({key: 'value'})).toBe('value'));
   });
 
   describe(`fnLast`, () => {

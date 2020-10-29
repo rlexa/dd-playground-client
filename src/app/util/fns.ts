@@ -209,9 +209,6 @@ export const fnIndexOf = <T>(equals: (aa: T) => (bb: T) => boolean) => (vals: T[
 
 // OBJECTS
 
-export const fnKey = <T extends object, K extends keyof T>(key: K) => (val: T) => val?.[key];
-export const fnTKey = <T extends object>() => <K extends keyof T>(key: K) => fnKey<T, K>(key);
-
 /** Merges `{}` < `baseValue` < `overwriteWith` */
 export const fnMerge = <T extends object>(baseValue?: Partial<T>) => (overwriteWith?: Partial<T>): T =>
   ({...(baseValue || {}), ...(overwriteWith || {})} as T);
