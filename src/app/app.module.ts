@@ -9,7 +9,6 @@ import {AppComponent} from './app.component';
 import {DiGlobalRouterParamsProvider} from './di-global';
 import {FlexboxModule} from './module/directive/flexbox';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from './routing';
-import {AppRxStore, createAppRxStore} from './rx-state';
 
 const appRoutes: Routes = [
   {
@@ -40,7 +39,7 @@ const appRoutes: Routes = [
   /* EXPORTS: Export declared classes that components in other modules are able to reference in their templates */
   exports: [],
   /* PROVIDERS: all providers in any module imported in root have application scope */
-  providers: [{provide: AppRxStore, useFactory: createAppRxStore}, DiGlobalRouterParamsProvider],
+  providers: [DiGlobalRouterParamsProvider],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

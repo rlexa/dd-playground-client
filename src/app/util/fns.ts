@@ -15,6 +15,9 @@ export const fnTrace = (label: string) => <T>(value: T): T => {
 
 // COMPOSITION
 
+/** Applies `fnTrafo` on `fn`'s `arg`. */
+export const fnArg = <T>(fnTrafo: (arg: T) => T) => <V>(fn: (arg: T) => V) => (arg: T) => fn?.(fnTrafo?.(arg));
+
 /** @returns `fn(arg1)(arg2)` result. */
 export const fnApply2 = <T1>(arg1: T1) => <T2>(arg2: T2) => <R>(fn: (arg1: T1) => (arg2: T2) => R) => fn(arg1)(arg2);
 export const fnApplyFn2 = <T1, T2, R>(fn: (arg1: T1) => (arg2: T2) => R) => (arg1: T1) => (arg2: T2) => fnApply2(arg1)(arg2)(fn);
@@ -110,6 +113,9 @@ export const fnGt = <T>(arg1: T) => (arg2: T) => arg1 > arg2;
 export const fnGte = <T>(arg1: T) => (arg2: T) => arg1 >= arg2;
 export const fnLt = <T>(arg1: T) => (arg2: T) => arg1 < arg2;
 export const fnLte = <T>(arg1: T) => (arg2: T) => arg1 <= arg2;
+
+/** Expensive JSON comparison. */
+export const fnEqual = <T>(arg1: T) => (arg2: T) => fnSame(JSON.stringify(arg1))(JSON.stringify(arg2));
 
 // LOGIC
 
@@ -224,6 +230,10 @@ export const fnInvert = (arg: number) => -arg;
 
 export const fnFloat = (arg: number) => (arg < 0 ? arg - 1 - fnFloor(arg) : arg - fnFloor(arg));
 export const fnSub = (arg1: number) => (arg2: number) => fnSum(arg1)(fnInvert(arg2));
+
+export const fnMax = (arg1: number) => (arg2: number) => Math.max(arg1, arg2);
+export const fnMin = (arg1: number) => (arg2: number) => Math.min(arg1, arg2);
+export const fnMinMax = (min: number) => (max: number) => fnCompose(fnMax(min), fnMin(max));
 
 // STRING
 

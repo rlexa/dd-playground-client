@@ -55,7 +55,6 @@
     "@angular/platform-browser-dynamic": "^10.1.4",
     "@angular/router": "^10.1.4",
     "d3": "^5.8.0",
-    "dd-rx-state": "^1.1.0",
     "dd-rxjs": "^1.4.0",
     "font-awesome": "^4.7.0",
     "pdfmake": "^0.1.68",

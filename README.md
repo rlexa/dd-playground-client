@@ -28,18 +28,17 @@ The client is intended to be dev-oriented only and doesn't contain any localizat
 
 ### Misc.
 
-* Following files used (via openssl) for localhost SSL/HTTPS serving:
-  * rootCA.key, rootCA.pem, rootCA.srl, server.crt, server.csr, server.key, v3.ext
+- Following files used (via openssl) for localhost SSL/HTTPS serving:
+  - rootCA.key, rootCA.pem, rootCA.srl, server.crt, server.csr, server.key, v3.ext
 
 ### CI
 
 [Travis] is used for continuous integration incl. testing and deploying to [Firebase] for hosting.
 
-[Angular UI Framework]: https://angular.io
-[Deployed Site]: https://dd-playground-client.firebaseapp.com
-[Firebase]: https://firebase.google.com/
-[Jest]: https://facebook.github.io/jest
-[Material Design]: https://material.angular.io
-[Material Design Icons]: https://google.github.io/material-design-icons
-[RxState]: https://github.com/rlexa/dd-rx-state
-[Travis]: https://travis-ci.org
+[angular ui framework]: https://angular.io
+[deployed site]: https://dd-playground-client.firebaseapp.com
+[firebase]: https://firebase.google.com/
+[jest]: https://facebook.github.io/jest
+[material design]: https://material.angular.io
+[material design icons]: https://google.github.io/material-design-icons
+[travis]: https://travis-ci.org

@@ -8,7 +8,6 @@ import {PlaygroundRoute} from './playground-route';
 const routeNavs: Record<PlaygroundRoute, NavigationBarItem> = {
   [PlaygroundRoute.DemoGhibli]: {icon: 'items3', route: PlaygroundRoute.DemoGhibli, label: 'Ghibli'},
   [PlaygroundRoute.DemoMisc]: {icon: 'items1', route: PlaygroundRoute.DemoMisc, label: 'Misc.'},
-  [PlaygroundRoute.DemoState]: {icon: 'items2', route: PlaygroundRoute.DemoState, label: 'State'},
 };
 
 const data: NavigationBarItemsData = {
@@ -24,10 +23,6 @@ const ROUTING: Routes = [
       {
         path: PlaygroundRoute.DemoMisc,
         loadChildren: () => import('src/app/module/widget/demo-misc/demo-misc.module').then((m) => m.DemoMiscModule),
-      },
-      {
-        path: PlaygroundRoute.DemoState,
-        loadChildren: () => import('src/app/module/widget/demo-state/demo-state.module').then((m) => m.DemoStateModule),
       },
       {
         path: PlaygroundRoute.DemoGhibli,

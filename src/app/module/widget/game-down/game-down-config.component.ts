@@ -1,12 +1,11 @@
 import {ChangeDetectionStrategy, Component, Inject, OnDestroy} from '@angular/core';
-import {watch} from 'dd-rx-state';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {distinctUntilChanged, filter, map, shareReplay, takeUntil, withLatestFrom} from 'rxjs/operators';
 import {buildSituation1, checkProblems, DEF_FAMEDOWN_STATE_FIELDS, GameDownField, modField} from 'src/app/module/widget/game-down/data';
-import {RxStateService, RxStateSetGameDownService} from 'src/app/rx-state';
 import {trackByIndex} from 'src/app/util';
 import {DiDebugView, DiSceneSelectedIndex, DiTheme} from './di-game-down-values';
+import {GameDownService} from './service';
 
 @Component({
   selector: 'app-game-down-config',
@@ -15,8 +14,7 @@ import {DiDebugView, DiSceneSelectedIndex, DiTheme} from './di-game-down-values'
 })
 export class GameDownConfigComponent implements OnDestroy {
   constructor(
-    private readonly rxState: RxStateService,
-    private readonly rxStateMutate: RxStateSetGameDownService,
+    private readonly gameDownService: GameDownService,
     @Inject(DiDebugView) public readonly viewDebug$: BehaviorSubject<boolean>,
     @Inject(DiSceneSelectedIndex) public readonly selectedFieldIndex$: Observable<number>,
     @Inject(DiTheme) public readonly theme$: BehaviorSubject<string>,
@@ -24,15 +22,15 @@ export class GameDownConfigComponent implements OnDestroy {
 
   @RxCleanup() private readonly done$ = new DoneSubject();
 
-  readonly factor$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.factor));
-  readonly factorMax$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.factorMax));
-  readonly factorMin$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.factorMin));
-  readonly fields$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.fields));
-  readonly fieldValues$ = this.rxState.state$.pipe(watch((state) => state.game.down.fieldValues));
-  readonly renderer$ = this.rxState.state$.pipe(watch((state) => state.game.down.scene.renderer));
-  readonly renderers$ = this.rxState.state$.pipe(watch((state) => state.game.down.rendererValues));
-  readonly themes$ = this.rxState.state$.pipe(
-    watch((state) => state.game.down.themes),
+  readonly factor$ = this.gameDownService.state$.pipe(map((state) => state.scene.factor));
+  readonly factorMax$ = this.gameDownService.state$.pipe(map((state) => state.scene.factorMax));
+  readonly factorMin$ = this.gameDownService.state$.pipe(map((state) => state.scene.factorMin));
+  readonly fields$ = this.gameDownService.state$.pipe(map((state) => state.scene.fields));
+  readonly fieldValues$ = this.gameDownService.state$.pipe(map((state) => state.fieldValues));
+  readonly renderer$ = this.gameDownService.state$.pipe(map((state) => state.scene.renderer));
+  readonly renderers$ = this.gameDownService.state$.pipe(map((state) => state.rendererValues));
+  readonly themes$ = this.gameDownService.state$.pipe(
+    map((state) => state.themes),
     map((_) => _.map((ii) => ii.name)),
   );
 
@@ -62,8 +60,8 @@ export class GameDownConfigComponent implements OnDestroy {
     takeUntil(this.done$),
   );
 
-  onSetFactor = this.rxStateMutate.setSceneFactor;
-  onSetRenderer = this.rxStateMutate.setSceneRenderer;
+  onSetFactor = this.gameDownService.setFactor;
+  onSetRenderer = this.gameDownService.setRenderer;
   trackByIndex = trackByIndex;
 
   onSetTheme = (val: string) => this.theme$.next(val);
@@ -78,7 +76,7 @@ export class GameDownConfigComponent implements OnDestroy {
   onMergeSelectedFieldWithField = (into: GameDownField, val: string) => this.onMergeSelectedField(into, modField.set(into, val));
 
   onSetFieldsPresetKey = (key: string) =>
-    key in this.sceneFieldsPresets$.value ? this.rxStateMutate.setSceneFields(this.sceneFieldsPresets$.value[key]) : {};
+    key in this.sceneFieldsPresets$.value ? this.gameDownService.setFields(this.sceneFieldsPresets$.value[key]) : {};
 
   private onMergeSelectedField = (into: GameDownField, merge: GameDownField) =>
     of({into, merge})
@@ -91,5 +89,5 @@ export class GameDownConfigComponent implements OnDestroy {
             Object.keys(merge).some((key) => into[key] !== merge[key]),
         ),
       )
-      .subscribe(([_, index]) => this.rxStateMutate.setSceneField(index, {..._.into, ..._.merge}));
+      .subscribe(([_, index]) => this.gameDownService.setField({index, value: {..._.into, ..._.merge}}));
 }

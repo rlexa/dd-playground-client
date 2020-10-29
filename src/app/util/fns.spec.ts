@@ -36,7 +36,10 @@ import {
   fnLte,
   fnMap,
   fnMapIndexed,
+  fnMax,
   fnMerge,
+  fnMin,
+  fnMinMax,
   fnMod,
   fnMult,
   fnNot,
@@ -265,9 +268,23 @@ describe(`fns`, () => {
     test(`maps null to undefined`, () => expect(fnMapIndexed(toIndex)(null)).toEqual(undefined));
   });
 
+  describe(`fnMax`, () => {
+    test(`takes max`, () => expect(fnMax(2)(5)).toBe(5));
+  });
+
   describe(`fnMerge, fnRMerge`, () => {
     test(`merges`, () => expect(fnMerge({a: 1, b: 2})({b: 3, c: 4} as any)).toEqual({a: 1, b: 3, c: 4}));
     test(`merges-r`, () => expect(fnRMerge({b: 3, c: 4} as any)({a: 1, b: 2})).toEqual({a: 1, b: 3, c: 4}));
+  });
+
+  describe(`fnMin`, () => {
+    test(`takes min`, () => expect(fnMin(2)(5)).toBe(2));
+  });
+
+  describe(`fnMinMax`, () => {
+    test(`takes min`, () => expect(fnMinMax(2)(5)(1)).toBe(2));
+    test(`takes max`, () => expect(fnMinMax(2)(5)(6)).toBe(5));
+    test(`takes value`, () => expect(fnMinMax(2)(5)(3)).toBe(3));
   });
 
   describe(`fnMod`, () => {
