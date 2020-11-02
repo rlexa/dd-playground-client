@@ -112,7 +112,7 @@ export function fnCompose(...funcs: ((arg: any) => any)[]) {
  *  interface CounterLabeled { counter: number; label: string; }
  *  const setValue = (counter: number) => (obj: CounterLabeled) => ({...obj, counter});
  *  const addOnTop = (add: number) => (obj: CounterLabeled) => obj.counter + add;
- *  const addValueInScope = fnProcessWith(setValue)(addOnTop);
+ *  const addValueInScope = fnProcessApplyScoped(setValue)(addOnTop);
  *  console.log(addValueInScope(2)({counter: 1, label: 'hello'}));
  *  // {counter: 3, label: 'hello'}
  */
@@ -125,7 +125,7 @@ export const fnProcessApplyScoped = <T, R>(fn: (from: R) => (scope: T) => T) => 
  *  interface CounterLabeled { counter: number; label: string; }
  *  const setValue = (counter: number) => (obj: CounterLabeled) => ({...obj, counter});
  *  const multTwo = (val: number) => 2 * val;
- *  const setValueInScope = fnProcessWith(setValue)(multTwo);
+ *  const setValueInScope = fnProcessApply(setValue)(multTwo);
  *  console.log(setValueInScope(2)({counter: 1, label: 'hello'}));
  *  // {counter: 4, label: 'hello'}
  */
