@@ -144,20 +144,14 @@ const getRandomFoodPosition = (st: Game): Vector => {
   return fnCompose(indexToVector, fnWhileDo(indexInSnake)(increment), getMapRandomFreeIndex)(st);
 };
 
+/** @returns (10)(-4)=>6, (10)(14)=>4 */
+const normalizeOverflow = (max: number) => (val: number) => (val < 0 ? val + max : val >= max ? val % max : val);
+
 const getNewSnakeHeadPosition = (st: Game): Vector => {
   const newPos = getSnakeNextPosition(st);
   const map = getMap(st);
-  if (newPos.x < 0) {
-    newPos.x += map.width;
-  } else if (newPos.x >= map.width) {
-    newPos.x %= map.width;
-  }
-  if (newPos.y < 0) {
-    newPos.y += map.height;
-  } else if (newPos.y >= map.height) {
-    newPos.y %= map.height;
-  }
-
+  newPos.x = normalizeOverflow(map.width)(newPos.x);
+  newPos.y = normalizeOverflow(map.height)(newPos.y);
   return newPos;
 };
 
