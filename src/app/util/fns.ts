@@ -131,6 +131,8 @@ export const fnProcessApplyScoped = <T, R>(fn: (from: R) => (scope: T) => T) => 
  */
 export const fnProcessApply = <T, R>(fn: (from: R) => (scope: T) => T) => <V>(fnWith: (arg: V) => R) => fnCompose(fn, fnWith);
 
+export const fnCurry = <T1, T2, R>(fn: (arg1: T1, arg2: T2) => R) => (arg1: T1) => (arg2: T2) => fn(arg1, arg2);
+
 // COMPARE
 
 export const fnSame = <T>(arg1: T) => (arg2: T) => arg1 === arg2;

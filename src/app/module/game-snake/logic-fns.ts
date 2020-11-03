@@ -224,4 +224,4 @@ const loop = just(
 
 export const initGame = (from?: Preset): Game => ({inputDirection: null, scene: initScene(initPreset(from)), state: 'start'});
 export const processFrame = loop;
-export const onInputDirection = (state: Game, inputDirection: Vector): Game => ({...state, inputDirection});
+export const onInputDirection = (state: Game, inputDirection: Vector): Game => redInputDirection(inputDirection)(state);
