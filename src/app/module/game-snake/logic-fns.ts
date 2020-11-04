@@ -7,12 +7,14 @@ import {
   fnFlip,
   fnGte,
   fnHead,
+  fnIfThenElse,
   fnInvert,
   fnIs,
   fnLen,
   fnLift1,
   fnLift2,
   fnLift2to2,
+  fnLt,
   fnMerge,
   fnMod,
   fnMult,
@@ -32,7 +34,7 @@ import {
   fnWrapKey,
   fnWrapSet,
 } from 'src/app/util/fns';
-import {equalVectors, includesVector, isZeroVector, makeVector, sumVectors, Vector, vecZero} from 'src/app/util/fns-vector';
+import {equalVectors, getX, getY, includesVector, isZeroVector, makeVector, sumVectors, Vector, vecZero} from 'src/app/util/fns-vector';
 
 const increment = fnSum(1);
 
@@ -117,7 +119,6 @@ const gameSceneMapSnakeDirection = fnWrapIn(gameSceneMapSnake)(snakeDirection);
 const gameSceneMapSnakePositions = fnWrapIn(gameSceneMapSnake)(snakePositions);
 const gameSceneMapWidth = fnWrapIn(gameSceneMap)(mapWidth);
 
-const getMap = fnWrapGet(gameSceneMap);
 const getHeight = fnWrapGet(gameSceneMapHeight);
 const getWidth = fnWrapGet(gameSceneMapWidth);
 const getInputDirection = fnWrapGet(gameInputDirection);
@@ -129,7 +130,10 @@ const getSnakePositions = fnWrapGet(gameSceneMapSnakePositions);
 const getSnakeHead = fnCompose(fnFirst, getSnakePositions);
 const getSnakeTail = fnCompose(fnTail, getSnakePositions);
 const getSnakeSize = fnCompose(fnDefault(0), fnLen, getSnakePositions);
-const getSnakeNextPosition = fnLift2(sumVectors)(getSnakeHead)(getSnakeDirection);
+const getSnakeNextPositionDim = (fnDim: (vec: Vector) => number) =>
+  fnLift2(fnSum)(fnCompose(fnDim, getSnakeHead))(fnCompose(fnDim, getSnakeDirection));
+const getSnakeNextPositionX = getSnakeNextPositionDim(getX);
+const getSnakeNextPositionY = getSnakeNextPositionDim(getY);
 const getState = fnWrapGet(gameState);
 
 const getMapSize = fnLift2(fnMult)(getHeight)(getWidth);
@@ -144,16 +148,14 @@ const getRandomFoodPosition = (st: Game): Vector => {
   return fnCompose(indexToVector, fnWhileDo(indexInSnake)(increment), getMapRandomFreeIndex)(st);
 };
 
+const normalizeOverflowHigh = (size: number) => (offset: number) => fnIfThenElse(fnGte(offset)(size))(fnMod(offset)(size))(offset);
 /** @returns (10)(-4)=>6, (10)(14)=>4 */
-const normalizeOverflow = (max: number) => (val: number) => (val < 0 ? val + max : val >= max ? val % max : val);
+const normalizeOverflow = (size: number) => (offset: number) =>
+  fnIfThenElse(fnLt(offset)(0))(fnSum(offset)(size))(normalizeOverflowHigh(size)(offset));
 
-const getNewSnakeHeadPosition = (st: Game): Vector => {
-  const newPos = getSnakeNextPosition(st);
-  const map = getMap(st);
-  newPos.x = normalizeOverflow(map.width)(newPos.x);
-  newPos.y = normalizeOverflow(map.height)(newPos.y);
-  return newPos;
-};
+const getNewSnakeHeadPositionX = fnLift2(normalizeOverflow)(getWidth)(getSnakeNextPositionX);
+const getNewSnakeHeadPositionY = fnLift2(normalizeOverflow)(getHeight)(getSnakeNextPositionY);
+const getNewSnakeHeadPosition = fnLift2(makeVector)(getNewSnakeHeadPositionX)(getNewSnakeHeadPositionY);
 
 const moveSnakeHead = fnLift2<Vector[], Vector, Vector[]>(fnAddFirst)(getNewSnakeHeadPosition)(getSnakePositions);
 const cutSnakeTail = fnCompose(fnHead, getSnakePositions);
