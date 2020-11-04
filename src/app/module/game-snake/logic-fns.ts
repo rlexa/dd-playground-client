@@ -179,11 +179,12 @@ const isWon = whenGameIs('won');
 
 const redFood = fnWrapSet(gameSceneMapFood);
 const redFoodPosition = fnWrapSet(gameSceneMapFoodPosition);
-const redState = fnWrapSet(gameState);
 const redInputDirection = fnWrapSet(gameInputDirection);
+const redScene = fnWrapSet(gameScene);
 const redSnake = fnWrapSet(gameSceneMapSnake);
 const redSnakeDirection = fnWrapSet(gameSceneMapSnakeDirection);
 const redSnakePositions = fnWrapSet(gameSceneMapSnakePositions);
+const redState = fnWrapSet(gameState);
 
 const clearFood = redFood(null);
 const addFood = fnLift1(redFoodPosition)(getRandomFoodPosition);
@@ -218,6 +219,6 @@ const loop = just(
   ),
 );
 
-export const initGame = (from?: Preset): Game => ({inputDirection: null, scene: initScene(initPreset(from)), state: 'start'});
+export const initGame = (from?: Preset): Game => fnCompose(clearInput, startGame, redScene(initScene(initPreset(from))))(null);
 export const processFrame = loop;
 export const onInputDirection = (state: Game, inputDirection: Vector): Game => redInputDirection(inputDirection)(state);
