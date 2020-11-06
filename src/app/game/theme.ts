@@ -2,43 +2,43 @@ export interface StringToString {
   [key: string]: string;
 }
 
-export interface Color<C extends StringToString> {
+export interface Color<C extends StringToString = StringToString> {
   missing?: string;
   map: C;
   name: string;
 }
 
-export interface Theme<C extends StringToString> {
+export interface Theme<C extends StringToString = StringToString> {
   color: Color<C>;
   name?: string;
 }
 
 export const CLR_MISSING = 'hsla(309, 89%, 77%, 1)';
 
-export const COLOR_MISSING: Color<StringToString> = {
+export const COLOR_MISSING: Color = {
   map: {},
   missing: CLR_MISSING,
   name: 'missing',
 };
 
-export const THEME_MISSING: Theme<StringToString> = {
+export const THEME_MISSING: Theme = {
   color: COLOR_MISSING,
   name: 'missing',
 };
 
-export const reduceThemes = <C extends StringToString>(name: string, themes: Theme<C>[]): Theme<C> =>
-  themes.reduce(
-    (acc, _) => ({
+export const reduceThemes = (name: string, themes: Theme[]) =>
+  themes.reduce<Theme>(
+    (acc, theme) => ({
       ...acc,
       color: {
         ...acc.color,
-        map: {...(acc.color.map as any), ...(_.color.map as any)},
-        missing: acc.color.missing || _.color.missing,
-        name: acc.color.name || _.color.name,
+        map: {...(acc.color.map as any), ...(theme.color.map as any)},
+        missing: acc.color.missing || theme.color.missing,
+        name: acc.color.name || theme.color.name,
       },
-      name: acc.name || _.name,
+      name: acc.name || theme.name,
     }),
-    {name, color: {}} as Theme<C>,
+    {name, color: {map: {}, name: null}},
   );
 
 export const themeColor = <C extends StringToString>(theme: Theme<C>, getter: (map: C) => string) =>
