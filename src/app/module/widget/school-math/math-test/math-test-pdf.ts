@@ -1,21 +1,7 @@
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import {Content, ContentText} from 'pdfmake/interfaces';
-import {
-  fnCompose,
-  fnCreate,
-  fnFilter,
-  fnIfThenElse,
-  fnIs,
-  fnJoin,
-  fnMap,
-  fnMapIndexed,
-  fnPadEnd,
-  fnPadStart,
-  fnSetter,
-  fnSplit,
-  fnSum,
-} from 'src/app/util/fns';
+import {Content} from 'pdfmake/interfaces';
+import {fnCompose, fnFilter, fnIfThenElse, fnIs, fnJoin, fnMap, fnMapIndexed, fnPadEnd, fnPadStart, fnSplit, fnSum} from 'src/app/util/fns';
 import {
   getPoints,
   getQuestions,
@@ -32,8 +18,6 @@ import {
 
 // needed for some reason (see docs)
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
-
-const setText = fnSetter<ContentText, 'text'>('text');
 
 const indexToChar = fnCompose(String.fromCharCode, fnSum('a'.charCodeAt(0)));
 const splitByComma = fnSplit(',');
@@ -94,7 +78,7 @@ const typeHandle: Record<MathTestQuestionType, (val: MathTestQuestion) => Conten
 const hasTitle = fnCompose(fnIs, getTitle);
 
 const questionTitleToPdf = (index: number) => (val: MathTestQuestion): Content =>
-  fnIfThenElse(hasTitle(val))(fnCreate(setText(`${indexToChar(index)}) ${getTitle(val)}`)))(null);
+  fnIfThenElse(hasTitle(val))<Content>({text: `${indexToChar(index)}) ${getTitle(val)}`})(null);
 
 const questionToPdf = (index: number) => (val: MathTestQuestion): Content =>
   filterValidContent([
@@ -126,7 +110,7 @@ export function mathTestToPdf(data: MathTest) {
           {text: getTitle(data) || 'Math Test', style: 'h1'},
           ...indexedItemToPdfContentWith(taskToPdf)(getTasks(data)),
           {pageBreak: 'before', text: `Ergebnisse für: ${getTitle(data)}`, style: 'h1'},
-          setText(`Punkte: ${getPoints(data)}`)(null),
+          {text: `Punkte: ${getPoints(data)}`},
           ...indexedItemToPdfContentWith(taskToResultsPdf)(getTasks(data)),
         ],
         styles: {
