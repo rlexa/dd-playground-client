@@ -3,9 +3,13 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {Content} from 'pdfmake/interfaces';
 import {fnCompose, fnFilter, fnIfThenElse, fnJoin, fnMap, fnMapIndexed, fnPadEnd, fnPadStart, fnSplit, fnSum} from 'src/app/util/fns';
 import {
-  getPointsNumber,
-  getTextString,
-  getTitleString,
+  getPoints,
+  getQuestions,
+  getResult,
+  getTasks,
+  getText,
+  getTitle,
+  getType,
   MathTest,
   MathTestQuestion,
   MathTestQuestionType,
@@ -64,31 +68,31 @@ function questionPyramideToPdf(val: string): Content {
 }
 
 const typeHandle: Record<MathTestQuestionType, (val: MathTestQuestion) => Content> = {
-  pyramide: fnCompose(questionPyramideToPdf, getTextString),
-  questionline: fnCompose(questionLineToPdf, getTextString),
-  shortresult: fnCompose(questionShortResultToPdf, getTextString),
-  table: fnCompose(questionTableToPdf, getTextString),
+  pyramide: fnCompose(questionPyramideToPdf, getText),
+  questionline: fnCompose(questionLineToPdf, getText),
+  shortresult: fnCompose(questionShortResultToPdf, getText),
+  table: fnCompose(questionTableToPdf, getText),
 };
 
 const questionToPdf = (index: number) => (val: MathTestQuestion): Content =>
   fnFilter<Content>(Boolean)([
-    fnIfThenElse(Boolean(getTitleString(val)))({text: `${indexToChar(index)}) ${getTitleString(val)}`})(null),
-    (typeHandle[val?.type] ?? ((value: MathTestQuestion) => `TODO type ${value?.type || 'undefined'}`))(val),
+    fnIfThenElse(Boolean(getTitle(val)))({text: `${indexToChar(index)}) ${getTitle(val)}`})(null),
+    (typeHandle[getType(val)] ?? ((value: MathTestQuestion) => `TODO type ${getType(value) || 'undefined'}`))(val),
   ]);
 
 const taskToPdf = (index: number) => (val: MathTestTask): Content => ({
   stack: [
-    {text: `${index + 1}. ${getTitleString(val) ?? ''}`, style: ['h2', 'marginTop']},
-    {text: getTextString(val) ?? '', style: 'marginAll'},
-    ...indexedItemToPdfContentWith(questionToPdf)(val.questions ?? []),
+    {text: `${index + 1}. ${getTitle(val) ?? ''}`, style: ['h2', 'marginTop']},
+    {text: getText(val) ?? '', style: 'marginAll'},
+    ...indexedItemToPdfContentWith(questionToPdf)(getQuestions(val) ?? []),
   ],
   unbreakable: true,
 });
 
-const questionToResultsPdf = (data: MathTestQuestion): Content => `Punkte: ${getPointsNumber(data)}. Ergebnis: ${data.result}`;
+const questionToResultsPdf = (data: MathTestQuestion): Content => `Punkte: ${getPoints(data)}. Ergebnis: ${getResult(data)}`;
 
 const taskToResultsPdf = (index: number) => (data: MathTestTask): Content => ({
-  stack: [{text: `${index + 1}. Punkte: ${getPointsNumber(data)}`}, ...data?.questions?.map(questionToResultsPdf)],
+  stack: [{text: `${index + 1}. Punkte: ${getPoints(data)}`}, ...getQuestions(data)?.map(questionToResultsPdf)],
   style: 'marginAll',
 });
 
@@ -97,11 +101,11 @@ export function mathTestToPdf(data: MathTest) {
     ? null
     : pdfMake.createPdf({
         content: [
-          {text: getTitleString(data) || 'Math Test', style: 'h1'},
-          ...indexedItemToPdfContentWith(taskToPdf)(data?.tasks),
-          {pageBreak: 'before', text: `Ergebnisse für: ${getTitleString(data)}`, style: 'h1'},
-          {text: `Punkte: ${getPointsNumber(data)}`},
-          ...indexedItemToPdfContentWith(taskToResultsPdf)(data?.tasks),
+          {text: getTitle(data) || 'Math Test', style: 'h1'},
+          ...indexedItemToPdfContentWith(taskToPdf)(getTasks(data)),
+          {pageBreak: 'before', text: `Ergebnisse für: ${getTitle(data)}`, style: 'h1'},
+          {text: `Punkte: ${getPoints(data)}`},
+          ...indexedItemToPdfContentWith(taskToResultsPdf)(getTasks(data)),
         ],
         styles: {
           defaultStyle: {fontSize: 14},

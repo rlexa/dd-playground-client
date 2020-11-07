@@ -1,6 +1,7 @@
 import {
   fnAbs,
   fnApply2,
+  fnArr,
   fnCompose,
   fnDefault,
   fnDiv,
@@ -34,26 +35,22 @@ import {
 
 export type MathTestQuestionType = 'pyramide' | 'shortresult' | 'table' | 'questionline';
 
-export const getPointsNumber = fnGetter<{points?: number}, 'points'>('points');
-export const getTextString = fnGetter<{text?: string}, 'text'>('text');
-export const getTitleString = fnGetter<{title?: string}, 'title'>('title');
+export const getPoints = fnGetter<{points?: number}, 'points'>('points');
+export const getQuestions = fnGetter<{questions?: MathTestQuestion[]}, 'questions'>('questions');
+export const getResult = fnGetter<{result?: string}, 'result'>('result');
+export const getTasks = fnGetter<{tasks?: MathTestTask[]}, 'tasks'>('tasks');
+export const getText = fnGetter<{text?: string}, 'text'>('text');
+export const getTitle = fnGetter<{title?: string}, 'title'>('title');
+export const getType = fnGetter<{type?: MathTestQuestionType}, 'type'>('type');
 
-const getPointsOrZero = fnCompose(fnDefault(0), getPointsNumber);
+const getPointsOrZero = fnCompose(fnDefault(0), getPoints);
 const accPoints = fnFlip(fnProcessApply(fnSum)(getPointsOrZero));
 const sumPoints = fnReduce(0)(accPoints);
 
-export interface WithResultString {
-  result?: string;
-}
-
-const getResult = fnGetter<WithResultString, 'result'>('result');
-
-export interface WithTextString {
-  text?: string;
-}
-
-export interface MathTestQuestion extends WithResultString, WithTextString {
+export interface MathTestQuestion {
   points?: number;
+  result?: string;
+  text?: string;
   title?: string;
   type?: MathTestQuestionType;
 }
@@ -64,14 +61,10 @@ const setQuestionText = fnSetter<MathTestQuestion, 'text'>('text');
 const setQuestionTitle = fnSetter<MathTestQuestion, 'title'>('title');
 const setQuestionType = fnSetter<MathTestQuestion, 'type'>('type');
 
-export interface WithMathTestQuestionList {
-  questions?: MathTestQuestion[];
-}
-
-const getQuestions = fnGetter<WithMathTestQuestionList, 'questions'>('questions');
-
-export interface MathTestTask extends WithMathTestQuestionList, WithTextString {
+export interface MathTestTask {
   points?: number;
+  questions?: MathTestQuestion[];
+  text?: string;
   title?: string;
 }
 
@@ -127,9 +120,9 @@ const addDistinctItemsUntil = <T>(newItem: (items: T[]) => T) => (compare: (aa: 
 
 const mergeQuestionsToQuestionShortresult = fnReduce(fnCompose(setQuestionPoints(0), setQuestionType('shortresult'))(null))(
   (acc) => (ii: MathTestQuestion) => {
-    const mergePoints = fnLift2to2(fnSum)(getPointsNumber)(getPointsNumber);
+    const mergePoints = fnLift2to2(fnSum)(getPoints)(getPoints);
     const mergeResult = fnLift2to2(appendString(','))(getResult)(getResult);
-    const mergeText = fnLift2to2(appendString(','))(getTextString)(getTextString);
+    const mergeText = fnLift2to2(appendString(','))(getText)(getText);
 
     return fnCompose(
       setQuestionPoints(mergePoints(acc)(ii)),
@@ -466,7 +459,7 @@ const generateTaskTextSumSketch = (rnd: () => number): MathTestTask => {
 
 export function generateMathTestGrade3({seed = 1, title = 'Math Test'}): MathTest {
   const rnd = randomize(seed);
-  const tasks = [
+  const tasks = fnArr(
     generateTaskTextSumSketch(rnd),
     generateTaskPyramideSum(rnd),
     generateTaskPlusMinus(rnd),
@@ -477,6 +470,6 @@ export function generateMathTestGrade3({seed = 1, title = 'Math Test'}): MathTes
     generateTaskDotBeforeLinePriority(rnd),
     generateTaskInsertComparison(rnd),
     generateTaskInsertOperation(rnd),
-  ];
+  );
   return fnCompose(setTestPoints(sumPoints(tasks)), setTestTasks(tasks), setTestTitle(title))(null);
 }
