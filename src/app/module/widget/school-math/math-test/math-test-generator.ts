@@ -34,12 +34,11 @@ import {
 
 export type MathTestQuestionType = 'pyramide' | 'shortresult' | 'table' | 'questionline';
 
-export interface WithPointsNumber {
-  points?: number;
-}
+export const getPointsNumber = fnGetter<{points?: number}, 'points'>('points');
+export const getTextString = fnGetter<{text?: string}, 'text'>('text');
+export const getTitleString = fnGetter<{title?: string}, 'title'>('title');
 
-const getPoints = fnGetter<WithPointsNumber, 'points'>('points');
-const getPointsOrZero = fnCompose(fnDefault(0), getPoints);
+const getPointsOrZero = fnCompose(fnDefault(0), getPointsNumber);
 const accPoints = fnFlip(fnProcessApply(fnSum)(getPointsOrZero));
 const sumPoints = fnReduce(0)(accPoints);
 
@@ -53,9 +52,8 @@ export interface WithTextString {
   text?: string;
 }
 
-const getText = fnGetter<WithTextString, 'text'>('text');
-
-export interface MathTestQuestion extends WithPointsNumber, WithResultString, WithTextString {
+export interface MathTestQuestion extends WithResultString, WithTextString {
+  points?: number;
   title?: string;
   type?: MathTestQuestionType;
 }
@@ -72,7 +70,8 @@ export interface WithMathTestQuestionList {
 
 const getQuestions = fnGetter<WithMathTestQuestionList, 'questions'>('questions');
 
-export interface MathTestTask extends WithPointsNumber, WithMathTestQuestionList, WithTextString {
+export interface MathTestTask extends WithMathTestQuestionList, WithTextString {
+  points?: number;
   title?: string;
 }
 
@@ -85,7 +84,8 @@ const calcPointsFromQuestions = fnCompose(sumPoints, getQuestions);
 const insertTaskPoints = fnLift1(setTaskPoints)(calcPointsFromQuestions);
 const setTaskQuestionsCalcPoints = (questions: MathTestQuestion[]) => fnCompose(insertTaskPoints, setTaskQuestions(questions));
 
-export interface MathTest extends WithPointsNumber {
+export interface MathTest {
+  points?: number;
   tasks?: MathTestTask[];
   title?: string;
 }
@@ -127,9 +127,9 @@ const addDistinctItemsUntil = <T>(newItem: (items: T[]) => T) => (compare: (aa: 
 
 const mergeQuestionsToQuestionShortresult = fnReduce(fnCompose(setQuestionPoints(0), setQuestionType('shortresult'))(null))(
   (acc) => (ii: MathTestQuestion) => {
-    const mergePoints = fnLift2to2(fnSum)(getPoints)(getPoints);
+    const mergePoints = fnLift2to2(fnSum)(getPointsNumber)(getPointsNumber);
     const mergeResult = fnLift2to2(appendString(','))(getResult)(getResult);
-    const mergeText = fnLift2to2(appendString(','))(getText)(getText);
+    const mergeText = fnLift2to2(appendString(','))(getTextString)(getTextString);
 
     return fnCompose(
       setQuestionPoints(mergePoints(acc)(ii)),
