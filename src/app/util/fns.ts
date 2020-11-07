@@ -82,6 +82,8 @@ export function fnProcess<T>(...fns: ((arg: T) => T)[]) {
   return (val: T) => fns.reduce((acc, fn) => fn(acc), val);
 }
 
+export const fnCreate = <T>(...fns: ((arg: T) => T)[]) => fnProcess<T>(...fns)(null);
+
 export const fnProcessIf = <T>(...ands: ((arg: T) => boolean)[]) => (...fns: ((arg: T) => T)[]) => (value: T) =>
   fnAndFns(...ands)(value) ? fnProcess(...fns)(value) : value;
 

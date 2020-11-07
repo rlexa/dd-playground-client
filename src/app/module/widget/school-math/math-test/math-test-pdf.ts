@@ -1,7 +1,21 @@
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import {Content} from 'pdfmake/interfaces';
-import {fnCompose, fnFilter, fnIfThenElse, fnJoin, fnMap, fnMapIndexed, fnPadEnd, fnPadStart, fnSplit, fnSum} from 'src/app/util/fns';
+import {Content, ContentText} from 'pdfmake/interfaces';
+import {
+  fnCompose,
+  fnCreate,
+  fnFilter,
+  fnIfThenElse,
+  fnIs,
+  fnJoin,
+  fnMap,
+  fnMapIndexed,
+  fnPadEnd,
+  fnPadStart,
+  fnSetter,
+  fnSplit,
+  fnSum,
+} from 'src/app/util/fns';
 import {
   getPoints,
   getQuestions,
@@ -19,13 +33,16 @@ import {
 // needed for some reason (see docs)
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
+const setText = fnSetter<ContentText, 'text'>('text');
+
 const indexToChar = fnCompose(String.fromCharCode, fnSum('a'.charCodeAt(0)));
 const splitByComma = fnSplit(',');
 const splitByWall = fnSplit('|');
 const wrapIn = (wrap: string) => (val: unknown) => `${wrap}${val}${wrap}`;
+const filterValidContent = fnFilter<Content>(Boolean);
 
 const indexedItemToPdfContentWith = <T>(mapIndexed: (index: number) => (val: T) => Content) =>
-  fnCompose(fnFilter<Content>(Boolean), fnMapIndexed(mapIndexed));
+  fnCompose(filterValidContent, fnMapIndexed(mapIndexed));
 
 const questionLineToPdf = (val: string): Content => ({text: `${val} _____`, style: 'marginAll'});
 
@@ -74,9 +91,14 @@ const typeHandle: Record<MathTestQuestionType, (val: MathTestQuestion) => Conten
   table: fnCompose(questionTableToPdf, getText),
 };
 
+const hasTitle = fnCompose(fnIs, getTitle);
+
+const questionTitleToPdf = (index: number) => (val: MathTestQuestion): Content =>
+  fnIfThenElse(hasTitle(val))(fnCreate(setText(`${indexToChar(index)}) ${getTitle(val)}`)))(null);
+
 const questionToPdf = (index: number) => (val: MathTestQuestion): Content =>
-  fnFilter<Content>(Boolean)([
-    fnIfThenElse(Boolean(getTitle(val)))({text: `${indexToChar(index)}) ${getTitle(val)}`})(null),
+  filterValidContent([
+    questionTitleToPdf(index)(val),
     (typeHandle[getType(val)] ?? ((value: MathTestQuestion) => `TODO type ${getType(value) || 'undefined'}`))(val),
   ]);
 
@@ -104,7 +126,7 @@ export function mathTestToPdf(data: MathTest) {
           {text: getTitle(data) || 'Math Test', style: 'h1'},
           ...indexedItemToPdfContentWith(taskToPdf)(getTasks(data)),
           {pageBreak: 'before', text: `Ergebnisse für: ${getTitle(data)}`, style: 'h1'},
-          {text: `Punkte: ${getPoints(data)}`},
+          setText(`Punkte: ${getPoints(data)}`)(null),
           ...indexedItemToPdfContentWith(taskToResultsPdf)(getTasks(data)),
         ],
         styles: {
