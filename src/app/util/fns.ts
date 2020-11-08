@@ -185,6 +185,12 @@ export const fnThenIfElse = <T1>(thenResult: T1) => (condition: boolean) => <T2>
 export const fnElseThenIf = <T2>(elseResult: T2) => <T1>(thenResult: T1) => (condition: boolean) =>
   fnIfThenElse(condition)(thenResult)(elseResult);
 
+export const fnCheckThenElse = <T>(fnIf: (arg: T) => boolean) => <R>(fnThen: (arg: T) => R) => (fnElse: (arg: T) => R) => (arg: T) =>
+  fnIf?.(arg) ? fnThen?.(arg) : fnElse?.(arg);
+export const fnCheckThenOrNull = <T>(fnIf: (arg: T) => boolean) => <R>(fnThen: (arg: T) => R) =>
+  fnCheckThenElse(fnIf)(fnThen)(fnFn(null as R));
+export const fnChecked = <T, R>(fnThen: (arg: T) => R) => fnCheckThenOrNull<T>(fnIs)(fnThen);
+
 // LISTS
 
 export const fnArr = <T>(...vals: T[]) => [...vals];

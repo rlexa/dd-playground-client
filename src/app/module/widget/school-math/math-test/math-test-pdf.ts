@@ -1,7 +1,20 @@
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {Content} from 'pdfmake/interfaces';
-import {fnCompose, fnFilter, fnIfThenElse, fnIs, fnJoin, fnMap, fnMapIndexed, fnPadEnd, fnPadStart, fnSplit, fnSum} from 'src/app/util/fns';
+import {
+  fnChecked,
+  fnCheckThenOrNull,
+  fnCompose,
+  fnFilter,
+  fnIs,
+  fnJoin,
+  fnMap,
+  fnMapIndexed,
+  fnPadEnd,
+  fnPadStart,
+  fnSplit,
+  fnSum,
+} from 'src/app/util/fns';
 import {
   getPoints,
   getQuestions,
@@ -77,8 +90,8 @@ const typeHandle: Record<MathTestQuestionType, (val: MathTestQuestion) => Conten
 
 const hasTitle = fnCompose(fnIs, getTitle);
 
-const questionTitleToPdf = (index: number) => (val: MathTestQuestion): Content =>
-  fnIfThenElse(hasTitle(val))<Content>({text: `${indexToChar(index)}) ${getTitle(val)}`})(null);
+const questionTitleToPdf = (index: number) =>
+  fnCheckThenOrNull(hasTitle)((val: MathTestQuestion): Content => ({text: `${indexToChar(index)}) ${getTitle(val)}`}));
 
 const questionToPdf = (index: number) => (val: MathTestQuestion): Content =>
   filterValidContent([
@@ -102,23 +115,22 @@ const taskToResultsPdf = (index: number) => (data: MathTestTask): Content => ({
   style: 'marginAll',
 });
 
-export function mathTestToPdf(data: MathTest) {
-  return !data
-    ? null
-    : pdfMake.createPdf({
-        content: [
-          {text: getTitle(data) || 'Math Test', style: 'h1'},
-          ...indexedItemToPdfContentWith(taskToPdf)(getTasks(data)),
-          {pageBreak: 'before', text: `Ergebnisse für: ${getTitle(data)}`, style: 'h1'},
-          {text: `Punkte: ${getPoints(data)}`},
-          ...indexedItemToPdfContentWith(taskToResultsPdf)(getTasks(data)),
-        ],
-        styles: {
-          defaultStyle: {fontSize: 14},
-          h1: {fontSize: 16, bold: true, alignment: 'center', lineHeight: 1.2},
-          h2: {fontSize: 15, bold: true, lineHeight: 1.1},
-          marginAll: {margin: 5},
-          marginTop: {margin: [0, 10, 0, 0]},
-        },
-      });
-}
+const testToPdf = (data: MathTest) =>
+  pdfMake.createPdf({
+    content: [
+      {text: getTitle(data) || 'Math Test', style: 'h1'},
+      ...indexedItemToPdfContentWith(taskToPdf)(getTasks(data)),
+      {pageBreak: 'before', text: `Ergebnisse für: ${getTitle(data)}`, style: 'h1'},
+      {text: `Punkte: ${getPoints(data)}`},
+      ...indexedItemToPdfContentWith(taskToResultsPdf)(getTasks(data)),
+    ],
+    styles: {
+      defaultStyle: {fontSize: 14},
+      h1: {fontSize: 16, bold: true, alignment: 'center', lineHeight: 1.2},
+      h2: {fontSize: 15, bold: true, lineHeight: 1.1},
+      marginAll: {margin: 5},
+      marginTop: {margin: [0, 10, 0, 0]},
+    },
+  });
+
+export const mathTestToPdf = fnChecked(testToPdf);
