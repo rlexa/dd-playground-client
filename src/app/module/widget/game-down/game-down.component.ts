@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {Theme} from 'src/app/game';
 import {GameDownColorMap} from './data';
 import {DiDebugView, DiSceneHoveredIndex, DiSceneSelectedIndex, DiTheme} from './di-game-down-values';
 import {GameDownService} from './service';
+import {Theme} from './theme';
 import {themeDownDefault, themes} from './theming';
 
 @Component({

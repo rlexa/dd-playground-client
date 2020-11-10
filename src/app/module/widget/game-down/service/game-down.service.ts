@@ -1,7 +1,6 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {RxCleanup, StateSubject} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
-import {Theme, THEME_MISSING} from 'src/app/game';
 import {
   fnCompose,
   fnDefault,
@@ -18,6 +17,7 @@ import {
   fnWrapSet,
 } from 'src/app/util/fns';
 import {DEF_FAMEDOWN_STATE_FIELDS, DEF_FIELD_VALUES, DEF_SCENE_FACTOR, GameDownColorMap, GameDownField, GameDownScene} from '../data';
+import {Theme, THEME_MISSING} from '../theme';
 
 export interface GameDownState {
   fieldValues?: string[];

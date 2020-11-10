@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/cor
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {fTthemeColor, Theme} from 'src/app/game';
 import {GameDownColorMap} from 'src/app/module/widget/game-down/data';
+import {fTthemeColor, Theme} from './theme';
 
 @Component({
   selector: 'app-game-down-field',
