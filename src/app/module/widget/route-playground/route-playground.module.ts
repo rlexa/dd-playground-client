@@ -6,8 +6,9 @@ import {NavigationContentComponent, NavigationContentModule} from '../navigation
 import {PlaygroundRoute} from './playground-route';
 
 const routeNavs: Record<PlaygroundRoute, NavigationBarItem> = {
+  [PlaygroundRoute.DemoChords]: {icon: 'queue_music', route: PlaygroundRoute.DemoChords, label: 'Chords'},
   [PlaygroundRoute.DemoGhibli]: {icon: 'items3', route: PlaygroundRoute.DemoGhibli, label: 'Ghibli'},
-  [PlaygroundRoute.DemoMisc]: {icon: 'items1', route: PlaygroundRoute.DemoMisc, label: 'Misc.'},
+  [PlaygroundRoute.DemoMisc]: {icon: 'items2', route: PlaygroundRoute.DemoMisc, label: 'Misc.'},
 };
 
 const data: NavigationBarItemsData = {
@@ -20,6 +21,10 @@ const ROUTING: Routes = [
     component: NavigationContentComponent,
     data,
     children: [
+      {
+        path: PlaygroundRoute.DemoChords,
+        loadChildren: () => import('src/app/module/widget/music/music.module').then((m) => m.RoutedMusicModule),
+      },
       {
         path: PlaygroundRoute.DemoMisc,
         loadChildren: () => import('src/app/module/widget/demo-misc/demo-misc.module').then((m) => m.DemoMiscModule),
