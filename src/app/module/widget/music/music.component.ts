@@ -36,6 +36,7 @@ const track1: Track = {
 @Component({
   selector: 'app-music',
   templateUrl: './music.component.html',
+  styleUrls: ['./music.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MusicComponent {
