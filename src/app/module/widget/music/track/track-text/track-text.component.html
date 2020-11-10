@@ -1,0 +1,8 @@
+<ng-container *ngIf="lines$ | async as lines">
+  <ng-container *ngFor="let line of lines; trackBy: trackByIndex">
+    <br *ngIf="!line.text" />
+    <p *ngIf="line.text" [class.indent]="!!line.indent">{{ line.text }}</p>
+  </ng-container>
+  <hr />
+  <pre>{{ lines | json }}</pre>
+</ng-container>

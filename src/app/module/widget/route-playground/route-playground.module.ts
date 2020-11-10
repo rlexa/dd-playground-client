@@ -33,8 +33,8 @@ const ROUTING: Routes = [
         path: PlaygroundRoute.DemoGhibli,
         loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule),
       },
-      {path: ROUTE_ROOT, redirectTo: PlaygroundRoute.DemoMisc, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: PlaygroundRoute.DemoMisc},
+      {path: ROUTE_ROOT, redirectTo: PlaygroundRoute.DemoChords, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: PlaygroundRoute.DemoChords},
     ],
   },
 ];

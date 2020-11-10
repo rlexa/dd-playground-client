@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  font-family: monospace;
+
+  p {
+    &.indent {
+      margin-left: 1em;
+    }
+  }
+}
+
+pre {
+  white-space: normal;
+}
