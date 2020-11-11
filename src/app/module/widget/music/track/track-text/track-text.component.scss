@@ -2,8 +2,8 @@
   display: block;
   font-family: monospace;
 
-  pre {
-    margin: 0 0;
+  p {
+    white-space: pre-wrap;
 
     &.indent {
       margin-left: 1em;
