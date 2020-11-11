@@ -1,5 +1,5 @@
 ::-webkit-scrollbar {
-  width: .6rem;
+  width: 0.6rem;
   height: 1rem;
 }
 
@@ -28,10 +28,4 @@ h1 {
 
 html {
   font-size: var(--size-font-root);
-}
-
-pre {
-  &.break-text {
-    white-space: pre-wrap;
-  }
 }

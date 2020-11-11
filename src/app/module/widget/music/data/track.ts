@@ -1,3 +1,5 @@
+import {fnCompose, fnPadStart, fnSplit} from 'src/app/util/fns';
+
 export interface Meta {
   key: string;
   value: string;
@@ -15,19 +17,30 @@ export interface Line {
   text?: string;
 }
 
-const trim = (text: string) => text?.trim();
+const lineBreaks = ['\r\n', '\r', '\n'];
 
-const splitBreaksWin = (text: string) => text?.split('\r\n');
-const splitBreaksMac = (text: string) => text?.split('\r');
-const splitBreaksUnix = (text: string) => text?.split('\n');
+const splitBreaksWin = fnSplit(lineBreaks[0]);
+const splitBreaksMac = fnSplit(lineBreaks[1]);
+const splitBreaksUnix = fnSplit(lineBreaks[2]);
+
+const trimStart = (text: string) =>
+  lineBreaks.reduce((acc, lineBreak) => (acc?.startsWith(lineBreak) ? acc.substr(lineBreak.length) : acc), text);
+const trimEnd = (text: string) =>
+  lineBreaks.reduce((acc, lineBreak) => (acc?.endsWith(lineBreak) ? acc.substr(0, acc.length - lineBreak.length) : acc), text);
+const trim = fnCompose(trimEnd, trimStart);
+
+const getIndent = (text: string) => (text?.startsWith('\t') ? 1 : 0);
+
+const adjustChords = (text: string) =>
+  text?.replace(/<(.+?)>/g, (match, chord: string, offset: number, inputString: string) => {
+    return `${chord}  `;
+  });
 
 const normalizeTextLine = (text: string) =>
-  text
+  adjustChords(text)
     ?.replace(/\t/g, '')
     .replace(/(<[^(><.)]+>)/g, '')
     .replace(/<>/g, '');
-
-const getIndent = (text: string) => (text?.startsWith('\t') ? 1 : 0);
 
 const textToLine = (text: string): Line => ({indent: getIndent(text), text: normalizeTextLine(text)});
 
