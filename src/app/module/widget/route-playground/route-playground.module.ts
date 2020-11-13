@@ -6,9 +6,8 @@ import {NavigationContentComponent, NavigationContentModule} from '../navigation
 import {PlaygroundRoute} from './playground-route';
 
 const routeNavs: Record<PlaygroundRoute, NavigationBarItem> = {
-  [PlaygroundRoute.DemoChords]: {icon: 'queue_music', route: PlaygroundRoute.DemoChords, label: 'Chords'},
-  [PlaygroundRoute.DemoGhibli]: {icon: 'items3', route: PlaygroundRoute.DemoGhibli, label: 'Ghibli'},
-  [PlaygroundRoute.DemoMisc]: {icon: 'items2', route: PlaygroundRoute.DemoMisc, label: 'Misc.'},
+  [PlaygroundRoute.DemoGhibli]: {icon: 'items2', route: PlaygroundRoute.DemoGhibli, label: 'Ghibli'},
+  [PlaygroundRoute.DemoMisc]: {icon: 'items1', route: PlaygroundRoute.DemoMisc, label: 'Misc.'},
 };
 
 const data: NavigationBarItemsData = {
@@ -22,10 +21,6 @@ const ROUTING: Routes = [
     data,
     children: [
       {
-        path: PlaygroundRoute.DemoChords,
-        loadChildren: () => import('src/app/module/widget/music/music.module').then((m) => m.RoutedMusicModule),
-      },
-      {
         path: PlaygroundRoute.DemoMisc,
         loadChildren: () => import('src/app/module/widget/demo-misc/demo-misc.module').then((m) => m.DemoMiscModule),
       },
@@ -33,8 +28,8 @@ const ROUTING: Routes = [
         path: PlaygroundRoute.DemoGhibli,
         loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule),
       },
-      {path: ROUTE_ROOT, redirectTo: PlaygroundRoute.DemoChords, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: PlaygroundRoute.DemoChords},
+      {path: ROUTE_ROOT, redirectTo: PlaygroundRoute.DemoMisc, pathMatch: 'full'},
+      {path: ROUTE_WILDCARD, redirectTo: PlaygroundRoute.DemoMisc},
     ],
   },
 ];
