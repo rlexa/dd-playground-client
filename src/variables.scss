@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import 'md-custom-theme.scss';
 
 :root {
@@ -37,9 +38,9 @@
   --color-border: hsla(0, 0%, 0%, 0.12);
 }
 
-$clr-primary: mat-color($primary);
-$clr-secondary: mat-color($accent);
-$clr-warn: mat-color($warn);
+$clr-primary: mat.get-color-from-palette($primary);
+$clr-secondary: mat.get-color-from-palette($accent);
+$clr-warn: mat.get-color-from-palette($warn);
 
 $clr-item-bg: #e0e0e0;
 $clr-item-bg-connected: lightgreen;
