@@ -1,4 +1,4 @@
-import {async, TestBed} from '@angular/core/testing';
+import {TestBed, waitForAsync} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {MatButton} from '@angular/material/button';
@@ -17,21 +17,23 @@ import {SimpleViewComponent} from '../simple-view';
 import {GraphWalkerComponent} from './graph-walker.component';
 
 describe('GraphWalkerComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule],
-      declarations: [
-        GraphWalkerComponent,
-        MockComponents(MatAutocomplete, MatButton, MatCard, MatCardContent, MatFormField, MatIcon, MatOption, MatSelect),
-        MockComponents(SimpleViewComponent),
-        MockDirectives(MatAutocompleteTrigger, FlexboxDirective),
-        MockPipe(IconPipe, val => `icon ${val}`),
-      ],
-      providers: [GraphskyService],
-    })
-      .overrideComponent(GraphWalkerComponent, overrideForChangeDetection)
-      .compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule, FormsModule],
+        declarations: [
+          GraphWalkerComponent,
+          MockComponents(MatAutocomplete, MatButton, MatCard, MatCardContent, MatFormField, MatIcon, MatOption, MatSelect),
+          MockComponents(SimpleViewComponent),
+          MockDirectives(MatAutocompleteTrigger, FlexboxDirective),
+          MockPipe(IconPipe, (val) => `icon ${val}`),
+        ],
+        providers: [GraphskyService],
+      })
+        .overrideComponent(GraphWalkerComponent, overrideForChangeDetection)
+        .compileComponents();
+    }),
+  );
 
   test('is created', () => {
     const fixture = TestBed.createComponent(GraphWalkerComponent);

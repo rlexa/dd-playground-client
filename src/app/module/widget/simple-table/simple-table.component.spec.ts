@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MatFormField} from '@angular/material/form-field';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
@@ -11,20 +11,22 @@ import {StartuppercasePipe} from '../../pipe/startuppercase';
 import {SimpleTableComponent} from './simple-table.component';
 
 describe('SimpleTableComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [],
-      declarations: [
-        SimpleTableComponent,
-        MockComponents(MatFormField, MatPaginator),
-        MockDirectives(MatColumnDef, MatHeaderRowDef, MatRowDef, MatSort, MatSortHeader, MatTable, FlexboxDirective),
-        MockPipes(RipupperPipe, StartuppercasePipe),
-      ],
-      providers: [],
-    })
-      .overrideComponent(SimpleTableComponent, overrideForChangeDetection)
-      .compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [],
+        declarations: [
+          SimpleTableComponent,
+          MockComponents(MatFormField, MatPaginator),
+          MockDirectives(MatColumnDef, MatHeaderRowDef, MatRowDef, MatSort, MatSortHeader, MatTable, FlexboxDirective),
+          MockPipes(RipupperPipe, StartuppercasePipe),
+        ],
+        providers: [],
+      })
+        .overrideComponent(SimpleTableComponent, overrideForChangeDetection)
+        .compileComponents();
+    }),
+  );
 
   let fixture: ComponentFixture<SimpleTableComponent>;
 

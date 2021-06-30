@@ -1,4 +1,4 @@
-import {async, TestBed} from '@angular/core/testing';
+import {TestBed, waitForAsync} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
@@ -13,20 +13,22 @@ import {SimpleViewComponent} from '../simple-view';
 import {CryptoComponent} from './crypto.component';
 
 describe('CryptoComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule],
-      declarations: [
-        CryptoComponent,
-        MockComponents(MatButton, MatCard, MatCardTitle, MatCardContent, MatList, MatListItem, MatFormField),
-        MockComponents(SimpleViewComponent),
-        MockDirectives(FlexboxDirective),
-      ],
-      providers: [mockAll(CryptoApiService)],
-    })
-      .overrideComponent(CryptoComponent, overrideForChangeDetection)
-      .compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule, FormsModule],
+        declarations: [
+          CryptoComponent,
+          MockComponents(MatButton, MatCard, MatCardTitle, MatCardContent, MatList, MatListItem, MatFormField),
+          MockComponents(SimpleViewComponent),
+          MockDirectives(FlexboxDirective),
+        ],
+        providers: [mockAll(CryptoApiService)],
+      })
+        .overrideComponent(CryptoComponent, overrideForChangeDetection)
+        .compileComponents();
+    }),
+  );
 
   test('is created', () => {
     const fixture = TestBed.createComponent(CryptoComponent);

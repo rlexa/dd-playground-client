@@ -34,7 +34,7 @@ const appRoutes: Routes = [
     NativeDateModule,
     FlexboxModule,
     // routing
-    RouterModule.forRoot(appRoutes, {enableTracing: false}),
+    RouterModule.forRoot(appRoutes, {enableTracing: false, relativeLinkResolution: 'legacy'}),
   ],
   /* EXPORTS: Export declared classes that components in other modules are able to reference in their templates */
   exports: [],

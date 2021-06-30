@@ -1,4 +1,4 @@
-import {async, TestBed} from '@angular/core/testing';
+import {TestBed, waitForAsync} from '@angular/core/testing';
 import {MatButton} from '@angular/material/button';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -9,20 +9,22 @@ import {SimpleViewComponent} from '../simple-view';
 import {DemoMiscComponent} from './demo-misc.component';
 
 describe('DemoMiscComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [
-        DemoMiscComponent,
-        MockComponents(MatButton, MatCard, MatCardTitle, MatCardContent),
-        MockComponents(SimpleViewComponent),
-        MockDirectives(FlexboxDirective),
-      ],
-      providers: [],
-    })
-      .overrideComponent(DemoMiscComponent, overrideForChangeDetection)
-      .compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule],
+        declarations: [
+          DemoMiscComponent,
+          MockComponents(MatButton, MatCard, MatCardTitle, MatCardContent),
+          MockComponents(SimpleViewComponent),
+          MockDirectives(FlexboxDirective),
+        ],
+        providers: [],
+      })
+        .overrideComponent(DemoMiscComponent, overrideForChangeDetection)
+        .compileComponents();
+    }),
+  );
 
   test('is created', () => {
     const fixture = TestBed.createComponent(DemoMiscComponent);
