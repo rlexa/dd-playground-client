@@ -18,10 +18,6 @@ Frameworks involved in the development of the client itself.
 
 The client is intended to be dev-oriented only and doesn't contain any localization at the moment.
 
-#### State Handling
-
-[RxState] is used for the majority of the UI state scope.
-
 ### Testing
 
 [Jest] is used for unit testing (using matching-snapshot testing for components).
