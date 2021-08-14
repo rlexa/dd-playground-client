@@ -76,12 +76,18 @@ describe(`fns`, () => {
   const sum = (arg1: number) => (arg2: number) => arg1 + arg2;
   const plusOne = (arg: number) => +arg + 1;
   const multTwo = (arg: number) => +arg * 2;
-  const isSame = <T>(aa: T) => (bb: T) => aa === bb;
-  const concatToString = <T1, T2>(aa: T1) => (bb: T2) => `${aa}.${bb}`;
+  const isSame =
+    <T>(aa: T) =>
+    (bb: T) =>
+      aa === bb;
+  const concatToString =
+    <T1, T2>(aa: T1) =>
+    (bb: T2) =>
+      `${aa}.${bb}`;
 
   describe(`fnAbs`, () => {
     test(`uses Math.abs`, () => {
-      spyOn(Math, 'abs').and.callThrough();
+      jest.spyOn(Math, 'abs');
       expect(fnAbs(-123)).toBe(123);
       expect(Math.abs).toHaveBeenCalledWith(-123);
     });
@@ -330,12 +336,12 @@ describe(`fns`, () => {
 
   describe(`fnRandom, fnRandomInt`, () => {
     test(`fnRandom returns random`, () => {
-      spyOn(Math, 'random').and.returnValue(0.5);
+      jest.spyOn(Math, 'random').mockReturnValue(0.5);
       expect(fnRandom()).toBe(0.5);
     });
 
     test(`fnRandomInt returns random int`, () => {
-      spyOn(Math, 'random').and.returnValue(0.5);
+      jest.spyOn(Math, 'random').mockReturnValue(0.5);
       expect(fnRandomInt(10)).toBe(5);
     });
   });
@@ -372,7 +378,7 @@ describe(`fns`, () => {
 
   describe(`fnSin`, () => {
     test(`uses Math.sin`, () => {
-      spyOn(Math, 'sin').and.callThrough();
+      jest.spyOn(Math, 'sin');
       expect(fnSin(0)).toBe(0);
       expect(Math.sin).toHaveBeenCalledWith(0);
     });
@@ -416,7 +422,7 @@ describe(`fns`, () => {
 
   describe(`fnTrace`, () => {
     test(`logs and returns same`, () => {
-      spyOn(console, 'log');
+      jest.spyOn(console, 'log');
       expect(fnTrace('tag')(1)).toBe(1);
       expect(console.log).toHaveBeenCalledWith('tag: 1');
     });

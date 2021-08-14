@@ -2,6 +2,7 @@
 
 exports[`CryptoComponent is created 1`] = `
 <app-crypto
+  __ngContext__={[Function LRootView]}
   anyData$={[Function Subject]}
   api={[Function Object]}
   apiBlockCypherBitcoinAddress={[Function Function]}
@@ -54,6 +55,7 @@ exports[`CryptoComponent is created 1`] = `
                   BlockCypher WS
                 </button>
               </div>
+              
             </mat-list-item>
             <h3
               mat-subheader=""
@@ -87,6 +89,7 @@ exports[`CryptoComponent is created 1`] = `
                     Blockchain WS
                   </button>
                 </div>
+                
                 <div
                   ddflexbox="vys"
                 >
@@ -101,7 +104,9 @@ exports[`CryptoComponent is created 1`] = `
                     BlockCypher WS
                   </button>
                 </div>
+                
               </div>
+              
             </mat-list-item>
             <h3
               mat-subheader=""
@@ -121,10 +126,13 @@ exports[`CryptoComponent is created 1`] = `
                     WebBitcoin API
                   </button>
                 </div>
+                
               </div>
+              
             </mat-list-item>
           </mat-list>
         </div>
+        
       </mat-card-content>
     </mat-card>
     <mat-card

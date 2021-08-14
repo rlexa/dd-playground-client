@@ -1,7 +1,7 @@
 <app-ghibli-item-detail
   *ngIf="item$ | async as item"
   [title]="item | itemToTitle"
-  [linkSelf]="item.url"
+  [linkSelf]="url$ | async"
   [links]="[item.films, item.residents] | flat"
   [keyVals]="keyVals$ | async"
 ></app-ghibli-item-detail>

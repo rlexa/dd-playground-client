@@ -2,6 +2,7 @@
 
 exports[`VersionComponent is created 1`] = `
 <app-version
+  __ngContext__={[Function LRootView]}
   onGotoSettings={[Function Function]}
   router={[Function Object]}
   version$={[Function Observable]}

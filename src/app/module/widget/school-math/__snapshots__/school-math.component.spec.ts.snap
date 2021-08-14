@@ -2,6 +2,7 @@
 
 exports[`SchoolMathComponent is created 1`] = `
 <app-school-math
+  __ngContext__={[Function LRootView]}
   data$={[Function Observable]}
   done$={[Function DoneSubject]}
   pdfMeta$={[Function Observable]}

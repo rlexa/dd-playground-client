@@ -2,6 +2,7 @@
 
 exports[`GraphTopLevelComponent is created 1`] = `
 <app-graph-top-level
+  __ngContext__={[Function LRootView]}
   graphsky={[Function GraphskyService]}
   http={[Function Object]}
 >

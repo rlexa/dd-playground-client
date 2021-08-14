@@ -1,3 +1,4 @@
+import {Injectable} from '@angular/core';
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -58,6 +59,7 @@ interface IGraphsky {
   destroy: () => void;
 }
 
+@Injectable()
 export class Graphsky implements IGraphsky {
   constructor() {
     this.change$.subscribe(() => {

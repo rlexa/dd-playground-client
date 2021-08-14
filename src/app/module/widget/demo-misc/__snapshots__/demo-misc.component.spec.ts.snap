@@ -2,6 +2,7 @@
 
 exports[`DemoMiscComponent is created 1`] = `
 <app-demo-misc
+  __ngContext__={[Function LRootView]}
   graphsky={[Function GraphskyService]}
   graphskyAddTestData={[Function Function]}
   graphskyAll$={[Function Observable]}
@@ -43,11 +44,13 @@ exports[`DemoMiscComponent is created 1`] = `
                 DROP
               </button>
             </div>
+            
             <app-simple-view
               class="hovered-elevated"
               subheader="Stats"
             />
           </div>
+          
           <app-simple-view
             class="hovered-elevated"
             subheader="All"
@@ -61,6 +64,7 @@ exports[`DemoMiscComponent is created 1`] = `
             subheader="Diversity"
           />
         </div>
+        
       </mat-card-content>
     </mat-card>
   </div>

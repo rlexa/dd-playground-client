@@ -8,6 +8,7 @@ exports[`GraphWalkerComponent is created 1`] = `
   GRID_FROM={[Function String]}
   GRID_SIZE={[Function String]}
   GRID_TO={[Function String]}
+  __ngContext__={[Function LRootView]}
   curNode$={[Function BehaviorSubject]}
   curTag$={[Function BehaviorSubject]}
   curType$={[Function BehaviorSubject]}
@@ -51,6 +52,7 @@ exports[`GraphWalkerComponent is created 1`] = `
             <app-simple-view />
           </div>
         </div>
+        
         <div
           class="contenthv childhv hovered-elevated"
           ddflexbox="hycw"
@@ -65,6 +67,7 @@ exports[`GraphWalkerComponent is created 1`] = `
             <mat-select>
               
             </mat-select>
+            
           </mat-form-field>
           <mat-form-field
             class="margin-left childhv"
@@ -73,8 +76,8 @@ exports[`GraphWalkerComponent is created 1`] = `
             <mat-select>
               
             </mat-select>
+            
           </mat-form-field>
-          
           <button
             mat-mini-fab=""
           >
@@ -105,6 +108,7 @@ exports[`GraphWalkerComponent is created 1`] = `
           >
             &gt;
           </button>
+          
           <mat-form-field
             class="margin-left childhv"
             hintlabel="Value"
@@ -112,13 +116,16 @@ exports[`GraphWalkerComponent is created 1`] = `
             <input
               matinput=""
             />
+            
             <mat-autocomplete>
               
             </mat-autocomplete>
           </mat-form-field>
         </div>
         
+        
       </div>
+      
     </mat-card-content>
   </mat-card>
 </app-graph-walker>

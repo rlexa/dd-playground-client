@@ -2,6 +2,7 @@
 
 exports[`NavigationBarComponent renders 1`] = `
 <app-navigation-bar
+  __ngContext__={[Function LRootView]}
   items="null"
   layout={[Function String]}
   trackByIndex={[Function Function]}
@@ -9,10 +10,10 @@ exports[`NavigationBarComponent renders 1`] = `
   <mat-toolbar
     color="primary"
   >
-    
     <span
       class="mat-toolbar-filler"
     />
+    
     
   </mat-toolbar>
 </app-navigation-bar>
@@ -20,6 +21,7 @@ exports[`NavigationBarComponent renders 1`] = `
 
 exports[`NavigationBarComponent with items renders 1`] = `
 <app-navigation-bar
+  __ngContext__={[Function LRootView]}
   items={[Function Array]}
   layout={[Function String]}
   trackByIndex={[Function Function]}
@@ -27,16 +29,13 @@ exports[`NavigationBarComponent with items renders 1`] = `
   <mat-toolbar
     color="primary"
   >
-    
     <span
       class="mat-toolbar-filler"
     />
     
-    
     <nav
       class="mat-nav-list"
     >
-      
       <a
         href="/route1"
         mat-button=""
@@ -76,16 +75,20 @@ exports[`NavigationBarComponent with items renders 1`] = `
         </i>
       </a>
       
+      
     </nav>
     <span
       class="mat-toolbar-filler"
     />
+    
+    
   </mat-toolbar>
 </app-navigation-bar>
 `;
 
 exports[`NavigationBarComponent with items with layout column renders 1`] = `
 <app-navigation-bar
+  __ngContext__={[Function LRootView]}
   items={[Function Array]}
   layout={[Function String]}
   trackByIndex={[Function Function]}
@@ -95,12 +98,9 @@ exports[`NavigationBarComponent with items with layout column renders 1`] = `
     color="primary"
   >
     
-    
-    
     <nav
       class="mat-nav-list"
     >
-      
       <a
         href="/route1"
         mat-button=""
@@ -140,10 +140,13 @@ exports[`NavigationBarComponent with items with layout column renders 1`] = `
         </i>
       </a>
       
+      
     </nav>
     <span
       class="mat-toolbar-filler"
     />
+    
+    
   </mat-toolbar>
 </app-navigation-bar>
 `;

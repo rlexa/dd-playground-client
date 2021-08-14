@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {GhibliPerson} from '../../api-ghibli.service';
 import {DiRemoteCurrentItem} from '../../ghibli-detail';
 
@@ -19,5 +19,10 @@ export class RoutedGhibliPersonDetailComponent {
       'Eye Color': val?.eye_color,
       'Hair Color': val?.hair_color,
     })),
+  );
+
+  public readonly links$ = this.item$.pipe(
+    filter((item) => !!item),
+    map((item) => [(item as any).locations, (item as any).people, item.species, (item as any).vehicles]),
   );
 }

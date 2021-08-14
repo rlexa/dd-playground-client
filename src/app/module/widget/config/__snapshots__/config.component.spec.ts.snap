@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ConfigComponent is created 1`] = `
-<app-config>
+<app-config
+  __ngContext__={[Function LRootView]}
+>
   <mat-card>
     <mat-card-title>
       Configuration

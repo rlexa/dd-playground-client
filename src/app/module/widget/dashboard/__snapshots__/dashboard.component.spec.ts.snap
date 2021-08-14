@@ -2,6 +2,7 @@
 
 exports[`DashboardComponent renders 1`] = `
 <app-dashboard
+  __ngContext__={[Function LRootView]}
   isVisibleFooter$={[Function StateSubject]}
 >
   <div
@@ -12,9 +13,10 @@ exports[`DashboardComponent renders 1`] = `
     />
     <main>
       <router-outlet />
+      
     </main>
-    
     <app-footer />
+    
   </div>
 </app-dashboard>
 `;

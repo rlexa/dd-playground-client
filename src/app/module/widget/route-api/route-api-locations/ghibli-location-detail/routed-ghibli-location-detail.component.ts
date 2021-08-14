@@ -19,4 +19,6 @@ export class RoutedGhibliLocationDetailComponent {
       Terrain: val?.terrain,
     })),
   );
+
+  public readonly url$ = this.item$.pipe(map((item) => (item as any)?.url));
 }

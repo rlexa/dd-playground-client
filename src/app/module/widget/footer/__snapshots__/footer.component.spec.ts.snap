@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FooterComponent renders 1`] = `
-<app-footer>
+<app-footer
+  __ngContext__={[Function LRootView]}
+>
   <span
     class="filler"
   /><app-version />

@@ -3,6 +3,7 @@
 exports[`SimpleViewComponent is created 1`] = `
 <app-simple-view
   FORMAT_DATE_TIMESTAMP={[Function String]}
+  __ngContext__={[Function LRootView]}
   clickables$={[Function AnonymousSubject]}
   clicked={[Function EventEmitter_]}
   data$={[Function BehaviorSubject]}
@@ -24,6 +25,7 @@ exports[`SimpleViewComponent is created 1`] = `
 exports[`SimpleViewComponent with data renders 1`] = `
 <app-simple-view
   FORMAT_DATE_TIMESTAMP={[Function String]}
+  __ngContext__={[Function LRootView]}
   clickables$={[Function AnonymousSubject]}
   clicked={[Function EventEmitter_]}
   data$={[Function BehaviorSubject]}
@@ -47,19 +49,11 @@ exports[`SimpleViewComponent with data renders 1`] = `
       style="max-width: 100%;"
     >
       
-      
       <mat-list
         class="mat-list-auto-height"
       >
         
-        
-        
-        
-        
-        
-        
         <table>
-          
           <tr>
             <td
               style="vertical-align: top;"
@@ -86,22 +80,29 @@ exports[`SimpleViewComponent with data renders 1`] = `
                   
                   
                   
-                  
-                  
                   <span
                     style=""
                   >
                      value 
                   </span>
+                  
+                  
                 </span>
               </mat-list-item>
             </td>
           </tr>
+          
         </table>
         
         
+        
+        
+        
+        
       </mat-list>
+      
     </div>
+    
   </div>
 </app-simple-view>
 `;

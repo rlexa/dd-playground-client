@@ -56,7 +56,7 @@
             #valInput
             matInput
             [value]="curVal$ | async"
-            (change)="setCurVal($event.target.value)"
+            (change)="setCurVal(valInput.value)"
             [matAutocomplete]="valAutoComplete"
             (focus)="setCurVal(valInput.value)"
             (keyup)="setCurVal(valInput.value)"

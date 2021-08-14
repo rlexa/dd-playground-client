@@ -3,6 +3,7 @@
 exports[`GhibliComponent is created 1`] = `
 <app-ghibli
   TYPES_LISTS={[Function Array]}
+  __ngContext__={[Function LRootView]}
   anyData$={[Function Subject]}
   api={[Function Object]}
   busyCount$={[Function BehaviorSubject]}
@@ -35,7 +36,6 @@ exports[`GhibliComponent is created 1`] = `
             >
               API
             </h3>
-            
             <mat-list-item>
               <button
                 mat-raised-button=""
@@ -71,8 +71,10 @@ exports[`GhibliComponent is created 1`] = `
                 /vehicles/
               </button>
             </mat-list-item>
+            
           </mat-list>
         </div>
+        
       </mat-card-content>
     </mat-card>
     

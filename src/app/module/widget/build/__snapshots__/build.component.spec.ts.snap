@@ -2,6 +2,7 @@
 
 exports[`BuildComponent is created 1`] = `
 <app-build
+  __ngContext__={[Function LRootView]}
   globalFlags$={[Function Observable]}
 >
   <mat-card>

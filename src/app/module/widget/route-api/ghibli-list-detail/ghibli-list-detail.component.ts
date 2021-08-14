@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, TrackByFunction} from '@angular/core';
 import {Observable} from 'rxjs';
 import {DiRemoteCurrentItemToId} from '../di-api-common';
 import {DiRemoteCurrentList} from './di-ghibli-list';
@@ -12,6 +12,6 @@ import {DiRemoteCurrentList} from './di-ghibli-list';
 export class GhibliListDetailComponent<T> {
   constructor(
     @Inject(DiRemoteCurrentList) public readonly items$: Observable<T[]>,
-    @Inject(DiRemoteCurrentItemToId) public readonly trackById: (item: T) => string,
+    @Inject(DiRemoteCurrentItemToId) public readonly trackById: TrackByFunction<T>,
   ) {}
 }

@@ -3,10 +3,11 @@
     <ng-container *ngIf="dataBatchClickables$ | async as dataBatchClickables">
       <mat-form-field class="childhv">
         <input
+          #inputFilter
           matInput
           [value]="filter$ | async"
-          (change)="setFilter($event.target.value)"
-          (keyup)="setFilter($event.target.value)"
+          (change)="setFilter(inputFilter.value)"
+          (keyup)="setFilter(inputFilter.value)"
           placeholder="Filter"
         />
       </mat-form-field>

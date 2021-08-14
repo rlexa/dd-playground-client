@@ -21,7 +21,7 @@ const remoteTypeRoute: Record<RemoteType, ApiRoute> = {
 
 @Pipe({name: 'ghibliRouteLink', pure: true})
 export class GhibliRouteLinkPipe implements PipeTransform {
-  transform(value: any, context: string, ...args: any[]) {
+  transform(value: any, context?: string, ...args: any[]) {
     const [id, remoteType] = String(value).split('/').reverse();
     if (id?.length && Object.values(RemoteType).includes(remoteType as RemoteType)) {
       const apiRoute = remoteTypeRoute[remoteType as RemoteType];
