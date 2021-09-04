@@ -15,5 +15,6 @@
   "editor.insertSpaces": true,
   "html.format.wrapLineLength": 140,
   "editor.rulers": [140],
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "editor.bracketPairColorization.enabled": true
 }
