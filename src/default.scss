@@ -4,22 +4,20 @@
 }
 
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 0.6rem $clr-scrollbar-track;
   box-shadow: inset 0 0 0.6rem $clr-scrollbar-track;
   border-radius: 1rem;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 1rem;
-  -webkit-box-shadow: inset 0 0 0.6rem $clr-scrollbar-thumb;
   box-shadow: inset 0 0 0.6rem $clr-scrollbar-thumb;
 }
 
 body {
   font-size: var(--size-font-default);
   font-family: var(--font-family-root);
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {

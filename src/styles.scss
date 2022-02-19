@@ -3,11 +3,11 @@
 @import '~font-awesome/css/font-awesome.min.css';
 @import '~material-design-icons/iconfont/material-icons.css';
 
-@import 'variables.scss';
-@import 'overwrite-native.scss';
+@import 'variables';
+@import 'overwrite-native';
 
-@import 'overwrite-md.scss';
+@import 'overwrite-md';
 
-@import 'layout.scss';
-@import 'default.scss';
-@import 'deco.scss';
+@import 'layout';
+@import 'default';
+@import 'deco';

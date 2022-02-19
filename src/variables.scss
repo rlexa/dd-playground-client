@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@import 'md-custom-theme.scss';
+@import 'md-custom-theme';
 
 :root {
   --font-family-root: Roboto, 'Helvetica Neue', sans-serif;
@@ -43,25 +43,25 @@ $clr-secondary: mat.get-color-from-palette($accent);
 $clr-warn: mat.get-color-from-palette($warn);
 
 $clr-item-bg: #e0e0e0;
-$clr-item-bg-connected: lightgreen;
+$clr-item-bg-connected: #90ee90;
 $clr-item-bg-light: #f0f0f0;
 $clr-item-fg: #000;
-$clr-mat-dark: fade-out(black, 0.13);
-$clr-mat-dark-disabled: fade-out(black, 0.74);
-$clr-mat-dark-divider: fade-out(black, 0.88);
-$clr-mat-dark-icon: fade-out(black, 0.46);
+$clr-mat-dark: fade-out(#000000, 0.13);
+$clr-mat-dark-disabled: fade-out(#000000, 0.74);
+$clr-mat-dark-divider: fade-out(#000000, 0.88);
+$clr-mat-dark-icon: fade-out(#000000, 0.46);
 $clr-mat-dark-row-hover: #eeeeee;
 $clr-mat-dark-row-select: #f5f5f5;
-$clr-mat-dark-secondary: fade-out(black, 0.46);
-$clr-mat-light: fade-out(white, 0);
-$clr-mat-light-disabled: fade-out(white, 0.7);
+$clr-mat-dark-secondary: fade-out(#000000, 0.46);
+$clr-mat-light: fade-out(#ffffff, 0);
+$clr-mat-light-disabled: fade-out(#ffffff, 0.7);
 $clr-mat-light-icon: $clr-mat-light;
 $clr-mat-light-row-hover: #f1f1f1;
-$clr-mat-light-secondary: fade-out(white, 0.3);
+$clr-mat-light-secondary: fade-out(#ffffff, 0.3);
 $clr-mat-table-dialog-color: #f9f9f9;
-$clr-scrollbar-thumb: fade-out(black, 0.5);
-$clr-scrollbar-track: fade-out(black, 0.9);
-$clr-transparent: fade-out(black, 1);
+$clr-scrollbar-thumb: fade-out(#000000, 0.5);
+$clr-scrollbar-track: fade-out(#000000, 0.9);
+$clr-transparent: fade-out(#000000, 1);
 
 $mat-clr-accent: $clr-secondary;
 $mat-clr-chip-bg: $clr-item-bg;

@@ -1,4 +1,6 @@
 .scope {
+  background: #2f4f4f;
+
   td > div {
     width: 3rem;
     height: 3rem;
@@ -6,26 +8,24 @@
     text-align: center;
   }
 
-  background: darkslategrey;
-
   .field {
     border-radius: 1em;
 
     &-flag {
-      background-color: brown;
+      background-color: #a52a2a;
     }
 
     &-clear {
-      background-color: antiquewhite;
+      background-color: #faebd7;
       border-radius: 0;
     }
 
     &:hover {
-      outline: 1px solid aquamarine;
+      outline: 1px solid #7fffd4;
     }
   }
 
   &-show-mines .field-mine {
-    background-color: darkolivegreen;
+    background-color: #556b2f;
   }
 }

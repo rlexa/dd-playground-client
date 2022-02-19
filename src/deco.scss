@@ -1,167 +1,204 @@
 @use '@angular/material' as mat;
 
-.border-radius {
+.border-radius,
+%border-radius {
   border-radius: var(--size-radius);
 }
 
-.border-radius-top-left {
+.border-radius-top-left,
+%border-radius-top-left {
   border-top-left-radius: var(--size-radius);
 }
 
-.border-radius-top-right {
+.border-radius-top-right,
+%border-radius-top-right {
   border-top-right-radius: var(--size-radius);
 }
 
-.border-radius-top {
-  @extend .border-radius-top-left;
-  @extend .border-radius-top-right;
+.border-radius-top,
+%border-radius-top {
+  @extend %border-radius-top-left;
+  @extend %border-radius-top-right;
 }
 
-.border-left {
+.border-left,
+%border-left {
   border-left: solid 1px $clr-mat-dark-divider;
 }
 
-.border-right {
+.border-right,
+%border-right {
   border-right: solid 1px $clr-mat-dark-divider;
 }
 
-.border-top {
+.border-top,
+%border-top {
   border-top: solid 1px $clr-mat-dark-divider;
 }
 
-.border-bottom {
+.border-bottom,
+%border-bottom {
   border-bottom: solid 1px $clr-mat-dark-divider;
 }
 
-.border {
-  @extend .border-radius;
-  @extend .border-left;
-  @extend .border-right;
-  @extend .border-top;
-  @extend .border-bottom;
+.border,
+%border {
+  @extend %border-radius;
+  @extend %border-left;
+  @extend %border-right;
+  @extend %border-top;
+  @extend %border-bottom;
 }
 
-.background-highlighted {
+.background-highlighted,
+%background-highlighted {
   background-color: fade-out($mat-clr-chip-bg-connected, 0.35);
 }
 
-.auto-line-height {
+.auto-line-height,
+%auto-line-height {
   line-height: initial;
 }
 
-.no-font-size {
+.no-font-size,
+%no-font-size {
   font-size: inherit;
 }
 
-.text-gigantic {
+.text-gigantic,
+%text-gigantic {
   font-size: var(--size-font-gigantic);
 }
 
-.font-default {
+.font-default,
+%font-default {
   font-size: var(--size-font-default);
 }
 
-.font-smaller {
+.font-smaller,
+%font-smaller {
   font-size: var(--size-font-smaller);
 }
 
-.font-small {
+.font-small,
+%font-small {
   font-size: var(--size-font-small);
 }
 
-.font-bold {
+.font-bold,
+%font-bold {
   font-weight: bold;
 }
 
-.text-warning {
+.text-warning,
+%text-warning {
   color: $clr-warn;
 }
 
-.ellipsis {
+.ellipsis,
+%ellipsis {
   overflow-x: hidden;
   text-overflow: ellipsis;
 }
 
-.text-nowrap {
+.text-nowrap,
+%text-nowrap {
   white-space: nowrap;
 }
 
-.text-ellipsis {
-  @extend .text-nowrap;
+.text-ellipsis,
+%text-ellipsis {
+  @extend %text-nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.text-left {
+.text-left,
+%text-left {
   text-align: left;
 }
 
-.text-center {
+.text-center,
+%text-center {
   text-align: center;
 }
 
-.text-right {
+.text-right,
+%text-right {
   text-align: right;
 }
 
-.break-text {
+.break-text,
+%break-text {
   white-space: normal;
   word-wrap: break-word;
 }
 
-.break-word {
+.break-word,
+%break-word {
   word-break: break-all;
 }
 
-.no-break-text {
+.no-break-text,
+%no-break-text {
   white-space: nowrap;
   word-wrap: normal;
 }
 
-.value-numeric {
+.value-numeric,
+%value-numeric {
   font-family: monospace;
 }
 
-.color-primary {
+.color-primary,
+%color-primary {
   color: $clr-primary;
 }
 
-.color-secondary {
+.color-secondary,
+%color-secondary {
   color: $clr-secondary;
 }
 
-.color-accent {
-  @extend .color-secondary;
+.color-accent,
+%color-accent {
+  @extend %color-secondary;
 }
 
-.color-warn {
+.color-warn,
+%color-warn {
   color: $clr-warn;
 }
 
-.css-highlight {
+.css-highlight,
+%css-highlight {
   color: $clr-primary;
 }
 
-.copyable {
+.copyable,
+%copyable {
   cursor: copy;
 }
 
-.clickable {
+.clickable,
+%clickable {
   cursor: pointer;
 }
 
-.deadclick {
+.deadclick,
+%deadclick {
   &:active {
     pointer-events: none;
   }
 }
 
-.deadclick-force {
+.deadclick-force,
+%deadclick-force {
   pointer-events: none;
 }
 
 .highlighted:not(:hover) {
-  @extend .background-highlighted;
+  @extend %background-highlighted;
 }
 
 .hoverable:hover {
@@ -169,7 +206,7 @@
 }
 
 .topfix {
-  margin-bottom: 0rem;
+  margin-bottom: 0;
   font-size: calc(var(--size-font-default) * 0.75);
   color: $clr-mat-dark-secondary;
 }
@@ -184,13 +221,14 @@
 }
 
 .btm-right-single-action {
-  @extend .position-fixed;
+  @extend %position-fixed;
   display: inline-block;
   bottom: 2rem;
   right: 2rem;
 }
 
-.transition-background-color {
+.transition-background-color,
+%transition-background-color {
   transition: background-color var(--transition-duration);
 }
 
@@ -236,18 +274,21 @@
   }
 }
 
-.elevated-animation {
+.elevated-animation,
+%elevated-animation {
   @include mat.elevation-transition;
 }
 
-.elevated-1 {
+.elevated-1,
+%elevated-1 {
   @include mat.elevation(1);
 }
 
 .hovered-elevated {
-  @extend .elevated-animation;
+  @extend %elevated-animation;
+
   &:hover {
-    @extend .elevated-1;
+    @extend %elevated-1;
   }
 }
 

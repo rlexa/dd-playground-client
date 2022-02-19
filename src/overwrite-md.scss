@@ -4,25 +4,26 @@
 
 .mat-drawer-container {
   background-color: $clr-transparent;
+
   &.position-absolute {
-    @extend .position-absolute;
+    @extend %position-absolute;
   }
 }
 
 .mat-drawer-container .mat-drawer-content {
-  @extend .position-absolute;
-  @extend .match-parent;
+  @extend %position-absolute;
+  @extend %match-parent;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
   .mat-sidenav-content-below-toolbar {
-    @extend .position-relative;
+    @extend %position-relative;
     flex: 1 0 auto;
 
     .mat-scrollable-content {
-      @extend .position-absolute;
-      @extend .match-parent;
+      @extend %position-absolute;
+      @extend %match-parent;
       overflow-x: hidden;
       overflow-y: auto;
     }
@@ -44,55 +45,64 @@
 }
 
 .mat-card-shadow {
-  box-shadow: 0 3px 1px -2px fade-out(black, .8), 0 2px 2px 0 fade-out(black, .86), 0 1px 5px 0 fade-out(black, .88);
+  box-shadow: 0 3px 1px -2px fade-out(#000, 0.8), 0 2px 2px 0 fade-out(#000, 0.86), 0 1px 5px 0 fade-out(#000, 0.88);
 }
 
 .mat-icon,
 .material-icons,
 .mat-input-prefix .material-icons {
-  &.mat-icon-size-smaller {
-    @include mat-item-size($size-icon-height * .75);
+  &.mat-icon-size-smaller,
+  &%mat-icon-size-smaller {
+    @include mat-item-size($size-icon-height * 0.75);
   }
+
   &.mat-icon-size-small {
-    @include mat-item-size($size-icon-height * .60);
+    @include mat-item-size($size-icon-height * 0.6);
   }
+
   &.mat-icon-size-smallest {
-    @include mat-item-size($size-icon-height * .45);
+    @include mat-item-size($size-icon-height * 0.45);
   }
 }
 
 .mat-mini-fab {
   &.mat-mini-fab-size-smaller {
-    @include mat-item-size($size-mini-fab-height * .75);
+    @include mat-item-size($size-mini-fab-height * 0.75);
+
     .mat-button-wrapper {
-      padding: 0rem 0rem;
+      padding: 0;
       display: block;
     }
+
     .mat-icon {
-      @extend .mat-icon-size-smaller;
+      @extend %mat-icon-size-smaller;
       margin-top: -0.3rem;
     }
   }
 }
 
-.mat-list[dense] .mat-list-item .mat-list-text>* {
+.mat-list[dense] .mat-list-item .mat-list-text > * {
   &.childv {
-    @extend .childv;
+    @extend %childv;
   }
+
   &.childh {
-    @extend .childh;
+    @extend %childh;
   }
+
   &.childhv {
-    @extend .childhv;
+    @extend %childhv;
   }
+
   &.childvh {
-    @extend .childvh;
+    @extend %childvh;
   }
 }
 
 .mat-list-auto-height {
   &.mat-list .mat-list-item {
     height: auto;
+
     .mat-list-item-content {
       min-height: 4.8rem;
       height: auto;
@@ -101,6 +111,7 @@
 
   &.mat-list[dense] .mat-list-item {
     height: auto;
+
     .mat-list-item-content {
       min-height: 2.75rem;
       height: auto;
@@ -111,15 +122,17 @@
 .minimize-height {
   &.mat-form-field {
     .mat-form-field-wrapper {
-      padding-bottom: 0px;
+      padding-bottom: 0;
     }
+
     .mat-form-field-underline,
     .mat-form-field-subscript-wrapper {
       display: none;
     }
+
     .mat-form-field-infix {
-      @extend .contentv;
-      border-top: 0px;
+      @extend %contentv;
+      border-top: 0;
     }
   }
 }
@@ -149,19 +162,21 @@
 .mat-raised-button,
 .mat-select {
   &.auto-line-height {
-    @extend .auto-line-height;
+    @extend %auto-line-height;
   }
+
   &.auto-min-width {
-    @extend .auto-min-width;
+    @extend %auto-min-width;
   }
+
   &.no-padding {
-    @extend .no-padding;
+    @extend %no-padding;
   }
 
   &.inline-button {
-    @extend .auto-line-height;
-    @extend .auto-min-width;
-    @extend .no-padding;
+    @extend %auto-line-height;
+    @extend %auto-min-width;
+    @extend %no-padding;
   }
 
   &.dense {
@@ -178,14 +193,14 @@
 
 .no-infix {
   .mat-form-field-infix {
-    padding-top: 0px;
-    border-top-width: 0px;
+    padding-top: 0;
+    border-top-width: 0;
   }
 }
 
 .mat-card {
   &.transition-background-color {
-    @extend .transition-background-color;
+    @extend %transition-background-color;
   }
 }
 
@@ -199,7 +214,7 @@
 }
 
 .mat-nav-list {
-  >.mat-button {
+  > .mat-button {
     &.active {
       font-weight: bold;
     }
@@ -210,7 +225,7 @@
   box-shadow: none;
   user-select: none;
   background: none;
-  border: none;
+  border: 0;
   cursor: pointer;
   filter: none;
   font-weight: normal;
@@ -225,7 +240,7 @@
 
 .mat-sidenav-toggle {
   padding: 0 1.4rem;
-  color: fade-out(white, .13);
+  color: fade-out(#fff, 0.13);
 }
 
 .mat-sidenav {
@@ -255,7 +270,7 @@
 .mat-toolbar {
   &.mat-toolbar-single-row {
     .mat-nav-list {
-      padding-top: 0px;
+      padding-top: 0;
     }
   }
 }
@@ -292,12 +307,13 @@
   }
 }
 
-.min-width-auto {
+.min-width-auto,
+%min-width-auto {
   min-width: auto;
 }
 
 .min-width-auto .mat-select-trigger {
-  @extend .min-width-auto;
+  @extend %min-width-auto;
 }
 
 .width-date-input {
@@ -310,43 +326,48 @@
   max-width: 10rem;
 }
 
-.width-short-input {
+.width-short-input,
+%width-short-input {
   min-width: 5rem;
   max-width: 5rem;
 }
 
-.width-short-month {
-  @extend .width-short-input;
+.width-short-month,
+%width-short-month {
+  @extend %width-short-input;
 }
 
 .width-short-month .mat-select-trigger {
-  @extend .width-short-month;
+  @extend %width-short-month;
 }
 
-.width-short-year {
+.width-short-year,
+%width-short-year {
   min-width: 6rem;
   max-width: 6rem;
 }
 
 .width-short-year .mat-select-trigger {
-  @extend .width-short-year;
+  @extend %width-short-year;
 }
 
-.font-inherit {
+.font-inherit,
+%font-inherit {
   font-size: inherit;
   line-height: inherit;
 }
 
 .font-inherit .mat-select-trigger {
-  @extend .font-inherit;
+  @extend %font-inherit;
 }
 
-.height-inherit {
+.height-inherit,
+%height-inherit {
   height: inherit;
 }
 
 .height-inherit .mat-select-trigger {
-  @extend .height-inherit;
+  @extend %height-inherit;
 }
 
 $clr-dark-bg: #1e1e1e;
@@ -354,12 +375,11 @@ $clr-dark-bg-lightee: lighten($clr-dark-bg, 15);
 $clr-dark-bg-lighter: lighten($clr-dark-bg, 20);
 $clr-dark-bg-lighted: lighten($clr-dark-bg, 25);
 $clr-dark-fg: #d4d4d4;
-$clr-dark-fg-fadee: fade-out($clr-dark-fg, .25);
-$clr-dark-fg-fader: fade-out($clr-dark-fg, .5);
-$clr-dark-fg-faded: fade-out($clr-dark-fg, .75);
+$clr-dark-fg-fadee: fade-out($clr-dark-fg, 0.25);
+$clr-dark-fg-fader: fade-out($clr-dark-fg, 0.5);
+$clr-dark-fg-faded: fade-out($clr-dark-fg, 0.75);
 
 .theme-dark {
-
   .mat-drawer {
     background-color: $clr-dark-bg;
     color: $clr-dark-fg;
@@ -390,8 +410,8 @@ $clr-dark-fg-faded: fade-out($clr-dark-fg, .75);
     background-color: lighten($clr-dark-bg, 15);
     color: $clr-dark-fg;
 
-    &:not([class*=mat-elevation-z]) {
-      box-shadow: 0 3px 1px -2px fade-out(white, .8), 0 2px 2px 0 fade-out(white, .86), 0 1px 5px 0 fade-out(white, .88);
+    &:not([class*='mat-elevation-z']) {
+      box-shadow: 0 3px 1px -2px fade-out(#fff, 0.8), 0 2px 2px 0 fade-out(#fff, 0.86), 0 1px 5px 0 fade-out(#fff, 0.88);
     }
   }
 

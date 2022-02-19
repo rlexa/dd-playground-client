@@ -3,21 +3,21 @@
   width: 100%;
 
   display: grid;
-  background: darkslategrey;
+  background: #2f4f4f;
 
   .field {
     border-radius: 1em;
 
     &-food {
-      background-color: gold;
+      background-color: #ffd700;
     }
 
     &-snake {
-      background-color: lightgrey;
+      background-color: #d3d3d3;
     }
 
     &-head {
-      background-color: lime;
+      background-color: #00ff00;
     }
   }
 }
