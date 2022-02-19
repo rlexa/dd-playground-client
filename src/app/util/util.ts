@@ -20,7 +20,7 @@ export function calcElementHeight(element: HTMLElement) {
     ret =
       (rect ? rect.height : element.offsetHeight) +
       [style.marginTop, style.marginBottom, style.borderTopWidth, style.borderBottomWidth]
-        .map(ii => parseInt(ii, 10))
+        .map((ii) => parseInt(ii, 10))
         .reduce((acc, ii) => acc + (isNaN(ii) ? 0 : ii), 0);
   }
   return ret;
@@ -41,9 +41,7 @@ export const hash = (value: string): number => {
   let ret = 0;
   if (value && value.length) {
     for (let ii = 0; ii < value.length; ++ii) {
-      // tslint:disable-next-line:no-bitwise
       ret = (ret << 5) - ret + value.charCodeAt(ii);
-      // tslint:disable-next-line:no-bitwise
       ret |= 0; // Convert to 32bit integer
     }
   }
