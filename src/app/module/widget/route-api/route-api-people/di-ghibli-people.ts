@@ -12,7 +12,7 @@ export const DiRemoteGhibliPeople = new InjectionToken<Observable<GhibliPerson[]
     inject(ApiGhibliService)
       .persons$()
       .pipe(
-        catchError(() => of<GhibliPerson[]>(null)),
+        catchError(() => of(null as GhibliPerson[])),
         distinctUntilChanged(isEqualValue),
         shareReplay({refCount: true, bufferSize: 1}),
       ),

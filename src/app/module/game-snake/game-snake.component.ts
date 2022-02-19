@@ -52,7 +52,7 @@ export class GameSnakeComponent implements OnDestroy, OnInit {
     merge(...this.processors$)
       .pipe(takeUntil(this.done$))
       .subscribe(rxNext_(this.game$));
-    this.toggleLoop$.pipe(filter(Boolean)).subscribe(this.onFrame);
+    this.toggleLoop$.pipe(filter(Boolean)).subscribe(() => this.onFrame());
   }
 
   private onFrame = (time?: number) => {

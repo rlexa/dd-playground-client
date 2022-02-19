@@ -12,7 +12,7 @@ export const DiRemoteGhibliVehicles = new InjectionToken<Observable<GhibliVehicl
     inject(ApiGhibliService)
       .vehicles$()
       .pipe(
-        catchError(() => of<GhibliVehicle[]>(null)),
+        catchError(() => of(null as GhibliVehicle[])),
         distinctUntilChanged(isEqualValue),
         shareReplay({refCount: true, bufferSize: 1}),
       ),

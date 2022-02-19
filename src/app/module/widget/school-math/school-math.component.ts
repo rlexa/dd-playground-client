@@ -21,7 +21,7 @@ export class SchoolMathComponent implements OnDestroy, OnInit {
 
   @RxCleanup() private readonly done$ = new DoneSubject();
 
-  @RxCleanup() readonly triggerPdf$ = new Subject();
+  @RxCleanup() readonly triggerPdf$ = new Subject<void>();
 
   triggerPdf = () => this.triggerPdf$.next();
   setSeed = (seed: number) => this.seed$.next(seed);

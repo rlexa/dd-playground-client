@@ -12,7 +12,7 @@ export const DiRemoteGhibliMovies = new InjectionToken<Observable<GhibliMovie[]>
     inject(ApiGhibliService)
       .movies$()
       .pipe(
-        catchError(() => of<GhibliMovie[]>(null)),
+        catchError(() => of(null as GhibliMovie[])),
         distinctUntilChanged(isEqualValue),
         shareReplay({refCount: true, bufferSize: 1}),
       ),

@@ -12,7 +12,7 @@ export const DiRemoteGhibliLocations = new InjectionToken<Observable<GhibliLocat
     inject(ApiGhibliService)
       .locations$()
       .pipe(
-        catchError(() => of<GhibliLocation[]>(null)),
+        catchError(() => of(null as GhibliLocation[])),
         distinctUntilChanged(isEqualValue),
         shareReplay({refCount: true, bufferSize: 1}),
       ),
