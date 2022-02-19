@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {GraphskyService} from '../../service/graphsky-api';
 
@@ -8,7 +8,7 @@ import {GraphskyService} from '../../service/graphsky-api';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [GraphskyService],
 })
-export class DemoMiscComponent implements OnDestroy {
+export class DemoMiscComponent {
   constructor(private readonly graphsky: GraphskyService) {}
 
   readonly graphskyLog$ = this.graphsky.log$;
@@ -17,13 +17,13 @@ export class DemoMiscComponent implements OnDestroy {
     map(() =>
       this.graphsky.query((nodes, _) =>
         nodes
-          .filter(node => 'name' in node.data)
+          .filter((node) => 'name' in node.data)
           .sort((aa, bb) => aa.data.name.toString().localeCompare(bb.data.name.toString()))
           .reduce(
             (acc, node) => ({
               ...acc,
               [node.data.name.toString() + ' ' + node.data.sex.toString()]: node.out
-                .map(link => link.data.relationship + ' ' + link.to.data.name)
+                .map((link) => link.data.relationship + ' ' + link.to.data.name)
                 .join(', '),
             }),
             {},
@@ -35,8 +35,8 @@ export class DemoMiscComponent implements OnDestroy {
     map(() =>
       this.graphsky.query((_, links) =>
         links
-          .filter(link => link.data.relationship === 'likes')
-          .map(link => link.to)
+          .filter((link) => link.data.relationship === 'likes')
+          .map((link) => link.to)
           .sort((aa, bb) => aa.data.name.toString().localeCompare(bb.data.name.toString()))
           .reduce(
             (acc, node) => ({
@@ -52,7 +52,7 @@ export class DemoMiscComponent implements OnDestroy {
     map(() =>
       this.graphsky.query((nodes, _) =>
         nodes
-          .filter(node => 'sex' in node.data)
+          .filter((node) => 'sex' in node.data)
           .reduce(
             (acc, node) => ({
               ...acc,
@@ -63,8 +63,6 @@ export class DemoMiscComponent implements OnDestroy {
       ),
     ),
   );
-
-  ngOnDestroy() {}
 
   graphskyAddTestData = () => {
     this.graphsky.add([

@@ -5,7 +5,7 @@
       <mat-form-field>
         <input #input type="number" matInput [min]="1" placeholder="Seed" [value]="seed$ | async" (change)="setSeed(+input.value)" />
       </mat-form-field>
-      <button mat-raised-button [disabled]="!(data$ | async)" (click)="triggerPdf()">PDF</button>
+      <button mat-raised-button [disabled]="!!!(data$ | async)" (click)="triggerPdf()">PDF</button>
     </p>
     <app-simple-view subheader="JSON" [data]="data$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
     <app-simple-view subheader="PDF" [data]="pdfMeta$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>

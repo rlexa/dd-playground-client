@@ -18,6 +18,7 @@ function consume(where: Value, what: string) {
 const parse = (from: Value, map: {[key: string]: string}, defaultValue: string) =>
   Object.keys(map).reduce((acc, key) => (!acc && consume(from, key) ? map[key] : acc), '') || defaultValue;
 
+// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({selector: '[ddFlexbox], [ddFlexitem]'})
 export class FlexboxDirective {
   private readonly mapJustifyContent = {
