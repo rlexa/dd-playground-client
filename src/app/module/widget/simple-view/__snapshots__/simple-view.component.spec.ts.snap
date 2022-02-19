@@ -18,7 +18,6 @@ exports[`SimpleViewComponent is created 1`] = `
   subheader="null"
   types$={[Function AnonymousSubject]}
 >
-  
 </app-simple-view>
 `;
 
@@ -41,24 +40,30 @@ exports[`SimpleViewComponent with data renders 1`] = `
   types$={[Function AnonymousSubject]}
 >
   <div
-    class="position-relative"
+    class="position-relative ng-tns-c73-0 ng-star-inserted"
   >
     <div
-      class="scroll-x-auto"
+      class="scroll-x-auto ng-tns-c73-0"
       ddflexbox="hys"
+      ng-reflect-dd-flexbox="hys"
       style="max-width: 100%;"
     >
-      
       <mat-list
-        class="mat-list-auto-height"
+        class="mat-list-auto-height ng-tns-c73-0 ng-star-inserted"
       >
-        
-        <table>
-          <tr>
+        <table
+          class="ng-tns-c73-0 ng-star-inserted"
+        >
+          <tr
+            class="ng-tns-c73-0 ng-star-inserted"
+          >
             <td
+              class="ng-tns-c73-0"
               style="vertical-align: top;"
             >
-              <mat-list-item>
+              <mat-list-item
+                class="ng-tns-c73-0"
+              >
                 <span
                   class="no-break-text"
                 >
@@ -66,43 +71,31 @@ exports[`SimpleViewComponent with data renders 1`] = `
                 </span>
               </mat-list-item>
             </td>
-            <td>
+            <td
+              class="ng-tns-c73-0"
+            >
               <mat-list-item
-                class="ng-trigger ng-trigger-TRIGGER_WobbleX"
+                class="ng-tns-c73-0 ng-trigger ng-trigger-TRIGGER_WobbleX"
                 style=""
               >
                 <span
                   class="break-text size-data-label"
+                  ng-reflect-ng-class="[object Object]"
                 >
-                  
-                  
-                  
-                  
-                  
-                  
                   <span
+                    class="ng-tns-c73-0 ng-star-inserted"
+                    ng-reflect-ng-class="[object Object]"
                     style=""
                   >
                      value 
                   </span>
-                  
-                  
                 </span>
               </mat-list-item>
             </td>
           </tr>
-          
         </table>
-        
-        
-        
-        
-        
-        
       </mat-list>
-      
     </div>
-    
   </div>
 </app-simple-view>
 `;

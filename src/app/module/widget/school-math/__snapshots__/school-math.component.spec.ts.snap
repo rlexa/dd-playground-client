@@ -27,14 +27,23 @@ exports[`SchoolMathComponent is created 1`] = `
         </mat-form-field>
         <button
           mat-raised-button=""
+          ng-reflect-disabled="false"
         >
           PDF
         </button>
       </p>
       <app-simple-view
+        ng-reflect-data="[object Object]"
+        ng-reflect-is-dense="true"
+        ng-reflect-is-width-constrained="false"
+        ng-reflect-subheader="JSON"
         subheader="JSON"
       />
       <app-simple-view
+        ng-reflect-data="[object Object]"
+        ng-reflect-is-dense="true"
+        ng-reflect-is-width-constrained="false"
+        ng-reflect-subheader="PDF"
         subheader="PDF"
       />
     </mat-card-content>

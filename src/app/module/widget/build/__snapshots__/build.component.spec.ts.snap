@@ -10,7 +10,10 @@ exports[`BuildComponent is created 1`] = `
       Build Settings
     </mat-card-title>
     <mat-card-content>
-      <app-simple-view />
+      <app-simple-view
+        ng-reflect-data="[object Object]"
+        ng-reflect-is-width-constrained="false"
+      />
     </mat-card-content>
   </mat-card>
 </app-build>

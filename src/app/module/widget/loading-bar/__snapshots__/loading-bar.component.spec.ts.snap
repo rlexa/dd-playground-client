@@ -8,6 +8,5 @@ exports[`LoadingBarComponent is created 1`] = `
   styleMarginTop={[Function String]}
   styleMinHeight={[Function String]}
 >
-  
 </app-loading-bar>
 `;

@@ -17,6 +17,7 @@ exports[`GhibliComponent is created 1`] = `
 >
   <div
     ddflexbox="hyscsw"
+    ng-reflect-dd-flexbox="hyscsw"
   >
     <mat-card
       class="childhv"
@@ -27,6 +28,7 @@ exports[`GhibliComponent is created 1`] = `
       <mat-card-content>
         <div
           ddflexbox="vys"
+          ng-reflect-dd-flexbox="vys"
         >
           <mat-list
             class="mat-list-auto-height"
@@ -71,14 +73,10 @@ exports[`GhibliComponent is created 1`] = `
                 /vehicles/
               </button>
             </mat-list-item>
-            
           </mat-list>
         </div>
-        
       </mat-card-content>
     </mat-card>
-    
-    
   </div>
 </app-ghibli>
 `;

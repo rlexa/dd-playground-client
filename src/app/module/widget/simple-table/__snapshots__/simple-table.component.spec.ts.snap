@@ -30,7 +30,6 @@ exports[`SimpleTableComponent is created 1`] = `
   total$={[Function Observable]}
   trackByIndex={[Function Function]}
 >
-  
 </app-simple-table>
 `;
 
@@ -64,6 +63,5 @@ exports[`SimpleTableComponent with data renders 1`] = `
   total$={[Function Observable]}
   trackByIndex={[Function Function]}
 >
-  
 </app-simple-table>
 `;

@@ -13,10 +13,8 @@ exports[`DashboardComponent renders 1`] = `
     />
     <main>
       <router-outlet />
-      
     </main>
     <app-footer />
-    
   </div>
 </app-dashboard>
 `;

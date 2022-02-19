@@ -1,12 +1,13 @@
-require('jest-preset-angular/ngcc-jest-processor');
-
 module.exports = {
   preset: 'jest-preset-angular',
   name: 'dd-playground-client',
-  setupFilesAfterEnv: ['<rootDir>/src/jest-setup.ts'],
   coverageDirectory: 'dist/coverage',
   collectCoverageFrom: ['src/app/**/*.ts'],
   coveragePathIgnorePatterns: ['/node_modules/', '.module.ts', 'index.ts', '.stories.ts'],
-  testPathIgnorePatterns: ['/node_modules/', '.stories.ts', 'test.ts'],
-  testURL: 'http://localhost/',
+  setupFilesAfterEnv: ['<rootDir>/src/jest-setup.ts'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '.stories.ts', '<rootDir>/src/test.ts', '<rootDir>/src/app/test.ts'],
+  snapshotSerializers: ['jest-preset-angular/build/serializers/ng-snapshot', 'jest-preset-angular/build/serializers/html-comment'],
+  moduleNameMapper: {
+    'src/(.*)': '<rootDir>/src/$1',
+  },
 };

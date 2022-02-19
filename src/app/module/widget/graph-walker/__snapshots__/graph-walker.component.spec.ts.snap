@@ -31,9 +31,11 @@ exports[`GraphWalkerComponent is created 1`] = `
     <mat-card-content>
       <div
         ddflexbox="vyt"
+        ng-reflect-dd-flexbox="vyt"
       >
         <div
           ddflexbox="hysw"
+          ng-reflect-dd-flexbox="hysw"
         >
           <div
             class="contenthv childhv hovered-elevated"
@@ -41,7 +43,11 @@ exports[`GraphWalkerComponent is created 1`] = `
             <h2>
               DB Stats: Overall
             </h2>
-            <app-simple-view />
+            <app-simple-view
+              ng-reflect-data="[object Object]"
+              ng-reflect-is-dense="true"
+              ng-reflect-is-width-constrained="false"
+            />
           </div>
           <div
             class="contenthv childhv hovered-elevated"
@@ -49,13 +55,16 @@ exports[`GraphWalkerComponent is created 1`] = `
             <h2>
               DB Stats: Node Types
             </h2>
-            <app-simple-view />
+            <app-simple-view
+              ng-reflect-is-dense="true"
+              ng-reflect-is-width-constrained="false"
+            />
           </div>
         </div>
-        
         <div
           class="contenthv childhv hovered-elevated"
           ddflexbox="hycw"
+          ng-reflect-dd-flexbox="hycw"
         >
           <label>
             Query first node of:
@@ -63,20 +72,18 @@ exports[`GraphWalkerComponent is created 1`] = `
           <mat-form-field
             class="margin-left childhv"
             hintlabel="Type"
+            ng-reflect-hint-label="Type"
           >
             <mat-select>
-              
             </mat-select>
-            
           </mat-form-field>
           <mat-form-field
             class="margin-left childhv"
             hintlabel="Tag"
+            ng-reflect-hint-label="Tag"
           >
             <mat-select>
-              
             </mat-select>
-            
           </mat-form-field>
           <button
             mat-mini-fab=""
@@ -108,24 +115,20 @@ exports[`GraphWalkerComponent is created 1`] = `
           >
             &gt;
           </button>
-          
           <mat-form-field
             class="margin-left childhv"
             hintlabel="Value"
+            ng-reflect-hint-label="Value"
           >
             <input
               matinput=""
+              ng-reflect-autocomplete="[object Object]"
             />
-            
             <mat-autocomplete>
-              
             </mat-autocomplete>
           </mat-form-field>
         </div>
-        
-        
       </div>
-      
     </mat-card-content>
   </mat-card>
 </app-graph-walker>

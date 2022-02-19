@@ -9,12 +9,12 @@ exports[`NavigationContentComponent renders 1`] = `
   <app-navigation-bar
     appnavigationbaritemsfromroute=""
     layout="column"
+    ng-reflect-layout="column"
   /><main>
     <div
       class="scroll-in-y"
     >
       <router-outlet />
-      
     </div>
   </main>
 </app-navigation-content>

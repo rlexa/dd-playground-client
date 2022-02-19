@@ -9,12 +9,11 @@ exports[`NavigationBarComponent renders 1`] = `
 >
   <mat-toolbar
     color="primary"
+    ng-reflect-color="primary"
   >
     <span
       class="mat-toolbar-filler"
     />
-    
-    
   </mat-toolbar>
 </app-navigation-bar>
 `;
@@ -28,17 +27,21 @@ exports[`NavigationBarComponent with items renders 1`] = `
 >
   <mat-toolbar
     color="primary"
+    ng-reflect-color="primary"
   >
     <span
       class="mat-toolbar-filler"
     />
-    
     <nav
       class="mat-nav-list"
     >
       <a
         href="/route1"
         mat-button=""
+        ng-reflect-message="label1"
+        ng-reflect-position="below"
+        ng-reflect-router-link="route1"
+        ng-reflect-router-link-active="active"
         routerlinkactive="active"
         style="min-width: auto;"
       >
@@ -48,10 +51,13 @@ exports[`NavigationBarComponent with items renders 1`] = `
           icon icon1
         </i>
       </a>
-      
       <a
         href="/route2"
         mat-button=""
+        ng-reflect-message="label2"
+        ng-reflect-position="below"
+        ng-reflect-router-link="route2"
+        ng-reflect-router-link-active="active"
         routerlinkactive="active"
         style="min-width: auto;"
       >
@@ -61,10 +67,13 @@ exports[`NavigationBarComponent with items renders 1`] = `
           icon icon2
         </i>
       </a>
-      
       <a
         href="/route3"
         mat-button=""
+        ng-reflect-message="label3"
+        ng-reflect-position="below"
+        ng-reflect-router-link="route3"
+        ng-reflect-router-link-active="active"
         routerlinkactive="active"
         style="min-width: auto;"
       >
@@ -74,14 +83,10 @@ exports[`NavigationBarComponent with items renders 1`] = `
           icon icon3
         </i>
       </a>
-      
-      
     </nav>
     <span
       class="mat-toolbar-filler"
     />
-    
-    
   </mat-toolbar>
 </app-navigation-bar>
 `;
@@ -96,14 +101,18 @@ exports[`NavigationBarComponent with items with layout column renders 1`] = `
   <mat-toolbar
     class="toolbar-column"
     color="primary"
+    ng-reflect-color="primary"
   >
-    
     <nav
       class="mat-nav-list"
     >
       <a
         href="/route1"
         mat-button=""
+        ng-reflect-message="label1"
+        ng-reflect-position="right"
+        ng-reflect-router-link="route1"
+        ng-reflect-router-link-active="active"
         routerlinkactive="active"
         style="min-width: auto;"
       >
@@ -113,10 +122,13 @@ exports[`NavigationBarComponent with items with layout column renders 1`] = `
           icon icon1
         </i>
       </a>
-      
       <a
         href="/route2"
         mat-button=""
+        ng-reflect-message="label2"
+        ng-reflect-position="right"
+        ng-reflect-router-link="route2"
+        ng-reflect-router-link-active="active"
         routerlinkactive="active"
         style="min-width: auto;"
       >
@@ -126,10 +138,13 @@ exports[`NavigationBarComponent with items with layout column renders 1`] = `
           icon icon2
         </i>
       </a>
-      
       <a
         href="/route3"
         mat-button=""
+        ng-reflect-message="label3"
+        ng-reflect-position="right"
+        ng-reflect-router-link="route3"
+        ng-reflect-router-link-active="active"
         routerlinkactive="active"
         style="min-width: auto;"
       >
@@ -139,14 +154,10 @@ exports[`NavigationBarComponent with items with layout column renders 1`] = `
           icon icon3
         </i>
       </a>
-      
-      
     </nav>
     <span
       class="mat-toolbar-filler"
     />
-    
-    
   </mat-toolbar>
 </app-navigation-bar>
 `;
