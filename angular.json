@@ -81,7 +81,6 @@
       }
     }
   },
-  "defaultProject": "dd-playground-client",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
