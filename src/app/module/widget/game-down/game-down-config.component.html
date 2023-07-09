@@ -16,10 +16,8 @@
             [max]="factorMax$ | async"
             [min]="factorMin$ | async"
             [step]="0.1"
-            [value]="factor$ | async"
             [thumbLabel]="true"
-            (change)="onSetFactor($event.value)"
-          ></mat-slider>
+           #ngSlider><input matSliderThumb [value]="factor$ | async" (change)="onSetFactor({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value}.value)" #ngSliderThumb="matSliderThumb" /></mat-slider>
         </div>
       </mat-list-item>
       <mat-list-item>

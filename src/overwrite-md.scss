@@ -30,11 +30,12 @@
   }
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of option that may no longer apply for the MDC version. */
 .mat-option-text {
   display: block;
 }
 
-.mat-select {
+.mat-mdc-select {
   min-height: 1.7rem;
 }
 
@@ -44,10 +45,12 @@
   width: $size;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 .mat-card-shadow {
   box-shadow: 0 3px 1px -2px fade-out(#000, 0.8), 0 2px 2px 0 fade-out(#000, 0.86), 0 1px 5px 0 fade-out(#000, 0.88);
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
 .mat-icon,
 .material-icons,
 .mat-input-prefix .material-icons {
@@ -65,10 +68,10 @@
   }
 }
 
-.mat-mini-fab {
+.mat-mdc-mini-fab {
   &.mat-mini-fab-size-smaller {
     @include mat-item-size($size-mini-fab-height * 0.75);
-
+    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
     .mat-button-wrapper {
       padding: 0;
       display: block;
@@ -81,7 +84,8 @@
   }
 }
 
-.mat-list[dense] .mat-list-item .mat-list-text > * {
+/* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
+.mat-mdc-list[dense] .mat-mdc-list-item .mat-list-text > * {
   &.childv {
     @extend %childv;
   }
@@ -99,19 +103,21 @@
   }
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
+/* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
 .mat-list-auto-height {
-  &.mat-list .mat-list-item {
+  &.mat-mdc-list .mat-mdc-list-item {
     height: auto;
-
+    /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
     .mat-list-item-content {
       min-height: 4.8rem;
       height: auto;
     }
   }
 
-  &.mat-list[dense] .mat-list-item {
+  &.mat-mdc-list[dense] .mat-mdc-list-item {
     height: auto;
-
+    /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
     .mat-list-item-content {
       min-height: 2.75rem;
       height: auto;
@@ -120,16 +126,17 @@
 }
 
 .minimize-height {
-  &.mat-form-field {
+  &.mat-mdc-form-field {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-wrapper {
       padding-bottom: 0;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-underline,
     .mat-form-field-subscript-wrapper {
       display: none;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-infix {
       @extend %contentv;
       border-top: 0;
@@ -148,19 +155,19 @@
       display: flex;
       flex-direction: column;
 
-      .mat-button {
+      .mat-mdc-button {
         padding: 8px 16px;
       }
     }
   }
 }
 
-.mat-button,
-.mat-fab,
-.mat-icon-button,
-.mat-mini-fab,
-.mat-raised-button,
-.mat-select {
+.mat-mdc-button,
+.mat-mdc-fab,
+.mat-mdc-icon-button,
+.mat-mdc-mini-fab,
+.mat-mdc-raised-button,
+.mat-mdc-select {
   &.auto-line-height {
     @extend %auto-line-height;
   }
@@ -192,19 +199,20 @@
 }
 
 .no-infix {
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
   .mat-form-field-infix {
     padding-top: 0;
     border-top-width: 0;
   }
 }
 
-.mat-card {
+.mat-mdc-card {
   &.transition-background-color {
     @extend %transition-background-color;
   }
 }
 
-.mat-menu-item {
+.mat-mdc-menu-item {
   &.dense {
     height: auto;
     text-align: center;
@@ -214,7 +222,7 @@
 }
 
 .mat-nav-list {
-  > .mat-button {
+  > .mat-mdc-button {
     &.active {
       font-weight: bold;
     }
@@ -255,7 +263,8 @@
   }
 }
 
-.mat-tab-group.min-tab-header-size {
+.mat-mdc-tab-group.min-tab-header-size {
+  /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
   .mat-tab-label {
     height: auto;
     min-width: auto;
@@ -263,6 +272,7 @@
   }
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
 .mat-tab-body-content {
   position: relative;
 }
@@ -279,20 +289,23 @@
   flex: 1 1 auto;
 }
 
-.mat-tooltip {
+.mat-mdc-tooltip {
   font-size: var(--size-font-smaller);
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
 .mat-input-save-subspace {
   margin-bottom: var(--size-gap-bottom-table-column-input);
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
 .mat-input-prefix {
   .material-icons {
     font-size: 1.5em;
   }
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
 .mat-input-suffix {
   .material-icons {
     font-size: 1.5em;
@@ -300,6 +313,7 @@
 }
 
 .font-table-input {
+  /* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
   .mat-input-wrapper,
   .mat-select-trigger {
     font-weight: normal;
@@ -312,6 +326,7 @@
   min-width: auto;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
 .min-width-auto .mat-select-trigger {
   @extend %min-width-auto;
 }
@@ -337,6 +352,7 @@
   @extend %width-short-input;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
 .width-short-month .mat-select-trigger {
   @extend %width-short-month;
 }
@@ -347,6 +363,7 @@
   max-width: 6rem;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
 .width-short-year .mat-select-trigger {
   @extend %width-short-year;
 }
@@ -357,6 +374,7 @@
   line-height: inherit;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
 .font-inherit .mat-select-trigger {
   @extend %font-inherit;
 }
@@ -366,6 +384,7 @@
   height: inherit;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
 .height-inherit .mat-select-trigger {
   @extend %height-inherit;
 }
@@ -390,13 +409,13 @@ $clr-dark-fg-faded: fade-out($clr-dark-fg, 0.75);
     color: $clr-dark-fg;
   }
 
-  .mat-list .mat-subheader,
+  .mat-mdc-list .mat-mdc-subheader,
   .mat-nav-list .mat-subheader,
   .mat-selection-list .mat-subheader {
     color: $clr-dark-fg-fadee;
   }
 
-  .mat-list .mat-list-item,
+  .mat-mdc-list .mat-mdc-list-item,
   .mat-nav-list .mat-list-item,
   .mat-selection-list .mat-list-item {
     color: $clr-dark-fg;
@@ -406,7 +425,7 @@ $clr-dark-fg-faded: fade-out($clr-dark-fg, 0.75);
     border-top-color: $clr-dark-fg-fader;
   }
 
-  .mat-card {
+  .mat-mdc-card {
     background-color: lighten($clr-dark-bg, 15);
     color: $clr-dark-fg;
 
