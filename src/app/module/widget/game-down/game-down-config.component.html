@@ -12,12 +12,14 @@
       <mat-list-item>
         <div ddFlexbox="hyc">
           <label mat-line>Size:</label>
-          <mat-slider
-            [max]="factorMax$ | async"
-            [min]="factorMin$ | async"
-            [step]="0.1"
-            [thumbLabel]="true"
-           #ngSlider><input matSliderThumb [value]="factor$ | async" (change)="onSetFactor({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value}.value)" #ngSliderThumb="matSliderThumb" /></mat-slider>
+          <mat-slider [max]="factorMax$ | async" [min]="factorMin$ | async" [step]="0.1" #ngSlider>
+            <input
+              matSliderThumb
+              [value]="factor$ | async"
+              (change)="onSetFactor({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value}.value)"
+              #ngSliderThumb="matSliderThumb"
+            />
+          </mat-slider>
         </div>
       </mat-list-item>
       <mat-list-item>

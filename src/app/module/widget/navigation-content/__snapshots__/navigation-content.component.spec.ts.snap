@@ -2,7 +2,6 @@
 
 exports[`NavigationContentComponent renders 1`] = `
 <app-navigation-content
-  __ngContext__={[Function LRootView]}
   activatedRoute={[Function Object]}
   scrollable$={[Function Observable]}
 >

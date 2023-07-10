@@ -2,7 +2,6 @@
 
 exports[`NavigationBarComponent renders 1`] = `
 <app-navigation-bar
-  __ngContext__={[Function LRootView]}
   items="null"
   layout={[Function String]}
   trackByIndex={[Function Function]}
@@ -20,7 +19,6 @@ exports[`NavigationBarComponent renders 1`] = `
 
 exports[`NavigationBarComponent with items renders 1`] = `
 <app-navigation-bar
-  __ngContext__={[Function LRootView]}
   items={[Function Array]}
   layout={[Function String]}
   trackByIndex={[Function Function]}
@@ -93,7 +91,6 @@ exports[`NavigationBarComponent with items renders 1`] = `
 
 exports[`NavigationBarComponent with items with layout column renders 1`] = `
 <app-navigation-bar
-  __ngContext__={[Function LRootView]}
   items={[Function Array]}
   layout={[Function String]}
   trackByIndex={[Function Function]}

@@ -2,7 +2,6 @@
 
 exports[`LoadingBarComponent is created 1`] = `
 <app-loading-bar
-  __ngContext__={[Function LRootView]}
   show="false"
   styleDisplay={[Function String]}
   styleMarginTop={[Function String]}

@@ -18,8 +18,8 @@ export class GameMinesweeperComponent implements OnDestroy, OnInit {
   @RxCleanup() public game$ = new BehaviorSubject<Game>(null);
   @RxCleanup() public preset$ = new BehaviorSubject<Preset>({height: 15, mines: 15, width: 15});
 
-  @RxCleanup() public triggerInit$ = new Subject();
-  @RxCleanup() public triggerFrame$ = new Subject();
+  @RxCleanup() public triggerInit$ = new Subject<void>();
+  @RxCleanup() public triggerFrame$ = new Subject<void>();
   @RxCleanup() public triggerInputIndex$ = new Subject<{index: number; alt: boolean}>();
   @RxCleanup() public toggleLoop$ = new BehaviorSubject(false);
 

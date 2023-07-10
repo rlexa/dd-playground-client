@@ -32,6 +32,7 @@
     "@angular/platform-browser-dynamic": "^16.1.4",
     "@angular/router": "^16.1.4",
     "d3": "^7.3.0",
+    "dd-rxjs": "^1.5.1",
     "font-awesome": "^4.7.0",
     "material-design-icons": "^3.0.1",
     "pdfmake": "^0.2.4",

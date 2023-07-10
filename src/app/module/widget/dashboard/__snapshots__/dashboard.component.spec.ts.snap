@@ -2,7 +2,6 @@
 
 exports[`DashboardComponent renders 1`] = `
 <app-dashboard
-  __ngContext__={[Function LRootView]}
   isVisibleFooter$={[Function StateSubject]}
 >
   <div

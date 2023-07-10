@@ -22,7 +22,7 @@ export interface WithImage extends WithOffset, WithSize {
   dy?: number;
   dw?: number;
   dh?: number;
-  image?: CanvasImageSource;
+  image?: CanvasImageSource & {height: number; width: number};
 }
 
 export interface WithImageUrl extends WithImage {
@@ -49,13 +49,13 @@ export interface WithText extends WithColor, WithOffset {
 }
 
 export class ImageHolderCanvas implements ImageHolder<CanvasImageSource> {
-  @RxCleanup() private readonly urlToImage$ = new BehaviorSubject<Record<string, CanvasImageSource>>({});
+  @RxCleanup() private readonly urlToImage$ = new BehaviorSubject<Record<string, CanvasImageSource & {height: number; width: number}>>({});
 
   readonly images$ = this.urlToImage$.pipe(
     map((urlToImage) =>
       Object.entries(urlToImage)
         .filter(([key, val]) => !!val)
-        .reduce<ImageMeta>((acc, [key, val]) => ({...acc, [key]: {width: val.width, height: val.height}} as ImageMeta), {}),
+        .reduce<ImageMeta>((acc, [key, val]) => ({...acc, [key]: {width: val.width, height: val.height}}) as ImageMeta, {}),
     ),
   );
 
@@ -111,8 +111,10 @@ export const transformPush = (ctx: CanvasRenderingContext2D) => ctx.save();
 
 const each = <T>(ctx: CanvasRenderingContext2D, data: T, ...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) =>
   (funcs || []).forEach((_) => _(ctx, data));
-const fEach = <T>(...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) => (ctx: CanvasRenderingContext2D, data: T) =>
-  each(ctx, data, ...funcs);
+const fEach =
+  <T>(...funcs: ((ctx: CanvasRenderingContext2D, data: T) => void)[]) =>
+  (ctx: CanvasRenderingContext2D, data: T) =>
+    each(ctx, data, ...funcs);
 
 export const renderBackground = fEach(fillStyle, fillCanvas);
 export const renderImage = fEach(blitImage);
