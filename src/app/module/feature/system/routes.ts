@@ -18,7 +18,7 @@ export default [
     data,
     children: [
       {path: RouteConfiguration, loadChildren: () => import('../config/routes')},
-      {path: RouteBuildConfig, loadChildren: () => import('src/app/module/widget/build/build.module').then((m) => m.BuildModule)},
+      {path: RouteBuildConfig, loadChildren: () => import('../build/routes')},
       {path: RouteRoot, redirectTo: RouteConfiguration, pathMatch: 'full'},
       {path: RouteWild, redirectTo: RouteConfiguration},
     ],

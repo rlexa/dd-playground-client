@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BuildComponent renders 1`] = `
+<mock-render>
+  <app-build>
+    <mat-card
+      appearance="outlined"
+      ng-reflect-appearance="outlined"
+    >
+      <mat-card-title>
+        Build Settings
+      </mat-card-title>
+      <mat-card-content>
+        <app-simple-view
+          ng-reflect-data="globalFlags"
+          ng-reflect-is-width-constrained="false"
+        />
+      </mat-card-content>
+    </mat-card>
+  </app-build>
+</mock-render>
+`;
