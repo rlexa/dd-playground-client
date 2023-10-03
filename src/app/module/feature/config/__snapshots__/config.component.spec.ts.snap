@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfigComponent renders 1`] = `
+<mock-render>
+  <app-config>
+    <mat-card
+      appearance="outlined"
+      ng-reflect-appearance="outlined"
+    >
+      <mat-card-title>
+        Configuration
+      </mat-card-title>
+      <mat-card-content>
+        <mat-list
+          class="mat-list-auto-height"
+        >
+          <h3
+            mat-subheader=""
+          >
+            Nothing to configure yet.
+          </h3>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </app-config>
+</mock-render>
+`;

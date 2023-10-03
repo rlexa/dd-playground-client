@@ -53,10 +53,7 @@ const ROUTING: Routes = [
         path: DashboardRoute.Api,
         loadChildren: () => import('src/app/module/widget/route-api/route-api.module').then((m) => m.RouteApiModule),
       },
-      {
-        path: DashboardRoute.Settings,
-        loadChildren: () => import('src/app/module/widget/route-system/route-system.module').then((m) => m.RouteSystemModule),
-      },
+      {path: DashboardRoute.Settings, loadChildren: () => import('src/app/module/feature/system/routes')},
       {path: RouteRoot, redirectTo: DashboardRoute.Overview, pathMatch: 'full'},
       {path: RouteWild, redirectTo: DashboardRoute.Overview},
     ],
