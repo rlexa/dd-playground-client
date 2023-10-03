@@ -8,15 +8,15 @@ import {AppRoute} from './app-route';
 import {AppComponent} from './app.component';
 import {DiGlobalRouterParamsProvider} from './di-global';
 import {FlexboxDirective} from './module/directive/flexbox';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from './routing';
+import {RouteRoot, RouteWild} from './routing';
 
 const appRoutes: Routes = [
   {
     path: AppRoute.Dashboard,
     loadChildren: () => import('src/app/module/widget/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
-  {path: ROUTE_ROOT, redirectTo: AppRoute.Dashboard, pathMatch: 'full'},
-  {path: ROUTE_WILDCARD, redirectTo: AppRoute.Dashboard},
+  {path: RouteRoot, redirectTo: AppRoute.Dashboard, pathMatch: 'full'},
+  {path: RouteWild, redirectTo: AppRoute.Dashboard},
 ];
 
 @NgModule({

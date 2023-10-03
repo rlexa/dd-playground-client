@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {GhibliLocation} from '../api-ghibli.service';
 import {DiRemoteCurrentItemToTitle} from '../di-api-common';
 import {DiRemoteCurrentItem} from '../ghibli-detail';
@@ -22,14 +22,14 @@ import {GhibliLocationDetailModule, RoutedGhibliLocationDetailComponent} from '.
     GhibliLocationDetailModule,
     RouterModule.forChild([
       {
-        path: ROUTE_ROOT,
+        path: RouteRoot,
         component: GhibliListDetailComponent,
         children: [
           {path: `:${routeParamIdLocation}`, component: RoutedGhibliLocationDetailComponent},
-          {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
+          {path: RouteWild, redirectTo: RouteRoot},
         ],
       },
-      {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
+      {path: RouteWild, redirectTo: RouteRoot},
     ]),
   ],
 })

@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentModule} from '../navigation-content';
+import {NavigationContentComponent} from '../navigation-content';
 import {OverviewComponent} from '../overview/overview.module';
 import {OverviewRoute} from './overview-route';
 
@@ -16,18 +16,18 @@ const data: NavigationBarItemsData = {
 
 const ROUTING: Routes = [
   {
-    path: ROUTE_ROOT,
+    path: RouteRoot,
     component: NavigationContentComponent,
     data,
     children: [
       {path: OverviewRoute.Current, component: OverviewComponent},
-      {path: ROUTE_ROOT, redirectTo: OverviewRoute.Current, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: OverviewRoute.Current},
+      {path: RouteRoot, redirectTo: OverviewRoute.Current, pathMatch: 'full'},
+      {path: RouteWild, redirectTo: OverviewRoute.Current},
     ],
   },
 ];
 
-@NgModule({imports: [NavigationContentModule, RouterModule.forChild(ROUTING)]})
+@NgModule({imports: [NavigationContentComponent, RouterModule.forChild(ROUTING)]})
 class RouteOverviewModule {}
 
 export {RouteOverviewModule};

@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentModule} from '../navigation-content';
+import {NavigationContentComponent} from '../navigation-content';
 import {PlaygroundRoute} from './playground-route';
 
 const routeNavs: Record<PlaygroundRoute, NavigationBarItem> = {
@@ -16,7 +16,7 @@ const data: NavigationBarItemsData = {
 
 const ROUTING: Routes = [
   {
-    path: ROUTE_ROOT,
+    path: RouteRoot,
     component: NavigationContentComponent,
     data,
     children: [
@@ -28,13 +28,13 @@ const ROUTING: Routes = [
         path: PlaygroundRoute.DemoGhibli,
         loadChildren: () => import('src/app/module/widget/ghibli/ghibli.module').then((m) => m.GhibliModule),
       },
-      {path: ROUTE_ROOT, redirectTo: PlaygroundRoute.DemoMisc, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: PlaygroundRoute.DemoMisc},
+      {path: RouteRoot, redirectTo: PlaygroundRoute.DemoMisc, pathMatch: 'full'},
+      {path: RouteWild, redirectTo: PlaygroundRoute.DemoMisc},
     ],
   },
 ];
 
-@NgModule({imports: [NavigationContentModule, RouterModule.forChild(ROUTING)]})
+@NgModule({imports: [NavigationContentComponent, RouterModule.forChild(ROUTING)]})
 class RoutePlaygroundModule {}
 
 export {RoutePlaygroundModule};

@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavigationContentComponent renders 1`] = `
-<app-navigation-content
-  activatedRoute={[Function Object]}
-  scrollable$={[Function Observable]}
->
-  <app-navigation-bar
-    appnavigationbaritemsfromroute=""
-    layout="column"
-    ng-reflect-layout="column"
-  /><main>
-    <div
-      class="scroll-in-y"
-    >
-      <router-outlet />
-    </div>
-  </main>
-</app-navigation-content>
+<mock-render>
+  <app-navigation-content>
+    <app-navigation-bar
+      appnavigationbaritemsfromroute=""
+      layout="column"
+      ng-reflect-layout="column"
+    />
+    <main>
+      <div
+        class="scroll-in-y"
+      >
+        <router-outlet />
+      </div>
+    </main>
+  </app-navigation-content>
+</mock-render>
 `;

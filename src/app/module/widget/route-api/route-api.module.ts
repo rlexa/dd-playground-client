@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentComponentData, NavigationContentModule} from '../navigation-content';
+import {NavigationContentComponent, NavigationContentComponentData} from '../navigation-content';
 import {GhibliLocation, GhibliMovie, GhibliPerson, GhibliSpecies, GhibliVehicle} from './api-ghibli.service';
 import {ApiRoute, apiRouteIcon, apiRouteTooltip} from './api-route';
 import {DiRemoteCurrentItemToId} from './di-api-common';
@@ -18,7 +18,7 @@ const data: NavigationBarItemsData & NavigationContentComponentData = {
 
 const ROUTING: Routes = [
   {
-    path: ROUTE_ROOT,
+    path: RouteRoot,
     component: NavigationContentComponent,
     data,
     children: [
@@ -47,14 +47,14 @@ const ROUTING: Routes = [
         loadChildren: () =>
           import('src/app/module/widget/route-api/route-api-vehicles/route-api-vehicles.module').then((m) => m.RouteApiVehiclesModule),
       },
-      {path: ROUTE_ROOT, redirectTo: ApiRoute.Movie, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: ApiRoute.Movie},
+      {path: RouteRoot, redirectTo: ApiRoute.Movie, pathMatch: 'full'},
+      {path: RouteWild, redirectTo: ApiRoute.Movie},
     ],
   },
 ];
 
 @NgModule({
-  imports: [NavigationContentModule, RouterModule.forChild(ROUTING)],
+  imports: [NavigationContentComponent, RouterModule.forChild(ROUTING)],
   providers: [
     {
       provide: DiRemoteCurrentItemToId,

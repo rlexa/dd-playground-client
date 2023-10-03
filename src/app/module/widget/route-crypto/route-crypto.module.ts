@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentModule} from '../navigation-content';
+import {NavigationContentComponent} from '../navigation-content';
 import {CryptoRoute} from './crypto-route';
 
 const routeNavs: Record<CryptoRoute, NavigationBarItem> = {
@@ -15,18 +15,18 @@ const data: NavigationBarItemsData = {
 
 const ROUTING: Routes = [
   {
-    path: ROUTE_ROOT,
+    path: RouteRoot,
     component: NavigationContentComponent,
     data,
     children: [
       {path: CryptoRoute.Blockchain, loadChildren: () => import('src/app/module/widget/crypto/crypto.module').then((m) => m.CryptoModule)},
-      {path: ROUTE_ROOT, redirectTo: CryptoRoute.Blockchain, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: CryptoRoute.Blockchain},
+      {path: RouteRoot, redirectTo: CryptoRoute.Blockchain, pathMatch: 'full'},
+      {path: RouteWild, redirectTo: CryptoRoute.Blockchain},
     ],
   },
 ];
 
-@NgModule({imports: [NavigationContentModule, RouterModule.forChild(ROUTING)]})
+@NgModule({imports: [NavigationContentComponent, RouterModule.forChild(ROUTING)]})
 class RouteCryptoModule {}
 
 export {RouteCryptoModule};

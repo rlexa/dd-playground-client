@@ -33,8 +33,8 @@
                         >
                           {{ model[key] | date: FORMAT_DATE_TIMESTAMP }}
                         </span>
-                        <ng-container *ngSwitchCase="'json'"> {{ model[key] | json }} </ng-container>
-                        <ng-container *ngSwitchCase="'void'"> {{ '-' }} </ng-container>
+                        <ng-container *ngSwitchCase="'json'">{{ model[key] | json }}</ng-container>
+                        <ng-container *ngSwitchCase="'void'">{{ '-' }}</ng-container>
                         <app-simple-view
                           *ngSwitchCase="'array'"
                           [data]="model[key]"
@@ -43,7 +43,7 @@
                           [isExpanded]="false"
                           [isClickable]="isClickable"
                           (clicked)="onClicked($event.key, $event.value)"
-                        ></app-simple-view>
+                        />
                         <app-simple-view
                           *ngSwitchCase="'recursive'"
                           [data]="model[key]"
@@ -52,7 +52,7 @@
                           [isExpanded]="false"
                           [isClickable]="isClickable"
                           (clicked)="onClicked($event.key, $event.value)"
-                        ></app-simple-view>
+                        />
                         <span
                           *ngSwitchDefault
                           [ngClass]="{clickable: clickables[key], 'color-accent': clickables[key]}"

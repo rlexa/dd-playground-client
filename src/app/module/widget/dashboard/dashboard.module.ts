@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {FooterModule} from '../footer';
 import {NavigationBarItem, NavigationBarItemsData, NavigationBarModule} from '../navigation-bar';
 import {DashboardRoute} from './dashboard-route';
@@ -24,7 +24,7 @@ const data: NavigationBarItemsData = {
 
 const ROUTING: Routes = [
   {
-    path: ROUTE_ROOT,
+    path: RouteRoot,
     component: DashboardComponent,
     data,
     children: [
@@ -44,10 +44,7 @@ const ROUTING: Routes = [
         path: DashboardRoute.Crypto,
         loadChildren: () => import('src/app/module/widget/route-crypto/route-crypto.module').then((m) => m.RouteCryptoModule),
       },
-      {
-        path: DashboardRoute.School,
-        loadChildren: () => import('src/app/module/widget/route-school/route-school.module').then((m) => m.RouteSchoolModule),
-      },
+      {path: DashboardRoute.School, loadChildren: () => import('../../feature/school/routes')},
       {
         path: DashboardRoute.Playground,
         loadChildren: () => import('src/app/module/widget/route-playground/route-playground.module').then((m) => m.RoutePlaygroundModule),
@@ -60,8 +57,8 @@ const ROUTING: Routes = [
         path: DashboardRoute.Settings,
         loadChildren: () => import('src/app/module/widget/route-system/route-system.module').then((m) => m.RouteSystemModule),
       },
-      {path: ROUTE_ROOT, redirectTo: DashboardRoute.Overview, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: DashboardRoute.Overview},
+      {path: RouteRoot, redirectTo: DashboardRoute.Overview, pathMatch: 'full'},
+      {path: RouteWild, redirectTo: DashboardRoute.Overview},
     ],
   },
 ];
@@ -73,4 +70,4 @@ const ROUTING: Routes = [
 })
 class DashboardModule {}
 
-export {DashboardModule, DashboardComponent};
+export {DashboardComponent, DashboardModule};

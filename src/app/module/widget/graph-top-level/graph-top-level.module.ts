@@ -2,9 +2,9 @@ import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
-import {NavigationContentModule} from '../navigation-content';
+import {NavigationContentComponent} from '../navigation-content';
 import {GraphRoute} from './graph-route';
 import {GraphTopLevelComponent} from './graph-top-level.component';
 
@@ -18,7 +18,7 @@ const data: NavigationBarItemsData = {
 
 const ROUTING: Routes = [
   {
-    path: ROUTE_ROOT,
+    path: RouteRoot,
     component: GraphTopLevelComponent,
     data,
     children: [
@@ -26,17 +26,17 @@ const ROUTING: Routes = [
         path: GraphRoute.Walker,
         loadChildren: () => import('src/app/module/widget/graph-walker/graph-walker.module').then((m) => m.GraphWalkerModule),
       },
-      {path: ROUTE_ROOT, redirectTo: GraphRoute.Walker, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: GraphRoute.Walker},
+      {path: RouteRoot, redirectTo: GraphRoute.Walker, pathMatch: 'full'},
+      {path: RouteWild, redirectTo: GraphRoute.Walker},
     ],
   },
 ];
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, NavigationContentModule, RouterModule.forChild(ROUTING)],
+  imports: [CommonModule, HttpClientModule, NavigationContentComponent, RouterModule.forChild(ROUTING)],
   exports: [GraphTopLevelComponent],
   declarations: [GraphTopLevelComponent],
 })
 class GraphTopLevelModule {}
 
-export {GraphTopLevelModule, GraphTopLevelComponent};
+export {GraphTopLevelComponent, GraphTopLevelModule};

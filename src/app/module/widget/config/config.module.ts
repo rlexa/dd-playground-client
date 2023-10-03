@@ -3,12 +3,12 @@ import {NgModule} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {ConfigComponent} from './config.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: ConfigComponent, pathMatch: 'full'},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
+  {path: RouteRoot, component: ConfigComponent, pathMatch: 'full'},
+  {path: RouteWild, redirectTo: RouteRoot},
 ];
 
 @NgModule({
@@ -18,4 +18,4 @@ const ROUTING: Routes = [
 })
 class ConfigModule {}
 
-export {ConfigModule, ConfigComponent};
+export {ConfigComponent, ConfigModule};

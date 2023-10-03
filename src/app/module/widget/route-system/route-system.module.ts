@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentModule} from '../navigation-content';
+import {NavigationContentComponent} from '../navigation-content';
 import {SystemRoute} from './system-route';
 
 const routeNavs: Record<SystemRoute, NavigationBarItem> = {
@@ -16,7 +16,7 @@ const data: NavigationBarItemsData = {
 
 const ROUTING: Routes = [
   {
-    path: ROUTE_ROOT,
+    path: RouteRoot,
     component: NavigationContentComponent,
     data,
     children: [
@@ -25,13 +25,13 @@ const ROUTING: Routes = [
         loadChildren: () => import('src/app/module/widget/config/config.module').then((m) => m.ConfigModule),
       },
       {path: SystemRoute.BuildConfig, loadChildren: () => import('src/app/module/widget/build/build.module').then((m) => m.BuildModule)},
-      {path: ROUTE_ROOT, redirectTo: SystemRoute.Configuration, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: SystemRoute.Configuration},
+      {path: RouteRoot, redirectTo: SystemRoute.Configuration, pathMatch: 'full'},
+      {path: RouteWild, redirectTo: SystemRoute.Configuration},
     ],
   },
 ];
 
-@NgModule({imports: [NavigationContentModule, RouterModule.forChild(ROUTING)]})
+@NgModule({imports: [NavigationContentComponent, RouterModule.forChild(ROUTING)]})
 class RouteSystemModule {}
 
 export {RouteSystemModule};

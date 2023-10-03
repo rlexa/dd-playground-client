@@ -10,7 +10,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {FlexboxDirective} from '../../directive/flexbox';
 import {SimpleViewComponent} from '../simple-view';
 import {GameDownAiInitiativeComponent} from './game-down-ai-initiative.component';
@@ -21,8 +21,8 @@ import {GameDownComponent} from './game-down.component';
 import {RenderSimpleFieldComponent} from './renderer';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: GameDownComponent, pathMatch: 'full'},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
+  {path: RouteRoot, component: GameDownComponent, pathMatch: 'full'},
+  {path: RouteWild, redirectTo: RouteRoot},
 ];
 
 @NgModule({

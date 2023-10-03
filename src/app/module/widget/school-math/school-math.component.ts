@@ -21,8 +21,8 @@ import {DiSchoolMathSeed, DiSchoolMathTest, DiSchoolMathTestPdfMeta} from './di-
         </mat-form-field>
         <button mat-raised-button [disabled]="!!!(data$ | async)" (click)="triggerPdf()">PDF</button>
       </p>
-      <app-simple-view subheader="JSON" [data]="data$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
-      <app-simple-view subheader="PDF" [data]="pdfMeta$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+      <app-simple-view subheader="JSON" [data]="data$ | async" [isWidthConstrained]="false" [isDense]="true" />
+      <app-simple-view subheader="PDF" [data]="pdfMeta$ | async" [isWidthConstrained]="false" [isDense]="true" />
     </mat-card-content>
   </mat-card>`,
   styleUrls: ['./school-math.component.scss'],

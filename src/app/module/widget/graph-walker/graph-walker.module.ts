@@ -8,15 +8,15 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {FlexboxDirective} from '../../directive/flexbox';
 import {IconPipe} from '../../pipe/icon';
 import {SimpleViewComponent} from '../simple-view';
 import {GraphWalkerComponent, TAG_TYPE} from './graph-walker.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: GraphWalkerComponent, pathMatch: 'full'},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
+  {path: RouteRoot, component: GraphWalkerComponent, pathMatch: 'full'},
+  {path: RouteWild, redirectTo: RouteRoot},
 ];
 
 @NgModule({

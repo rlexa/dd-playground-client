@@ -7,14 +7,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {FlexboxDirective} from '../../directive/flexbox';
 import {SimpleViewComponent} from '../simple-view';
 import {CryptoComponent} from './crypto.component';
 
 const ROUTING: Routes = [
-  {path: ROUTE_ROOT, component: CryptoComponent, pathMatch: 'full'},
-  {path: ROUTE_WILDCARD, redirectTo: ROUTE_ROOT},
+  {path: RouteRoot, component: CryptoComponent, pathMatch: 'full'},
+  {path: RouteWild, redirectTo: RouteRoot},
 ];
 
 @NgModule({

@@ -1,6 +1,8 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {ActivatedRoute, Data} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ActivatedRoute, Data, RouterModule} from '@angular/router';
 import {map} from 'rxjs/operators';
+import {NavigationBarModule} from '../navigation-bar';
 
 export interface NavigationContentComponentData extends Data {
   navigationContentScrollable?: boolean;
@@ -8,12 +10,19 @@ export interface NavigationContentComponentData extends Data {
 
 @Component({
   selector: 'app-navigation-content',
-  templateUrl: './navigation-content.component.html',
+  template: `<app-navigation-bar appNavigationBarItemsFromRoute layout="column" />
+    <main>
+      <div [class.scroll-in-y]="scrollable$ | async">
+        <router-outlet />
+      </div>
+    </main>`,
   styleUrls: ['./navigation-content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, RouterModule, NavigationBarModule],
 })
 export class NavigationContentComponent {
-  constructor(private readonly activatedRoute: ActivatedRoute) {}
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   public readonly scrollable$ = this.activatedRoute.data.pipe(
     map(

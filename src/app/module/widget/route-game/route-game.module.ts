@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
+import {RouteRoot, RouteWild} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
-import {NavigationContentComponent, NavigationContentModule} from '../navigation-content';
+import {NavigationContentComponent} from '../navigation-content';
 import {GameRoute} from './game-route';
 
 const routeNavs: Record<GameRoute, NavigationBarItem> = {
@@ -18,7 +18,7 @@ const data: NavigationBarItemsData = {
 
 const ROUTING: Routes = [
   {
-    path: ROUTE_ROOT,
+    path: RouteRoot,
     component: NavigationContentComponent,
     data,
     children: [
@@ -38,13 +38,13 @@ const ROUTING: Routes = [
         path: GameRoute.RenderCanvas,
         loadChildren: () => import('src/app/module/widget/render-canvas/render-canvas.module').then((m) => m.RenderCanvasModule),
       },
-      {path: ROUTE_ROOT, redirectTo: GameRoute.MineSweeper, pathMatch: 'full'},
-      {path: ROUTE_WILDCARD, redirectTo: GameRoute.MineSweeper},
+      {path: RouteRoot, redirectTo: GameRoute.MineSweeper, pathMatch: 'full'},
+      {path: RouteWild, redirectTo: GameRoute.MineSweeper},
     ],
   },
 ];
 
-@NgModule({imports: [NavigationContentModule, RouterModule.forChild(ROUTING)]})
+@NgModule({imports: [NavigationContentComponent, RouterModule.forChild(ROUTING)]})
 class RouteGameModule {}
 
 export {RouteGameModule};

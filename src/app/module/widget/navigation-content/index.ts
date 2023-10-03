@@ -1,1 +1,1 @@
-export * from './navigation-content.module';
+export * from './navigation-content.component';
