@@ -16,7 +16,7 @@ export default [
     loadComponent: () => import('../../widget/navigation-content').then((ii) => ii.NavigationContentComponent),
     data,
     children: [
-      {path: RouteMath, loadChildren: () => import('src/app/module/widget/school-math/routes')},
+      {path: RouteMath, loadChildren: () => import('../school-math/routes')},
       {path: RouteRoot, redirectTo: RouteMath, pathMatch: 'full'},
       {path: RouteWild, redirectTo: RouteMath},
     ],

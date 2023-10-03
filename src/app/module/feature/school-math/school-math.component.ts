@@ -7,7 +7,7 @@ import {MatInputModule} from '@angular/material/input';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {Subject} from 'rxjs';
 import {filter, map, takeUntil, withLatestFrom} from 'rxjs/operators';
-import {SimpleViewComponent} from '../simple-view';
+import {SimpleViewComponent} from '../../widget/simple-view';
 import {DiSchoolMathSeed, DiSchoolMathTest, DiSchoolMathTestPdfMeta} from './di-school-math-data';
 
 @Component({
