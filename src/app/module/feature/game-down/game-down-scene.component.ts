@@ -1,23 +1,27 @@
-import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
-import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {combineLatest} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
-import {GAMEDOWN_FIELD_H, GAMEDOWN_FIELD_W} from 'src/app/module/widget/game-down/data';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {GAMEDOWN_FIELD_H, GAMEDOWN_FIELD_W} from './data';
 import {DiDebugView, DiSceneHoveredIndex, DiSceneSelectedIndex, DiTheme} from './di-game-down-values';
+import {GameDownFieldComponent} from './game-down-field.component';
+import {RenderSimpleFieldComponent} from './renderer';
 import {GameDownService, RENDERER_SIMPLE} from './service';
 
 @Component({
   selector: 'app-game-down-scene',
   templateUrl: './game-down-scene.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, FlexboxDirective, GameDownFieldComponent, RenderSimpleFieldComponent],
 })
 export class GameDownSceneComponent {
-  constructor(
-    private readonly gameDownService: GameDownService,
-    @Inject(DiDebugView) public readonly viewDebug$: Observable<boolean>,
-    @Inject(DiSceneHoveredIndex) public readonly hovered$: BehaviorSubject<number>,
-    @Inject(DiSceneSelectedIndex) public readonly selected$: BehaviorSubject<number>,
-    @Inject(DiTheme) public readonly themeName$: BehaviorSubject<string>,
-  ) {}
+  private readonly gameDownService = inject(GameDownService);
+  readonly hovered$ = inject(DiSceneHoveredIndex);
+  readonly viewDebug$ = inject(DiDebugView);
+  readonly selected$ = inject(DiSceneSelectedIndex);
+  readonly themeName$ = inject(DiTheme);
 
   readonly HEIGHT = Array.from(Array(GAMEDOWN_FIELD_H), (_, index) => index);
   readonly RENDERER_SIMPLE = RENDERER_SIMPLE;

@@ -1,24 +1,43 @@
-import {ChangeDetectionStrategy, Component, Inject, OnDestroy} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, OnDestroy, inject} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatListModule} from '@angular/material/list';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
-import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
+import {BehaviorSubject, combineLatest, of} from 'rxjs';
 import {distinctUntilChanged, filter, map, shareReplay, takeUntil, withLatestFrom} from 'rxjs/operators';
-import {buildSituation1, checkProblems, DEF_FAMEDOWN_STATE_FIELDS, GameDownField, modField} from 'src/app/module/widget/game-down/data';
 import {trackByIndex} from 'src/app/util';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {DEF_FAMEDOWN_STATE_FIELDS, GameDownField, buildSituation1, checkProblems, modField} from './data';
 import {DiDebugView, DiSceneSelectedIndex, DiTheme} from './di-game-down-values';
+import {GameDownAiInitiativeComponent} from './game-down-ai-initiative.component';
 import {GameDownService} from './service';
 
 @Component({
   selector: 'app-game-down-config',
   templateUrl: './game-down-config.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FlexboxDirective,
+    FormsModule,
+    GameDownAiInitiativeComponent,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatListModule,
+    MatSelectModule,
+    MatSliderModule,
+  ],
 })
 export class GameDownConfigComponent implements OnDestroy {
-  constructor(
-    private readonly gameDownService: GameDownService,
-    @Inject(DiDebugView) public readonly viewDebug$: BehaviorSubject<boolean>,
-    @Inject(DiSceneSelectedIndex) public readonly selectedFieldIndex$: Observable<number>,
-    @Inject(DiTheme) public readonly theme$: BehaviorSubject<string>,
-  ) {}
+  private readonly gameDownService = inject(GameDownService);
+  readonly selectedFieldIndex$ = inject(DiSceneSelectedIndex);
+  readonly theme$ = inject(DiTheme);
+  readonly viewDebug$ = inject(DiDebugView);
 
   @RxCleanup() private readonly done$ = new DoneSubject();
 

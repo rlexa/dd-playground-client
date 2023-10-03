@@ -1,5 +1,5 @@
-import {FIELD_WATER, GameDownField} from 'src/app/module/widget/game-down/data/game-down';
-import {modField, modHovering, modInitiative} from 'src/app/module/widget/game-down/data/game-down-util';
+import {FIELD_WATER, GameDownField} from './game-down';
+import {modField, modHovering, modInitiative} from './game-down-util';
 
 export const checkProblemsOnField = (field: GameDownField) => {
   const ret: string[] = [];

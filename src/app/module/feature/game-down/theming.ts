@@ -1,4 +1,4 @@
-import {GameDownColorMap} from 'src/app/module/widget/game-down/data';
+import {GameDownColorMap} from './data';
 import {Color, reduceThemes, Theme, THEME_MISSING} from './theme';
 
 // DEFAULT

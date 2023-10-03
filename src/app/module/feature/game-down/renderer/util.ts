@@ -10,7 +10,7 @@ import {
   GameDownFieldActor,
   GameDownFieldEntity,
   modField,
-} from 'src/app/module/widget/game-down/data';
+} from '../data';
 import {Theme, themeColor} from '../theme';
 
 const ENTITY_BUILDING = entityBuilding().name;

@@ -12,8 +12,7 @@
         [data]="fields[index]"
         [hovered]="(hovered$ | async) === index"
         [selected]="(selected$ | async) === index"
-      >
-      </app-render-simple-field>
+      />
     </ng-container>
 
     <div
@@ -37,8 +36,7 @@
     <ng-container *ngIf="fields$ | async as fields">
       <tr *ngFor="let yy of HEIGHT">
         <td *ngFor="let xx of WIDTH">
-          <ng-container *ngTemplateOutlet="templateIndexedField; context: {$implicit: yy * WIDTH.length + xx, fields: fields}">
-          </ng-container>
+          <ng-container *ngTemplateOutlet="templateIndexedField; context: {$implicit: yy * WIDTH.length + xx, fields: fields}" />
         </td>
       </tr>
     </ng-container>

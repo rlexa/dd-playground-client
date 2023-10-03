@@ -1,11 +1,12 @@
-import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject} from '@angular/core';
+import {MatListModule} from '@angular/material/list';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
-import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {resolveInitiative as resolveInitiativeIndices} from 'src/app/module/widget/game-down/data';
 import {trackByIndex} from 'src/app/util';
 import {setUntilThenBack$} from 'src/app/util/set-until-then-back-rx';
-import {DiDashboardVisibilityFooter} from '../dashboard/di-dashboard-options';
+import {DiDashboardVisibilityFooter} from '../../widget/dashboard/di-dashboard-options';
+import {resolveInitiative as resolveInitiativeIndices} from './data';
 import {DiSceneHoveredIndex, DiSceneSelectedIndex} from './di-game-down-values';
 import {GameDownService} from './service';
 
@@ -13,14 +14,14 @@ import {GameDownService} from './service';
   selector: 'app-game-down-ai-initiative',
   templateUrl: './game-down-ai-initiative.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, MatListModule],
 })
 export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
-  constructor(
-    private readonly gameDownService: GameDownService,
-    @Inject(DiDashboardVisibilityFooter) private readonly isVisibleFooter$: BehaviorSubject<boolean>,
-    @Inject(DiSceneHoveredIndex) public readonly hovered$: BehaviorSubject<number>,
-    @Inject(DiSceneSelectedIndex) public readonly selected$: BehaviorSubject<number>,
-  ) {}
+  private readonly gameDownService = inject(GameDownService);
+  readonly hovered$ = inject(DiSceneHoveredIndex);
+  private readonly isVisibleFooter$ = inject(DiDashboardVisibilityFooter);
+  readonly selected$ = inject(DiSceneSelectedIndex);
 
   @RxCleanup() private readonly done$ = new DoneSubject();
 

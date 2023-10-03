@@ -1,9 +1,11 @@
+import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {GameDownColorMap, GameDownField} from 'src/app/module/widget/game-down/data';
+import {FlexboxDirective} from 'src/app/module/directive/flexbox';
 import {trackByIndex} from 'src/app/util';
+import {GameDownColorMap, GameDownField} from '../data';
 import {Theme} from '../theme';
 import {actorToColor, entityToColor, fieldToColor} from './util';
 
@@ -11,6 +13,8 @@ import {actorToColor, entityToColor, fieldToColor} from './util';
   selector: 'app-render-simple-field',
   templateUrl: './render-simple-field.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, FlexboxDirective],
 })
 export class RenderSimpleFieldComponent implements OnDestroy {
   @RxCleanup() readonly data$ = new BehaviorSubject<GameDownField>(null);

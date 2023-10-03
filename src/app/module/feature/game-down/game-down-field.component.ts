@@ -1,14 +1,23 @@
+import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {GameDownColorMap} from 'src/app/module/widget/game-down/data';
-import {fTthemeColor, Theme} from './theme';
+import {GameDownColorMap} from './data';
+import {Theme, fTthemeColor} from './theme';
 
 @Component({
   selector: 'app-game-down-field',
-  templateUrl: './game-down-field.component.html',
+  template: `<div
+    class="position-relative deadclick-force"
+    [ngStyle]="{width: '9em', height: '9em'}"
+    [style.backgroundColor]="colorBg$ | async"
+  >
+    <ng-content />
+  </div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule],
 })
 export class GameDownFieldComponent implements OnDestroy {
   @RxCleanup() readonly theme$ = new BehaviorSubject<Theme<GameDownColorMap>>(null);

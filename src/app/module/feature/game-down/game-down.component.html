@@ -2,16 +2,16 @@
   <mat-card appearance="outlined" class="childhv">
     <mat-card-title>Config</mat-card-title>
     <mat-card-content>
-      <app-game-down-config></app-game-down-config>
+      <app-game-down-config />
     </mat-card-content>
   </mat-card>
 
-  <app-game-down-scene class="childhv scroll-x-auto"></app-game-down-scene>
+  <app-game-down-scene class="childhv scroll-x-auto" />
 
   <mat-card appearance="outlined" class="childhv">
     <mat-card-title>Scene State</mat-card-title>
     <mat-card-content>
-      <app-simple-view [data]="state$ | async" [isWidthConstrained]="false" [isDense]="true"></app-simple-view>
+      <app-simple-view [data]="state$ | async" [isWidthConstrained]="false" [isDense]="true" />
     </mat-card-content>
   </mat-card>
 </div>

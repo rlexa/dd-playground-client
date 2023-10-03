@@ -22,10 +22,7 @@ const ROUTING: Routes = [
     component: NavigationContentComponent,
     data,
     children: [
-      {
-        path: GameRoute.Down,
-        loadChildren: () => import('src/app/module/widget/game-down/game-down.module').then((m) => m.GameDownModule),
-      },
+      {path: GameRoute.Down, loadChildren: () => import('../../feature/game-down/routes')},
       {path: GameRoute.MineSweeper, loadChildren: () => import('../../feature/game-minesweeper/routes')},
       {path: GameRoute.Snake, loadChildren: () => import('../../feature/game-snake/routes')},
       {path: GameRoute.RenderCanvas, loadChildren: () => import('../../feature/render-canvas/routes')},
