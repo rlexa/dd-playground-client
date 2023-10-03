@@ -30,10 +30,7 @@ const ROUTING: Routes = [
         path: GameRoute.MineSweeper,
         loadChildren: () => import('src/app/module/game-minesweeper/game-minesweeper.module').then((m) => m.GameMinesweeperModule),
       },
-      {
-        path: GameRoute.Snake,
-        loadChildren: () => import('src/app/module/game-snake/game-snake.module').then((m) => m.GameSnakeModule),
-      },
+      {path: GameRoute.Snake, loadChildren: () => import('../../feature/game-snake/routes')},
       {path: GameRoute.RenderCanvas, loadChildren: () => import('../../feature/render-canvas/routes')},
       {path: RouteRoot, redirectTo: GameRoute.MineSweeper, pathMatch: 'full'},
       {path: RouteWild, redirectTo: GameRoute.MineSweeper},

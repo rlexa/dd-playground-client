@@ -13,20 +13,14 @@
     <button class="childhv" (click)="toggleLoop()">{{ (toggleLoop$ | async) ? 'Loop OFF' : 'Loop ON' }}</button>
     <button *ngFor="let vec of ['L', 'U', 'R', 'D']" class="childhv" (click)="triggerDirection(vec)">{{ vec }}</button>
 
-    <app-simple-view [isDense]="true" [isExpandable]="true" subheader="Preset" [data]="preset$ | async"></app-simple-view>
-    <app-simple-view
-      [isDense]="true"
-      [isExpandable]="true"
-      [isWidthConstrained]="false"
-      subheader="Game"
-      [data]="(game$ | async) || {}"
-    ></app-simple-view>
+    <app-simple-view [isDense]="true" [isExpandable]="true" subheader="Preset" [data]="preset$ | async" />
+    <app-simple-view [isDense]="true" [isExpandable]="true" [isWidthConstrained]="false" subheader="Game" [data]="(game$ | async) || {}" />
   </div>
 
   <div class="childhv contenthv background-highlighted border">
     <h5>Render: HTML</h5>
-    <div style="width: 20rem; height: 20rem; padding: .5em;">
-      <app-game-snake-render-html [game]="game$ | async"></app-game-snake-render-html>
+    <div style="width: 20rem; height: 20rem; padding: 0.5em">
+      <app-game-snake-render-html [game]="game$ | async" />
     </div>
   </div>
 </div>

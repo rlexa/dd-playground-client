@@ -1,7 +1,9 @@
-import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject} from '@angular/core';
 import {DoneSubject, RxCleanup, rxFire_, rxNext_} from 'dd-rxjs';
-import {BehaviorSubject, merge, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, merge} from 'rxjs';
 import {filter, takeUntil} from 'rxjs/operators';
+import {SimpleViewComponent} from '../../widget/simple-view';
 import {
   DiGameSnake,
   DiGameSnakePreset,
@@ -13,24 +15,25 @@ import {
   DiGameSnakeTriggerFrame,
   DiGameSnakeTriggerInit,
 } from './di-game-snake-values';
-import {Game, Preset} from './logic-fns';
+import {Game} from './logic-fns';
+import {GameSnakeRenderHtmlComponent} from './render';
 
 @Component({
   selector: 'app-game-snake',
   templateUrl: './game-snake.component.html',
   styleUrls: ['./game-snake.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, SimpleViewComponent, GameSnakeRenderHtmlComponent],
   providers: [DiGameSnakeProcessorDirectionProvider, DiGameSnakeProcessorFrameProvider, DiGameSnakeProcessorInitProvider],
 })
 export class GameSnakeComponent implements OnDestroy, OnInit {
-  constructor(
-    @Inject(DiGameSnake) public readonly game$: BehaviorSubject<Game>,
-    @Inject(DiGameSnakePreset) public readonly preset$: Observable<Preset>,
-    @Inject(DiGameSnakeProcessors) private readonly processors$: Observable<Game>[],
-    @Inject(DiGameSnakeTriggerDirection) private readonly triggerDirection$: Subject<string>,
-    @Inject(DiGameSnakeTriggerFrame) private readonly triggerFrame$: Subject<any>,
-    @Inject(DiGameSnakeTriggerInit) private readonly triggerInit$: Subject<any>,
-  ) {}
+  readonly game$ = inject(DiGameSnake);
+  readonly preset$ = inject(DiGameSnakePreset);
+  private readonly processors$ = inject(DiGameSnakeProcessors) as unknown as Observable<Game>[];
+  private readonly triggerDirection$ = inject(DiGameSnakeTriggerDirection);
+  private readonly triggerFrame$ = inject(DiGameSnakeTriggerFrame);
+  private readonly triggerInit$ = inject(DiGameSnakeTriggerInit);
 
   private timeLast = 0;
 
