@@ -1,5 +1,6 @@
 export const RouteBuildConfig = 'buildconfig';
 export const RouteConfiguration = 'configuration';
+export const RouteCurrent = 'current';
 export const RouteBlockchain = 'blockchain';
 export const RouteDemoGhibli = 'demoghibli';
 export const RouteDemoMisc = 'demomisc';

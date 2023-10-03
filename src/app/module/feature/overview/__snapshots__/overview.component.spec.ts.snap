@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OverviewComponent renders 1`] = `
+<mock-render>
+  <app-overview>
+    <mat-card
+      appearance="outlined"
+      ng-reflect-appearance="outlined"
+    >
+      <mat-card-title>
+        Empty?
+      </mat-card-title>
+      <mat-card-content>
+        <mat-list>
+          <h4
+            mat-header=""
+          >
+            Empty
+          </h4>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </app-overview>
+</mock-render>
+`;

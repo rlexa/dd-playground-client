@@ -28,10 +28,7 @@ const ROUTING: Routes = [
     component: DashboardComponent,
     data,
     children: [
-      {
-        path: DashboardRoute.Overview,
-        loadChildren: () => import('src/app/module/widget/route-overview/route-overview.module').then((m) => m.RouteOverviewModule),
-      },
+      {path: DashboardRoute.Overview, loadChildren: () => import('../../feature/overview/routes')},
       {
         path: DashboardRoute.Game,
         loadChildren: () => import('src/app/module/widget/route-game/route-game.module').then((m) => m.RouteGameModule),
