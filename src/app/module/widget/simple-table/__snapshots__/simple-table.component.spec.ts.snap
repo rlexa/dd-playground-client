@@ -1,67 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SimpleTableComponent is created 1`] = `
-<app-simple-table
-  FORMAT_DATE_TIMESTAMP={[Function String]}
-  __ngContext__={[Function LRootView]}
-  clicked={[Function EventEmitter_]}
-  columns$={[Function AnonymousSubject]}
-  data$={[Function BehaviorSubject]}
-  dataBatch$={[Function Observable]}
-  dataBatchClickables$={[Function Observable]}
-  dataFiltered$={[Function Observable]}
-  dblClick={[Function EventEmitter_]}
-  done$={[Function DoneSubject]}
-  filter$={[Function BehaviorSubject]}
-  isClickable="null"
-  onClicked={[Function Function]}
-  onRowDoubleClick={[Function Function]}
-  onSortChange={[Function Function]}
-  page$={[Function BehaviorSubject]}
-  pageSize$={[Function BehaviorSubject]}
-  setFilter={[Function Function]}
-  setPage={[Function Function]}
-  setSortAsc={[Function Function]}
-  setSortBy={[Function Function]}
-  sortAsc$={[Function BehaviorSubject]}
-  sortBy$={[Function BehaviorSubject]}
-  styleDisplay={[Function String]}
-  styleFlexDirection={[Function String]}
-  total$={[Function Observable]}
-  trackByIndex={[Function Function]}
->
-</app-simple-table>
+exports[`SimpleTableComponent renders 1`] = `
+<mock-render>
+  <app-simple-table
+    style="display: flex; flex-direction: column;"
+  >
+  </app-simple-table>
+</mock-render>
 `;
 
 exports[`SimpleTableComponent with data renders 1`] = `
-<app-simple-table
-  FORMAT_DATE_TIMESTAMP={[Function String]}
-  __ngContext__={[Function LRootView]}
-  clicked={[Function EventEmitter_]}
-  columns$={[Function AnonymousSubject]}
-  data$={[Function BehaviorSubject]}
-  dataBatch$={[Function Observable]}
-  dataBatchClickables$={[Function Observable]}
-  dataFiltered$={[Function Observable]}
-  dblClick={[Function EventEmitter_]}
-  done$={[Function DoneSubject]}
-  filter$={[Function BehaviorSubject]}
-  isClickable="null"
-  onClicked={[Function Function]}
-  onRowDoubleClick={[Function Function]}
-  onSortChange={[Function Function]}
-  page$={[Function BehaviorSubject]}
-  pageSize$={[Function BehaviorSubject]}
-  setFilter={[Function Function]}
-  setPage={[Function Function]}
-  setSortAsc={[Function Function]}
-  setSortBy={[Function Function]}
-  sortAsc$={[Function BehaviorSubject]}
-  sortBy$={[Function BehaviorSubject]}
-  styleDisplay={[Function String]}
-  styleFlexDirection={[Function String]}
-  total$={[Function Observable]}
-  trackByIndex={[Function Function]}
->
-</app-simple-table>
+<mock-render>
+  <app-simple-table
+    ng-reflect-data="[object Object],[object Object"
+    style="display: flex; flex-direction: column;"
+  >
+  </app-simple-table>
+</mock-render>
 `;

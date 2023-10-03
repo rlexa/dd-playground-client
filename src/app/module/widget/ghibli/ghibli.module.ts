@@ -7,7 +7,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {FlexboxDirective} from '../../directive/flexbox';
 import {LoadingBarModule} from '../loading-bar';
-import {SimpleTableModule} from '../simple-table';
+import {SimpleTableComponent} from '../simple-table';
 import {SimpleViewComponent} from '../simple-view';
 import {GhibliComponent} from './ghibli.component';
 
@@ -24,7 +24,7 @@ const ROUTING: Routes = [
     MatListModule,
     FlexboxDirective,
     LoadingBarModule,
-    SimpleTableModule,
+    SimpleTableComponent,
     SimpleViewComponent,
     RouterModule.forChild(ROUTING),
   ],

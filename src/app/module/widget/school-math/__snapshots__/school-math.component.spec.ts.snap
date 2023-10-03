@@ -1,52 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SchoolMathComponent is created 1`] = `
-<app-school-math
-  __ngContext__={[Function LRootView]}
-  data$={[Function Observable]}
-  done$={[Function DoneSubject]}
-  pdfMeta$={[Function Observable]}
-  seed$={[Function BehaviorSubject]}
-  setSeed={[Function Function]}
-  triggerPdf={[Function Function]}
-  triggerPdf$={[Function Subject]}
->
-  <mat-card>
-    <mat-card-title>
-      Math Test
-    </mat-card-title>
-    <mat-card-content>
-      <p>
-        <mat-form-field>
-          <input
-            matinput=""
-            min="1"
-            placeholder="Seed"
-            type="number"
-          />
-        </mat-form-field>
-        <button
-          mat-raised-button=""
-          ng-reflect-disabled="false"
-        >
-          PDF
-        </button>
-      </p>
-      <app-simple-view
-        ng-reflect-data="[object Object]"
-        ng-reflect-is-dense="true"
-        ng-reflect-is-width-constrained="false"
-        ng-reflect-subheader="JSON"
-        subheader="JSON"
-      />
-      <app-simple-view
-        ng-reflect-data="[object Object]"
-        ng-reflect-is-dense="true"
-        ng-reflect-is-width-constrained="false"
-        ng-reflect-subheader="PDF"
-        subheader="PDF"
-      />
-    </mat-card-content>
-  </mat-card>
-</app-school-math>
+exports[`SchoolMathComponent renders 1`] = `
+<mock-render>
+  <app-school-math>
+    <mat-card
+      appearance="outlined"
+      ng-reflect-appearance="outlined"
+    >
+      <mat-card-title>
+        Math Test
+      </mat-card-title>
+      <mat-card-content>
+        <p>
+          <mat-form-field>
+            <input
+              matinput=""
+              min="1"
+              ng-reflect-placeholder="Seed"
+              ng-reflect-type="number"
+              ng-reflect-value="123"
+              placeholder="Seed"
+              type="number"
+            />
+          </mat-form-field>
+          <button
+            mat-raised-button=""
+            ng-reflect-disabled="false"
+          >
+            PDF
+          </button>
+        </p>
+        <app-simple-view
+          ng-reflect-data="[object Object]"
+          ng-reflect-is-dense="true"
+          ng-reflect-is-width-constrained="false"
+          ng-reflect-subheader="JSON"
+          subheader="JSON"
+        />
+        <app-simple-view
+          ng-reflect-data="[object Object]"
+          ng-reflect-is-dense="true"
+          ng-reflect-is-width-constrained="false"
+          ng-reflect-subheader="PDF"
+          subheader="PDF"
+        />
+      </mat-card-content>
+    </mat-card>
+  </app-school-math>
+</mock-render>
 `;

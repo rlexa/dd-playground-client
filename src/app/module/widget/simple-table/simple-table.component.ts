@@ -1,14 +1,35 @@
+import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
 import {DoneSubject, RxCleanup, rxNext_, rxNull, rxTrue} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, merge} from 'rxjs';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {FORMAT_DATE_TIMESTAMP} from 'src/app/presets';
 import {trackByIndex} from 'src/app/util';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {RipupperPipe} from '../../pipe/ripupper';
+import {StartuppercasePipe} from '../../pipe/startuppercase';
 
 @Component({
   selector: 'app-simple-table',
   templateUrl: './simple-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    FlexboxDirective,
+    RipupperPipe,
+    StartuppercasePipe,
+  ],
 })
 export class SimpleTableComponent implements OnDestroy, OnInit {
   @HostBinding('style.display') readonly styleDisplay = 'flex';
@@ -32,6 +53,7 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
         .map(([key, val]) => key),
     ),
   );
+
   private readonly dataFiltered$ = combineLatest([this.data$, this.columns$, this.filter$]).pipe(
     debounceTime(0),
     map(([data, columns, filtering]) =>
@@ -42,6 +64,7 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
     ),
     takeUntil(this.done$),
   );
+
   readonly total$ = this.dataFiltered$.pipe(map((_) => (_ || []).length));
 
   readonly dataBatch$ = combineLatest([this.page$, this.pageSize$, this.sortAsc$, this.sortBy$, this.dataFiltered$]).pipe(
@@ -76,13 +99,13 @@ export class SimpleTableComponent implements OnDestroy, OnInit {
 
   trackByIndex = trackByIndex;
 
-  @Output() clicked = new EventEmitter<{key: string; value: any}>();
-  @Output() dblClick = new EventEmitter<any>();
+  @Output() readonly clicked = new EventEmitter<{key: string; value: any}>();
+  @Output() readonly dblClick = new EventEmitter<any>();
 
   @Input() set data(val: any[]) {
     this.data$.next(val);
   }
-  @Input() isClickable: (key: string, val: any) => boolean = null;
+  @Input() isClickable?: ((key: string, val: any) => boolean) | null;
 
   destroy() {}
   ngOnDestroy() {

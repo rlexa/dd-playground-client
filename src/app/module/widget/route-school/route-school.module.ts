@@ -19,10 +19,7 @@ const ROUTING: Routes = [
     component: NavigationContentComponent,
     data,
     children: [
-      {
-        path: SchoolRoute.Math,
-        loadChildren: () => import('src/app/module/widget/school-math/school-math.module').then((m) => m.RoutedSchoolMathModule),
-      },
+      {path: SchoolRoute.Math, loadChildren: () => import('src/app/module/widget/school-math/routes')},
       {path: ROUTE_ROOT, redirectTo: SchoolRoute.Math, pathMatch: 'full'},
       {path: ROUTE_WILDCARD, redirectTo: SchoolRoute.Math},
     ],

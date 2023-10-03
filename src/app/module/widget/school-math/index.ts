@@ -1,1 +1,1 @@
-export * from './school-math.module';
+export * from './school-math.component';

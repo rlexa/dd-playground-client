@@ -10,7 +10,7 @@ import {mathTestToPdf} from './math-test/math-test-pdf';
 /** Current math data seed. */
 export const DiSchoolMathSeed = new InjectionToken<BehaviorSubject<number>>('DI math data seed.', {
   providedIn: 'root',
-  factory: () => new StateSubject<number>(1),
+  factory: () => new StateSubject(1),
 });
 
 /** Current math test data. */
