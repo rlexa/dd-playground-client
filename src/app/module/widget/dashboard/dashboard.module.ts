@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {RouteRoot, RouteWild} from 'src/app/routing';
 import {FooterComponent} from '../footer';
-import {NavigationBarItem, NavigationBarItemsData, NavigationBarModule} from '../navigation-bar';
+import {NavigationBarComponent, NavigationBarItem, NavigationBarItemsData, NavigationBarItemsFromRouteDirective} from '../navigation-bar';
 import {DashboardRoute} from './dashboard-route';
 import {DashboardComponent} from './dashboard.component';
 
@@ -61,7 +61,7 @@ const ROUTING: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FooterComponent, NavigationBarModule, RouterModule.forChild(ROUTING)],
+  imports: [CommonModule, FooterComponent, NavigationBarComponent, NavigationBarItemsFromRouteDirective, RouterModule.forChild(ROUTING)],
   exports: [DashboardComponent],
   declarations: [DashboardComponent],
 })

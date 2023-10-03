@@ -2,7 +2,7 @@ import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {ActivatedRoute, Data, RouterModule} from '@angular/router';
 import {map} from 'rxjs/operators';
-import {NavigationBarModule} from '../navigation-bar';
+import {NavigationBarComponent, NavigationBarItemsFromRouteDirective} from '../navigation-bar';
 
 export interface NavigationContentComponentData extends Data {
   navigationContentScrollable?: boolean;
@@ -19,7 +19,7 @@ export interface NavigationContentComponentData extends Data {
   styleUrls: ['./navigation-content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterModule, NavigationBarModule],
+  imports: [CommonModule, RouterModule, NavigationBarComponent, NavigationBarItemsFromRouteDirective],
 })
 export class NavigationContentComponent {
   private readonly activatedRoute = inject(ActivatedRoute);

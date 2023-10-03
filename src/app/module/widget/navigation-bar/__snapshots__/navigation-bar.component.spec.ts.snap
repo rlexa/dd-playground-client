@@ -1,160 +1,156 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavigationBarComponent renders 1`] = `
-<app-navigation-bar
-  items="null"
-  layout={[Function String]}
-  trackByIndex={[Function Function]}
->
-  <mat-toolbar
-    color="primary"
-    ng-reflect-color="primary"
+<mock-render>
+  <app-navigation-bar
+    ng-reflect-layout="row"
   >
-    <span
-      class="mat-toolbar-filler"
-    />
-  </mat-toolbar>
-</app-navigation-bar>
+    <mat-toolbar
+      color="primary"
+      ng-reflect-color="primary"
+    >
+      <span
+        class="mat-toolbar-filler"
+      />
+    </mat-toolbar>
+  </app-navigation-bar>
+</mock-render>
 `;
 
 exports[`NavigationBarComponent with items renders 1`] = `
-<app-navigation-bar
-  items={[Function Array]}
-  layout={[Function String]}
-  trackByIndex={[Function Function]}
->
-  <mat-toolbar
-    color="primary"
-    ng-reflect-color="primary"
+<mock-render>
+  <app-navigation-bar
+    ng-reflect-items="[object Object],[object Object"
+    ng-reflect-layout="row"
   >
-    <span
-      class="mat-toolbar-filler"
-    />
-    <nav
-      class="mat-nav-list"
+    <mat-toolbar
+      color="primary"
+      ng-reflect-color="primary"
     >
-      <a
-        href="/route1"
-        mat-button=""
-        ng-reflect-message="label1"
-        ng-reflect-position="below"
-        ng-reflect-router-link="route1"
-        ng-reflect-router-link-active="active"
-        routerlinkactive="active"
-        style="min-width: auto;"
+      <span
+        class="mat-toolbar-filler"
+      />
+      <nav
+        class="mat-nav-list"
       >
-        <i
-          class="material-icons transition-transform active-scale"
+        <a
+          mat-button=""
+          ng-reflect-message="label1"
+          ng-reflect-position="below"
+          ng-reflect-router-link="route1"
+          ng-reflect-router-link-active="active"
+          routerlinkactive="active"
+          style="min-width: auto;"
         >
-          icon icon1
-        </i>
-      </a>
-      <a
-        href="/route2"
-        mat-button=""
-        ng-reflect-message="label2"
-        ng-reflect-position="below"
-        ng-reflect-router-link="route2"
-        ng-reflect-router-link-active="active"
-        routerlinkactive="active"
-        style="min-width: auto;"
-      >
-        <i
-          class="material-icons transition-transform active-scale"
+          <i
+            class="material-icons transition-transform active-scale"
+          >
+            icon icon1
+          </i>
+        </a>
+        <a
+          mat-button=""
+          ng-reflect-message="label2"
+          ng-reflect-position="below"
+          ng-reflect-router-link="route2"
+          ng-reflect-router-link-active="active"
+          routerlinkactive="active"
+          style="min-width: auto;"
         >
-          icon icon2
-        </i>
-      </a>
-      <a
-        href="/route3"
-        mat-button=""
-        ng-reflect-message="label3"
-        ng-reflect-position="below"
-        ng-reflect-router-link="route3"
-        ng-reflect-router-link-active="active"
-        routerlinkactive="active"
-        style="min-width: auto;"
-      >
-        <i
-          class="material-icons transition-transform active-scale"
+          <i
+            class="material-icons transition-transform active-scale"
+          >
+            icon icon2
+          </i>
+        </a>
+        <a
+          mat-button=""
+          ng-reflect-message="label3"
+          ng-reflect-position="below"
+          ng-reflect-router-link="route3"
+          ng-reflect-router-link-active="active"
+          routerlinkactive="active"
+          style="min-width: auto;"
         >
-          icon icon3
-        </i>
-      </a>
-    </nav>
-    <span
-      class="mat-toolbar-filler"
-    />
-  </mat-toolbar>
-</app-navigation-bar>
+          <i
+            class="material-icons transition-transform active-scale"
+          >
+            icon icon3
+          </i>
+        </a>
+      </nav>
+      <span
+        class="mat-toolbar-filler"
+      />
+    </mat-toolbar>
+  </app-navigation-bar>
+</mock-render>
 `;
 
 exports[`NavigationBarComponent with items with layout column renders 1`] = `
-<app-navigation-bar
-  items={[Function Array]}
-  layout={[Function String]}
-  trackByIndex={[Function Function]}
->
-  <mat-toolbar
-    class="toolbar-column"
-    color="primary"
-    ng-reflect-color="primary"
+<mock-render>
+  <app-navigation-bar
+    ng-reflect-items="[object Object],[object Object"
+    ng-reflect-layout="column"
   >
-    <nav
-      class="mat-nav-list"
+    <mat-toolbar
+      class="toolbar-column"
+      color="primary"
+      ng-reflect-color="primary"
     >
-      <a
-        href="/route1"
-        mat-button=""
-        ng-reflect-message="label1"
-        ng-reflect-position="right"
-        ng-reflect-router-link="route1"
-        ng-reflect-router-link-active="active"
-        routerlinkactive="active"
-        style="min-width: auto;"
+      <nav
+        class="mat-nav-list"
       >
-        <i
-          class="material-icons transition-transform active-scale"
+        <a
+          mat-button=""
+          ng-reflect-message="label1"
+          ng-reflect-position="right"
+          ng-reflect-router-link="route1"
+          ng-reflect-router-link-active="active"
+          routerlinkactive="active"
+          style="min-width: auto;"
         >
-          icon icon1
-        </i>
-      </a>
-      <a
-        href="/route2"
-        mat-button=""
-        ng-reflect-message="label2"
-        ng-reflect-position="right"
-        ng-reflect-router-link="route2"
-        ng-reflect-router-link-active="active"
-        routerlinkactive="active"
-        style="min-width: auto;"
-      >
-        <i
-          class="material-icons transition-transform active-scale"
+          <i
+            class="material-icons transition-transform active-scale"
+          >
+            icon icon1
+          </i>
+        </a>
+        <a
+          mat-button=""
+          ng-reflect-message="label2"
+          ng-reflect-position="right"
+          ng-reflect-router-link="route2"
+          ng-reflect-router-link-active="active"
+          routerlinkactive="active"
+          style="min-width: auto;"
         >
-          icon icon2
-        </i>
-      </a>
-      <a
-        href="/route3"
-        mat-button=""
-        ng-reflect-message="label3"
-        ng-reflect-position="right"
-        ng-reflect-router-link="route3"
-        ng-reflect-router-link-active="active"
-        routerlinkactive="active"
-        style="min-width: auto;"
-      >
-        <i
-          class="material-icons transition-transform active-scale"
+          <i
+            class="material-icons transition-transform active-scale"
+          >
+            icon icon2
+          </i>
+        </a>
+        <a
+          mat-button=""
+          ng-reflect-message="label3"
+          ng-reflect-position="right"
+          ng-reflect-router-link="route3"
+          ng-reflect-router-link-active="active"
+          routerlinkactive="active"
+          style="min-width: auto;"
         >
-          icon icon3
-        </i>
-      </a>
-    </nav>
-    <span
-      class="mat-toolbar-filler"
-    />
-  </mat-toolbar>
-</app-navigation-bar>
+          <i
+            class="material-icons transition-transform active-scale"
+          >
+            icon icon3
+          </i>
+        </a>
+      </nav>
+      <span
+        class="mat-toolbar-filler"
+      />
+    </mat-toolbar>
+  </app-navigation-bar>
+</mock-render>
 `;

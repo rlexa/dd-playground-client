@@ -1,5 +1,11 @@
+import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {RouterModule} from '@angular/router';
 import {trackByIndex} from 'src/app/util';
+import {IconPipe} from '../../pipe/icon';
 
 export interface NavigationBarItem {
   icon: string;
@@ -10,12 +16,13 @@ export interface NavigationBarItem {
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
-  styleUrls: ['./navigation-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, RouterModule, MatButtonModule, MatToolbarModule, MatTooltipModule, IconPipe],
 })
 export class NavigationBarComponent {
   @Input() layout: 'row' | 'column' = 'row';
-  @Input() items: NavigationBarItem[] = null;
+  @Input() items?: NavigationBarItem[] | null;
 
   trackByIndex = trackByIndex;
 }
