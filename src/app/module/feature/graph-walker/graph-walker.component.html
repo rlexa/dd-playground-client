@@ -6,14 +6,14 @@
       <label ddFlexitem="1 0" class="childh text-center">{{ 'inc .. out' }}</label>
       <label class="childh">{{ item.out.length }}</label>
     </div>
-    <app-simple-view [data]="item.data" [isDense]="true" [isWidthConstrained]="false"></app-simple-view>
+    <app-simple-view [data]="item.data" [isDense]="true" [isWidthConstrained]="false" />
   </div>
 </ng-template>
 
 <ng-template #tmplLink let-item let-header="header">
   <div ddFlexbox="vyt" class="contenthv childhv hovered-elevated">
     <h4 *ngIf="header" class="text-center">{{ header }}</h4>
-    <app-simple-view [data]="item.data" [isDense]="true" [isWidthConstrained]="false"></app-simple-view>
+    <app-simple-view [data]="item.data" [isDense]="true" [isWidthConstrained]="false" />
   </div>
 </ng-template>
 
@@ -25,12 +25,12 @@
       <div ddFlexbox="hysw">
         <div class="contenthv childhv hovered-elevated">
           <h2>DB Stats: Overall</h2>
-          <app-simple-view [data]="dbState$ | async" [isDense]="true" [isWidthConstrained]="false"></app-simple-view>
+          <app-simple-view [data]="dbState$ | async" [isDense]="true" [isWidthConstrained]="false" />
         </div>
 
         <div class="contenthv childhv hovered-elevated">
           <h2>DB Stats: Node Types</h2>
-          <app-simple-view [data]="dbNodeTypeCount$ | async" [isDense]="true" [isWidthConstrained]="false"></app-simple-view>
+          <app-simple-view [data]="dbNodeTypeCount$ | async" [isDense]="true" [isWidthConstrained]="false" />
         </div>
       </div>
 
@@ -39,13 +39,13 @@
 
         <mat-form-field class="margin-left childhv" hintLabel="Type">
           <mat-select [value]="curType$ | async" (selectionChange)="setCurType($event.value)">
-            <mat-option *ngFor="let ii of dbTypes$ | async" [value]="ii"> {{ ii }} </mat-option>
+            <mat-option *ngFor="let ii of dbTypes$ | async" [value]="ii">{{ ii }}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field class="margin-left childhv" hintLabel="Tag">
           <mat-select [value]="curTag$ | async" (selectionChange)="setCurTag($event.value)">
-            <mat-option *ngFor="let ii of curTypeKeys$ | async" [value]="ii"> {{ ii }} </mat-option>
+            <mat-option *ngFor="let ii of curTypeKeys$ | async" [value]="ii">{{ ii }}</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -72,9 +72,9 @@
         <div [ngStyle]="{'grid-area': GRID_FROM}">
           <div ddFlexbox="vye">
             <div *ngFor="let link of node.inc" ddFlexbox="hys" class="childh">
-              <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.from}"></ng-container>
+              <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.from}" />
               <div ddFlexbox="hyc">
-                <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}"></ng-container>
+                <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}" />
                 <button mat-mini-fab (click)="setCurNode(link.from)">
                   <mat-icon>{{ 'go_left' | icon }}</mat-icon>
                 </button>
@@ -85,7 +85,7 @@
 
         <div [ngStyle]="{'grid-area': GRID_CURRENT}">
           <div ddFlexbox="vyc" class="childh">
-            <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: node, header: 'CURRENT'}"></ng-container>
+            <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: node, header: 'CURRENT'}" />
           </div>
         </div>
 
@@ -96,9 +96,9 @@
                 <button mat-mini-fab (click)="setCurNode(link.to)">
                   <mat-icon>{{ 'go_right' | icon }}</mat-icon>
                 </button>
-                <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}"></ng-container>
+                <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}" />
               </div>
-              <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.to}"></ng-container>
+              <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.to}" />
             </div>
           </div>
         </div>

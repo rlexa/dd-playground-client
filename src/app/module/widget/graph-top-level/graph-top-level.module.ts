@@ -22,10 +22,7 @@ const ROUTING: Routes = [
     component: GraphTopLevelComponent,
     data,
     children: [
-      {
-        path: GraphRoute.Walker,
-        loadChildren: () => import('src/app/module/widget/graph-walker/graph-walker.module').then((m) => m.GraphWalkerModule),
-      },
+      {path: GraphRoute.Walker, loadChildren: () => import('../../feature/graph-walker/routes')},
       {path: RouteRoot, redirectTo: GraphRoute.Walker, pathMatch: 'full'},
       {path: RouteWild, redirectTo: GraphRoute.Walker},
     ],

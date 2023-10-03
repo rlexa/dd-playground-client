@@ -1,8 +1,19 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject} from '@angular/core';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 import {RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, of} from 'rxjs';
 import {debounceTime, filter, map, withLatestFrom} from 'rxjs/operators';
 import {GraphskyService, IGraphskyNode} from 'src/app/module/service/graphsky-api';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {IconPipe} from '../../pipe/icon';
+import {SimpleViewComponent} from '../../widget/simple-view';
 
 export const TAG_TYPE = '_type';
 
@@ -41,9 +52,23 @@ const compareEqual = (cmp: string, aa: any, bb: any) => {
   selector: 'app-graph-walker',
   templateUrl: './graph-walker.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+    FlexboxDirective,
+    IconPipe,
+    SimpleViewComponent,
+  ],
 })
 export class GraphWalkerComponent implements OnDestroy, OnInit {
-  constructor(private readonly graphsky: GraphskyService) {}
+  private readonly graphsky = inject(GraphskyService);
 
   readonly GRID_FROM = 'from';
   readonly GRID_CURRENT = 'current';

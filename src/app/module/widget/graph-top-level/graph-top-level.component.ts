@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {map, tap} from 'rxjs/operators';
 import {GraphskyService, IGraphskyData, IGraphskyLinkRequest} from 'src/app/module/service/graphsky-api';
-import {TAG_TYPE} from 'src/app/module/widget/graph-walker';
+import {TAG_TYPE} from '../../feature/graph-walker';
 
 interface TypedNode extends IGraphskyData {
   [TAG_TYPE]: string;
@@ -64,7 +64,10 @@ const csvToLinks = (csv: string, separator = ';', fromPrefix = 'from-', toPrefix
   providers: [GraphskyService],
 })
 export class GraphTopLevelComponent implements OnInit {
-  constructor(private readonly graphsky: GraphskyService, private readonly http: HttpClient) {}
+  constructor(
+    private readonly graphsky: GraphskyService,
+    private readonly http: HttpClient,
+  ) {}
 
   ngOnInit() {
     ['country', 'institution'].forEach((source) =>
