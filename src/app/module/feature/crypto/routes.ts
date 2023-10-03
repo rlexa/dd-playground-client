@@ -17,7 +17,7 @@ export default [
     component: NavigationContentComponent,
     data,
     children: [
-      {path: RouteBlockchain, loadChildren: () => import('./crypto.component').then((m) => m.CryptoComponent)},
+      {path: RouteBlockchain, loadComponent: () => import('./crypto.component').then((m) => m.CryptoComponent)},
       {path: RouteRoot, redirectTo: RouteBlockchain, pathMatch: 'full'},
       {path: RouteWild, redirectTo: RouteBlockchain},
     ],

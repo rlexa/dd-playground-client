@@ -3,8 +3,8 @@ import {RouteDemoGhibli, RouteDemoMisc, RouteRoot, RouteWild} from 'src/app/rout
 import {NavigationBarItem, NavigationBarItemsData} from '../../widget/navigation-bar';
 
 const routeNavs: Record<string, NavigationBarItem> = {
-  [RouteDemoGhibli]: {icon: 'items2', route: RouteDemoGhibli, label: 'Ghibli'},
   [RouteDemoMisc]: {icon: 'items1', route: RouteDemoMisc, label: 'Misc.'},
+  [RouteDemoGhibli]: {icon: 'items2', route: RouteDemoGhibli, label: 'Ghibli'},
 };
 
 const data: NavigationBarItemsData = {
