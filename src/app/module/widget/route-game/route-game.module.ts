@@ -34,10 +34,7 @@ const ROUTING: Routes = [
         path: GameRoute.Snake,
         loadChildren: () => import('src/app/module/game-snake/game-snake.module').then((m) => m.GameSnakeModule),
       },
-      {
-        path: GameRoute.RenderCanvas,
-        loadChildren: () => import('src/app/module/widget/render-canvas/render-canvas.module').then((m) => m.RenderCanvasModule),
-      },
+      {path: GameRoute.RenderCanvas, loadChildren: () => import('../../feature/render-canvas/routes')},
       {path: RouteRoot, redirectTo: GameRoute.MineSweeper, pathMatch: 'full'},
       {path: RouteWild, redirectTo: GameRoute.MineSweeper},
     ],

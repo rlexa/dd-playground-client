@@ -1,13 +1,18 @@
+import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
-import {enEmpty, enFillCanvasColor, Engine, enImageUrl, enText, enTransform} from './engine';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {SimpleViewComponent} from '../../widget/simple-view';
+import {Engine, enEmpty, enFillCanvasColor, enImageUrl, enText, enTransform} from './engine';
 
 @Component({
   selector: 'app-render-canvas',
   templateUrl: './render-canvas.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, FlexboxDirective, SimpleViewComponent],
 })
 export class RenderCanvasComponent implements OnDestroy, OnInit {
   @RxCleanup() private readonly done$ = new DoneSubject();

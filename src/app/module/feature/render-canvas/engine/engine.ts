@@ -1,8 +1,8 @@
 import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
-import {BehaviorSubject, of, Subject} from 'rxjs';
+import {BehaviorSubject, Subject, of} from 'rxjs';
 import {catchError, filter, map, startWith, takeUntil, tap, withLatestFrom} from 'rxjs/operators';
-import {ImageHolderCanvas} from 'src/app/module/widget/render-canvas/engine/context2d';
-import {EngineNodeShell} from 'src/app/module/widget/render-canvas/engine/engine-node-shell';
+import {ImageHolderCanvas} from './context2d';
+import {EngineNodeShell} from './engine-node-shell';
 import {EngineGlobal, EngineNode} from './types';
 
 export interface NodeStat<T> {
