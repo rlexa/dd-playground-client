@@ -1,25 +1,34 @@
-import {TestBed, waitForAsync} from '@angular/core/testing';
-import {MatProgressBar} from '@angular/material/progress-bar';
-import {MockComponents} from 'ng-mocks';
-import {detectChanges, overrideForChangeDetection} from 'src/app/test';
+import {ComponentFixture} from '@angular/core/testing';
+import {MockBuilder, MockRender} from 'ng-mocks';
 import {LoadingBarComponent} from './loading-bar.component';
 
 describe('LoadingBarComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [],
-        declarations: [LoadingBarComponent, MockComponents(MatProgressBar)],
-        providers: [],
-      })
-        .overrideComponent(LoadingBarComponent, overrideForChangeDetection)
-        .compileComponents();
-    }),
-  );
+  let fixture: ComponentFixture<LoadingBarComponent>;
 
-  test('is created', () => {
-    const fixture = TestBed.createComponent(LoadingBarComponent);
-    detectChanges(fixture);
-    expect(fixture).toMatchSnapshot();
+  beforeEach(() => MockBuilder(LoadingBarComponent));
+
+  beforeEach(() => {
+    fixture = MockRender(LoadingBarComponent);
+    fixture.detectChanges();
+  });
+
+  test('renders', () => expect(fixture).toMatchSnapshot());
+
+  describe(`with show`, () => {
+    beforeEach(() => {
+      fixture.componentInstance.show = true;
+      fixture.detectChanges();
+    });
+
+    test('renders', () => expect(fixture).toMatchSnapshot());
+
+    describe(`with margin`, () => {
+      beforeEach(() => {
+        fixture.componentInstance.withMargin = true;
+        fixture.detectChanges();
+      });
+
+      test('renders', () => expect(fixture).toMatchSnapshot());
+    });
   });
 });

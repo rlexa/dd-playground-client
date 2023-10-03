@@ -1,11 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LoadingBarComponent is created 1`] = `
-<app-loading-bar
-  show="false"
-  styleDisplay={[Function String]}
-  styleMarginTop={[Function String]}
-  styleMinHeight={[Function String]}
->
-</app-loading-bar>
+exports[`LoadingBarComponent renders 1`] = `
+<mock-render>
+  <app-loading-bar
+    style="display: block; min-height: .5rem;"
+  >
+  </app-loading-bar>
+</mock-render>
+`;
+
+exports[`LoadingBarComponent with show renders 1`] = `
+<mock-render>
+  <app-loading-bar
+    ng-reflect-show="true"
+    style="display: block; min-height: .5rem;"
+  >
+    <mat-progress-bar
+      mode="indeterminate"
+      ng-reflect-mode="indeterminate"
+    />
+  </app-loading-bar>
+</mock-render>
+`;
+
+exports[`LoadingBarComponent with show with margin renders 1`] = `
+<mock-render>
+  <app-loading-bar
+    ng-reflect-show="true"
+    ng-reflect-with-margin="true"
+    style="display: block; min-height: .5rem; margin-top: 1rem;"
+  >
+    <mat-progress-bar
+      mode="indeterminate"
+      ng-reflect-mode="indeterminate"
+    />
+  </app-loading-bar>
+</mock-render>
 `;

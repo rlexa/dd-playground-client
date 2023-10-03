@@ -1,9 +1,13 @@
+import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, HostBinding, Input} from '@angular/core';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-loading-bar',
-  templateUrl: './loading-bar.component.html',
+  template: `<mat-progress-bar *ngIf="show" mode="indeterminate" />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, MatProgressBarModule],
 })
 export class LoadingBarComponent {
   @HostBinding('style.display') readonly styleDisplay = 'block';
@@ -14,5 +18,5 @@ export class LoadingBarComponent {
     this.styleMarginTop = !!val ? '1rem' : null;
   }
 
-  @Input() show = false;
+  @Input() show?: boolean | null;
 }
