@@ -10,7 +10,7 @@ const hasBreaks = (value: string, from: number, to: number) => {
   return false;
 };
 
-@Pipe({name: 'ripupper', pure: true})
+@Pipe({name: 'ripupper', pure: true, standalone: true})
 export class RipupperPipe implements PipeTransform {
   transform(value: string): string {
     if (typeof value === 'string' && value.length >= 3) {

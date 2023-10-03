@@ -1,8 +1,7 @@
 {
-  "extends": "stylelint-config-sass-guidelines",
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
   "rules": {
     "string-quotes": null,
-    "order/properties-alphabetical-order": null,
     "color-hex-length": null,
     "selector-no-qualifying-type": null,
     "selector-pseudo-element-no-unknown": null,

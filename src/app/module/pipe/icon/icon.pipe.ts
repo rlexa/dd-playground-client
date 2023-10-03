@@ -57,9 +57,9 @@ export const ICON_MAP: {[key: string]: string} = {
 
 export const resolveIcon = (key: string) => (key in ICON_MAP ? ICON_MAP[key] : key);
 
-@Pipe({name: 'icon', pure: true})
+@Pipe({name: 'icon', pure: true, standalone: true})
 export class IconPipe implements PipeTransform {
-  transform(value: any, args?: any): any {
+  transform(value: any): any {
     return resolveIcon(value);
   }
 }

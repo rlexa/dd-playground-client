@@ -7,7 +7,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AppRoute} from './app-route';
 import {AppComponent} from './app.component';
 import {DiGlobalRouterParamsProvider} from './di-global';
-import {FlexboxModule} from './module/directive/flexbox';
+import {FlexboxDirective} from './module/directive/flexbox';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from './routing';
 
 const appRoutes: Routes = [
@@ -32,7 +32,7 @@ const appRoutes: Routes = [
     // 3rd party
     MatNativeDateModule,
     NativeDateModule,
-    FlexboxModule,
+    FlexboxDirective,
     // routing
     RouterModule.forRoot(appRoutes, {enableTracing: false}),
   ],

@@ -1,1 +1,1 @@
-export * from './flexbox.module';
+export * from './flexbox.directive';

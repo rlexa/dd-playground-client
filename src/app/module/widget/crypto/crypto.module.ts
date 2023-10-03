@@ -8,7 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {FlexboxModule} from '../../directive/flexbox';
+import {FlexboxDirective} from '../../directive/flexbox';
 import {SimpleViewModule} from '../simple-view';
 import {CryptoComponent} from './crypto.component';
 
@@ -26,7 +26,7 @@ const ROUTING: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
-    FlexboxModule,
+    FlexboxDirective,
     SimpleViewModule,
     RouterModule.forChild(ROUTING),
   ],
@@ -35,4 +35,4 @@ const ROUTING: Routes = [
 })
 class CryptoModule {}
 
-export {CryptoModule, CryptoComponent};
+export {CryptoComponent, CryptoModule};

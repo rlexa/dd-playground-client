@@ -4,7 +4,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {FlexboxModule} from '../../directive/flexbox';
+import {FlexboxDirective} from '../../directive/flexbox';
 import {SimpleViewModule} from '../simple-view';
 import {DemoMiscComponent} from './demo-misc.component';
 
@@ -14,10 +14,10 @@ const ROUTING: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, MatButtonModule, MatCardModule, FlexboxModule, SimpleViewModule, RouterModule.forChild(ROUTING)],
+  imports: [CommonModule, MatButtonModule, MatCardModule, FlexboxDirective, SimpleViewModule, RouterModule.forChild(ROUTING)],
   exports: [DemoMiscComponent],
   declarations: [DemoMiscComponent],
 })
 class DemoMiscModule {}
 
-export {DemoMiscModule, DemoMiscComponent};
+export {DemoMiscComponent, DemoMiscModule};

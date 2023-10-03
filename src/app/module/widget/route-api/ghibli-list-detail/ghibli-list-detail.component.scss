@@ -1,4 +1,4 @@
-@import '~src/variables';
+@use '../../../../../variables' as va;
 
 :host {
   display: flex;
@@ -7,6 +7,7 @@
 
   > .list {
     --list-size: 25rem;
+
     min-width: var(--list-size);
     max-width: var(--list-size);
 
@@ -21,7 +22,7 @@
         padding: 0.75em;
 
         &.active {
-          color: $clr-primary;
+          color: va.$clr-primary;
         }
       }
     }

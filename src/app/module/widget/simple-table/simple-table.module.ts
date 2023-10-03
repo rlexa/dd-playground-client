@@ -5,9 +5,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
-import {FlexboxModule} from '../../directive/flexbox';
-import {RipupperPipeModule} from '../../pipe/ripupper';
-import {StartuppercasePipeModule} from '../../pipe/startuppercase';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {RipupperPipe} from '../../pipe/ripupper';
+import {StartuppercasePipe} from '../../pipe/startuppercase';
 import {SimpleTableComponent} from './simple-table.component';
 
 @NgModule({
@@ -18,13 +18,13 @@ import {SimpleTableComponent} from './simple-table.component';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    FlexboxModule,
-    RipupperPipeModule,
-    StartuppercasePipeModule,
+    FlexboxDirective,
+    RipupperPipe,
+    StartuppercasePipe,
   ],
   exports: [SimpleTableComponent],
   declarations: [SimpleTableComponent],
 })
 class SimpleTableModule {}
 
-export {SimpleTableModule, SimpleTableComponent};
+export {SimpleTableComponent, SimpleTableModule};

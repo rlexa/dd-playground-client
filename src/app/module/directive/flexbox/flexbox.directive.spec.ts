@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture} from '@angular/core/testing';
+import {MockBuilder, MockRender} from 'ng-mocks';
 import {FlexboxDirective} from './flexbox.directive';
 
 // GENERAL
@@ -78,17 +79,17 @@ const testsFlexbox: TestingGround[] = [
   {info: 'hbox', param: 'h', styles: {...STYLE_DEFAULT_FLEXBOX}},
   {info: 'vbox', param: 'v', styles: {...STYLE_DEFAULT_FLEXBOX, flexDirection: 'column'}},
   {info: 'wrap', param: 'w', styles: {...STYLE_DEFAULT_FLEXBOX, flexWrap: 'wrap'}},
-  ...Object.keys(mapJustifyContent).map<TestingGround>(param => ({
+  ...Object.keys(mapJustifyContent).map<TestingGround>((param) => ({
     info: 'x dir ' + mapJustifyContent[param],
     param,
     styles: {...STYLE_DEFAULT_FLEXBOX, justifyContent: mapJustifyContent[param]},
   })),
-  ...Object.keys(mapAlignItems).map<TestingGround>(param => ({
+  ...Object.keys(mapAlignItems).map<TestingGround>((param) => ({
     info: 'y dir ' + mapAlignItems[param],
     param,
     styles: {...STYLE_DEFAULT_FLEXBOX, alignItems: mapAlignItems[param]},
   })),
-  ...Object.keys(mapAlignContent).map<TestingGround>(param => ({
+  ...Object.keys(mapAlignContent).map<TestingGround>((param) => ({
     info: 'content ' + mapAlignContent[param],
     param,
     styles: {...STYLE_DEFAULT_FLEXBOX, alignContent: mapAlignContent[param]},
@@ -112,12 +113,12 @@ const testsFlexbox: TestingGround[] = [
 
 const testsFlexitem: TestingGround[] = [
   {info: 'default', param: null, styles: {...STYLE_DEFAULT_FLEXITEM}},
-  ...Object.keys(mapAlignSelf).map<TestingGround>(param => ({
+  ...Object.keys(mapAlignSelf).map<TestingGround>((param) => ({
     info: 'self ' + mapAlignSelf[param],
     param,
     styles: {...STYLE_DEFAULT_FLEXITEM, alignSelf: mapAlignSelf[param]},
   })),
-  ...Object.keys(mapFlex).map<TestingGround>(param => ({
+  ...Object.keys(mapFlex).map<TestingGround>((param) => ({
     info: 'flex ' + mapFlex[param],
     param,
     styles: {...STYLE_DEFAULT_FLEXITEM, flex: mapFlex[param]},
@@ -131,9 +132,9 @@ const testsFlexitem: TestingGround[] = [
 ];
 
 @Component({
-  template: `
-    <div [ddFlexbox]="paramsFlexbox" [ddFlexitem]="paramsFlexitem"></div>
-  `,
+  template: `<div [ddFlexbox]="paramsFlexbox" [ddFlexitem]="paramsFlexitem"></div>`,
+  standalone: true,
+  imports: [FlexboxDirective],
 })
 class TestFlexboxComponent {
   paramsFlexbox: string = null;
@@ -146,8 +147,8 @@ describe('FlexboxDirective: parameter', () => {
   let target: HTMLElement;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({declarations: [FlexboxDirective, TestFlexboxComponent]});
-    fixture = TestBed.createComponent(TestFlexboxComponent);
+    MockBuilder(TestFlexboxComponent).keep(FlexboxDirective);
+    fixture = MockRender(TestFlexboxComponent);
     component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
     target = fixture.debugElement.nativeElement.querySelector('div');
@@ -157,19 +158,19 @@ describe('FlexboxDirective: parameter', () => {
     expect(target).toBeTruthy();
   });
 
-  testsFlexbox.forEach(ii =>
+  testsFlexbox.forEach((ii) =>
     test('should evaluate ddFlexbox parameter "' + ii.param + '": ' + ii.info, () => {
       component.paramsFlexbox = ii.param;
       fixture.detectChanges();
-      Object.keys(ii.styles).forEach(key => expect(key + ': ' + target.style[key]).toBe(key + ': ' + ii.styles[key]));
+      Object.keys(ii.styles).forEach((key) => expect(key + ': ' + target.style[key]).toBe(key + ': ' + ii.styles[key]));
     }),
   );
 
-  testsFlexitem.forEach(ii =>
+  testsFlexitem.forEach((ii) =>
     test('should evaluate ddFlexitem parameter "' + ii.param + '": ' + ii.info, () => {
       component.paramsFlexitem = ii.param;
       fixture.detectChanges();
-      Object.keys(ii.styles).forEach(key => expect(key + ': ' + target.style[key]).toBe(key + ': ' + ii.styles[key]));
+      Object.keys(ii.styles).forEach((key) => expect(key + ': ' + target.style[key]).toBe(key + ': ' + ii.styles[key]));
     }),
   );
 });

@@ -5,7 +5,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {FlexboxModule} from '../../directive/flexbox';
+import {FlexboxDirective} from '../../directive/flexbox';
 import {LoadingBarModule} from '../loading-bar';
 import {SimpleTableModule} from '../simple-table';
 import {SimpleViewModule} from '../simple-view';
@@ -22,7 +22,7 @@ const ROUTING: Routes = [
     MatButtonModule,
     MatCardModule,
     MatListModule,
-    FlexboxModule,
+    FlexboxDirective,
     LoadingBarModule,
     SimpleTableModule,
     SimpleViewModule,
@@ -33,4 +33,4 @@ const ROUTING: Routes = [
 })
 class GhibliModule {}
 
-export {GhibliModule, GhibliComponent};
+export {GhibliComponent, GhibliModule};

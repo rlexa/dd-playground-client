@@ -11,7 +11,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {FlexboxModule} from '../../directive/flexbox';
+import {FlexboxDirective} from '../../directive/flexbox';
 import {SimpleViewModule} from '../simple-view';
 import {GameDownAiInitiativeComponent} from './game-down-ai-initiative.component';
 import {GameDownConfigComponent} from './game-down-config.component';
@@ -38,7 +38,7 @@ const ROUTING: Routes = [
     MatListModule,
     MatSelectModule,
     MatSliderModule,
-    FlexboxModule,
+    FlexboxDirective,
     SimpleViewModule,
     RouterModule.forChild(ROUTING),
   ],
@@ -54,4 +54,4 @@ const ROUTING: Routes = [
 })
 class GameDownModule {}
 
-export {GameDownModule, GameDownComponent};
+export {GameDownComponent, GameDownModule};

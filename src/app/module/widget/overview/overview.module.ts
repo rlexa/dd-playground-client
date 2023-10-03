@@ -3,14 +3,14 @@ import {NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
-import {FlexboxModule} from '../../directive/flexbox';
+import {FlexboxDirective} from '../../directive/flexbox';
 import {OverviewComponent} from './overview.component';
 
 @NgModule({
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatListModule, FlexboxModule],
+  imports: [CommonModule, MatButtonModule, MatCardModule, MatListModule, FlexboxDirective],
   exports: [OverviewComponent],
   declarations: [OverviewComponent],
 })
 class OverviewModule {}
 
-export {OverviewModule, OverviewComponent};
+export {OverviewComponent, OverviewModule};

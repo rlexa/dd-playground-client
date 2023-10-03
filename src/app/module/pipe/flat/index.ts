@@ -1,1 +1,1 @@
-export * from './flat-pipe.module';
+export * from './flat.pipe';

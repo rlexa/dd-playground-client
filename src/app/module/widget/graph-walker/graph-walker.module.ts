@@ -9,8 +9,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {FlexboxModule} from '../../directive/flexbox';
-import {IconPipeModule} from '../../pipe/icon';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {IconPipe} from '../../pipe/icon';
 import {SimpleViewModule} from '../simple-view';
 import {GraphWalkerComponent, TAG_TYPE} from './graph-walker.component';
 
@@ -29,8 +29,8 @@ const ROUTING: Routes = [
     MatIconModule,
     MatInputModule,
     MatSelectModule,
-    FlexboxModule,
-    IconPipeModule,
+    FlexboxDirective,
+    IconPipe,
     SimpleViewModule,
     RouterModule.forChild(ROUTING),
   ],
@@ -39,4 +39,4 @@ const ROUTING: Routes = [
 })
 class GraphWalkerModule {}
 
-export {GraphWalkerModule, GraphWalkerComponent, TAG_TYPE};
+export {GraphWalkerComponent, GraphWalkerModule, TAG_TYPE};
