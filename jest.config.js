@@ -1,6 +1,5 @@
 module.exports = {
   preset: 'jest-preset-angular',
-  name: 'dd-playground-client',
   coverageDirectory: 'dist/coverage',
   collectCoverageFrom: ['src/app/**/*.ts'],
   coveragePathIgnorePatterns: ['/node_modules/', '.module.ts', 'index.ts', '.stories.ts'],

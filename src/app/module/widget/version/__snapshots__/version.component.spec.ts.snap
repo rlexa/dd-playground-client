@@ -1,20 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VersionComponent is created 1`] = `
-<app-version
-  onGotoSettings={[Function Function]}
-  router={[Function Object]}
-  version$={[Function Observable]}
->
-  <button
-    class="auto-line-height"
-    mat-button=""
-  >
-    <label
-      class="deadclick-force"
+exports[`VersionComponent renders 1`] = `
+<mock-render>
+  <app-version>
+    <button
+      class="auto-line-height"
+      mat-button=""
     >
-      v version
-    </label>
-  </button>
-</app-version>
+      <label
+        class="deadclick-force"
+      >
+        v version
+      </label>
+    </button>
+  </app-version>
+</mock-render>
 `;
