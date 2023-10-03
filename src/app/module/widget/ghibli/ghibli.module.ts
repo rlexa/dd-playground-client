@@ -8,7 +8,7 @@ import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {FlexboxDirective} from '../../directive/flexbox';
 import {LoadingBarModule} from '../loading-bar';
 import {SimpleTableModule} from '../simple-table';
-import {SimpleViewModule} from '../simple-view';
+import {SimpleViewComponent} from '../simple-view';
 import {GhibliComponent} from './ghibli.component';
 
 const ROUTING: Routes = [
@@ -25,7 +25,7 @@ const ROUTING: Routes = [
     FlexboxDirective,
     LoadingBarModule,
     SimpleTableModule,
-    SimpleViewModule,
+    SimpleViewComponent,
     RouterModule.forChild(ROUTING),
   ],
   exports: [GhibliComponent],

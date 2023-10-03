@@ -12,7 +12,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {FlexboxDirective} from '../../directive/flexbox';
-import {SimpleViewModule} from '../simple-view';
+import {SimpleViewComponent} from '../simple-view';
 import {GameDownAiInitiativeComponent} from './game-down-ai-initiative.component';
 import {GameDownConfigComponent} from './game-down-config.component';
 import {GameDownFieldComponent} from './game-down-field.component';
@@ -39,7 +39,7 @@ const ROUTING: Routes = [
     MatSelectModule,
     MatSliderModule,
     FlexboxDirective,
-    SimpleViewModule,
+    SimpleViewComponent,
     RouterModule.forChild(ROUTING),
   ],
   exports: [GameDownComponent],

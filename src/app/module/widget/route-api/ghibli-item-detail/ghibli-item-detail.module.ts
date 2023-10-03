@@ -1,14 +1,14 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {SimpleViewModule} from '../../simple-view';
+import {SimpleViewComponent} from '../../simple-view';
 import {GhiblLinkModule} from '../ghibli-link';
 import {GhibliItemDetailComponent} from './ghibli-item-detail.component';
 
 @NgModule({
   declarations: [GhibliItemDetailComponent],
-  imports: [CommonModule, GhiblLinkModule, SimpleViewModule],
+  imports: [CommonModule, GhiblLinkModule, SimpleViewComponent],
   exports: [GhibliItemDetailComponent],
 })
 class GhibliItemDetailModule {}
 
-export {GhibliItemDetailModule, GhibliItemDetailComponent};
+export {GhibliItemDetailComponent, GhibliItemDetailModule};

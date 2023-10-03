@@ -1,40 +1,27 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatButton} from '@angular/material/button';
-import {MatList, MatListItem} from '@angular/material/list';
+import {ComponentFixture} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MockComponents, MockDirectives, MockPipe, MockPipes} from 'ng-mocks';
-import {detectChanges, overrideForChangeDetection} from 'src/app/test';
-import {FlexboxDirective} from '../../directive/flexbox';
+import {MockBuilder, MockRender} from 'ng-mocks';
+import {detectChanges} from 'src/app/test';
 import {IconPipe} from '../../pipe/icon';
-import {RipupperPipe} from '../../pipe/ripupper';
-import {StartuppercasePipe} from '../../pipe/startuppercase';
 import {SimpleViewComponent} from './simple-view.component';
 
 describe('SimpleViewComponent', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule],
-      declarations: [
-        SimpleViewComponent,
-        MockComponents(MatButton, MatList, MatListItem),
-        MockDirectives(FlexboxDirective),
-        MockPipes(RipupperPipe, StartuppercasePipe),
-        MockPipe(IconPipe, (val) => `icon ${val}`),
-      ],
-      providers: [],
-    })
-      .overrideComponent(SimpleViewComponent, overrideForChangeDetection)
-      .compileComponents();
-  });
-
   let fixture: ComponentFixture<SimpleViewComponent<any>>;
 
-  beforeEach(() => (fixture = TestBed.createComponent(SimpleViewComponent)));
+  beforeEach(() =>
+    MockBuilder(SimpleViewComponent)
+      .keep(NoopAnimationsModule)
+      .mock(IconPipe, (val) => `icon ${val}`),
+  );
 
-  test('is created', () => {
-    detectChanges(fixture);
-    expect(fixture).toMatchSnapshot();
+  beforeEach(() => {
+    fixture = MockRender(SimpleViewComponent, undefined, false);
+    fixture.componentInstance.isWidthConstrained = true;
+    fixture.componentInstance.isExpanded = true;
+    fixture.detectChanges();
   });
+
+  test('renders', () => expect(fixture).toMatchSnapshot());
 
   describe(`with data`, () => {
     beforeEach(() => {

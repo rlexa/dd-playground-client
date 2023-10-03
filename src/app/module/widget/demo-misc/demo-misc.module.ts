@@ -5,7 +5,7 @@ import {MatCardModule} from '@angular/material/card';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {FlexboxDirective} from '../../directive/flexbox';
-import {SimpleViewModule} from '../simple-view';
+import {SimpleViewComponent} from '../simple-view';
 import {DemoMiscComponent} from './demo-misc.component';
 
 const ROUTING: Routes = [
@@ -14,7 +14,7 @@ const ROUTING: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, MatButtonModule, MatCardModule, FlexboxDirective, SimpleViewModule, RouterModule.forChild(ROUTING)],
+  imports: [CommonModule, MatButtonModule, MatCardModule, FlexboxDirective, SimpleViewComponent, RouterModule.forChild(ROUTING)],
   exports: [DemoMiscComponent],
   declarations: [DemoMiscComponent],
 })

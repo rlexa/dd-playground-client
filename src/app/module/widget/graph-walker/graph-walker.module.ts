@@ -11,7 +11,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
 import {FlexboxDirective} from '../../directive/flexbox';
 import {IconPipe} from '../../pipe/icon';
-import {SimpleViewModule} from '../simple-view';
+import {SimpleViewComponent} from '../simple-view';
 import {GraphWalkerComponent, TAG_TYPE} from './graph-walker.component';
 
 const ROUTING: Routes = [
@@ -31,7 +31,7 @@ const ROUTING: Routes = [
     MatSelectModule,
     FlexboxDirective,
     IconPipe,
-    SimpleViewModule,
+    SimpleViewComponent,
     RouterModule.forChild(ROUTING),
   ],
   exports: [GraphWalkerComponent],

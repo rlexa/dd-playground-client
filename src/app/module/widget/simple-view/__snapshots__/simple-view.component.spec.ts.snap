@@ -1,98 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SimpleViewComponent is created 1`] = `
-<app-simple-view
-  FORMAT_DATE_TIMESTAMP={[Function String]}
-  clickables$={[Function AnonymousSubject]}
-  clicked={[Function EventEmitter_]}
-  data$={[Function BehaviorSubject]}
-  guessType={[Function Function]}
-  isClickable="null"
-  isDense="false"
-  isExpandable="false"
-  isExpanded={[Function Boolean]}
-  isWidthConstrained={[Function Boolean]}
-  keys$={[Function AnonymousSubject]}
-  onClicked={[Function Function]}
-  subheader="null"
-  types$={[Function AnonymousSubject]}
->
-</app-simple-view>
+exports[`SimpleViewComponent renders 1`] = `
+<mock-render>
+  <app-simple-view
+    class="ng-tns-c3484243911-0"
+    ng-reflect-is-expanded="true"
+    ng-reflect-is-width-constrained="true"
+  >
+  </app-simple-view>
+</mock-render>
 `;
 
 exports[`SimpleViewComponent with data renders 1`] = `
-<app-simple-view
-  FORMAT_DATE_TIMESTAMP={[Function String]}
-  clickables$={[Function AnonymousSubject]}
-  clicked={[Function EventEmitter_]}
-  data$={[Function BehaviorSubject]}
-  guessType={[Function Function]}
-  isClickable="null"
-  isDense="false"
-  isExpandable="false"
-  isExpanded={[Function Boolean]}
-  isWidthConstrained={[Function Boolean]}
-  keys$={[Function AnonymousSubject]}
-  onClicked={[Function Function]}
-  subheader="null"
-  types$={[Function AnonymousSubject]}
->
-  <div
-    class="position-relative ng-tns-c1038423380-0 ng-star-inserted"
+<mock-render>
+  <app-simple-view
+    class="ng-tns-c3484243911-0"
+    ng-reflect-data="[object Object]"
+    ng-reflect-is-expanded="true"
+    ng-reflect-is-width-constrained="true"
   >
     <div
-      class="scroll-x-auto ng-tns-c1038423380-0"
-      ddflexbox="hys"
-      ng-reflect-dd-flexbox="hys"
-      style="max-width: 100%;"
+      class="position-relative ng-tns-c3484243911-0 ng-star-inserted"
     >
-      <mat-list
-        class="mat-list-auto-height ng-tns-c1038423380-0 ng-star-inserted"
+      <div
+        class="scroll-x-auto ng-tns-c3484243911-0"
+        ddflexbox="hys"
+        ng-reflect-dd-flexbox="hys"
+        style="max-width: 100%;"
       >
-        <table
-          class="ng-tns-c1038423380-0 ng-star-inserted"
+        <mat-list
+          class="mat-list-auto-height ng-tns-c3484243911-0 ng-star-inserted"
         >
-          <tr
-            class="ng-tns-c1038423380-0 ng-star-inserted"
+          <table
+            class="ng-tns-c3484243911-0 ng-star-inserted"
           >
-            <td
-              class="ng-tns-c1038423380-0"
-              style="vertical-align: top;"
+            <tr
+              class="ng-tns-c3484243911-0 ng-star-inserted"
             >
-              <mat-list-item
-                class="ng-tns-c1038423380-0"
+              <td
+                class="ng-tns-c3484243911-0"
+                style="vertical-align: top;"
               >
-                <span
-                  class="no-break-text"
-                >
-                   undefined 
-                </span>
-              </mat-list-item>
-            </td>
-            <td
-              class="ng-tns-c1038423380-0"
-            >
-              <mat-list-item
-                class="ng-tns-c1038423380-0 ng-trigger ng-trigger-TRIGGER_WobbleX"
-              >
-                <span
-                  class="break-text size-data-label"
-                  ng-reflect-ng-class="[object Object]"
+                <mat-list-item
+                  class="ng-tns-c3484243911-0"
                 >
                   <span
-                    class="ng-tns-c1038423380-0 ng-star-inserted"
-                    ng-reflect-ng-class="[object Object]"
-                    style=""
+                    class="no-break-text"
                   >
-                     value 
+                     undefined 
                   </span>
-                </span>
-              </mat-list-item>
-            </td>
-          </tr>
-        </table>
-      </mat-list>
+                </mat-list-item>
+              </td>
+              <td
+                class="ng-tns-c3484243911-0"
+              >
+                <mat-list-item
+                  class="ng-tns-c3484243911-0 ng-trigger ng-trigger-TRIGGER_WobbleX"
+                >
+                  <span
+                    class="break-text size-data-label"
+                    ng-reflect-ng-class="[object Object]"
+                  >
+                    <span
+                      class="ng-tns-c3484243911-0 ng-star-inserted"
+                      ng-reflect-ng-class="[object Object]"
+                      style=""
+                    >
+                       value 
+                    </span>
+                  </span>
+                </mat-list-item>
+              </td>
+            </tr>
+          </table>
+        </mat-list>
+      </div>
     </div>
-  </div>
-</app-simple-view>
+  </app-simple-view>
+</mock-render>
 `;

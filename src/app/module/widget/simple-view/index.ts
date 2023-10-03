@@ -1,1 +1,1 @@
-export * from './simple-view.module';
+export * from './simple-view.component';

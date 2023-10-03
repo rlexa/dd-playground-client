@@ -1,10 +1,17 @@
+import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TRIGGER_WOBBLE_X} from 'src/app/animations';
 import {FORMAT_DATE_TIMESTAMP} from 'src/app/presets';
 import {isNumeric, isWeb} from 'src/app/util';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {IconPipe} from '../../pipe/icon';
+import {RipupperPipe} from '../../pipe/ripupper';
+import {StartuppercasePipe} from '../../pipe/startuppercase';
 
 type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string' | 'void' | 'array';
 
@@ -13,6 +20,8 @@ type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string'
   templateUrl: './simple-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [TRIGGER_WOBBLE_X],
+  standalone: true,
+  imports: [CommonModule, MatButtonModule, MatListModule, FlexboxDirective, IconPipe, RipupperPipe, StartuppercasePipe],
 })
 export class SimpleViewComponent<T> implements OnDestroy {
   readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;
@@ -33,14 +42,14 @@ export class SimpleViewComponent<T> implements OnDestroy {
     ),
   );
 
-  @Input() isWidthConstrained = true;
-  @Input() isClickable: (key: string, val: any) => boolean = null;
-  @Input() isDense = false;
-  @Input() isExpanded = true;
-  @Input() isExpandable = false;
-  @Input() subheader: string = null;
+  @Input() isWidthConstrained?: boolean | null = true;
+  @Input() isClickable?: ((key: string, val: any) => boolean) | null;
+  @Input() isDense?: boolean | null;
+  @Input() isExpanded?: boolean | null = true;
+  @Input() isExpandable?: boolean | null;
+  @Input() subheader?: string | null;
 
-  @Output() clicked = new EventEmitter<{key: string; value: any}>();
+  @Output() readonly clicked = new EventEmitter<{key: string; value: any}>();
 
   destroy() {}
   ngOnDestroy() {

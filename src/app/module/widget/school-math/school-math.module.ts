@@ -6,11 +6,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RouterModule} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {SimpleViewModule} from '../simple-view';
+import {SimpleViewComponent} from '../simple-view';
 import {SchoolMathComponent} from './school-math.component';
 
 @NgModule({
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, SimpleViewModule],
+  imports: [CommonModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, SimpleViewComponent],
   exports: [SchoolMathComponent],
   declarations: [SchoolMathComponent],
 })
@@ -27,4 +27,4 @@ class SchoolMathModule {}
 })
 class RoutedSchoolMathModule {}
 
-export {RoutedSchoolMathModule, SchoolMathModule, SchoolMathComponent};
+export {RoutedSchoolMathModule, SchoolMathComponent, SchoolMathModule};

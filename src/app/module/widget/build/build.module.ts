@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {RouterModule, Routes} from '@angular/router';
 import {ROUTE_ROOT, ROUTE_WILDCARD} from 'src/app/routing';
-import {SimpleViewModule} from '../simple-view';
+import {SimpleViewComponent} from '../simple-view';
 import {BuildComponent} from './build.component';
 
 const ROUTING: Routes = [
@@ -12,10 +12,10 @@ const ROUTING: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, MatCardModule, SimpleViewModule, RouterModule.forChild(ROUTING)],
+  imports: [CommonModule, MatCardModule, SimpleViewComponent, RouterModule.forChild(ROUTING)],
   exports: [BuildComponent],
   declarations: [BuildComponent],
 })
 class BuildModule {}
 
-export {BuildModule, BuildComponent};
+export {BuildComponent, BuildModule};
