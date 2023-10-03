@@ -1,16 +1,37 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, OnDestroy, inject} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatListModule} from '@angular/material/list';
 import {RxCleanup, rxNext_} from 'dd-rxjs';
-import {BehaviorSubject, of, Subject} from 'rxjs';
+import {BehaviorSubject, Subject, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
+import {FlexboxDirective} from '../../directive/flexbox';
 import {CryptoApiService} from '../../service/crypto-api';
+import {SimpleViewComponent} from '../../widget/simple-view';
 
 @Component({
   selector: 'app-crypto',
   templateUrl: './crypto.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    FlexboxDirective,
+    SimpleViewComponent,
+  ],
 })
 export class CryptoComponent implements OnDestroy {
-  constructor(private readonly api: CryptoApiService) {}
+  private readonly api = inject(CryptoApiService);
 
   @RxCleanup() readonly bitcoinAddress$ = new BehaviorSubject('1BoatSLRHtKNngkdXEeobR76b53LETtpyT');
   @RxCleanup() readonly anyData$ = new Subject();

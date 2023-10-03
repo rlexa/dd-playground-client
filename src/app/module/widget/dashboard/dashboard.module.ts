@@ -40,10 +40,7 @@ const ROUTING: Routes = [
         path: DashboardRoute.Graph,
         loadChildren: () => import('src/app/module/widget/graph-top-level/graph-top-level.module').then((m) => m.GraphTopLevelModule),
       },
-      {
-        path: DashboardRoute.Crypto,
-        loadChildren: () => import('src/app/module/widget/route-crypto/route-crypto.module').then((m) => m.RouteCryptoModule),
-      },
+      {path: DashboardRoute.Crypto, loadChildren: () => import('../../feature/crypto/routes')},
       {path: DashboardRoute.School, loadChildren: () => import('../../feature/school/routes')},
       {
         path: DashboardRoute.Playground,
@@ -53,7 +50,7 @@ const ROUTING: Routes = [
         path: DashboardRoute.Api,
         loadChildren: () => import('src/app/module/widget/route-api/route-api.module').then((m) => m.RouteApiModule),
       },
-      {path: DashboardRoute.Settings, loadChildren: () => import('src/app/module/feature/system/routes')},
+      {path: DashboardRoute.Settings, loadChildren: () => import('../../feature/system/routes')},
       {path: RouteRoot, redirectTo: DashboardRoute.Overview, pathMatch: 'full'},
       {path: RouteWild, redirectTo: DashboardRoute.Overview},
     ],
