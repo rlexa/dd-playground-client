@@ -1,15 +1,22 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
 import {map} from 'rxjs/operators';
+import {FlexboxDirective} from '../../directive/flexbox';
 import {GraphskyService} from '../../service/graphsky-api';
+import {SimpleViewComponent} from '../../widget/simple-view';
 
 @Component({
   selector: 'app-demo-misc',
   templateUrl: './demo-misc.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, MatButtonModule, MatCardModule, FlexboxDirective, SimpleViewComponent],
   providers: [GraphskyService],
 })
 export class DemoMiscComponent {
-  constructor(private readonly graphsky: GraphskyService) {}
+  private readonly graphsky = inject(GraphskyService);
 
   readonly graphskyLog$ = this.graphsky.log$;
   readonly graphskyNodes$ = this.graphsky.nodeCount$;

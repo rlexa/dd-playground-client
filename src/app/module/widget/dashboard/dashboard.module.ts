@@ -42,10 +42,7 @@ const ROUTING: Routes = [
       },
       {path: DashboardRoute.Crypto, loadChildren: () => import('../../feature/crypto/routes')},
       {path: DashboardRoute.School, loadChildren: () => import('../../feature/school/routes')},
-      {
-        path: DashboardRoute.Playground,
-        loadChildren: () => import('src/app/module/widget/route-playground/route-playground.module').then((m) => m.RoutePlaygroundModule),
-      },
+      {path: DashboardRoute.Playground, loadChildren: () => import('../../feature/playground/routes')},
       {
         path: DashboardRoute.Api,
         loadChildren: () => import('src/app/module/widget/route-api/route-api.module').then((m) => m.RouteApiModule),

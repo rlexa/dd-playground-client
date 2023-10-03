@@ -14,7 +14,7 @@
             [data]="graphskyLog$ | async"
             [isWidthConstrained]="false"
             [isDense]="true"
-          ></app-simple-view>
+          />
         </div>
 
         <app-simple-view
@@ -23,21 +23,21 @@
           [data]="graphskyAll$ | async"
           [isWidthConstrained]="false"
           [isDense]="true"
-        ></app-simple-view>
+        />
         <app-simple-view
           class="hovered-elevated"
           subheader="Likes"
           [data]="graphskyLiked$ | async"
           [isWidthConstrained]="false"
           [isDense]="true"
-        ></app-simple-view>
+        />
         <app-simple-view
           class="hovered-elevated"
           subheader="Diversity"
           [data]="graphskyDiversity$ | async"
           [isWidthConstrained]="false"
           [isDense]="true"
-        ></app-simple-view>
+        />
       </div>
     </mat-card-content>
   </mat-card>

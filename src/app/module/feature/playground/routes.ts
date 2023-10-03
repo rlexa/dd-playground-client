@@ -1,8 +1,6 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route} from '@angular/router';
 import {RouteDemoGhibli, RouteDemoMisc, RouteRoot, RouteWild} from 'src/app/routing';
-import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
-import {NavigationContentComponent} from '../navigation-content';
+import {NavigationBarItem, NavigationBarItemsData} from '../../widget/navigation-bar';
 
 const routeNavs: Record<string, NavigationBarItem> = {
   [RouteDemoGhibli]: {icon: 'items2', route: RouteDemoGhibli, label: 'Ghibli'},
@@ -13,10 +11,10 @@ const data: NavigationBarItemsData = {
   navigationBarItems: Object.values(routeNavs),
 };
 
-const ROUTING: Routes = [
+export default [
   {
     path: RouteRoot,
-    component: NavigationContentComponent,
+    loadComponent: () => import('../../widget/navigation-content').then((ii) => ii.NavigationContentComponent),
     data,
     children: [
       {path: RouteDemoMisc, loadChildren: () => import('../../feature/demo-misc/routes')},
@@ -25,9 +23,4 @@ const ROUTING: Routes = [
       {path: RouteWild, redirectTo: RouteDemoMisc},
     ],
   },
-];
-
-@NgModule({imports: [NavigationContentComponent, RouterModule.forChild(ROUTING)]})
-class RoutePlaygroundModule {}
-
-export {RoutePlaygroundModule};
+] as Route[];

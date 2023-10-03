@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DemoMiscComponent renders 1`] = `
+<mock-render>
+  <app-demo-misc>
+    <div
+      ddflexbox="vyt"
+      ng-reflect-dd-flexbox="vyt"
+    >
+      <mat-card
+        appearance="outlined"
+        class="childv"
+        ng-reflect-appearance="outlined"
+      >
+        <mat-card-title>
+          Graphsky
+        </mat-card-title>
+        <mat-card-content>
+          <div
+            ddflexbox="hysw"
+            ng-reflect-dd-flexbox="hysw"
+          >
+            <div
+              ddflexbox="vys"
+              ng-reflect-dd-flexbox="vys"
+            >
+              <div
+                ddflexbox="hyc"
+                ng-reflect-dd-flexbox="hyc"
+              >
+                <button
+                  color="accent"
+                  mat-button=""
+                  ng-reflect-color="accent"
+                >
+                  + TEST
+                </button>
+                <button
+                  color="warn"
+                  mat-button=""
+                  ng-reflect-color="warn"
+                >
+                  DROP
+                </button>
+              </div>
+              <app-simple-view
+                class="hovered-elevated"
+                ng-reflect-data="[object Object]"
+                ng-reflect-is-dense="true"
+                ng-reflect-is-width-constrained="false"
+                ng-reflect-subheader="Stats"
+                subheader="Stats"
+              />
+            </div>
+            <app-simple-view
+              class="hovered-elevated"
+              ng-reflect-data="[object Object]"
+              ng-reflect-is-dense="true"
+              ng-reflect-is-width-constrained="false"
+              ng-reflect-subheader="All"
+              subheader="All"
+            />
+            <app-simple-view
+              class="hovered-elevated"
+              ng-reflect-data="[object Object]"
+              ng-reflect-is-dense="true"
+              ng-reflect-is-width-constrained="false"
+              ng-reflect-subheader="Likes"
+              subheader="Likes"
+            />
+            <app-simple-view
+              class="hovered-elevated"
+              ng-reflect-data="[object Object]"
+              ng-reflect-is-dense="true"
+              ng-reflect-is-width-constrained="false"
+              ng-reflect-subheader="Diversity"
+              subheader="Diversity"
+            />
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </app-demo-misc>
+</mock-render>
+`;
