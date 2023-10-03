@@ -2,8 +2,8 @@ import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {Router} from '@angular/router';
-import {AppRoute} from 'src/app/app-route';
 import {DiGlobalVersion} from 'src/app/di-global';
+import {RouteDashboard} from 'src/app/routing';
 import {DashboardRoute} from '../dashboard/dashboard-route';
 import {SystemRoute} from '../route-system/system-route';
 
@@ -20,5 +20,5 @@ export class VersionComponent {
   public readonly version$ = inject(DiGlobalVersion);
   private readonly router = inject(Router);
 
-  onGotoSettings = () => this.router.navigate([AppRoute.Dashboard, DashboardRoute.Settings, SystemRoute.BuildConfig]);
+  onGotoSettings = () => this.router.navigate([RouteDashboard, DashboardRoute.Settings, SystemRoute.BuildConfig]);
 }

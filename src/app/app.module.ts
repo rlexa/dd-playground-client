@@ -4,19 +4,18 @@ import {MatNativeDateModule, NativeDateModule} from '@angular/material/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule, Routes} from '@angular/router';
-import {AppRoute} from './app-route';
 import {AppComponent} from './app.component';
 import {DiGlobalRouterParamsProvider} from './di-global';
 import {FlexboxDirective} from './module/directive/flexbox';
-import {RouteRoot, RouteWild} from './routing';
+import {RouteDashboard, RouteRoot, RouteWild} from './routing';
 
 const appRoutes: Routes = [
   {
-    path: AppRoute.Dashboard,
+    path: RouteDashboard,
     loadChildren: () => import('src/app/module/widget/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
-  {path: RouteRoot, redirectTo: AppRoute.Dashboard, pathMatch: 'full'},
-  {path: RouteWild, redirectTo: AppRoute.Dashboard},
+  {path: RouteRoot, redirectTo: RouteDashboard, pathMatch: 'full'},
+  {path: RouteWild, redirectTo: RouteDashboard},
 ];
 
 @NgModule({

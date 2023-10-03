@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {AppRoute} from 'src/app/app-route';
+import {RouteDashboard} from 'src/app/routing';
 import {DashboardRoute} from '../../dashboard/dashboard-route';
 import {ApiRoute, apiRouteIcon, apiRouteTooltip} from '../api-route';
 
@@ -29,7 +29,7 @@ export class GhibliRouteLinkPipe implements PipeTransform {
         ? apiRouteIcon[apiRoute]
         : context === 'tooltip'
         ? apiRouteTooltip[apiRoute]
-        : `/${AppRoute.Dashboard}/${DashboardRoute.Api}/${apiRoute}/${id}`;
+        : `/${RouteDashboard}/${DashboardRoute.Api}/${apiRoute}/${id}`;
     }
     return context === 'icon' ? 'warning' : context === 'tooltip' ? 'Error' : null;
   }
