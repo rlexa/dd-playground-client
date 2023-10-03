@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GhibliComponent renders 1`] = `
+<mock-render>
+  <app-ghibli>
+    <div
+      ddflexbox="hyscsw"
+      ng-reflect-dd-flexbox="hyscsw"
+    >
+      <mat-card
+        appearance="outlined"
+        class="childhv"
+        ng-reflect-appearance="outlined"
+      >
+        <mat-card-title>
+          Queries
+        </mat-card-title>
+        <mat-card-content>
+          <div
+            ddflexbox="vys"
+            ng-reflect-dd-flexbox="vys"
+          >
+            <mat-list
+              class="mat-list-auto-height"
+            >
+              <h3
+                mat-subheader=""
+              >
+                API
+              </h3>
+              <mat-list-item>
+                <button
+                  mat-raised-button=""
+                >
+                  /locations/
+                </button>
+              </mat-list-item>
+              <mat-list-item>
+                <button
+                  mat-raised-button=""
+                >
+                  /films/
+                </button>
+              </mat-list-item>
+              <mat-list-item>
+                <button
+                  mat-raised-button=""
+                >
+                  /people/
+                </button>
+              </mat-list-item>
+              <mat-list-item>
+                <button
+                  mat-raised-button=""
+                >
+                  /species/
+                </button>
+              </mat-list-item>
+              <mat-list-item>
+                <button
+                  mat-raised-button=""
+                >
+                  /vehicles/
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </app-ghibli>
+</mock-render>
+`;

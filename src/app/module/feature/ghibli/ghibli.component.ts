@@ -1,16 +1,35 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, OnDestroy, inject} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
 import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, of} from 'rxjs';
 import {filter, finalize, map, switchMap, tap} from 'rxjs/operators';
-import {GhibliApiService, GhibliEntity, GhibliType, GHIBLI_TYPES} from 'src/app/module/service/ghibli-api';
+import {GHIBLI_TYPES, GhibliApiService, GhibliEntity, GhibliType} from 'src/app/module/service/ghibli-api';
+import {FlexboxDirective} from '../../directive/flexbox';
+import {LoadingBarComponent} from '../../widget/loading-bar';
+import {SimpleTableComponent} from '../../widget/simple-table';
+import {SimpleViewComponent} from '../../widget/simple-view';
 
 @Component({
   selector: 'app-ghibli',
   templateUrl: './ghibli.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+    MatListModule,
+    FlexboxDirective,
+    LoadingBarComponent,
+    SimpleTableComponent,
+    SimpleViewComponent,
+  ],
 })
 export class GhibliComponent implements OnDestroy {
-  constructor(private readonly api: GhibliApiService) {}
+  private readonly api = inject(GhibliApiService);
 
   private readonly typeToDetails$: Record<GhibliType, (id: string) => Observable<GhibliEntity>> = {
     [GhibliType.Location]: this.api.location$,
