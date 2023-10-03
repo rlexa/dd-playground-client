@@ -1,6 +1,7 @@
+import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {RxCleanup} from 'dd-rxjs';
-import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, combineLatest} from 'rxjs';
 import {distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
 import {Game, getNeighbourVectorsAround} from '../logic';
@@ -12,6 +13,8 @@ type FIELD = 'clear' | 'empty' | 'flag' | 'mine';
   templateUrl: './game-minesweeper-render-html.component.html',
   styleUrls: ['./game-minesweeper-render-html.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule],
 })
 export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
   @RxCleanup() public readonly game$ = new BehaviorSubject<Game>(null);

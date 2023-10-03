@@ -1,14 +1,19 @@
+import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {RxCleanup, rxFire_, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {filter, map, withLatestFrom} from 'rxjs/operators';
-import {Game, initGame, onInput, Preset, processFrame} from './logic';
+import {SimpleViewComponent} from '../../widget/simple-view';
+import {Game, Preset, initGame, onInput, processFrame} from './logic';
+import {GameMinesweeperRenderHtmlComponent} from './render';
 
 @Component({
   selector: 'app-game-minesweeper',
   templateUrl: './game-minesweeper.component.html',
   styleUrls: ['./game-minesweeper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, SimpleViewComponent, GameMinesweeperRenderHtmlComponent],
 })
 export class GameMinesweeperComponent implements OnDestroy, OnInit {
   private timeLast = 0;
