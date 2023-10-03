@@ -1,9 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FooterComponent renders 1`] = `
-<app-footer>
-  <span
-    class="filler"
-  /><app-version />
-</app-footer>
+<mock-render>
+  <app-footer>
+    <span
+      class="filler"
+    />
+    <app-version />
+  </app-footer>
+</mock-render>
 `;

@@ -1,27 +1,16 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {MockComponents} from 'ng-mocks';
-import {detectChanges, overrideForChangeDetection} from 'src/app/test';
-import {VersionComponent} from '../version';
+import {ComponentFixture} from '@angular/core/testing';
+import {MockBuilder, MockRender} from 'ng-mocks';
 import {FooterComponent} from './footer.component';
 
 describe('FooterComponent', () => {
   let fixture: ComponentFixture<FooterComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [],
-      declarations: [FooterComponent, MockComponents(VersionComponent)],
-      providers: [],
-    })
-      .overrideComponent(FooterComponent, overrideForChangeDetection)
-      .compileComponents();
-  });
+  beforeEach(() => MockBuilder(FooterComponent));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FooterComponent);
-    detectChanges(fixture);
+    fixture = MockRender(FooterComponent);
+    fixture.detectChanges();
   });
 
-  it('creates instance', () => expect(fixture.componentInstance).toBeTruthy());
-  it(`renders`, () => expect(fixture).toMatchSnapshot());
+  test('renders', () => expect(fixture).toMatchSnapshot());
 });

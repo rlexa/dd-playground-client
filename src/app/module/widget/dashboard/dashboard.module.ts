@@ -2,7 +2,7 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {RouteRoot, RouteWild} from 'src/app/routing';
-import {FooterModule} from '../footer';
+import {FooterComponent} from '../footer';
 import {NavigationBarItem, NavigationBarItemsData, NavigationBarModule} from '../navigation-bar';
 import {DashboardRoute} from './dashboard-route';
 import {DashboardComponent} from './dashboard.component';
@@ -61,7 +61,7 @@ const ROUTING: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FooterModule, NavigationBarModule, RouterModule.forChild(ROUTING)],
+  imports: [CommonModule, FooterComponent, NavigationBarModule, RouterModule.forChild(ROUTING)],
   exports: [DashboardComponent],
   declarations: [DashboardComponent],
 })

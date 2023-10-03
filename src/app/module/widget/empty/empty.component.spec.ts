@@ -1,23 +1,16 @@
-import {TestBed, waitForAsync} from '@angular/core/testing';
-import {detectChanges, overrideForChangeDetection} from 'src/app/test';
+import {ComponentFixture} from '@angular/core/testing';
+import {MockBuilder, MockRender} from 'ng-mocks';
 import {EmptyComponent} from './empty.component';
 
-describe('EmptyComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [],
-        declarations: [EmptyComponent],
-        providers: [],
-      })
-        .overrideComponent(EmptyComponent, overrideForChangeDetection)
-        .compileComponents();
-    }),
-  );
+describe('BuildComponent', () => {
+  let fixture: ComponentFixture<EmptyComponent>;
 
-  test('is created', () => {
-    const fixture = TestBed.createComponent(EmptyComponent);
-    detectChanges(fixture);
-    expect(fixture).toMatchSnapshot();
+  beforeEach(() => MockBuilder(EmptyComponent));
+
+  beforeEach(() => {
+    fixture = MockRender(EmptyComponent);
+    fixture.detectChanges();
   });
+
+  test('renders', () => expect(fixture).toMatchSnapshot());
 });

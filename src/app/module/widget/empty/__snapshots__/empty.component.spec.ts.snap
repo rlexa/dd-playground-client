@@ -1,9 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EmptyComponent is created 1`] = `
-<app-empty>
-  <div>
-    ...
-  </div>
-</app-empty>
+exports[`BuildComponent renders 1`] = `
+<mock-render>
+  <app-empty>
+    <div>
+      ...
+    </div>
+  </app-empty>
+</mock-render>
 `;
