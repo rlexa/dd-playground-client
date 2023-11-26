@@ -1,20 +1,22 @@
 <mat-toolbar color="primary" [class.toolbar-column]="layout === 'column'">
-  <span *ngIf="layout === 'row'" class="mat-toolbar-filler"></span>
-  <ng-container *ngIf="items as iis">
+  @if (layout === undefined || layout === 'row') {
+    <span class="mat-toolbar-filler"></span>
+  }
+  @if (items) {
     <nav class="mat-nav-list">
-      @for (ii of iis; track $index) {
+      @for (ii of items; track $index) {
         <a
           mat-button
           [style.min-width]="'auto'"
           [routerLink]="ii.route"
           routerLinkActive="active"
           [matTooltip]="ii.label"
-          [matTooltipPosition]="layout === 'row' ? 'below' : 'right'"
+          [matTooltipPosition]="layout === undefined || layout === 'row' ? 'below' : 'right'"
         >
           <i class="material-icons transition-transform active-scale">{{ ii.icon | icon }}</i>
         </a>
       }
     </nav>
     <span class="mat-toolbar-filler"></span>
-  </ng-container>
+  }
 </mat-toolbar>

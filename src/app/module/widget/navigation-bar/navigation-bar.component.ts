@@ -20,6 +20,6 @@ export interface NavigationBarItem {
   imports: [CommonModule, RouterModule, MatButtonModule, MatToolbarModule, MatTooltipModule, IconPipe],
 })
 export class NavigationBarComponent {
-  @Input() layout: 'row' | 'column' = 'row';
+  @Input() layout?: 'row' | 'column' | null;
   @Input() items?: NavigationBarItem[] | null;
 }
