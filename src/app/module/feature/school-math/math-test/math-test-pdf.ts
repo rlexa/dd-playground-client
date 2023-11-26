@@ -30,7 +30,8 @@ import {
 } from './math-test-generator';
 
 // needed for some reason (see docs)
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+const wth = pdfMake as any;
+(wth as any).vfs = pdfFonts.pdfMake.vfs;
 
 const indexToChar = fnCompose(String.fromCharCode, fnSum('a'.charCodeAt(0)));
 const splitByComma = fnSplit(',');
@@ -93,27 +94,33 @@ const hasTitle = fnCompose(fnIs, getTitle);
 const questionTitleToPdf = (index: number) =>
   fnCheckThenOrNull(hasTitle)((val: MathTestQuestion): Content => ({text: `${indexToChar(index)}) ${getTitle(val)}`}));
 
-const questionToPdf = (index: number) => (val: MathTestQuestion): Content =>
-  filterValidContent([
-    questionTitleToPdf(index)(val),
-    (typeHandle[getType(val)] ?? ((value: MathTestQuestion) => `TODO type ${getType(value) || 'undefined'}`))(val),
-  ]);
+const questionToPdf =
+  (index: number) =>
+  (val: MathTestQuestion): Content =>
+    filterValidContent([
+      questionTitleToPdf(index)(val),
+      (typeHandle[getType(val)] ?? ((value: MathTestQuestion) => `TODO type ${getType(value) || 'undefined'}`))(val),
+    ]);
 
-const taskToPdf = (index: number) => (val: MathTestTask): Content => ({
-  stack: [
-    {text: `${index + 1}. ${getTitle(val) ?? ''}`, style: ['h2', 'marginTop']},
-    {text: getText(val) ?? '', style: 'marginAll'},
-    ...indexedItemToPdfContentWith(questionToPdf)(getQuestions(val) ?? []),
-  ],
-  unbreakable: true,
-});
+const taskToPdf =
+  (index: number) =>
+  (val: MathTestTask): Content => ({
+    stack: [
+      {text: `${index + 1}. ${getTitle(val) ?? ''}`, style: ['h2', 'marginTop']},
+      {text: getText(val) ?? '', style: 'marginAll'},
+      ...indexedItemToPdfContentWith(questionToPdf)(getQuestions(val) ?? []),
+    ],
+    unbreakable: true,
+  });
 
 const questionToResultsPdf = (data: MathTestQuestion): Content => `Punkte: ${getPoints(data)}. Ergebnis: ${getResult(data)}`;
 
-const taskToResultsPdf = (index: number) => (data: MathTestTask): Content => ({
-  stack: [{text: `${index + 1}. Punkte: ${getPoints(data)}`}, ...getQuestions(data)?.map(questionToResultsPdf)],
-  style: 'marginAll',
-});
+const taskToResultsPdf =
+  (index: number) =>
+  (data: MathTestTask): Content => ({
+    stack: [{text: `${index + 1}. Punkte: ${getPoints(data)}`}, ...getQuestions(data)?.map(questionToResultsPdf)],
+    style: 'marginAll',
+  });
 
 const testToPdf = (data: MathTest) =>
   pdfMake.createPdf({
