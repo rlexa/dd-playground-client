@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {trackByIndex} from 'src/app/util';
 
 @Component({
   selector: 'app-ghibli-link',
@@ -9,5 +8,4 @@ import {trackByIndex} from 'src/app/util';
 })
 export class GhiblLinkComponent {
   @Input() links: string[];
-  trackByIndex = trackByIndex;
 }

@@ -24,7 +24,7 @@
           [matSortActive]="sortBy$ | async"
           (matSortChange)="onSortChange($event.active, $event.direction !== 'desc')"
         >
-          <ng-container *ngFor="let col of columns; trackBy: trackByIndex" [matColumnDef]="col">
+          @for (col of columns; track $index) {
             <th mat-header-cell *matHeaderCellDef [mat-sort-header]="col">{{ col | startuppercase | ripupper }}</th>
             <td mat-cell *matCellDef="let ii; let index = index">
               <div
@@ -38,7 +38,7 @@
                 </span>
               </div>
             </td>
-          </ng-container>
+          }
 
           <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: columns" class="hoverable" (dblclick)="onRowDoubleClick(row)"></tr>

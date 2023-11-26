@@ -9,7 +9,7 @@
 </ng-container>
 
 <div *ngIf="links?.length > 1" class="links">
-  <ng-container *ngFor="let item of links; trackBy: trackByIndex">
+  @for (item of links; track $index) {
     <ng-container *ngTemplateOutlet="templateLink; context: {$implicit: item}"> </ng-container>
-  </ng-container>
+  }
 </div>

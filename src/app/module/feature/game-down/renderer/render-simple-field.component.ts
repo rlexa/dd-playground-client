@@ -4,7 +4,6 @@ import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {FlexboxDirective} from 'src/app/module/directive/flexbox';
-import {trackByIndex} from 'src/app/util';
 import {GameDownColorMap, GameDownField} from '../data';
 import {Theme} from '../theme';
 import {actorToColor, entityToColor, fieldToColor} from './util';
@@ -30,8 +29,6 @@ export class RenderSimpleFieldComponent implements OnDestroy {
   readonly colorsEntities$ = combineLatest([this.data$, this.theme$]).pipe(
     map(([data, theme]) => (data.entities || []).map((_) => entityToColor(_, theme))),
   );
-
-  trackBy = trackByIndex;
 
   @Input() set data(val: GameDownField) {
     this.data$.next(val);

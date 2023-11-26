@@ -3,16 +3,19 @@ import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/cor
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, Observable, combineLatest} from 'rxjs';
 import {distinctUntilChanged, filter, map} from 'rxjs/operators';
-import {trackByIndex} from 'src/app/util';
 import {Game} from '../logic-fns';
 
 type FIELD = 'empty' | 'food' | 'snake' | 'head';
 
 @Component({
   selector: 'app-game-snake-render-html',
-  template: `<div *ngIf="game$ | async" class="scope" [ngStyle]="{'grid-template-columns': gridColRepeat$ | async}">
-    <div *ngFor="let field of fields$ | async; trackBy: trackByIndex" class="field field-{{ field }}"></div>
-  </div>`,
+  template: `@if (game$ | async) {
+    <div class="scope" [ngStyle]="{'grid-template-columns': gridColRepeat$ | async}">
+      @for (field of fields$ | async; track $index) {
+        <div class="field field-{{ field }}"></div>
+      }
+    </div>
+  }`,
   styleUrls: ['./game-snake-render-html.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -65,8 +68,6 @@ export class GameSnakeRenderHtmlComponent implements OnDestroy {
       return cells;
     }),
   );
-
-  trackByIndex = trackByIndex;
 
   destroy() {}
   ngOnDestroy() {

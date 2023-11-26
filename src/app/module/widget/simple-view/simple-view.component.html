@@ -9,62 +9,74 @@
           <ng-container *ngIf="clickables$ | async as clickables">
             <h4 *ngIf="subheader" mat-subheader>{{ subheader }}</h4>
             <table>
-              <tr *ngFor="let key of keys; let iindex = index">
-                <td [style.verticalAlign]="'top'">
-                  <mat-list-item>
-                    <span class="no-break-text">
-                      {{ (key | startuppercase | ripupper) + (types[iindex] === 'array' ? ' (' + model[key].length + ')' : '') }}
-                    </span>
-                  </mat-list-item>
-                </td>
-                <!-- <td class="contenthv" [style.verticalAlign]="'top'">{{ types[iindex] }}</td> -->
-                <td>
-                  <mat-list-item [@TRIGGER_WobbleX]="['recursive'].includes(types[iindex]) ? null : model[key]">
-                    <span
-                      class="break-text"
-                      [ngClass]="{'value-numeric': types[iindex] === 'number', 'size-data-label': isWidthConstrained}"
-                    >
-                      <ng-container [ngSwitch]="types[iindex]">
-                        <a *ngSwitchCase="'url'" [href]="model[key]">{{ model[key] }}</a>
-                        <span
-                          *ngSwitchCase="'timestamp'"
-                          [ngClass]="{clickable: clickables[key], 'color-accent': clickables[key]}"
-                          (click)="clickables[key] ? onClicked(key, model[key]) : {}"
-                        >
-                          {{ model[key] | date: FORMAT_DATE_TIMESTAMP }}
-                        </span>
-                        <ng-container *ngSwitchCase="'json'">{{ model[key] | json }}</ng-container>
-                        <ng-container *ngSwitchCase="'void'">{{ '-' }}</ng-container>
-                        <app-simple-view
-                          *ngSwitchCase="'array'"
-                          [data]="model[key]"
-                          [isWidthConstrained]="isWidthConstrained"
-                          [isExpandable]="true"
-                          [isExpanded]="false"
-                          [isClickable]="isClickable"
-                          (clicked)="onClicked($event.key, $event.value)"
-                        />
-                        <app-simple-view
-                          *ngSwitchCase="'recursive'"
-                          [data]="model[key]"
-                          [isWidthConstrained]="isWidthConstrained"
-                          [isExpandable]="true"
-                          [isExpanded]="false"
-                          [isClickable]="isClickable"
-                          (clicked)="onClicked($event.key, $event.value)"
-                        />
-                        <span
-                          *ngSwitchDefault
-                          [ngClass]="{clickable: clickables[key], 'color-accent': clickables[key]}"
-                          (click)="clickables[key] ? onClicked(key, model[key]) : {}"
-                        >
-                          {{ model[key] }}
-                        </span>
-                      </ng-container>
-                    </span>
-                  </mat-list-item>
-                </td>
-              </tr>
+              @for (key of keys; track $index) {
+                <tr>
+                  <td [style.verticalAlign]="'top'">
+                    <mat-list-item>
+                      <span class="no-break-text">
+                        {{ (key | startuppercase | ripupper) + (types[$index] === 'array' ? ' (' + model[key].length + ')' : '') }}
+                      </span>
+                    </mat-list-item>
+                  </td>
+                  <!-- <td class="contenthv" [style.verticalAlign]="'top'">{{ types[$index] }}</td> -->
+                  <td>
+                    <mat-list-item [@TRIGGER_WobbleX]="['recursive'].includes(types[$index]) ? null : model[key]">
+                      <span
+                        class="break-text"
+                        [ngClass]="{'value-numeric': types[$index] === 'number', 'size-data-label': isWidthConstrained}"
+                      >
+                        @switch (types[$index]) {
+                          @case ('url') {
+                            <a [href]="model[key]">{{ model[key] }}</a>
+                          }
+                          @case ('timestamp') {
+                            <span
+                              [ngClass]="{clickable: clickables[key], 'color-accent': clickables[key]}"
+                              (click)="clickables[key] ? onClicked(key, model[key]) : {}"
+                            >
+                              {{ model[key] | date: FORMAT_DATE_TIMESTAMP }}
+                            </span>
+                          }
+                          @case ('json') {
+                            {{ model[key] | json }}
+                          }
+                          @case ('void') {
+                            {{ '-' }}
+                          }
+                          @case ('array') {
+                            <app-simple-view
+                              [data]="model[key]"
+                              [isWidthConstrained]="isWidthConstrained"
+                              [isExpandable]="true"
+                              [isExpanded]="false"
+                              [isClickable]="isClickable"
+                              (clicked)="onClicked($event.key, $event.value)"
+                            />
+                          }
+                          @case ('recursive') {
+                            <app-simple-view
+                              [data]="model[key]"
+                              [isWidthConstrained]="isWidthConstrained"
+                              [isExpandable]="true"
+                              [isExpanded]="false"
+                              [isClickable]="isClickable"
+                              (clicked)="onClicked($event.key, $event.value)"
+                            />
+                          }
+                          @default {
+                            <span
+                              [ngClass]="{clickable: clickables[key], 'color-accent': clickables[key]}"
+                              (click)="clickables[key] ? onClicked(key, model[key]) : {}"
+                            >
+                              {{ model[key] }}
+                            </span>
+                          }
+                        }
+                      </span>
+                    </mat-list-item>
+                  </td>
+                </tr>
+              }
             </table>
           </ng-container>
         </ng-container>

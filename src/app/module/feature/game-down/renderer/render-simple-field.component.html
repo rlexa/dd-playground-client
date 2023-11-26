@@ -7,13 +7,9 @@
     >
       <div ddFlexbox="hyscsw" class="position-absolute match-parent">
         <ng-container *ngIf="colorsEntities$ | async as colorsEntities">
-          <div
-            *ngFor="let colorEntity of colorsEntities; trackBy: trackBy"
-            [style.margin]="'1%'"
-            [style.width]="'23%'"
-            [style.height]="'23%'"
-            [style.backgroundColor]="colorEntity"
-          ></div>
+          @for (colorEntity of colorsEntities; track $index) {
+            <div [style.margin]="'1%'" [style.width]="'23%'" [style.height]="'23%'" [style.backgroundColor]="colorEntity"></div>
+          }
           <div
             *ngIf="colorActor$ | async as colorActor"
             [style.margin]="'1%'"

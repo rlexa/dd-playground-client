@@ -11,7 +11,9 @@
     <button class="childhv" (click)="triggerInit()">Init</button>
     <button class="childhv" (click)="triggerFrame()">Frame</button>
     <button class="childhv" (click)="toggleLoop()">{{ (toggleLoop$ | async) ? 'Loop OFF' : 'Loop ON' }}</button>
-    <button *ngFor="let vec of ['L', 'U', 'R', 'D']" class="childhv" (click)="triggerDirection(vec)">{{ vec }}</button>
+    @for (vec of ['L', 'U', 'R', 'D']; track $index) {
+      <button class="childhv" (click)="triggerDirection(vec)">{{ vec }}</button>
+    }
 
     <app-simple-view [isDense]="true" [isExpandable]="true" subheader="Preset" [data]="preset$ | async" />
     <app-simple-view [isDense]="true" [isExpandable]="true" [isWidthConstrained]="false" subheader="Game" [data]="(game$ | async) || {}" />

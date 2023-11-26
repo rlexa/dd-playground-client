@@ -5,9 +5,11 @@
       <div ddFlexbox="vys">
         <mat-list class="mat-list-auto-height">
           <h3 mat-subheader>API</h3>
-          <mat-list-item *ngFor="let type of TYPES_LISTS">
-            <button mat-raised-button (click)="toAnyData(typeToList$[type])">{{ type }}</button>
-          </mat-list-item>
+          @for (type of TYPES_LISTS; track $index) {
+            <mat-list-item>
+              <button mat-raised-button (click)="toAnyData(typeToList$[type])">{{ type }}</button>
+            </mat-list-item>
+          }
         </mat-list>
       </div>
     </mat-card-content>

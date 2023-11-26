@@ -3,7 +3,6 @@ import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject} from '@an
 import {MatListModule} from '@angular/material/list';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {map} from 'rxjs/operators';
-import {trackByIndex} from 'src/app/util';
 import {setUntilThenBack$} from 'src/app/util/set-until-then-back-rx';
 import {DiDashboardVisibilityFooter} from '../../widget/dashboard/di-dashboard-options';
 import {resolveInitiative as resolveInitiativeIndices} from './data';
@@ -28,8 +27,6 @@ export class GameDownAiInitiativeComponent implements OnDestroy, OnInit {
   readonly fields$ = this.gameDownService.state$.pipe(map((state) => state.scene.fields));
 
   readonly resolvedInitiativeIndices$ = this.fields$.pipe(map(resolveInitiativeIndices));
-
-  trackByIndex = trackByIndex;
 
   destroy() {}
   ngOnDestroy() {

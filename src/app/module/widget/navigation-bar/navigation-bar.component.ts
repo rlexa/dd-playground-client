@@ -4,7 +4,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {RouterModule} from '@angular/router';
-import {trackByIndex} from 'src/app/util';
 import {IconPipe} from '../../pipe/icon';
 
 export interface NavigationBarItem {
@@ -23,6 +22,4 @@ export interface NavigationBarItem {
 export class NavigationBarComponent {
   @Input() layout: 'row' | 'column' = 'row';
   @Input() items?: NavigationBarItem[] | null;
-
-  trackByIndex = trackByIndex;
 }
