@@ -3,17 +3,14 @@
 
 :root {
   --font-family-root: roboto, 'Helvetica Neue', sans-serif;
-
   --margin-small: 0.1rem;
   --margin-smaller: 0.25rem;
   --margin: 0.5rem;
   --margin-bigger: 0.75rem;
   --margin-big: 1rem;
-
   --padding: var(--margin);
   --padding-bigger: var(--margin-bigger);
   --padding-big: var(--margin-big);
-
   --size-cell: 23rem;
   --size-font-h1: 2.4rem;
   --size-font-root: 62.5%;
@@ -31,17 +28,14 @@
   --size-radius: 0.5rem;
   --size-squared: 2.3rem;
   --size-viewport-min: 80rem;
-
   --transition-duration-fast: 100ms;
   --transition-duration: 300ms;
-
-  --color-border: hsla(0, 0%, 0%, 0.12);
+  --color-border: hsla(0deg 0% 0% / 12%);
 }
 
 $clr-primary: mat.get-color-from-palette($primary);
 $clr-secondary: mat.get-color-from-palette($accent);
 $clr-warn: mat.get-color-from-palette($warn);
-
 $clr-item-bg: #e0e0e0;
 $clr-item-bg-connected: #90ee90;
 $clr-item-bg-light: #f0f0f0;
@@ -62,13 +56,11 @@ $clr-mat-table-dialog-color: #f9f9f9;
 $clr-scrollbar-thumb: fade-out(#000000, 0.5);
 $clr-scrollbar-track: fade-out(#000000, 0.9);
 $clr-transparent: fade-out(#000000, 1);
-
 $mat-clr-accent: $clr-secondary;
 $mat-clr-chip-bg: $clr-item-bg;
 $mat-clr-chip-bg-connected: $clr-item-bg-connected;
 $mat-clr-chip-fg: $clr-item-fg;
 $mat-clr-primary: $clr-primary;
 $mat-clr-warn: $clr-warn;
-
 $size-icon-height: 2.4rem;
 $size-mini-fab-height: 4rem;

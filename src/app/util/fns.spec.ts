@@ -429,7 +429,7 @@ describe(`fns`, () => {
   });
 
   describe(`fnWhileDo`, () => {
-    test(`loops until break`, () => expect(fnWhileDo((nr) => nr < 4)(plusOne)(0)).toBe(4));
+    test(`loops until break`, () => expect(fnWhileDo<number>((nr) => nr < 4)(plusOne)(0)).toBe(4));
     test(`does not loop on immediate break`, () => expect(fnWhileDo(() => false)(plusOne)(0)).toBe(0));
   });
 
