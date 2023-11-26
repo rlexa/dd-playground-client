@@ -30,9 +30,7 @@ const ROUTING: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, NavigationContentComponent, RouterModule.forChild(ROUTING)],
-  exports: [GraphTopLevelComponent],
-  declarations: [GraphTopLevelComponent],
+  imports: [CommonModule, HttpClientModule, GraphTopLevelComponent, NavigationContentComponent, RouterModule.forChild(ROUTING)],
 })
 class GraphTopLevelModule {}
 

@@ -1,29 +1,39 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {RouterTestingModule} from '@angular/router/testing';
-import {MockComponents} from 'ng-mocks';
-import {detectChanges, overrideForChangeDetection} from 'src/app/test';
+import {ComponentFixture} from '@angular/core/testing';
+import {MockBuilder, MockRender, ngMocks} from 'ng-mocks';
+import {BehaviorSubject} from 'rxjs';
 import {FooterComponent} from '../footer';
-import {NavigationBarComponent} from '../navigation-bar';
 import {DashboardComponent} from './dashboard.component';
+import {DiDashboardVisibilityFooter} from './di-dashboard-options';
 
 describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [DashboardComponent, MockComponents(NavigationBarComponent, FooterComponent)],
-      providers: [],
-    })
-      .overrideComponent(DashboardComponent, overrideForChangeDetection)
-      .compileComponents();
+  const mockFooter$ = new BehaviorSubject(false);
+
+  afterAll(() => {
+    mockFooter$.complete();
   });
 
+  beforeEach(() => MockBuilder(DashboardComponent).mock(DiDashboardVisibilityFooter, mockFooter$));
+
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
-    detectChanges(fixture);
+    mockFooter$.next(false);
+    fixture = MockRender(DashboardComponent);
+    fixture.detectChanges();
   });
 
   it('creates instance', () => expect(fixture.componentInstance).toBeTruthy());
+
   it(`renders`, () => expect(fixture).toMatchSnapshot());
+
+  describe(`with visible footer`, () => {
+    beforeEach(() => {
+      mockFooter$.next(true);
+      fixture.detectChanges();
+    });
+
+    it(`renders`, () => expect(fixture).toMatchSnapshot());
+
+    it(`has footer`, () => expect(ngMocks.findInstance(FooterComponent)).toBeTruthy());
+  });
 });

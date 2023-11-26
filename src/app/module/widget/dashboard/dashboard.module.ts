@@ -49,9 +49,14 @@ const ROUTING: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FooterComponent, NavigationBarComponent, NavigationBarItemsFromRouteDirective, RouterModule.forChild(ROUTING)],
-  exports: [DashboardComponent],
-  declarations: [DashboardComponent],
+  imports: [
+    CommonModule,
+    DashboardComponent,
+    FooterComponent,
+    NavigationBarComponent,
+    NavigationBarItemsFromRouteDirective,
+    RouterModule.forChild(ROUTING),
+  ],
 })
 class DashboardModule {}
 

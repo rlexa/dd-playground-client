@@ -1,19 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DashboardComponent renders 1`] = `
-<app-dashboard
-  isVisibleFooter$={[Function StateSubject]}
->
-  <div
-    class="content mat-app-background"
-  >
-    <app-navigation-bar
-      appnavigationbaritemsfromroute=""
-    />
-    <main>
-      <router-outlet />
-    </main>
-    <app-footer />
-  </div>
-</app-dashboard>
+<mock-render>
+  <app-dashboard>
+    <div
+      class="content mat-app-background"
+    >
+      <app-navigation-bar
+        appnavigationbaritemsfromroute=""
+      />
+      <main>
+        <router-outlet />
+      </main>
+    </div>
+  </app-dashboard>
+</mock-render>
+`;
+
+exports[`DashboardComponent with visible footer renders 1`] = `
+<mock-render>
+  <app-dashboard>
+    <div
+      class="content mat-app-background"
+    >
+      <app-navigation-bar
+        appnavigationbaritemsfromroute=""
+      />
+      <main>
+        <router-outlet />
+      </main>
+      <app-footer />
+    </div>
+  </app-dashboard>
+</mock-render>
 `;

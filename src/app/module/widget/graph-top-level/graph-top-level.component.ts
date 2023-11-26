@@ -1,8 +1,10 @@
+import {CommonModule} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, inject} from '@angular/core';
 import {map, tap} from 'rxjs/operators';
 import {GraphskyService, IGraphskyData, IGraphskyLinkRequest} from 'src/app/module/service/graphsky-api';
 import {TAG_TYPE} from '../../feature/graph-walker';
+import {NavigationContentComponent} from '../navigation-content';
 
 interface TypedNode extends IGraphskyData {
   [TAG_TYPE]: string;
@@ -61,13 +63,13 @@ const csvToLinks = (csv: string, separator = ';', fromPrefix = 'from-', toPrefix
   selector: 'app-graph-top-level',
   templateUrl: './graph-top-level.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, NavigationContentComponent],
   providers: [GraphskyService],
 })
 export class GraphTopLevelComponent implements OnInit {
-  constructor(
-    private readonly graphsky: GraphskyService,
-    private readonly http: HttpClient,
-  ) {}
+  private readonly graphsky = inject(GraphskyService);
+  private readonly http = inject(HttpClient);
 
   ngOnInit() {
     ['country', 'institution'].forEach((source) =>

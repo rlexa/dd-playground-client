@@ -1,10 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GraphTopLevelComponent is created 1`] = `
-<app-graph-top-level
-  graphsky={[Function GraphskyService]}
-  http={[Function Object]}
->
-  <app-navigation-content />
-</app-graph-top-level>
+<mock-render>
+  <app-graph-top-level>
+    <app-navigation-content />
+  </app-graph-top-level>
+</mock-render>
 `;

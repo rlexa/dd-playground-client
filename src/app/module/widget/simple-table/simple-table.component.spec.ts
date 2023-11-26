@@ -1,6 +1,6 @@
 import {ComponentFixture} from '@angular/core/testing';
 import {MockBuilder, MockRender} from 'ng-mocks';
-import {detectChanges} from 'src/app/test';
+import {firstValueFrom} from 'rxjs';
 import {SimpleTableComponent} from './simple-table.component';
 
 describe('SimpleTableComponent', () => {
@@ -21,9 +21,13 @@ describe('SimpleTableComponent', () => {
         {col0: 'row0', col1: 'row0'},
         {col0: 'row1', col1: 'row1'},
       ];
-      detectChanges(fixture);
+      fixture.detectChanges();
     });
 
     test(`renders`, () => expect(fixture).toMatchSnapshot());
+
+    test(`has columns`, async () => expect(await firstValueFrom(fixture.componentInstance.columns$)).toEqual(['col0', 'col1']));
+
+    test(`has no clickables`, async () => expect(await firstValueFrom(fixture.componentInstance.dataBatchClickables$)).toEqual([[], []]));
   });
 });

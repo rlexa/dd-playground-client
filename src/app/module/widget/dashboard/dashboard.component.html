@@ -1,9 +1,11 @@
 <div class="content mat-app-background">
-  <app-navigation-bar appNavigationBarItemsFromRoute></app-navigation-bar>
+  <app-navigation-bar appNavigationBarItemsFromRoute />
 
   <main>
-    <router-outlet></router-outlet>
+    <router-outlet />
   </main>
 
-  <app-footer *ngIf="isVisibleFooter$ | async"></app-footer>
+  @if (isVisibleFooter$ | async) {
+    <app-footer />
+  }
 </div>

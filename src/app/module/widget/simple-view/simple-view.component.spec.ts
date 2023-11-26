@@ -1,7 +1,6 @@
 import {ComponentFixture} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MockBuilder, MockRender} from 'ng-mocks';
-import {detectChanges} from 'src/app/test';
 import {IconPipe} from '../../pipe/icon';
 import {SimpleViewComponent} from './simple-view.component';
 
@@ -26,7 +25,7 @@ describe('SimpleViewComponent', () => {
   describe(`with data`, () => {
     beforeEach(() => {
       fixture.componentInstance.data = {key: 'value'};
-      detectChanges(fixture);
+      fixture.detectChanges();
     });
 
     test(`renders`, () => expect(fixture).toMatchSnapshot());
