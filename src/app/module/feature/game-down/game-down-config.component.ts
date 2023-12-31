@@ -9,7 +9,6 @@ import {MatSliderModule} from '@angular/material/slider';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, of} from 'rxjs';
 import {distinctUntilChanged, filter, map, shareReplay, takeUntil, withLatestFrom} from 'rxjs/operators';
-import {trackByIndex} from 'src/app/util';
 import {DEF_FAMEDOWN_STATE_FIELDS, GameDownField, buildSituation1, checkProblems, modField} from './data';
 import {DiDebugView, DiSceneSelectedIndex, DiTheme} from './di-game-down-values';
 import {GameDownAiInitiativeComponent} from './game-down-ai-initiative.component';
@@ -79,7 +78,6 @@ export class GameDownConfigComponent implements OnDestroy {
 
   onSetFactor = this.gameDownService.setFactor;
   onSetRenderer = this.gameDownService.setRenderer;
-  trackByIndex = trackByIndex;
 
   onSetTheme = (val: string) => this.theme$.next(val);
 

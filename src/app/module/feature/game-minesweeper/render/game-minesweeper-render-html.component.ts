@@ -3,7 +3,6 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Outp
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, Observable, combineLatest} from 'rxjs';
 import {distinctUntilChanged, filter, map} from 'rxjs/operators';
-import {trackByIndex} from 'src/app/util';
 import {Game, getNeighbourVectorsAround} from '../logic';
 
 type FIELD = 'clear' | 'empty' | 'flag' | 'mine';
@@ -96,8 +95,6 @@ export class GameMinesweeperRenderHtmlComponent implements OnDestroy {
       }),
     ),
   );
-
-  trackByIndex = trackByIndex;
 
   destroy() {}
   ngOnDestroy() {

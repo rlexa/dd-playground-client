@@ -121,5 +121,3 @@ export const toRange = (count: number, optTo?: number) =>
   Array.from(Array(optTo ? optTo - count : count || 0), (ii, jj) => jj + (optTo ? count : 0));
 
 export const toWebAddress = (value: string) => (('' + value).startsWith('http') ? value : 'http://' + value);
-
-export const trackByIndex = (index: number, _: any) => index;
