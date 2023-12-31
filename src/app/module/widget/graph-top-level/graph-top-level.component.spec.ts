@@ -8,7 +8,12 @@ import {GraphskyService} from '../../service/graphsky-api';
 import {GraphTopLevelComponent} from './graph-top-level.component';
 
 describe('GraphTopLevelComponent', () => {
-  beforeEach(() => MockBuilder(GraphTopLevelComponent).provide(mockAll(GraphskyService)).provide(mockAll(HttpClient)));
+  beforeEach(() =>
+    MockBuilder(GraphTopLevelComponent)
+      .provide(mockAll(GraphskyService))
+      .provide(mockAll(HttpClient))
+      .beforeCompileComponents((tb) => tb.overrideComponent(GraphTopLevelComponent, {set: {providers: [mockAll(GraphskyService)]}})),
+  );
 
   beforeEach(() => {
     Mock.extend(TestBed.inject(HttpClient)).with({get: () => of(null)});

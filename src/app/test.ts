@@ -12,6 +12,8 @@ export const getterMockedComponent =
   (fixture: ComponentFixture<any>): MockedComponent<T> =>
     fixture.debugElement.query(By.directive(type))?.componentInstance;
 
+export const findDirective = <T>(fixture: ComponentFixture<any>, type: Type<T>) => getterMockedComponent(type)(fixture);
+
 /**
  * Mocks via factory.
  */
