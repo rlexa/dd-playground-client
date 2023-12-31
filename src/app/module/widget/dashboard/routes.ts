@@ -1,9 +1,6 @@
-import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route} from '@angular/router';
 import {RouteRoot, RouteWild} from 'src/app/routing';
-import {FooterComponent} from '../footer';
-import {NavigationBarComponent, NavigationBarItem, NavigationBarItemsData, NavigationBarItemsFromRouteDirective} from '../navigation-bar';
+import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
 import {DashboardRoute} from './dashboard-route';
 import {DashboardComponent} from './dashboard.component';
 
@@ -21,7 +18,7 @@ const data: NavigationBarItemsData = {
   navigationBarItems: Object.values(DashboardRoute).map<NavigationBarItem>((ii) => ({...routeNavs[ii], route: ii})),
 };
 
-const ROUTING: Routes = [
+export default [
   {
     path: RouteRoot,
     component: DashboardComponent,
@@ -38,18 +35,4 @@ const ROUTING: Routes = [
       {path: RouteWild, redirectTo: DashboardRoute.Overview},
     ],
   },
-];
-
-@NgModule({
-  imports: [
-    CommonModule,
-    DashboardComponent,
-    FooterComponent,
-    NavigationBarComponent,
-    NavigationBarItemsFromRouteDirective,
-    RouterModule.forChild(ROUTING),
-  ],
-})
-class DashboardModule {}
-
-export {DashboardComponent, DashboardModule};
+] as Route[];

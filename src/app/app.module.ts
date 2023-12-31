@@ -23,10 +23,7 @@ import {RouteDashboard, RouteRoot, RouteWild} from './routing';
     DiGlobalRouterParamsProvider,
     provideRouter(
       [
-        {
-          path: RouteDashboard,
-          loadChildren: () => import('src/app/module/widget/dashboard/dashboard.module').then((m) => m.DashboardModule),
-        },
+        {path: RouteDashboard, loadChildren: () => import('src/app/module/widget/dashboard/routes')},
         {path: RouteRoot, redirectTo: RouteDashboard, pathMatch: 'full'},
         {path: RouteWild, redirectTo: RouteDashboard},
       ],
