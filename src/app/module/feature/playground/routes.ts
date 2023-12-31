@@ -18,7 +18,6 @@ export default [
     data,
     children: [
       {path: RouteDemoMisc, loadChildren: () => import('../../feature/demo-misc/routes')},
-      {path: RouteDemoGhibli, loadChildren: () => import('../../feature/ghibli/routes')},
       {path: RouteRoot, redirectTo: RouteDemoMisc, pathMatch: 'full'},
       {path: RouteWild, redirectTo: RouteDemoMisc},
     ],

@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {DateAdapter, NativeDateAdapter} from '@angular/material/core';
 import {Title} from '@angular/platform-browser';
+import {RouterModule} from '@angular/router';
 import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {Observable} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -8,8 +9,13 @@ import {DiGlobalTitle} from './di-global';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: `<div class="position-absolute match-parent app-viewport">
+    <div class="position-absolute match-parent container-bg-logo"></div>
+    <router-outlet></router-outlet>
+  </div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [RouterModule],
 })
 export class AppComponent implements OnDestroy, OnInit {
   constructor(

@@ -3,7 +3,7 @@
     <h4 *ngIf="header" class="text-center">{{ header }}</h4>
     <div ddFlexbox="hyc">
       <label class="childh">{{ item.inc.length }}</label>
-      <label ddFlexitem="1 0" class="childh text-center">{{ 'inc .. out' }}</label>
+      <label class="childh text-center" style="flex: 1 0 auto">{{ 'inc .. out' }}</label>
       <label class="childh">{{ item.out.length }}</label>
     </div>
     <app-simple-view [data]="item.data" [isDense]="true" [isWidthConstrained]="false" />
