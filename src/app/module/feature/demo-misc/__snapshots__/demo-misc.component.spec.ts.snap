@@ -4,8 +4,7 @@ exports[`DemoMiscComponent renders 1`] = `
 <mock-render>
   <app-demo-misc>
     <div
-      ddflexbox="vyt"
-      ng-reflect-dd-flexbox="vyt"
+      class="list-v"
     >
       <mat-card
         appearance="outlined"
@@ -17,16 +16,13 @@ exports[`DemoMiscComponent renders 1`] = `
         </mat-card-title>
         <mat-card-content>
           <div
-            ddflexbox="hysw"
-            ng-reflect-dd-flexbox="hysw"
+            class="list-h wrap"
           >
             <div
-              ddflexbox="vys"
-              ng-reflect-dd-flexbox="vys"
+              class="list-v"
             >
               <div
-                ddflexbox="hyc"
-                ng-reflect-dd-flexbox="hyc"
+                class="bar-h"
               >
                 <button
                   color="accent"

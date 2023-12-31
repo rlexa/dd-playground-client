@@ -1,0 +1,31 @@
+.list-h,
+%list-h {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.list-v,
+%list-v {
+  @extend %list-h;
+
+  flex-direction: column;
+}
+
+.bar-h,
+%bar-h {
+  @extend %list-h;
+
+  align-content: center;
+}
+
+.bar-v,
+%bar-v {
+  @extend %list-v;
+
+  align-content: center;
+}
+
+.wrap,
+%wrap {
+  flex-wrap: wrap;
+}
