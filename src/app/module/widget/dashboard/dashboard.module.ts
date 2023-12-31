@@ -30,10 +30,7 @@ const ROUTING: Routes = [
     children: [
       {path: DashboardRoute.Overview, loadChildren: () => import('../../feature/overview/routes')},
       {path: DashboardRoute.Game, loadChildren: () => import('../../feature/game/routes')},
-      {
-        path: DashboardRoute.Graph,
-        loadChildren: () => import('src/app/module/widget/graph-top-level/graph-top-level.module').then((m) => m.GraphTopLevelModule),
-      },
+      {path: DashboardRoute.Graph, loadChildren: () => import('../../widget/graph-top-level/routes')},
       {path: DashboardRoute.Crypto, loadChildren: () => import('../../feature/crypto/routes')},
       {path: DashboardRoute.School, loadChildren: () => import('../../feature/school/routes')},
       {path: DashboardRoute.Playground, loadChildren: () => import('../../feature/playground/routes')},

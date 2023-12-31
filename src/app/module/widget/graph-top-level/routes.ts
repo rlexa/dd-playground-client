@@ -1,10 +1,6 @@
-import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Route} from '@angular/router';
 import {RouteRoot, RouteWild} from 'src/app/routing';
 import {NavigationBarItem, NavigationBarItemsData} from '../navigation-bar';
-import {NavigationContentComponent} from '../navigation-content';
 import {GraphRoute} from './graph-route';
 import {GraphTopLevelComponent} from './graph-top-level.component';
 
@@ -16,7 +12,7 @@ const data: NavigationBarItemsData = {
   navigationBarItems: Object.values(GraphRoute).map((ii) => routeNavs[ii]),
 };
 
-const ROUTING: Routes = [
+export default [
   {
     path: RouteRoot,
     component: GraphTopLevelComponent,
@@ -27,11 +23,4 @@ const ROUTING: Routes = [
       {path: RouteWild, redirectTo: GraphRoute.Walker},
     ],
   },
-];
-
-@NgModule({
-  imports: [CommonModule, HttpClientModule, GraphTopLevelComponent, NavigationContentComponent, RouterModule.forChild(ROUTING)],
-})
-class GraphTopLevelModule {}
-
-export {GraphTopLevelComponent, GraphTopLevelModule};
+] as Route[];
