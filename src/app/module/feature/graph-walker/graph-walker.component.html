@@ -1,7 +1,7 @@
 <ng-template #tmplNode let-item let-header="header">
-  <div ddFlexbox="vyt" class="contenthv childhv hovered-elevated">
+  <div class="contenthv childhv hovered-elevated list-v">
     <h4 *ngIf="header" class="text-center">{{ header }}</h4>
-    <div ddFlexbox="hyc">
+    <div class="bar-h">
       <label class="childh">{{ item.inc.length }}</label>
       <label class="childh text-center" style="flex: 1 0 auto">{{ 'inc .. out' }}</label>
       <label class="childh">{{ item.out.length }}</label>
@@ -11,7 +11,7 @@
 </ng-template>
 
 <ng-template #tmplLink let-item let-header="header">
-  <div ddFlexbox="vyt" class="contenthv childhv hovered-elevated">
+  <div class="contenthv childhv hovered-elevated list-v">
     <h4 *ngIf="header" class="text-center">{{ header }}</h4>
     <app-simple-view [data]="item.data" [isDense]="true" [isWidthConstrained]="false" />
   </div>
@@ -21,8 +21,8 @@
 
 <mat-card appearance="outlined">
   <mat-card-content>
-    <div ddFlexbox="vyt">
-      <div ddFlexbox="hysw">
+    <div class="list-v">
+      <div class="list-h wrap">
         <div class="contenthv childhv hovered-elevated">
           <h2>DB Stats: Overall</h2>
           <app-simple-view [data]="dbState$ | async" [isDense]="true" [isWidthConstrained]="false" />
@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <div ddFlexbox="hycw" class="contenthv childhv hovered-elevated">
+      <div class="contenthv childhv hovered-elevated bar-h wrap">
         <label>Query first node of:</label>
 
         <mat-form-field class="margin-left childhv" hintLabel="Type">
@@ -70,10 +70,10 @@
 
       <div *ngIf="curNode$ | async as node" [ngStyle]="{display: 'grid', 'grid-template-areas': GRID, 'grid-template-columns': GRID_SIZE}">
         <div [ngStyle]="{'grid-area': GRID_FROM}">
-          <div ddFlexbox="vye">
-            <div *ngFor="let link of node.inc" ddFlexbox="hys" class="childh">
+          <div class="list-v" [style.align-items]="'flex-end'">
+            <div *ngFor="let link of node.inc" class="childh list-h">
               <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.from}" />
-              <div ddFlexbox="hyc">
+              <div class="bar-h">
                 <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}" />
                 <button mat-mini-fab (click)="setCurNode(link.from)">
                   <mat-icon>{{ 'go_left' | icon }}</mat-icon>
@@ -84,15 +84,15 @@
         </div>
 
         <div [ngStyle]="{'grid-area': GRID_CURRENT}">
-          <div ddFlexbox="vyc" class="childh">
+          <div class="childh bar-v">
             <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: node, header: 'CURRENT'}" />
           </div>
         </div>
 
         <div [ngStyle]="{'grid-area': GRID_TO}">
-          <div ddFlexbox="vys" class="childh">
-            <div *ngFor="let link of node.out" ddFlexbox="hys">
-              <div ddFlexbox="hyc">
+          <div class="childh list-v">
+            <div *ngFor="let link of node.out" class="list-h">
+              <div class="bar-h">
                 <button mat-mini-fab (click)="setCurNode(link.to)">
                   <mat-icon>{{ 'go_right' | icon }}</mat-icon>
                 </button>

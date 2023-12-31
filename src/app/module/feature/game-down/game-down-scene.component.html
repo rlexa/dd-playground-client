@@ -18,8 +18,9 @@
 
     <div
       *ngIf="viewDebug$ | async"
-      ddFlexbox="vxeye"
-      class="position-absolute match-parent border-radius value-numeric"
+      class="position-absolute match-parent border-radius value-numeric list-v"
+      [style.align-items]="'flex-end'"
+      [style.justify-content]="'end'"
       [style.fontSize]="'1.5em'"
       [style.border]="'.2em solid transparent'"
     >

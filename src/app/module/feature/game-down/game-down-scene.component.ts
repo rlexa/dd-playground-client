@@ -2,7 +2,6 @@ import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {combineLatest} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
-import {FlexboxDirective} from '../../directive/flexbox';
 import {GAMEDOWN_FIELD_H, GAMEDOWN_FIELD_W} from './data';
 import {DiDebugView, DiSceneHoveredIndex, DiSceneSelectedIndex, DiTheme} from './di-game-down-values';
 import {GameDownFieldComponent} from './game-down-field.component';
@@ -14,7 +13,7 @@ import {GameDownService, RENDERER_SIMPLE} from './service';
   templateUrl: './game-down-scene.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FlexboxDirective, GameDownFieldComponent, RenderSimpleFieldComponent],
+  imports: [CommonModule, GameDownFieldComponent, RenderSimpleFieldComponent],
 })
 export class GameDownSceneComponent {
   private readonly gameDownService = inject(GameDownService);

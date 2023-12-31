@@ -6,7 +6,6 @@ import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideRouter, withComponentInputBinding} from '@angular/router';
 import {AppComponent} from './app/app.component';
 import {DiGlobalRouterParamsProvider} from './app/di-global';
-import {FlexboxDirective} from './app/module/directive/flexbox';
 import {RouteDashboard, RouteRoot, RouteWild} from './app/routing';
 import {environment} from './environments/environment';
 
@@ -16,7 +15,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom([MatNativeDateModule, NativeDateModule, FlexboxDirective]),
+    importProvidersFrom([MatNativeDateModule, NativeDateModule]),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
     DiGlobalRouterParamsProvider,

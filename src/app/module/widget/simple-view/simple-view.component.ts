@@ -8,7 +8,6 @@ import {map} from 'rxjs/operators';
 import {TRIGGER_WOBBLE_X} from 'src/app/animations';
 import {FORMAT_DATE_TIMESTAMP} from 'src/app/presets';
 import {isNumeric, isWeb} from 'src/app/util';
-import {FlexboxDirective} from '../../directive/flexbox';
 import {IconPipe} from '../../pipe/icon';
 import {RipupperPipe} from '../../pipe/ripupper';
 import {StartuppercasePipe} from '../../pipe/startuppercase';
@@ -21,7 +20,7 @@ type CellType = 'url' | 'number' | 'timestamp' | 'json' | 'recursive' | 'string'
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [TRIGGER_WOBBLE_X],
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatListModule, FlexboxDirective, IconPipe, RipupperPipe, StartuppercasePipe],
+  imports: [CommonModule, MatButtonModule, MatListModule, IconPipe, RipupperPipe, StartuppercasePipe],
 })
 export class SimpleViewComponent<T> implements OnDestroy {
   readonly FORMAT_DATE_TIMESTAMP = FORMAT_DATE_TIMESTAMP;
@@ -62,18 +61,18 @@ export class SimpleViewComponent<T> implements OnDestroy {
     val === null || val === undefined
       ? 'void'
       : typeof val === 'object'
-      ? val instanceof Date
-        ? 'timestamp'
-        : Array.isArray(val)
-        ? 'array'
-        : 'recursive'
-      : typeof val === 'number'
-      ? 'number'
-      : typeof val === 'string'
-      ? isWeb(val)
-        ? 'url'
-        : isNumeric(val)
-        ? 'number'
-        : 'string'
-      : 'json';
+        ? val instanceof Date
+          ? 'timestamp'
+          : Array.isArray(val)
+            ? 'array'
+            : 'recursive'
+        : typeof val === 'number'
+          ? 'number'
+          : typeof val === 'string'
+            ? isWeb(val)
+              ? 'url'
+              : isNumeric(val)
+                ? 'number'
+                : 'string'
+            : 'json';
 }

@@ -1,5 +1,5 @@
 <div *ngIf="data$ | async as model" class="position-relative">
-  <div ddFlexbox="hys" [style.maxWidth]="'100%'" class="scroll-x-auto">
+  <div [style.maxWidth]="'100%'" class="list-h scroll-x-auto">
     <button mat-button *ngIf="isExpandable" class="inline-button" (click)="isExpanded = !isExpanded">
       <i class="material-icons rot-90">{{ (isExpanded ? 'collapse' : 'expand') | icon }}</i>
     </button>

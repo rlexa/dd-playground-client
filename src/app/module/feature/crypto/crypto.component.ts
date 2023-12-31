@@ -9,7 +9,6 @@ import {MatListModule} from '@angular/material/list';
 import {RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, Subject, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
-import {FlexboxDirective} from '../../directive/flexbox';
 import {CryptoApiService} from '../../service/crypto-api';
 import {SimpleViewComponent} from '../../widget/simple-view';
 
@@ -26,7 +25,6 @@ import {SimpleViewComponent} from '../../widget/simple-view';
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
-    FlexboxDirective,
     SimpleViewComponent,
   ],
 })

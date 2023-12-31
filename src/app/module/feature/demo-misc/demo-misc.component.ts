@@ -3,7 +3,6 @@ import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {map} from 'rxjs/operators';
-import {FlexboxDirective} from '../../directive/flexbox';
 import {GraphskyService} from '../../service/graphsky-api';
 import {SimpleViewComponent} from '../../widget/simple-view';
 
@@ -12,7 +11,7 @@ import {SimpleViewComponent} from '../../widget/simple-view';
   templateUrl: './demo-misc.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatCardModule, FlexboxDirective, SimpleViewComponent],
+  imports: [CommonModule, MatButtonModule, MatCardModule, SimpleViewComponent],
   providers: [GraphskyService],
 })
 export class DemoMiscComponent {

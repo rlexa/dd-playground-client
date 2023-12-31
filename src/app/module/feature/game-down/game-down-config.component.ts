@@ -10,7 +10,6 @@ import {DoneSubject, RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, of} from 'rxjs';
 import {distinctUntilChanged, filter, map, shareReplay, takeUntil, withLatestFrom} from 'rxjs/operators';
 import {trackByIndex} from 'src/app/util';
-import {FlexboxDirective} from '../../directive/flexbox';
 import {DEF_FAMEDOWN_STATE_FIELDS, GameDownField, buildSituation1, checkProblems, modField} from './data';
 import {DiDebugView, DiSceneSelectedIndex, DiTheme} from './di-game-down-values';
 import {GameDownAiInitiativeComponent} from './game-down-ai-initiative.component';
@@ -23,7 +22,6 @@ import {GameDownService} from './service';
   standalone: true,
   imports: [
     CommonModule,
-    FlexboxDirective,
     FormsModule,
     GameDownAiInitiativeComponent,
     MatCheckboxModule,

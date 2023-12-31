@@ -15,14 +15,14 @@
 %bar-h {
   @extend %list-h;
 
-  align-content: center;
+  align-items: center;
 }
 
 .bar-v,
 %bar-v {
   @extend %list-v;
 
-  align-content: center;
+  align-items: center;
 }
 
 .wrap,

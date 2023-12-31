@@ -3,7 +3,6 @@ import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/co
 import {DoneSubject, RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
-import {FlexboxDirective} from '../../directive/flexbox';
 import {SimpleViewComponent} from '../../widget/simple-view';
 import {Engine, enEmpty, enFillCanvasColor, enImageUrl, enText, enTransform} from './engine';
 
@@ -12,7 +11,7 @@ import {Engine, enEmpty, enFillCanvasColor, enImageUrl, enText, enTransform} fro
   templateUrl: './render-canvas.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FlexboxDirective, SimpleViewComponent],
+  imports: [CommonModule, SimpleViewComponent],
 })
 export class RenderCanvasComponent implements OnDestroy, OnInit {
   @RxCleanup() private readonly done$ = new DoneSubject();

@@ -9,12 +9,10 @@ exports[`GraphWalkerComponent renders 1`] = `
     >
       <mat-card-content>
         <div
-          ddflexbox="vyt"
-          ng-reflect-dd-flexbox="vyt"
+          class="list-v"
         >
           <div
-            ddflexbox="hysw"
-            ng-reflect-dd-flexbox="hysw"
+            class="list-h wrap"
           >
             <div
               class="contenthv childhv hovered-elevated"
@@ -41,9 +39,7 @@ exports[`GraphWalkerComponent renders 1`] = `
             </div>
           </div>
           <div
-            class="contenthv childhv hovered-elevated"
-            ddflexbox="hycw"
-            ng-reflect-dd-flexbox="hycw"
+            class="contenthv childhv hovered-elevated bar-h wrap"
           >
             <label>
               Query first node of:

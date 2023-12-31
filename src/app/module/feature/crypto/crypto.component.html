@@ -1,14 +1,14 @@
-<div ddFlexbox="hyscsw">
+<div class="list-h wrap">
   <mat-card appearance="outlined" class="childhv">
     <mat-card-title>Actions: API</mat-card-title>
     <mat-card-content>
-      <div ddFlexbox="vys">
+      <div class="list-v">
         <h1 class="color-warn">CORS/PROXY KILLS API.</h1>
 
         <mat-list class="mat-list-auto-height">
           <h3 mat-subheader>Ping</h3>
           <mat-list-item>
-            <div ddFlexbox="hyc">
+            <div class="bar-h">
               <button mat-button (click)="wsBlockchainPing()">Blockchain WS</button>
               <button mat-button (click)="wsBlockCypherPing()">BlockCypher WS</button>
             </div>
@@ -16,7 +16,7 @@
 
           <h3 mat-subheader>Address</h3>
           <mat-list-item>
-            <div ddFlexbox="hyc">
+            <div class="bar-h">
               <mat-form-field class="childh value-numeric">
                 <input
                   matInput
@@ -25,11 +25,11 @@
                   placeholder="Bitcoin Address"
                 />
               </mat-form-field>
-              <div ddFlexbox="vys">
+              <div class="list-v">
                 <button mat-button (click)="apiBlockchainBitcoinAddress()">Blockchain API</button>
                 <button mat-button (click)="wsBlockchainAddressLatestTransaction()">Blockchain WS</button>
               </div>
-              <div ddFlexbox="vys">
+              <div class="list-v">
                 <button mat-button (click)="apiBlockCypherBitcoinAddress()">BlockCypher API</button>
                 <button mat-button (click)="wsBlockCypherAddressConfirmedTx()">BlockCypher WS</button>
               </div>
@@ -38,8 +38,8 @@
 
           <h3 mat-subheader>Stats</h3>
           <mat-list-item>
-            <div ddFlexbox="hyc">
-              <div ddFlexbox="vys">
+            <div class="bar-h">
+              <div class="list-v">
                 <button mat-button (click)="apiWebBitcoinStats()">WebBitcoin API</button>
               </div>
             </div>

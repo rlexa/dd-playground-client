@@ -1,5 +1,5 @@
-<div ddFlexbox="hyscsw">
-  <div ddFlexbox="vys">
+<div class="list-h wrap">
+  <div class="list-v">
     <mat-list class="mat-list-auto-height">
       <h3 mat-subheader>Debug</h3>
       <mat-list-item>
@@ -10,7 +10,7 @@
     <mat-list class="mat-list-auto-height">
       <h3 mat-subheader>Scene</h3>
       <mat-list-item>
-        <div ddFlexbox="hyc">
+        <div class="bar-h">
           <label mat-line>Size:</label>
           <mat-slider [max]="factorMax$ | async" [min]="factorMin$ | async" [step]="0.1" #ngSlider>
             <input
@@ -57,7 +57,7 @@
     </mat-list>
   </div>
 
-  <div ddFlexbox="vys">
+  <div class="list-v">
     <mat-list class="mat-list-auto-height">
       <h3 mat-subheader>Stats</h3>
       <mat-list-item>
@@ -68,7 +68,7 @@
     <app-game-down-ai-initiative />
   </div>
 
-  <div *ngIf="selectedField$ | async as field" ddFlexbox="vys">
+  <div *ngIf="selectedField$ | async as field" class="list-v">
     <mat-list class="mat-list-auto-height">
       <h3 mat-subheader>Field {{ selectedFieldIndex$ | async }}</h3>
       <mat-list-item>

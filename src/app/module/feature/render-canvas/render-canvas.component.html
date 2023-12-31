@@ -1,8 +1,8 @@
-<div ddFlexbox="hyscsw">
+<div class="list-h wrap">
   <canvas id="render-canvas" class="childhv" [width]="width$ | async" [height]="height$ | async"></canvas>
 
-  <div class="childhv hovered-elevated" ddFlexbox="vys">
-    <div ddFlexbox="hyc">
+  <div class="childhv hovered-elevated list-v">
+    <div class="bar-h">
       <label class="childh">Canvas BG:</label>
       <input #input class="squared" type="color" [value]="colorCanvasBg$ | async" (input)="setColorCanvasBg(input.value)" />
     </div>

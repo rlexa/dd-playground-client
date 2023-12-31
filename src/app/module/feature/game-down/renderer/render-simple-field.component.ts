@@ -3,7 +3,6 @@ import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/cor
 import {RxCleanup} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {FlexboxDirective} from 'src/app/module/directive/flexbox';
 import {GameDownColorMap, GameDownField} from '../data';
 import {Theme} from '../theme';
 import {actorToColor, entityToColor, fieldToColor} from './util';
@@ -13,7 +12,7 @@ import {actorToColor, entityToColor, fieldToColor} from './util';
   templateUrl: './render-simple-field.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FlexboxDirective],
+  imports: [CommonModule],
 })
 export class RenderSimpleFieldComponent implements OnDestroy {
   @RxCleanup() readonly data$ = new BehaviorSubject<GameDownField>(null);

@@ -4,8 +4,7 @@ exports[`CryptoComponent renders 1`] = `
 <mock-render>
   <app-crypto>
     <div
-      ddflexbox="hyscsw"
-      ng-reflect-dd-flexbox="hyscsw"
+      class="list-h wrap"
     >
       <mat-card
         appearance="outlined"
@@ -17,8 +16,7 @@ exports[`CryptoComponent renders 1`] = `
         </mat-card-title>
         <mat-card-content>
           <div
-            ddflexbox="vys"
-            ng-reflect-dd-flexbox="vys"
+            class="list-v"
           >
             <h1
               class="color-warn"
@@ -35,8 +33,7 @@ exports[`CryptoComponent renders 1`] = `
               </h3>
               <mat-list-item>
                 <div
-                  ddflexbox="hyc"
-                  ng-reflect-dd-flexbox="hyc"
+                  class="bar-h"
                 >
                   <button
                     mat-button=""
@@ -57,8 +54,7 @@ exports[`CryptoComponent renders 1`] = `
               </h3>
               <mat-list-item>
                 <div
-                  ddflexbox="hyc"
-                  ng-reflect-dd-flexbox="hyc"
+                  class="bar-h"
                 >
                   <mat-form-field
                     class="childh value-numeric"
@@ -71,8 +67,7 @@ exports[`CryptoComponent renders 1`] = `
                     />
                   </mat-form-field>
                   <div
-                    ddflexbox="vys"
-                    ng-reflect-dd-flexbox="vys"
+                    class="list-v"
                   >
                     <button
                       mat-button=""
@@ -86,8 +81,7 @@ exports[`CryptoComponent renders 1`] = `
                     </button>
                   </div>
                   <div
-                    ddflexbox="vys"
-                    ng-reflect-dd-flexbox="vys"
+                    class="list-v"
                   >
                     <button
                       mat-button=""
@@ -109,12 +103,10 @@ exports[`CryptoComponent renders 1`] = `
               </h3>
               <mat-list-item>
                 <div
-                  ddflexbox="hyc"
-                  ng-reflect-dd-flexbox="hyc"
+                  class="bar-h"
                 >
                   <div
-                    ddflexbox="vys"
-                    ng-reflect-dd-flexbox="vys"
+                    class="list-v"
                   >
                     <button
                       mat-button=""

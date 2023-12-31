@@ -3,7 +3,6 @@ import {ChangeDetectionStrategy, Component, OnInit, inject} from '@angular/core'
 import {MatCardModule} from '@angular/material/card';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {FlexboxDirective} from '../../directive/flexbox';
 import {SimpleViewComponent} from '../../widget/simple-view';
 import {GameDownColorMap} from './data';
 import {DiDebugView, DiSceneHoveredIndex, DiSceneSelectedIndex, DiTheme} from './di-game-down-values';
@@ -18,7 +17,7 @@ import {themeDownDefault, themes} from './theming';
   templateUrl: './game-down.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FlexboxDirective, GameDownConfigComponent, GameDownSceneComponent, MatCardModule, SimpleViewComponent],
+  imports: [CommonModule, GameDownConfigComponent, GameDownSceneComponent, MatCardModule, SimpleViewComponent],
 })
 export class GameDownComponent implements OnInit {
   private readonly gameDownService = inject(GameDownService);

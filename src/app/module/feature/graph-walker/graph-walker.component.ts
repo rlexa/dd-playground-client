@@ -11,7 +11,6 @@ import {RxCleanup, rxNext_} from 'dd-rxjs';
 import {BehaviorSubject, combineLatest, of} from 'rxjs';
 import {debounceTime, filter, map, withLatestFrom} from 'rxjs/operators';
 import {GraphskyService, IGraphskyNode} from 'src/app/module/service/graphsky-api';
-import {FlexboxDirective} from '../../directive/flexbox';
 import {IconPipe} from '../../pipe/icon';
 import {SimpleViewComponent} from '../../widget/simple-view';
 
@@ -62,7 +61,6 @@ const compareEqual = (cmp: string, aa: any, bb: any) => {
     MatIconModule,
     MatInputModule,
     MatSelectModule,
-    FlexboxDirective,
     IconPipe,
     SimpleViewComponent,
   ],
