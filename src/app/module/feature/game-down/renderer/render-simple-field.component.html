@@ -1,25 +1,26 @@
-<ng-container *ngIf="theme$ | async as theme">
-  <ng-container *ngIf="data$ | async as data">
+@if (theme$ | async; as theme) {
+  @if (data$ | async; as data) {
     <div
       class="position-absolute match-parent"
       [style.border]="'1px solid ' + (colorBorder$ | async)"
       [style.backgroundColor]="colorField$ | async"
     >
       <div class="position-absolute match-parent list-h wrap">
-        <ng-container *ngIf="colorsEntities$ | async as colorsEntities">
+        @if (colorsEntities$ | async; as colorsEntities) {
           @for (colorEntity of colorsEntities; track $index) {
             <div [style.margin]="'1%'" [style.width]="'23%'" [style.height]="'23%'" [style.backgroundColor]="colorEntity"></div>
           }
-          <div
-            *ngIf="colorActor$ | async as colorActor"
-            [style.margin]="'1%'"
-            [style.width]="'23%'"
-            [style.height]="'23%'"
-            [style.backgroundColor]="colorActor"
-            [style.borderRadius]="'50%'"
-          ></div>
-        </ng-container>
+          @if (colorActor$ | async; as colorActor) {
+            <div
+              [style.margin]="'1%'"
+              [style.width]="'23%'"
+              [style.height]="'23%'"
+              [style.backgroundColor]="colorActor"
+              [style.borderRadius]="'50%'"
+            ></div>
+          }
+        }
       </div>
     </div>
-  </ng-container>
-</ng-container>
+  }
+}

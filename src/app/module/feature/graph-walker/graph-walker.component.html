@@ -1,6 +1,8 @@
 <ng-template #tmplNode let-item let-header="header">
   <div class="contenthv childhv hovered-elevated list-v">
-    <h4 *ngIf="header" class="text-center">{{ header }}</h4>
+    @if (header) {
+      <h4 class="text-center">{{ header }}</h4>
+    }
     <div class="bar-h">
       <label class="childh">{{ item.inc.length }}</label>
       <label class="childh text-center" style="flex: 1 0 auto">{{ 'inc .. out' }}</label>
@@ -12,7 +14,9 @@
 
 <ng-template #tmplLink let-item let-header="header">
   <div class="contenthv childhv hovered-elevated list-v">
-    <h4 *ngIf="header" class="text-center">{{ header }}</h4>
+    @if (header) {
+      <h4 class="text-center">{{ header }}</h4>
+    }
     <app-simple-view [data]="item.data" [isDense]="true" [isWidthConstrained]="false" />
   </div>
 </ng-template>
@@ -76,45 +80,47 @@
         </mat-form-field>
       </div>
 
-      <div *ngIf="curNode$ | async as node" [ngStyle]="{display: 'grid', 'grid-template-areas': GRID, 'grid-template-columns': GRID_SIZE}">
-        <div [ngStyle]="{'grid-area': GRID_FROM}">
-          <div class="list-v" [style.align-items]="'flex-end'">
-            @for (link of node.inc; track $index) {
-              <div class="childh list-h">
-                <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.from}" />
-                <div class="bar-h">
-                  <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}" />
-                  <button mat-mini-fab (click)="setCurNode(link.from)">
-                    <mat-icon>{{ 'go_left' | icon }}</mat-icon>
-                  </button>
+      @if (curNode$ | async; as node) {
+        <div [ngStyle]="{display: 'grid', 'grid-template-areas': GRID, 'grid-template-columns': GRID_SIZE}">
+          <div [ngStyle]="{'grid-area': GRID_FROM}">
+            <div class="list-v" [style.align-items]="'flex-end'">
+              @for (link of node.inc; track $index) {
+                <div class="childh list-h">
+                  <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.from}" />
+                  <div class="bar-h">
+                    <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}" />
+                    <button mat-mini-fab (click)="setCurNode(link.from)">
+                      <mat-icon>{{ 'go_left' | icon }}</mat-icon>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            }
+              }
+            </div>
           </div>
-        </div>
 
-        <div [ngStyle]="{'grid-area': GRID_CURRENT}">
-          <div class="childh bar-v">
-            <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: node, header: 'CURRENT'}" />
+          <div [ngStyle]="{'grid-area': GRID_CURRENT}">
+            <div class="childh bar-v">
+              <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: node, header: 'CURRENT'}" />
+            </div>
           </div>
-        </div>
 
-        <div [ngStyle]="{'grid-area': GRID_TO}">
-          <div class="childh list-v">
-            @for (link of node.out; track $index) {
-              <div class="list-h">
-                <div class="bar-h">
-                  <button mat-mini-fab (click)="setCurNode(link.to)">
-                    <mat-icon>{{ 'go_right' | icon }}</mat-icon>
-                  </button>
-                  <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}" />
+          <div [ngStyle]="{'grid-area': GRID_TO}">
+            <div class="childh list-v">
+              @for (link of node.out; track $index) {
+                <div class="list-h">
+                  <div class="bar-h">
+                    <button mat-mini-fab (click)="setCurNode(link.to)">
+                      <mat-icon>{{ 'go_right' | icon }}</mat-icon>
+                    </button>
+                    <ng-container *ngTemplateOutlet="tmplLink; context: {$implicit: link}" />
+                  </div>
+                  <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.to}" />
                 </div>
-                <ng-container *ngTemplateOutlet="tmplNode; context: {$implicit: link.to}" />
-              </div>
-            }
+              }
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
   </mat-card-content>
 </mat-card>

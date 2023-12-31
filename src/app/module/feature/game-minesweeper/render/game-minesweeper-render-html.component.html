@@ -1,30 +1,33 @@
-<table
-  *ngIf="game$ | async"
-  class="scope"
-  [class.scope-show-mines]="showMines || (lost$ | async)"
-  [style.border]="'none'"
-  [attr.cellspacing]="'0'"
-  [attr.cellpadding]="'0'"
->
-  <ng-container *ngIf="wide$ | async as wide">
-    <ng-container *ngIf="indexMineCount$ | async as indexMineCount">
-      <ng-container *ngIf="trtds$ | async as trtds">
-        @for (tr of trtds; track row; let row = $index) {
-          <tr>
-            @for (td of tr; track col; let col = $index) {
-              <td>
-                <div
-                  class="field field-{{ td }}"
-                  (click)="onClickIndex(row * wide + col, $event)"
-                  (auxclick)="onAuxClickIndex(row * wide + col)"
-                >
-                  <span *ngIf="td === 'clear' && indexMineCount[row * wide + col]">{{ indexMineCount[row * wide + col] }}</span>
-                </div>
-              </td>
-            }
-          </tr>
+@if (game$ | async) {
+  <table
+    class="scope"
+    [class.scope-show-mines]="showMines || (lost$ | async)"
+    [style.border]="'none'"
+    [attr.cellspacing]="'0'"
+    [attr.cellpadding]="'0'"
+  >
+    @if (wide$ | async; as wide) {
+      @if (indexMineCount$ | async; as indexMineCount) {
+        @if (trtds$ | async; as trtds) {
+          @for (tr of trtds; track row; let row = $index) {
+            <tr>
+              @for (td of tr; track col; let col = $index) {
+                <td>
+                  <div
+                    class="field field-{{ td }}"
+                    (click)="onClickIndex(row * wide + col, $event)"
+                    (auxclick)="onAuxClickIndex(row * wide + col)"
+                  >
+                    @if (td === 'clear' && indexMineCount[row * wide + col]) {
+                      <span>{{ indexMineCount[row * wide + col] }}</span>
+                    }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
         }
-      </ng-container>
-    </ng-container>
-  </ng-container>
-</table>
+      }
+    }
+  </table>
+}

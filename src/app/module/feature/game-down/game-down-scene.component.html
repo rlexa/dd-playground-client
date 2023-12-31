@@ -16,26 +16,27 @@
       }
     }
 
-    <div
-      *ngIf="viewDebug$ | async"
-      class="position-absolute match-parent border-radius value-numeric list-v"
-      [style.align-items]="'flex-end'"
-      [style.justify-content]="'end'"
-      [style.fontSize]="'1.5em'"
-      [style.border]="'.2em solid transparent'"
-    >
-      <label>{{ (renderer$ | async) || '!renderer!' }}</label>
-      <label>{{ (theme$ | async)?.name || '!theme!' }}</label>
-      <label>
-        {{ ((selected$ | async) === index ? 'S' : '_') + ((hovered$ | async) === index ? 'H' : '_') }}
-      </label>
-    </div>
+    @if (viewDebug$ | async) {
+      <div
+        class="position-absolute match-parent border-radius value-numeric list-v"
+        [style.align-items]="'flex-end'"
+        [style.justify-content]="'end'"
+        [style.fontSize]="'1.5em'"
+        [style.border]="'.2em solid transparent'"
+      >
+        <label>{{ (renderer$ | async) || '!renderer!' }}</label>
+        <label>{{ (theme$ | async)?.name || '!theme!' }}</label>
+        <label>
+          {{ ((selected$ | async) === index ? 'S' : '_') + ((hovered$ | async) === index ? 'H' : '_') }}
+        </label>
+      </div>
+    }
   </app-game-down-field>
 </ng-template>
 
 <div class="border" [style.fontSize]="(factor$ | async) + 'rem'" [style.backgroundColor]="'white'">
   <table [style.border]="'none'" [attr.cellspacing]="'0'" [attr.cellpadding]="'0'">
-    <ng-container *ngIf="fields$ | async as fields">
+    @if (fields$ | async; as fields) {
       @for (yy of HEIGHT; track yindex; let yindex = $index) {
         <tr>
           @for (xx of WIDTH; track xindex; let xindex = $index) {
@@ -45,6 +46,6 @@
           }
         </tr>
       }
-    </ng-container>
+    }
   </table>
 </div>

@@ -23,42 +23,48 @@
         </div>
       </mat-list-item>
       <mat-list-item>
-        <mat-form-field *ngIf="renderers$ | async as renderers">
-          <mat-select
-            #renderer
-            placeholder="Renderer"
-            [ngModel]="renderer$ | async"
-            (valueChange)="onSetRenderer($event); renderer.value = null"
-          >
-            <mat-option [value]="null">-</mat-option>
-            @for (key of renderers; track $index) {
-              <mat-option [value]="key">{{ key }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+        @if (renderers$ | async; as renderers) {
+          <mat-form-field>
+            <mat-select
+              #renderer
+              placeholder="Renderer"
+              [ngModel]="renderer$ | async"
+              (valueChange)="onSetRenderer($event); renderer.value = null"
+            >
+              <mat-option [value]="null">-</mat-option>
+              @for (key of renderers; track $index) {
+                <mat-option [value]="key">{{ key }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
       </mat-list-item>
       <mat-list-item>
-        <mat-form-field *ngIf="themes$ | async as themes">
-          <mat-select #sceneTheme placeholder="Themes" [ngModel]="theme$ | async" (valueChange)="onSetTheme($event)">
-            @for (key of themes; track $index) {
-              <mat-option [value]="key">{{ key }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+        @if (themes$ | async; as themes) {
+          <mat-form-field>
+            <mat-select #sceneTheme placeholder="Themes" [ngModel]="theme$ | async" (valueChange)="onSetTheme($event)">
+              @for (key of themes; track $index) {
+                <mat-option [value]="key">{{ key }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
       </mat-list-item>
       <mat-list-item>
-        <mat-form-field *ngIf="sceneFieldsPresetsKeys$ | async as sceneFieldsPresetsKeys">
-          <mat-select
-            #sceneFieldsPreset
-            placeholder="Field Presets"
-            (valueChange)="onSetFieldsPresetKey($event); sceneFieldsPreset.value = null"
-          >
-            <mat-option [value]="null">-</mat-option>
-            @for (key of sceneFieldsPresetsKeys; track $index) {
-              <mat-option [value]="key">{{ key }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+        @if (sceneFieldsPresetsKeys$ | async; as sceneFieldsPresetsKeys) {
+          <mat-form-field>
+            <mat-select
+              #sceneFieldsPreset
+              placeholder="Field Presets"
+              (valueChange)="onSetFieldsPresetKey($event); sceneFieldsPreset.value = null"
+            >
+              <mat-option [value]="null">-</mat-option>
+              @for (key of sceneFieldsPresetsKeys; track $index) {
+                <mat-option [value]="key">{{ key }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
       </mat-list-item>
     </mat-list>
   </div>
@@ -74,67 +80,71 @@
     <app-game-down-ai-initiative />
   </div>
 
-  <div *ngIf="selectedField$ | async as field" class="list-v">
-    <mat-list class="mat-list-auto-height">
-      <h3 mat-subheader>Field {{ selectedFieldIndex$ | async }}</h3>
-      <mat-list-item>
-        <mat-form-field *ngIf="fieldValues$ | async as fields">
-          <mat-select
-            placeholder="Field"
-            [ngModel]="selectedFieldField$ | async"
-            (valueChange)="onMergeSelectedFieldWithField(field, $event)"
-          >
-            @for (key of fields; track $index) {
-              <mat-option [value]="key">{{ key }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </mat-list-item>
-
-      @for (mod of field.modifiers; track $index) {
-        <p [style.marginLeft]="'2.5rem'">
-          {{ mod.type + (mod.data === null ? '' : ' (' + mod.data + ')') }}
-        </p>
-      }
-
-      <ng-container *ngIf="fieldProblems$ | async as fieldProblems">
-        <h3 mat-subheader>{{ 'Problems: ' + fieldProblems.length }}</h3>
-        @for (problem of fieldProblems; track $index) {
-          <p [style.marginLeft]="'2.5rem'">
-            {{ problem }}
-          </p>
-        }
-      </ng-container>
-
-      <ng-container *ngIf="selectedFieldEntities$ | async as entities">
-        <ng-container *ngIf="entities.length">
-          <h3 mat-subheader>Field Entities</h3>
-          @for (item of entities; track $index) {
-            <mat-list-item>
-              <p mat-line>{{ item.name + ' ' + (item.variant || 0) }}</p>
-            </mat-list-item>
-            @for (mod of item.modifiers; track $index) {
-              <p [style.marginLeft]="'2.5rem'">
-                {{ mod.type + (mod.data === null ? '' : ' (' + mod.data + ')') }}
-              </p>
-            }
-          }
-        </ng-container>
-      </ng-container>
-
-      <ng-container *ngIf="selectedFieldActor$ | async as item">
-        <h3 mat-subheader>Field Actor</h3>
+  @if (selectedField$ | async; as field) {
+    <div class="list-v">
+      <mat-list class="mat-list-auto-height">
+        <h3 mat-subheader>Field {{ selectedFieldIndex$ | async }}</h3>
         <mat-list-item>
-          <p mat-line>
-            {{ (item.isNpc ? 'NPC ' : '') + item.name + ' ' + (item.variant || 0) }}
-          </p>
+          @if (fieldValues$ | async; as fields) {
+            <mat-form-field>
+              <mat-select
+                placeholder="Field"
+                [ngModel]="selectedFieldField$ | async"
+                (valueChange)="onMergeSelectedFieldWithField(field, $event)"
+              >
+                @for (key of fields; track $index) {
+                  <mat-option [value]="key">{{ key }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
         </mat-list-item>
-        @for (mod of item.modifiers; track $index) {
+
+        @for (mod of field.modifiers; track $index) {
           <p [style.marginLeft]="'2.5rem'">
             {{ mod.type + (mod.data === null ? '' : ' (' + mod.data + ')') }}
           </p>
         }
-      </ng-container>
-    </mat-list>
-  </div>
+
+        @if (fieldProblems$ | async; as fieldProblems) {
+          <h3 mat-subheader>{{ 'Problems: ' + fieldProblems.length }}</h3>
+          @for (problem of fieldProblems; track $index) {
+            <p [style.marginLeft]="'2.5rem'">
+              {{ problem }}
+            </p>
+          }
+        }
+
+        @if (selectedFieldEntities$ | async; as entities) {
+          @if (entities.length) {
+            <h3 mat-subheader>Field Entities</h3>
+            @for (item of entities; track $index) {
+              <mat-list-item>
+                <p mat-line>{{ item.name + ' ' + (item.variant || 0) }}</p>
+              </mat-list-item>
+              @for (mod of item.modifiers; track $index) {
+                <p [style.marginLeft]="'2.5rem'">
+                  {{ mod.type + (mod.data === null ? '' : ' (' + mod.data + ')') }}
+                </p>
+              }
+            }
+          }
+        }
+
+        @if (selectedFieldActor$ | async; as item) {
+          <h3 mat-subheader>Field Actor</h3>
+          <mat-list-item>
+            <p mat-line>
+              {{ (item.isNpc ? 'NPC ' : '') + item.name + ' ' + (item.variant || 0) }}
+            </p>
+          </mat-list-item>
+          @for (mod of item.modifiers; track $index) {
+            <p [style.marginLeft]="'2.5rem'">
+              {{ mod.type + (mod.data === null ? '' : ' (' + mod.data + ')') }}
+            </p>
+          }
+        }
+      </mat-list>
+    </div>
+  }
 </div>

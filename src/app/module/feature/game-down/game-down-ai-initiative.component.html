@@ -1,21 +1,23 @@
-<ng-container *ngIf="fields$ | async as fields">
-  <ng-container *ngIf="resolvedInitiativeIndices$ | async as resolvedInitiativeIndices">
-    <div *ngIf="resolvedInitiativeIndices.length" class="list-v">
-      <mat-list class="mat-list-auto-height">
-        <h3 mat-subheader>Initiative</h3>
-        @for (ii of resolvedInitiativeIndices; track $index) {
-          <p
-            [style.marginLeft]="'2.5rem'"
-            class="clickable"
-            (mouseenter)="onHoverIndex(ii, true)"
-            (mouseleave)="onHoverIndex(ii, false)"
-            (click)="onClickIndex(ii)"
-            [style.color]="ii === (hovered$ | async) ? 'red' : null"
-          >
-            {{ fields[ii].actor.name + ' ' + (fields[ii].actor.variant || 0) }}
-          </p>
-        }
-      </mat-list>
-    </div>
-  </ng-container>
-</ng-container>
+@if (fields$ | async; as fields) {
+  @if (resolvedInitiativeIndices$ | async; as resolvedInitiativeIndices) {
+    @if (resolvedInitiativeIndices.length) {
+      <div class="list-v">
+        <mat-list class="mat-list-auto-height">
+          <h3 mat-subheader>Initiative</h3>
+          @for (ii of resolvedInitiativeIndices; track $index) {
+            <p
+              [style.marginLeft]="'2.5rem'"
+              class="clickable"
+              (mouseenter)="onHoverIndex(ii, true)"
+              (mouseleave)="onHoverIndex(ii, false)"
+              (click)="onClickIndex(ii)"
+              [style.color]="ii === (hovered$ | async) ? 'red' : null"
+            >
+              {{ fields[ii].actor.name + ' ' + (fields[ii].actor.variant || 0) }}
+            </p>
+          }
+        </mat-list>
+      </div>
+    }
+  }
+}

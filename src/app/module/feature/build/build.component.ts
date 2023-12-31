@@ -6,12 +6,14 @@ import {SimpleViewComponent} from '../../widget/simple-view';
 
 @Component({
   selector: 'app-build',
-  template: `<mat-card appearance="outlined" *ngIf="globalFlags$ | async as data">
-    <mat-card-title>Build Settings</mat-card-title>
-    <mat-card-content>
-      <app-simple-view [data]="data" [isWidthConstrained]="false" />
-    </mat-card-content>
-  </mat-card>`,
+  template: `@if (globalFlags$ | async; as data) {
+    <mat-card appearance="outlined">
+      <mat-card-title>Build Settings</mat-card-title>
+      <mat-card-content>
+        <app-simple-view [data]="data" [isWidthConstrained]="false" />
+      </mat-card-content>
+    </mat-card>
+  }`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, MatCardModule, SimpleViewComponent],

@@ -4,7 +4,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-loading-bar',
-  template: `<mat-progress-bar *ngIf="show" mode="indeterminate" />`,
+  template: `@if (show) {
+    <mat-progress-bar mode="indeterminate" />
+  }`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, MatProgressBarModule],
