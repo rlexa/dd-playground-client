@@ -8,7 +8,6 @@ import {DashboardRoute} from './dashboard-route';
 import {DashboardComponent} from './dashboard.component';
 
 const routeNavs: Record<DashboardRoute, Omit<NavigationBarItem, 'route'>> = {
-  [DashboardRoute.Api]: {icon: 'view_list', label: 'API'},
   [DashboardRoute.Crypto]: {icon: 'cryptocurrency', label: 'Cryptocurrency'},
   [DashboardRoute.Game]: {icon: 'game', label: 'Game'},
   [DashboardRoute.Graph]: {icon: 'graph', label: 'Graph'},
@@ -34,10 +33,6 @@ const ROUTING: Routes = [
       {path: DashboardRoute.Crypto, loadChildren: () => import('../../feature/crypto/routes')},
       {path: DashboardRoute.School, loadChildren: () => import('../../feature/school/routes')},
       {path: DashboardRoute.Playground, loadChildren: () => import('../../feature/playground/routes')},
-      {
-        path: DashboardRoute.Api,
-        loadChildren: () => import('src/app/module/widget/route-api/route-api.module').then((m) => m.RouteApiModule),
-      },
       {path: DashboardRoute.Settings, loadChildren: () => import('../../feature/system/routes')},
       {path: RouteRoot, redirectTo: DashboardRoute.Overview, pathMatch: 'full'},
       {path: RouteWild, redirectTo: DashboardRoute.Overview},
