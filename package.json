@@ -15,7 +15,7 @@
     "lint": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng lint",
     "post:lint": "npm run lint:scss",
     "test": "jest --ci --logHeapUsage",
-    "test:dev": "jest --updateSnapshot --bail --runInBand",
+    "test:dev": "jest --updateSnapshot",
     "test:watch": "npm run test:dev -- --watchAll",
     "test:coverage": "jest --coverage"
   },
